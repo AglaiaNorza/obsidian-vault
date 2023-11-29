@@ -69,7 +69,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 318.5
   },
   "right": {
     "id": "742fcaeff1e82ee3",
@@ -146,7 +146,7 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "ec4ab3ee4606cd45",
+  "active": "01cec9100da5dc42",
   "lastOpenFiles": [
     "fondamenti/esempio - rettangoli.md"
   ]
