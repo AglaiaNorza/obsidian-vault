@@ -1,3 +1,3 @@
 i dizionari sono utili
 
-mamma mia qu
+mamma mia quanto lo sono 
