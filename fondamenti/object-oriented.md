@@ -66,4 +66,24 @@ def __mul__(self, k):
 	
 	elif isinstance(k, color):
 ```
+### oggetti "callable"
+quali oggetti sono callable?
+callable() ritorna vero se un oggetto  è chiamabile
+```python
+[callable(x) for x in [int, str, list]]
+# True, True, True
+```
+int, stringhe e liste sono tutte chiamabili
+##### rendere un nuovo tipo chiamabile:
+si aggiunge call ai suoi metodi
+```python
+class Foobar():
+	def __init__(self):
+		pass
+		
+	def __call__(self, param=str()):
+		printf(f'called {param}'')
 
+fb = Foobar() #così abbiamo definito l'oggetto fb, che è callable
+```
+ma la classe Foobar stessa è callable?  sì
