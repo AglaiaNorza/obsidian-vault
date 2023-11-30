@@ -8,6 +8,8 @@ principio "first in first out"
 principio "last in first out"
 call_c è la prima ad "uscire", e il risultato viene passato a call_b
 
+in realtà ha una dimensione "limitata" (modificabile), ma per l'uso medio non interessa.
+
 usa:
 - push()
 - pop()
@@ -22,4 +24,5 @@ def fibonacci(n):
 ```
 
 così però fa molto lavoro - sviluppa ogni sottoalbero prima di tornare indietro.
+la sintassi conta per il modo in cui l'albero verrà navigato (sviluppa da sinistra a destra).
 
