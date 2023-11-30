@@ -85,5 +85,8 @@ class Foobar():
 		printf(f'called {param}'')
 
 fb = Foobar() #così abbiamo definito l'oggetto fb, che è callable
+fb("ghostbusters!")
+#called ghostbusters!
 ```
-ma la classe Foobar stessa è callable?  sì
+ma la classe Foobar stessa è callable?  sì.
+

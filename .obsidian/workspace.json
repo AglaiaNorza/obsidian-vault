@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "827fd57898d25d3b",
+        "id": "930314f8c7465875",
         "type": "tabs",
         "children": [
           {
-            "id": "ec4ab3ee4606cd45",
+            "id": "4b40ab7bb1cb695d",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -156,8 +156,12 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "ec4ab3ee4606cd45",
+  "active": "4b40ab7bb1cb695d",
   "lastOpenFiles": [
+    "2023-11-30.md",
+    "Untitled 1.canvas",
+    "Untitled.canvas",
+    "fondamenti/ricorsione.md",
     "fondamenti/object-oriented.md",
     "fondamenti/matrici (come immagini).md",
     "2023-11-29.md",
