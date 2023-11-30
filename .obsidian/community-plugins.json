@@ -1,3 +1,7 @@
 [
-  "obsidian-git"
+  "obsidian-git",
+  "obsidian-style-settings",
+  "highlightr-plugin",
+  "cmenu-plugin",
+  "editing-toolbar"
 ]

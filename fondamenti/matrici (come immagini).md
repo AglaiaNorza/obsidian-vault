@@ -204,4 +204,3 @@ somma = tuple(map(lambda s,p: s+p, somma,pix))
 	tuple(s+p for s, p in zip(somma, pix))
 ```
 
-

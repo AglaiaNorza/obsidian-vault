@@ -13,8 +13,8 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "fondamenti/dizionari.md",
-                "mode": "source",
+                "file": "fondamenti/object-oriented.md",
+                "mode": "preview",
                 "source": false
               }
             }
@@ -69,7 +69,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 318.5
+    "width": 318.5,
+    "collapsed": true
   },
   "right": {
     "id": "742fcaeff1e82ee3",
@@ -85,7 +86,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "fondamenti/dizionari.md",
+                "file": "fondamenti/object-oriented.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +103,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "fondamenti/dizionari.md",
+                "file": "fondamenti/object-oriented.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,11 +126,20 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "fondamenti/dizionari.md"
+                "file": "fondamenti/object-oriented.md"
               }
             }
+          },
+          {
+            "id": "76a5b0444c46af04",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {}
+            }
           }
-        ]
+        ],
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
@@ -146,8 +156,12 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "01cec9100da5dc42",
+  "active": "ec4ab3ee4606cd45",
   "lastOpenFiles": [
-    "fondamenti/esempio - rettangoli.md"
+    "fondamenti/matrici (come immagini).md",
+    "2023-11-29.md",
+    "fondamenti/function dictionary.md",
+    "fondamenti/esempio - rettangoli.md",
+    "fondamenti/dizionari.md"
   ]
 }

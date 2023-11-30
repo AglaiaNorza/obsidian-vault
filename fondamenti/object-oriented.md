@@ -66,3 +66,4 @@ def __mul__(self, k):
 	
 	elif isinstance(k, color):
 ```
+
