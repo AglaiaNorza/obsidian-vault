@@ -69,8 +69,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 318.5,
-    "collapsed": true
+    "width": 318.5
   },
   "right": {
     "id": "742fcaeff1e82ee3",
@@ -158,12 +157,14 @@
   },
   "active": "4b40ab7bb1cb695d",
   "lastOpenFiles": [
+    "fondamenti/matrici (come immagini).md",
+    "fondamenti/pack e unpack operators.md",
+    "fondamenti/stringhe.md",
+    "fondamenti/ricorsione.md",
     "2023-11-30.md",
     "Untitled 1.canvas",
     "Untitled.canvas",
-    "fondamenti/ricorsione.md",
     "fondamenti/object-oriented.md",
-    "fondamenti/matrici (come immagini).md",
     "2023-11-29.md",
     "fondamenti/function dictionary.md",
     "fondamenti/esempio - rettangoli.md",

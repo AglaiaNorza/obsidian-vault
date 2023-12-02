@@ -1,3 +1,4 @@
+una funzione ricorsiva è una funzione che chiama se stessa.
 si basa su <span style="color:#32a9b8">stack</span> e <span style="color:#32a9b8">queue</span>
 ##### queue
 principio "first in first out"
@@ -57,10 +58,10 @@ def fibonacci_iter(n):
 
 # generica per ricorsione
 
-1) riduzione del problema
-2) caso base - esiste un problema (una parte del problema) con soluzione elementare
-3) convergenza - applicando la riduzione  è sempre possibile arrivare al caso base
-4) conquer - unire le soluzioni delle riduzioni per risolvere il problema principale
+1) **<font color="#31859b">riduzione</font>** del problema
+2) **<font color="#31859b">caso base</font>** - esiste un problema (una parte del problema) con soluzione elementare
+3) **<font color="#31859b">convergenza</font>** - applicando la riduzione  è sempre possibile arrivare al caso base
+4) **<font color="#8064a2">conquer</font>** - unire le soluzioni delle riduzioni per risolvere il problema principale
 
 
 ###### per sommare ricorsivamente all'andata:
@@ -76,25 +77,3 @@ def sumrp(i, n, partial_sum=0):
     return sumrp(i+1, n, partial_sum=partial_sum+i)
 ```
 
-scacchiera ricorsiva:
-```python
-def checkboard(k=1):
-	black = (0,)*3
-	white = (255,)*3
-
-	row = [white,]*k + [black,]*k
-
-	return [row,]*k + [row[::-1],]*k
-
-def create_checkboard(n,k):
-	assert n%2 == 0, n
-	assert n>=2
-
-	if n == 2:
-		return checkboard(k)
-
-	rows = create_checkboard(n//2, k)
-	rows = rows*2
-
-	return [r*2 for r in rows]
-```
