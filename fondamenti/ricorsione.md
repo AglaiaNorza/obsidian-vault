@@ -63,4 +63,38 @@ def fibonacci_iter(n):
 4) conquer - unire le soluzioni delle riduzioni per risolvere il problema principale
 
 
+###### per sommare ricorsivamente all'andata:
+ragioniamo in maniera inversa: invece che ridurre, incrementiamo fino ad arrivare alla soluzione
 
+1. incremento i -> i+1
+2. finisco quando i= n+1 (convergenza e risultato)
+3. in partenza la somma e' 0, ad ogni passo incremento
+```python
+def sumrp(i, n, partial_sum=0):
+    if i == n:
+        return partial_sum + n # mi ri
+    return sumrp(i+1, n, partial_sum=partial_sum+i)
+```
+
+scacchiera ricorsiva:
+```python
+def checkboard(k=1):
+	black = (0,)*3
+	white = (255,)*3
+
+	row = [white,]*k + [black,]*k
+
+	return [row,]*k + [row[::-1],]*k
+
+def create_checkboard(n,k):
+	assert n%2 == 0, n
+	assert n>=2
+
+	if n == 2:
+		return checkboard(k)
+
+	rows = create_checkboard(n//2, k)
+	rows = rows*2
+
+	return [r*2 for r in rows]
+```
