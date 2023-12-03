@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "fondamenti/ricorsione.md",
+                "file": "fondamenti/matrici (come immagini).md",
                 "mode": "preview",
                 "source": false
               }
@@ -69,7 +69,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 318.5
+    "width": 318.5,
+    "collapsed": true
   },
   "right": {
     "id": "742fcaeff1e82ee3",
@@ -85,7 +86,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "fondamenti/ricorsione.md",
+                "file": "fondamenti/matrici (come immagini).md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +103,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "fondamenti/ricorsione.md",
+                "file": "fondamenti/matrici (come immagini).md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +126,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "fondamenti/ricorsione.md"
+                "file": "fondamenti/matrici (come immagini).md"
               }
             }
           },
@@ -157,17 +158,17 @@
   },
   "active": "4b40ab7bb1cb695d",
   "lastOpenFiles": [
+    "fondamenti/dizionari.md",
+    "fondamenti/ricorsione.md",
     "fondamenti/matrici (come immagini).md",
     "fondamenti/pack e unpack operators.md",
     "fondamenti/stringhe.md",
-    "fondamenti/ricorsione.md",
     "2023-11-30.md",
     "Untitled 1.canvas",
     "Untitled.canvas",
     "fondamenti/object-oriented.md",
     "2023-11-29.md",
     "fondamenti/function dictionary.md",
-    "fondamenti/esempio - rettangoli.md",
-    "fondamenti/dizionari.md"
+    "fondamenti/esempio - rettangoli.md"
   ]
 }
