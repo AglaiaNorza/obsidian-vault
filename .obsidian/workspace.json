@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "fondamenti/matrici (come immagini).md",
+                "file": "fondamenti/alberi.md",
                 "mode": "source",
                 "source": false
               }
@@ -69,7 +69,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 318.5
+    "width": 318.5,
+    "collapsed": true
   },
   "right": {
     "id": "742fcaeff1e82ee3",
@@ -85,7 +86,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "fondamenti/matrici (come immagini).md",
+                "file": "fondamenti/alberi.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +103,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "fondamenti/matrici (come immagini).md",
+                "file": "fondamenti/alberi.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +126,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "fondamenti/matrici (come immagini).md"
+                "file": "fondamenti/alberi.md"
               }
             }
           },
@@ -156,12 +157,14 @@
   },
   "active": "5860e70b3c7bfd46",
   "lastOpenFiles": [
+    "Screen Shot 2023-12-05 at 17.45.49.png",
+    "Screen Shot 2023-12-05 at 17.43.44.png",
+    "fondamenti/matrici (come immagini).md",
     "fondamenti/esempio - rettangoli.md",
     "fondamenti/function dictionary.md",
     "fondamenti/alberi.md",
     "fondamenti/ricorsione.md",
     "fondamenti/pack e unpack operators.md",
-    "fondamenti/matrici (come immagini).md",
     "fondamenti/dizionari.md",
     "fondamenti/stringhe.md",
     "2023-11-30.md",
