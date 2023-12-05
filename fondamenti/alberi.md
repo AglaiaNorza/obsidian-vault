@@ -29,7 +29,7 @@ def height(self):
 ```
 if not ... controlla se ci sono nodi figli
 
-**<font color="#4bacc6">diametro</font>**: percorso massimo da foglia a foglia (non è detto che passi dalla radice)
+**<font color="#4bacc6">diametro</font>**: percorso massimo da foglia a foglica (non è detto che passi dalla radice)
 COPIA DALLE SLIDE
 
 **<font color="#4bacc6">ricerca in un albero</font>** 
