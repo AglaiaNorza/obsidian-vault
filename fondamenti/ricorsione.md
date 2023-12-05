@@ -55,7 +55,6 @@ def fibonacci_iter(n):
 	f = [1,1] + [None] * (n-1)
 	for k in range(2, n)
 ```
-
 # generica per ricorsione
 
 1) **<font color="#31859b">riduzione</font>** del problema
@@ -64,7 +63,7 @@ def fibonacci_iter(n):
 4) **<font color="#8064a2">conquer</font>** - unire le soluzioni delle riduzioni per risolvere il problema principale
 
 
-###### per sommare ricorsivamente all'andata:
+##### sommare ricorsivamente all'andata:
 ragioniamo in maniera inversa: invece che ridurre, incrementiamo fino ad arrivare alla soluzione
 
 1. incremento i -> i+1
@@ -73,7 +72,85 @@ ragioniamo in maniera inversa: invece che ridurre, incrementiamo fino ad arrivar
 ```python
 def sumrp(i, n, partial_sum=0):
     if i == n:
-        return partial_sum + n # mi ri
+        return partial_sum + n 
     return sumrp(i+1, n, partial_sum=partial_sum+i)
 ```
 
+### ricorsione sugli alberi
+[[alberi]]
+
+in maniera ricorsiva, dobbiamo aprire tutte le directory e "vedere" tutti i file.
+###### esempio: trovare file con una certa estensione in una directory 
+- serve il modulo os (per cartelle/sottocartelle/file)
+	- os.listdir(cartella) dà tutti i file presenti nella cartella 
+- il path assoluto si trova con:
+```python
+f'{folder}/{fname}'
+#che sarebbe:
+folder + "/" + fname
+#oppure:
+os.path.join(folder, fname)
+```
+- stringa.endswith(end) - controlla se una stringa finisce in un certo modo
+
+```python
+import os
+
+def find_file_with_ext(folder, ext):
+	rez = [] #lista che conterrà i risultati
+
+	#si fa un for su quanti items abbiamo, e per ogni item,
+	#se è un file okay, sennò richiamiamo la funzione
+	#con quella directory invece di quella iniziale
+
+	for fname in os.listdir(folder):
+		#ricalcolo il percorso assoluto
+		full_path = f'{folder}/{fname}'
+		#full path può essere un file o una directory
+
+		if os.path.isfile(full_path):
+		
+			if fname.endswith(ext):
+				rez.append(full_path)
+				#se è un file e finisce con 
+				#l'estensione che voglio, lo aggiungo
+		else:
+			#se è una directory: vado in ricorsione
+			L_files = find_file_with_ext(full_path, ext)
+			#L_files sarà la lista di file in quella
+			#directory che finiscono con l'ext richiesta
+			#(perché la funzione ritorna una lista
+
+			rez = rez + L_files
+
+	return rez
+```
+
+la parte ricorsiva è difficile perché, quando stiamo scrivendo la parte ricorsiva ("else"), non abbiamo ancora scritto il return (quindi dobbiamo immaginare che la funzione restituirà la lista con i path dei file con estensione ext *in quella directory*).
+
+###### ritornare un dizionario con chiave percorso e valore dimensione del file
+- serve os per trovare la dimensione del file: 
+	- os.stat(file).st_size 
+
+```python
+import os
+
+def find_file_with_ext(folder, ext):
+	rez = {} 
+	
+	for fname in os.listdir(folder):
+		full_path = f'{folder}/{fname}'
+
+		if os.path.isfile(full_path):
+		
+			if fname.endswith(ext):
+				rez[fullpath] = os.stat(full_path).st_size 
+
+		else:
+			D_files = find_file_with_ext(full_path, ext)
+			
+			rez.update(D_files)
+			#oppure, con unpack:
+			# rez = {**rez, **D_files}
+	return rez
+```

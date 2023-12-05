@@ -13,8 +13,20 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "fondamenti/matrici (come immagini).md",
+                "file": "fondamenti/alberi.md",
                 "mode": "preview",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "5860e70b3c7bfd46",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "fondamenti/ricorsione.md",
+                "mode": "source",
                 "source": false
               }
             }
@@ -86,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "fondamenti/matrici (come immagini).md",
+                "file": "fondamenti/alberi.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "fondamenti/matrici (come immagini).md",
+                "file": "fondamenti/alberi.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -126,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "fondamenti/matrici (come immagini).md"
+                "file": "fondamenti/alberi.md"
               }
             }
           },
@@ -158,11 +170,12 @@
   },
   "active": "4b40ab7bb1cb695d",
   "lastOpenFiles": [
-    "fondamenti/function dictionary.md",
-    "fondamenti/matrici (come immagini).md",
-    "fondamenti/dizionari.md",
     "fondamenti/ricorsione.md",
+    "fondamenti/alberi.md",
     "fondamenti/pack e unpack operators.md",
+    "fondamenti/matrici (come immagini).md",
+    "fondamenti/function dictionary.md",
+    "fondamenti/dizionari.md",
     "fondamenti/stringhe.md",
     "2023-11-30.md",
     "Untitled 1.canvas",
