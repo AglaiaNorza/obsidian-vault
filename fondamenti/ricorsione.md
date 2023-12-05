@@ -57,10 +57,10 @@ def fibonacci_iter(n):
 ```
 # generica per ricorsione
 
-1) **<font color="#31859b">riduzione</font>** del problema
-2) **<font color="#31859b">caso base</font>** - esiste un problema (una parte del problema) con soluzione elementare
-3) **<font color="#31859b">convergenza</font>** - applicando la riduzione  è sempre possibile arrivare al caso base
-4) **<font color="#8064a2">conquer</font>** - unire le soluzioni delle riduzioni per risolvere il problema principale
+ 1) **<font color="#31859b">riduzione</font>** del problema
+ 2) **<font color="#31859b">caso base</font>** - esiste un problema (una parte del problema) con soluzione elementare
+ 3) **<font color="#31859b">convergenza</font>** - applicando la riduzione  è sempre possibile arrivare al caso base
+ 4) **<font color="#8064a2">conquer</font>** - unire le soluzioni delle riduzioni per risolvere il problema principale
 
 
 ##### sommare ricorsivamente all'andata:

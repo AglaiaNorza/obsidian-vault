@@ -8,24 +8,12 @@
         "type": "tabs",
         "children": [
           {
-            "id": "4b40ab7bb1cb695d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "fondamenti/alberi.md",
-                "mode": "preview",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "5860e70b3c7bfd46",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "fondamenti/ricorsione.md",
+                "file": "fondamenti/matrici (come immagini).md",
                 "mode": "source",
                 "source": false
               }
@@ -81,8 +69,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 318.5,
-    "collapsed": true
+    "width": 318.5
   },
   "right": {
     "id": "742fcaeff1e82ee3",
@@ -98,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "fondamenti/alberi.md",
+                "file": "fondamenti/matrici (come immagini).md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "fondamenti/alberi.md",
+                "file": "fondamenti/matrici (come immagini).md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "fondamenti/alberi.md"
+                "file": "fondamenti/matrici (come immagini).md"
               }
             }
           },
@@ -155,8 +142,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -168,20 +154,20 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "4b40ab7bb1cb695d",
+  "active": "5860e70b3c7bfd46",
   "lastOpenFiles": [
-    "fondamenti/ricorsione.md",
+    "fondamenti/esempio - rettangoli.md",
+    "fondamenti/function dictionary.md",
     "fondamenti/alberi.md",
+    "fondamenti/ricorsione.md",
     "fondamenti/pack e unpack operators.md",
     "fondamenti/matrici (come immagini).md",
-    "fondamenti/function dictionary.md",
     "fondamenti/dizionari.md",
     "fondamenti/stringhe.md",
     "2023-11-30.md",
     "Untitled 1.canvas",
     "Untitled.canvas",
     "fondamenti/object-oriented.md",
-    "2023-11-29.md",
-    "fondamenti/esempio - rettangoli.md"
+    "2023-11-29.md"
   ]
 }
