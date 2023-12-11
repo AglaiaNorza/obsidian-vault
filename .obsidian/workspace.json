@@ -69,8 +69,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 318.5,
-    "collapsed": true
+    "width": 318.5
   },
   "right": {
     "id": "742fcaeff1e82ee3",
@@ -143,8 +142,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -156,14 +154,15 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "76a5b0444c46af04",
+  "active": "5860e70b3c7bfd46",
   "lastOpenFiles": [
-    "Screen Shot 2023-12-05 at 17.45.49.png",
-    "Screen Shot 2023-12-05 at 17.43.44.png",
+    "ciao.md",
+    "fondamenti/alberi.md",
+    "fondamenti/attachments/Screen Shot 2023-12-05 at 17.45.49.png",
+    "fondamenti/attachments/Screen Shot 2023-12-05 at 17.43.44.png",
     "fondamenti/matrici (come immagini).md",
     "fondamenti/esempio - rettangoli.md",
     "fondamenti/function dictionary.md",
-    "fondamenti/alberi.md",
     "fondamenti/ricorsione.md",
     "fondamenti/pack e unpack operators.md",
     "fondamenti/dizionari.md",
