@@ -1,4 +1,4 @@
-2Le immagini si possono vedere come tensori di dimensione HWD3, o matrici di profondità 3.
+Le immagini si possono vedere come tensori di dimensione HWD3, o matrici di profondità 3.
 
 ```python
 def create_matrix(rows, columns, value):
@@ -35,8 +35,8 @@ print(*mat, sep = "\n")
 - dobbiamo sapere come partire:
 
 Un segmento orizzontale si rappresenta con:
-- un ==punto di partenza== (x e y)
-- o ==fino a dove== camminare (len of the segment) o un punto di arrivo (x)
+- un punto di partenza (x e y)
+- o fino a dove camminare (len of the segment) o un punto di arrivo (x)
 (per un segmento verticale è la stessa cosa ma con la y)
 
 ```python
@@ -51,7 +51,6 @@ def mat_plotline_ver (mat, x, y, length, value):
 	#mat è indicizzata [riga][colonna]
 	for each_y in range(y, y+length):
 		mat[each_y][x] = value
-
 ```
 
 fare i quattro lati di un rettangolo:
@@ -98,7 +97,7 @@ return [ [ im[r][c] for r in range(H)] for c in range(W)  ]
 #oppure
 list(map(list,zip(*im)))
 ```
-###### crop
+5) crop
 ```python
 def crop(im, x, y, w, h): #width, height 
 	return [ [c for c in row[x:x+w]] for row in im [y:y+h] ]
@@ -203,5 +202,4 @@ somma = tuple(map(lambda s,p: s+p, somma,pix))
 #equivalente a:
 	tuple(s+p for s, p in zip(somma, pix))
 ```
-
 

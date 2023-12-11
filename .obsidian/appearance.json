@@ -1,3 +1,5 @@
 {
-  "accentColor": ""
+  "accentColor": "#46adb4",
+  "cssTheme": "Prism",
+  "baseFontSize": 22
 }

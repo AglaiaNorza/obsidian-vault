@@ -18,8 +18,55 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "a9ab09dff972aac0",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "fondamenti/ricorsione.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "3f980467915ad34a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "fondamenti/ricorsione.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "9cbb2186c78bc0ca",
+            "type": "leaf",
+            "state": {
+              "type": "image",
+              "state": {
+                "file": "Screen Shot 2023-12-05 at 17.43.44.png"
+              }
+            }
+          },
+          {
+            "id": "073b0e7cfc46e63b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "conflict-files-obsidian-git.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -85,7 +132,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "fondamenti/function dictionary.md",
+                "file": "conflict-files-obsidian-git.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +149,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "fondamenti/function dictionary.md",
+                "file": "conflict-files-obsidian-git.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,15 +172,17 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "fondamenti/function dictionary.md"
+                "file": "conflict-files-obsidian-git.md"
               }
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -145,9 +194,16 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "65e51b3bfaea4753",
+  "active": "073b0e7cfc46e63b",
   "lastOpenFiles": [
+    "Screen Shot 2023-12-05 at 17.43.44.png",
+    "conflict-files-obsidian-git.md",
+    "fondamenti/ricorsione.md",
     "fondamenti/dizionari.md",
-    "fondamenti/esempio - rettangoli.md"
+    "fondamenti/esempio - rettangoli.md",
+    "fondamenti/function dictionary.md",
+    "fondamenti/object-oriented.md",
+    "fondamenti/alberi.md",
+    "Screen Shot 2023-12-05 at 17.45.49.png"
   ]
 }
