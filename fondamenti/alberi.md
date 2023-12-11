@@ -46,3 +46,6 @@ il filesystem può essere visto come **albero n-ario**:
 - <font color="#4bacc6"> directory</font> - <font color="#4bacc6">nodi</font>
  
 per ricorsione su alberi di filesystem:  [[ricorsione#ricorsione sugli alberi]]
+
+
+aha, aha
