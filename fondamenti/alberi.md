@@ -37,7 +37,7 @@ un albero, in memoria, alla fine è:
 
 quindi:
 caso base - il valore è nel nodo corrente
-sennò:
+sennò: ho figli? se sì, li controllo, se no, ho finito e non ho trovato
 
 ##### filesystem
 il filesystem può essere visto come **albero n-ario**:
@@ -46,6 +46,15 @@ il filesystem può essere visto come **albero n-ario**:
  
 per ricorsione su alberi di filesystem:  [[ricorsione#ricorsione sugli alberi |ricorsione sugli alberi]]
 
-#### alberi di gioco
+### alberi di gioco
+###### Tris
+- vince chi mette in fila il proprio simbolo.
+- pareggio: se la board è piena oppure manca una mossa (che non fa vincere nessuno) per riempirla.
+La board è uno <font color="#c0504d">stato</font> - una condizione del gioco.
+Una <font color="#4bacc6">mossa</font> ci porta in un altro stato.
 
+![[Screen Shot 2023-12-12 at 16.56.48.png |400]]
 
+possibili mosse/ricorsioni:
+![[Screen Shot 2023-12-12 at 16.58.21.png |400]]
+fine della ricorsione: vittoria o pareggio.
