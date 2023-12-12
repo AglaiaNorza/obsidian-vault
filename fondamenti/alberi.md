@@ -39,13 +39,13 @@ quindi:
 caso base - il valore è nel nodo corrente
 sennò:
 
-
 ##### filesystem
 il filesystem può essere visto come **albero n-ario**:
 - <font color="#c0504d">file </font> - <font color="#c0504d">foglie</font>
 - <font color="#4bacc6"> directory</font> - <font color="#4bacc6">nodi</font>
  
-per ricorsione su alberi di filesystem:  [[ricorsione#ricorsione sugli alberi]]
+per ricorsione su alberi di filesystem:  [[ricorsione#ricorsione sugli alberi |ricorsione sugli alberi]]
+
+#### alberi di gioco
 
 
-aha, aha
