@@ -58,3 +58,6 @@ Una <font color="#4bacc6">mossa</font> ci porta in un altro stato.
 possibili mosse/ricorsioni:
 ![[Screen Shot 2023-12-12 at 16.58.21.png |400]]
 fine della ricorsione: vittoria o pareggio.
+
+codice:
+![[alberi di gioco.py]]
