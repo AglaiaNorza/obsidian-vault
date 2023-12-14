@@ -26,6 +26,14 @@ def fibonacci(n):
 
 così però fa molto lavoro - sviluppa ogni sottoalbero prima di tornare indietro.
 la sintassi conta per il modo in cui l'albero verrà navigato (sviluppa da sinistra a destra).
+
+fibonacci con for:
+```python
+def fibonacci_iter(n):
+	f = [1,1] + [None] * (n-1)
+	for k in range(2, n)
+```
+
 ### caching/memoization
 "taglia" la complessità temporale del programma memorizzando i valori già calcolati.
 
@@ -47,13 +55,6 @@ class Fibo:
 		Fibo.memory[n] = rez
 		return rez
 	
-```
-
-fibonacci con for:
-```python
-def fibonacci_iter(n):
-	f = [1,1] + [None] * (n-1)
-	for k in range(2, n)
 ```
 # generica per ricorsione
 
