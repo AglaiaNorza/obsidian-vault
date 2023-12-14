@@ -12,5 +12,5 @@
   "things-style@@h4-size": "1.4em",
   "things-style@@h5-size": "1.2em",
   "things-style@@h6-size": "1em",
-  "things-style@@code-normal": "#FFFFFF"
+  "things-style@@fancy-code": false
 }

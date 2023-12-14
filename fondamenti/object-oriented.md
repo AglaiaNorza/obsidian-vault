@@ -3,6 +3,7 @@ una classe sta a un'istanza-oggetto come humankind sta a una persona x.
 #### ereditarietà
 si possono far derivare classi da altre classi 
 le classi derivate ereditano metodi e attributi, ma si possono estendere aggiungendone di nuovi.
+
 ![[Screen Shot 2023-11-28 at 16.47.40.png |250]]
 
 es. da Color (che ha r,g,b), se voglio anche alpha, eredito e aggiungo alpha

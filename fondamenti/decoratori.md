@@ -8,7 +8,7 @@ Un decoratore  è formato da:
 	- può comunque fare cose
 <br>
 - una **<font color="#4bacc6">funzione innestata</font>**:
-	- riceve come input gli argomenti della funzione da decorare (segnati di solito come (* args, ** kwargs )), e  fa quello che deve fare:
+	- riceve come input gli argomenti della funzione da decorare (segnati di solito come (aseterisco args, doppioasterisco kwargs )), e  fa quello che deve fare:
 		- come lo fa?
 			- può usare gli argomenti passati alla funzione - "args" o "kwargs" ([[decoratori#^f52bed |più info]])
 			- può chiamare la funzione e salvare il risultato in una variabile (o non salvarlo) - func(* args)
