@@ -20,9 +20,10 @@
     
 # Enumerare tutti i possibili stati
 # e tornare tutte le foglie dell'albero di gioco
+
 L = [99, 1, 3, 5, 20] #[d d d p]
 
-class GameTree:
+class GameNode:
     def __init__(self, state):
         self.state = state
         self.state_viz = [ 'd' if s%2 == 1 else 'p'  for s in state] # per debug
@@ -102,7 +103,7 @@ class GameTree:
         if start: return L
 # %%
     
-tree = GameTree(L)
+tree = GameNode(L)
 #%%
 #tree
 W = tree.leaves()
