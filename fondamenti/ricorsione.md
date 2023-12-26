@@ -155,3 +155,35 @@ def find_file_with_ext(folder, ext):
 			# rez = {**rez, **D_files}
 	return rez
 ```
+
+#### search orders
+**pre-order**:
+ricerca prima se stesso, poi tutti quelli a sinistra e poi tutti quelli a destra
+```python
+def find_pre(self, f_value):
+	if self.value == value:
+		return True
+		
+	elif self.sx and find_pre(self, value):
+		return True
+		
+	elif self.dx and find_pre(self, value):
+		return True
+		
+	else: return False
+```
+
+**in order:**
+prima sinistra, poi se stesso, poi destra
+```python
+def print_tree_in(self):
+	if self.sx:
+		self.s
+	print(self.value)
+	if self.dx:
+	
+
+```
+
+**post-order**
+prima sinistra, poi destra, poi se stesso
