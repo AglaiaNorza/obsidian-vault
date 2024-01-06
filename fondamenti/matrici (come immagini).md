@@ -93,7 +93,7 @@ list(reversed(list(map(list,zip(*mat)))))
 
 4) trasporre
 ```python
-return [ [ im[r][c] for r in range(H)] for c in range(W)  ] 
+return [ [ im[r][c] for r in range(len(mat))] for c in range(len(mat[0])) ] 
 #oppure
 list(map(list,zip(*im)))
 ```
