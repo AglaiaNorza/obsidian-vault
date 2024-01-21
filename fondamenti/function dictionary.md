@@ -55,6 +55,7 @@ lista = [valore for *iterazione* if *condizione]
 
 #### dizionari
 
+
 #### set
 	aggiunta: set.add(elemento)
 			set.update(altro_set)
