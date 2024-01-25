@@ -42,7 +42,7 @@ Un segmento orizzontale si rappresenta con:
 ```python
 def mat_plotline_hor(mat, x, y, length, value):
 	#mat è indicizzata [riga][colonna]
-	mat[y][x+length] = [value]*length
+	mat[y][x:x+length] = [value]*length
 
 ```
 
