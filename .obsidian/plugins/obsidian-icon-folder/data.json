@@ -6,11 +6,11 @@
     "emojiStyle": "none",
     "iconColor": null,
     "recentlyUsedIcons": [
+      "RiFileCodeLine",
       "RiFolderImageLine",
       "RiCodeLine",
       "FarImages",
-      "RiRainbowFill",
-      "FarRectangleList"
+      "RiRainbowFill"
     ],
     "recentlyUsedIconsSize": 5,
     "rules": [],
@@ -30,5 +30,6 @@
   "fondamenti/function dictionary.md": "FarRectangleList",
   "fondamenti/matrici (come immagini).md": "FarImages",
   "fondamenti": "RiCodeLine",
-  "fondamenti/attachments": "RiFolderImageLine"
+  "fondamenti/attachments": "RiFolderImageLine",
+  "fondamenti/cheat sheet esercizi.md": "RiFileCodeLine"
 }
