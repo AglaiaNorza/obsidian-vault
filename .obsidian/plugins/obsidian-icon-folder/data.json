@@ -6,11 +6,11 @@
     "emojiStyle": "none",
     "iconColor": null,
     "recentlyUsedIcons": [
+      "FarFileCode",
       "RiFileCodeLine",
       "RiFolderImageLine",
       "RiCodeLine",
-      "FarImages",
-      "RiRainbowFill"
+      "FarImages"
     ],
     "recentlyUsedIconsSize": 5,
     "rules": [],
@@ -27,9 +27,10 @@
     "iconsInNotesEnabled": true,
     "iconIdentifier": ":"
   },
-  "fondamenti/function dictionary.md": "FarRectangleList",
-  "fondamenti/matrici (come immagini).md": "FarImages",
-  "fondamenti": "RiCodeLine",
-  "fondamenti/attachments": "RiFolderImageLine",
-  "fondamenti/cheat sheet esercizi.md": "RiFileCodeLine"
+  "metodologie di programmazione": "FarFileCode",
+  "fondamenti di programmazione": "RiCodeLine",
+  "fondamenti di programmazione/attachments": "RiFolderImageLine",
+  "fondamenti di programmazione/cheat sheet esercizi.md": "RiFileCodeLine",
+  "fondamenti di programmazione/matrici (come immagini).md": "FarImages",
+  "fondamenti di programmazione/function dictionary.md": "FarRectangleList"
 }
