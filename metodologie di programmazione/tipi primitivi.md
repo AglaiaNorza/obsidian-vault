@@ -1,7 +1,7 @@
 tipi di dati di base built-in.
 ![[Screen Shot 2024-02-28 at 08.58.12.png]]
 - Le stringhe non sono in realtà tipi primitivi.
-- I char sono interpretati come veri e propri numeri ASCII, quindi si utilizzano gli operatori di somma e sottrazione.
+- I char sono interpretati come veri e propri numeri unicode, quindi si utilizzano gli operatori di somma e sottrazione.
 
 #### variabili
 Una variabile è creata tramite una **dichiarazione**, nella quale deve essere specificato il tipo:
@@ -39,7 +39,69 @@ rappresentazioni a livello di codice sorgente del valore di un tipo di dato.
 - Le costanti float hanno il suffisso f o F.
 - Il prefisso *0b* indica una rappresentazione binaria (es. 0b101 è 5)
 - Si può usare un trattino basso per separare le cifre (10_000 == 10000)
+#### precedenza operatori aritmetici
+![[Screen Shot 2024-02-28 at 09.39.14.png]]
+come in matematica.
 
+#### caratteri e stringhe
+I char seguono la **codifica unicode** (basata su interi a 16 bit), e sono racchiusi da apici (singoli) - 'a'.
+>[!caratteri di escape]-
+>- '\t' - tab
+>- '\n' - a capo
+>- '\\' - backslash
+>- ' \ ' ' - apice
+>- '\"' - virgolette
+#### operatori
+**incrementi**:
+- var++ (var = var +1)
+- var--
+ 
+diversi da:
+- ++var, --var
+ 
+*pre vs post-incremento*:
+a++ ha come risultato a, e poi lo incrementa di 1.
 
+```java
+int a = 3;
+int c = a++
+```
+qui, c vale 3 (il compilatore dà prima a c il valore di a, e poi aumenta a di 1)
+
+```java
+int a = 3;
+int c = ++a
+```
+qui, c vale 4 (e anche a).
+
+quindi:
+```java
+int a = 4;
+int c = 3;
+int z = (a++) - (c--);
+```
+ prima z = 1 
+poi a diventa 5 e c diventa 2
+
+**operatori booleani**:
+- && - and logico 
+- || - or
+- ! - not
+- ^ - xor
+
+&  e | - and  e or bit a bit (per i binari)
+ 
+**relazionali**:
+- ==
+- !=
+- < , <= , > , >=
+- istanceof
+
+**operatore ternario**:
+- ? :
+ 
+**shift**:
+- <<,  >>, >>>
+utili per i numeri binari: ogni shift a sinistra moltiplica per 2 (aggiungo uno 0 a destra in un numero binario)
 
 
