@@ -28,6 +28,7 @@ Il nome assegnato a una variabile è il suo **identificatore** (come in python, 
 >[!notazione]
 Si utilizza la **notazione Camel case**:
 > - quando si dichiara una variabile composta da più parole, la prima inizia con una minuscola e le successive con maiuscole (es. "contatoreTreniEsplosi")
+> - le **classi** devono per forza iniziare con una maiuscola (poi si continua con la camel case)
 
 #### letterali (o costanti)
 rappresentazioni a livello di codice sorgente del valore di un tipo di dato.
