@@ -29,8 +29,8 @@
   },
   "metodologie di programmazione": "FarFileCode",
   "fondamenti di programmazione": "RiCodeLine",
-  "fondamenti di programmazione/attachments": "RiFolderImageLine",
   "fondamenti di programmazione/cheat sheet esercizi.md": "RiFileCodeLine",
   "fondamenti di programmazione/matrici (come immagini).md": "FarImages",
-  "fondamenti di programmazione/function dictionary.md": "FarRectangleList"
+  "fondamenti di programmazione/function dictionary.md": "FarRectangleList",
+  "attachments": "RiFolderImageLine"
 }
