@@ -13,3 +13,6 @@ public class HelloWorld
 ```
 ![[Screen Shot 2024-02-28 at 10.54.17.png]]
 un programma deve quindi iniziare con una dichiarazione di una classe (il cui titolo sarà il nome del file), seguito da un metodo chiamato "public static void main" che riceve un array stringhe.
+
+> [!tip]
+>![[Screen Shot 2024-02-28 at 11.13.41.png]]
