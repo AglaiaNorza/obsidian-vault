@@ -1,7 +1,9 @@
 tipi di dati di base built-in.
 ![[Screen Shot 2024-02-28 at 08.58.12.png]]
 - Le stringhe non sono in realtà tipi primitivi.
-- I char sono interpretati come veri e propri numeri unicode, quindi si utilizzano gli operatori di somma e sottrazione.
+ 
+>[!warning] attenzione ai char
+> I char sono interpretati come veri e propri numeri unicode, quindi somma e sottrazione danno un risultato int.
 
 #### variabili
 Una variabile è creata tramite una **dichiarazione**, nella quale deve essere specificato il tipo:
@@ -20,16 +22,18 @@ le due cose possono essere fatte insieme:
 int contatore = 0;
 ```
 
-> [!static typing]
+> [!info] static typing
 > Il tipo di una variabile (se primitivo) è **statico** - non può cambiare.
 
 Il nome assegnato a una variabile è il suo **identificatore** (come in python, la prima lettera non può essere un numero) - gli identificatori sono case-sensitive.
 
->[!notazione]
+>[!tip] notazione
 Si utilizza la **notazione Camel case**:
 > - quando si dichiara una variabile composta da più parole, la prima inizia con una minuscola e le successive con maiuscole (es. "contatoreTreniEsplosi")
 > - le **classi** devono per forza iniziare con una maiuscola (poi si continua con la camel case)
 
+#### finals:
+le variabili **final** non possono cambiare valore all'interno di un programma (non si possono riassegnare) .
 #### letterali (o costanti)
 rappresentazioni a livello di codice sorgente del valore di un tipo di dato.
 (es: 27 è un letterale per gli interi)
@@ -40,18 +44,21 @@ rappresentazioni a livello di codice sorgente del valore di un tipo di dato.
 - Le costanti float hanno il suffisso f o F.
 - Il prefisso *0b* indica una rappresentazione binaria (es. 0b101 è 5)
 - Si può usare un trattino basso per separare le cifre (10_000 == 10000)
+#### array:
+```java
+String[] a = {"a", "b", "c", "d"}
+```
 #### precedenza operatori aritmetici
 ![[Screen Shot 2024-02-28 at 09.39.14.png]]
 come in matematica.
-
 #### caratteri e stringhe
 I char seguono la **codifica unicode** (basata su interi a 16 bit), e sono racchiusi da apici (singoli) - 'a'.
->[!caratteri di escape]-
->- '\t' - tab
->- '\n' - a capo
->- '\\' - backslash
->- ' \ ' ' - apice
->- '\"' - virgolette
+>[!info]- caratteri di escape
+>- `'\t'` - tab
+>- `'\n'` - a capo
+>- `'\\'` - backslash
+>- `' \' '` - apice
+>- `'\"'` - virgolette
 #### operatori
 **incrementi**:
 - var++ (var = var +1)
@@ -59,7 +66,7 @@ I char seguono la **codifica unicode** (basata su interi a 16 bit), e sono racch
  
 diversi da:
 - ++var, --var
- 
+
 *pre vs post-incremento*:
 a++ ha come risultato a, e poi lo incrementa di 1.
 
@@ -105,4 +112,42 @@ poi a diventa 5 e c diventa 2
 - <<,  >>, >>>
 utili per i numeri binari: ogni shift a sinistra moltiplica per 2 (aggiungo uno 0 a destra in un numero binario)
 
+# conversione di tipo
+### conversione esplicita:
+utilizza un metodo che prende in ingresso  un argomento di un tipo e ne restituisce uno di un altro.
+```java
+Integer.parseInt()
+Double.parseDouble()
+Math.round()
+Math.floor()
+Math.ceil()
+```
+### cast esplicito:
+anteponendo il tipo desiderato tra parentesi.
+```java
+(int)2.71828 //produce 2
+```
+da double a int, viene eliminata la parte decimale (prende la *parte intera*).
+### cast implicito:
+
+- Se il tipo di partenza è meno preciso, Java converte automaticamente il valore al tipo più preciso.
+```java
+double d = 2;
+```
+int è meno preciso di double, quindi non bisogna specificare (double)2.
+
+può avvenire:
+
+**in fase di assegnazione**:
+- byte, short e char possono diventare int.
+- int può diventare long.
+- float può diventare double.
+ 
+**in fase di calcolo di un'espressione**:
+- se un operando è double, tutta l'espressione diventa double.
+- sennò, se c'è un float, viene promossa a float.
+> [!warning]- precedenza
+> in un'espressione, il casting ha precedenza più elevata, quindi prima gli operandi vengono convertiti e poi vengono svolte le operazioni.
+>>[!example] es.
+>>`(int)42 * 0.4` dà come risultato un double 16.8
 
