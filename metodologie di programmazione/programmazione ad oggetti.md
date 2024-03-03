@@ -1,3 +1,6 @@
+---
+sticker: lucide//codesandbox
+---
 un oggetto ha:
 - **stato**
 - operazioni

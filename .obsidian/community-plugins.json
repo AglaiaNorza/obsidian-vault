@@ -4,7 +4,7 @@
   "highlightr-plugin",
   "editing-toolbar",
   "url-into-selection",
-  "obsidian-icon-folder",
-  "obsidian-folder-index",
-  "table-editor-obsidian"
+  "table-editor-obsidian",
+  "obsidian-plugin-toc",
+  "make-md"
 ]

@@ -1,3 +1,7 @@
+---
+color: ""
+sticker: lucide//info
+---
 - A metà corso rivela il progetto.
 - Le registrazioni arrivano 2/3 lezioni dopo.
 - Per contattarlo, classroom (se privata, stefano.faralli@uniroma1.it con soggetto [MDP-23-24] )
