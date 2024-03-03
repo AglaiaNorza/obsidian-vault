@@ -151,3 +151,4 @@ può avvenire:
 >>[!example] es.
 >>`(int)42 * 0.4` dà come risultato un double 16.8
 
+
