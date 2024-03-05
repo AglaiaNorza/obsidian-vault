@@ -56,7 +56,6 @@ o variabili d'istanza
 - dopo public - valore restituito - `void` se nessun valore
 - tra le parentesi - parametri in ingresso
 
-
 >[!example]- esempi
 >```java
 >public void reset(int newValue)
@@ -71,14 +70,21 @@ o variabili d'istanza
 >}
 >```
 
+###### chiamate di metodi
+- il numero e i tipi di parametri(argomenti) passati a un metodo deve coincidere con i parametri formali del metodo
+
+
 #### costruttori
 metodi per la **creazione di oggetti** di una classe.
-- stesso nome della classe.
+- **stesso nome** della classe.
 - inizializzano i campi dell'oggetto.
 - prendono zero, uno o più parametri.
 - **non hanno valori di uscita** ma non specificano void
- 
-Una classe può avere più costruttori con diversi tipi o diverso numero di parametri.
+- non è obbligatorio specificare un costruttore - se non viene specificato, il compilatore ne crea uno di default (pubblico e vuoto - non fa nulla)
+
+>[!danger] overloading
+>Java permette di sovraccaricare le segnature dei metodi.
+> - Si possono specificare **metodi con lo stesso nome**, che abbiano numero e/o tipo di parametri diversi, e Java saprà quali chiamare.
 
 >[!example] esempio:
 >```java
@@ -95,7 +101,7 @@ Una classe può avere più costruttori con diversi tipi o diverso numero di para
 >```
 >il primo costruttore si chiama senza parametri d'ingresso, il secondo passandogli un intero (Java sa quale stai chiamando in base a se passi un valore o no)
 
-##### creazione dell'oggetto
+##### creazione di un oggetto
 un oggetto viene creato con l'operatore `new`.
 ```java
 static public void main(String[] args)
@@ -109,3 +115,7 @@ static public void main(String[] args)
 ```
 il main è statico - non serve creare l'istanza della classe che lo riconosce.
 - Main e Counter possono ma non devono essere nella stessa classe (/file), basta che main sia in una classe che vede Counter.
+
+
+
+

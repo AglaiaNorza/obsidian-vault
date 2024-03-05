@@ -1,3 +1,6 @@
+---
+color: ""
+---
 tipi di dati di base built-in.
 
 ![[Screen Shot 2024-02-28 at 08.58.12.png]]
