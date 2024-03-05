@@ -15,10 +15,14 @@ Ne definisce la struttura in termini di:
 è un'**istanza** di una classe.
 Un programma può creare e usare uno o più oggetti della stessa classe.
 
-![[Screen Shot 2024-03-05 at 09.12.49.png]]
-![[Screen Shot 2024-03-05 at 09.17.22.png]]
+![[classe vs oggetto.png]]
 
-![[Screen Shot 2024-03-05 at 09.17.09.png]]
+| **classe**                                                             |     | **oggetto**                                                                        |
+| ---------------------------------------------------------------------- | --- | ---------------------------------------------------------------------------------- |
+| definita nel *codice sorgente*                                         |     | si trova all'interno di un programma<br>*in esecuzione*                            |
+| scritta da chi programma                                               |     | creato nel runtime di un programma                                                 |
+| specifica la *struttura* (numero e tipi)<br>dei campi dei suoi oggetti |     | contiene *specifici valori* dei campi, che<br>possono variare durante l'esecuzione |
+| specifica il comportamento dei suoi<br>oggetti tramite i metodi        |     | si comporta nel modo descritto nella <br>classe quando il metodo viene *chiamato*  |
 
 ****
 #### file sorgenti
