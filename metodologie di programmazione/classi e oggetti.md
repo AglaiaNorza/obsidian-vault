@@ -1,3 +1,6 @@
+---
+banner: attachments/Screen Shot 2024-03-05 at 09.23.55.png
+---
 possono:
 - modellare oggetti nel mondo reale
 - rappresentare oggetti grafici, entità software, concetti astratti, stati di un processo
@@ -115,6 +118,16 @@ static public void main(String[] args)
 ```
 il main è statico - non serve creare l'istanza della classe che lo riconosce.
 - Main e Counter possono ma non devono essere nella stessa classe (/file), basta che main sia in una classe che vede Counter.
+
+
+#### variabili locali vs campi
+
+| *campi*                                                                  |     | *variabili locali*                                                                           |
+| ------------------------------------------------------------------------ | --- | -------------------------------------------------------------------------------------------- |
+| variabili dell'**oggetto**                                               |     | variabili di un **metodo**                                                                   |
+| visibili almeno all'interno di tutti gli oggetti della <br>stessa classe |     | esistono da quando sono definite fino al termine dell'esecuzione<br>della chiamata al metodo |
+| esistono per tutta la vita di un oggetto                                 |     |                                                                                              |
+
 
 
 
