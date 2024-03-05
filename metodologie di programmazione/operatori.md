@@ -48,3 +48,8 @@ poi a diventa 5 e c diventa 2
 ##### shift:
 - `<<,  >>, >>>`
 utili per i numeri binari: ogni shift a sinistra moltiplica per 2 (aggiungo uno 0 a destra in un numero binario)
+
+
+##### precedenza operatori aritmetici
+![[Screen Shot 2024-02-28 at 09.39.14.png]]
+come in matematica.

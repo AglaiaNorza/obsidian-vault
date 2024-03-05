@@ -49,9 +49,7 @@ rappresentazioni a livello di codice sorgente del valore di un tipo di dato.
 ```java
 String[] a = {"a", "b", "c", "d"}
 ```
-#### precedenza operatori aritmetici
-![[Screen Shot 2024-02-28 at 09.39.14.png]]
-come in matematica.
+
 #### caratteri e stringhe
 I char seguono la **codifica unicode** (basata su interi a 16 bit), e sono racchiusi da apici (singoli) - 'a'.
 >[!info]- caratteri di escape
