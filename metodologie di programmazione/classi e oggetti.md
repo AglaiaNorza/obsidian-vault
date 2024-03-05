@@ -28,7 +28,7 @@ Un programma può creare e usare uno o più oggetti della stessa classe.
  
 >[!info] struttura del codice di una classe
 > 
-![[Screen Shot 2024-03-05 at 09.23.55.png]]
+![[anatomia classe.png]]
 
 - [[esempio - classe contatore]]
 

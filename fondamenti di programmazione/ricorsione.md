@@ -5,7 +5,7 @@ principio "first in first out"
 - enqueue() - come append
 - dequeue() - come pop(0)
 ##### stack
-![[Screen Shot 2023-11-28 at 17.45.54.png]]
+![[stack.png]]
 principio "last in first out"
 call_c è la prima ad "uscire", e il risultato viene passato a call_b
 

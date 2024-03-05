@@ -1,6 +1,6 @@
 formati da foglie e nodi.
 ###### alberi binari
-![[Screen Shot 2023-12-05 at 17.43.44.png | 500]]
+![[albero binario.png| 500]]
 si può creare una classe per definire i nodes (non serve definire tutto l'albero, basta un node con due figli)
 ```python
 class BinaryNode:
@@ -14,7 +14,7 @@ se non ha figli dx e sx sono none (di default)
 se ha figli riceve valori di tipo BinaryNode per dx e sx (i figli sono nodi/foglie)
 
 *livelli dell'albero*
-![[Screen Shot 2023-12-05 at 17.45.49.png |450]]
+![[albero e livelli.png|450]]
 per cercare a che livello ci si trova, bisogna definire nella ricorsione una variabile che viene modificata ad ogni chiamata ricorsiva
 
 <font color="#4bacc6">**trovare l'altezza ricorsivamente:**</font>
@@ -53,10 +53,10 @@ per ricorsione su alberi di filesystem:  [[ricorsione#ricorsione sugli alberi |r
 La board è uno <font color="#c0504d">stato</font> - una condizione del gioco.
 Una <font color="#4bacc6">mossa</font> ci porta in un altro stato.
 
-![[Screen Shot 2023-12-12 at 16.56.48.png |400]]
+![[chess board matrice.png|400]]
 
 possibili mosse/ricorsioni:
-![[Screen Shot 2023-12-12 at 16.58.21.png |400]]
+![[mosse tris.png|400]]
 fine della ricorsione: vittoria o pareggio.
 
 codice:

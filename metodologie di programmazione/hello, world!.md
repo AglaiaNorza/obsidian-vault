@@ -14,12 +14,12 @@ public class HelloWorld
 	}
 }
 ```
-![[Screen Shot 2024-02-28 at 10.54.17.png]]
+![[anatomia helloworld.png]]
 un programma deve quindi iniziare con una dichiarazione di una classe (il cui titolo sarà il nome del file), seguito da un metodo chiamato "public static void main" che riceve un array stringhe.
 
 > [!example]- processo compilazione
->![[Screen Shot 2024-02-28 at 11.13.41.png]]
+>![[under the hood java.png]]
 ##### argomenti in entrata
 Gli args possono essere passati come argomenti in entrata - Strings[] rappresenta l'array di stringhe fornite sulla command line dopo il nome del file.
 
-![[Screen Shot 2024-02-28 at 11.47.51.png]]
+![[classe botsemplicesemplice.png]]
