@@ -1,6 +1,3 @@
----
-banner: attachments/Screen Shot 2024-03-05 at 09.23.55.png
----
 possono:
 - modellare oggetti nel mondo reale
 - rappresentare oggetti grafici, entità software, concetti astratti, stati di un processo

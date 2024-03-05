@@ -6,5 +6,6 @@
   "url-into-selection",
   "table-editor-obsidian",
   "obsidian-plugin-toc",
-  "make-md"
+  "make-md",
+  "codeblock-customizer"
 ]
