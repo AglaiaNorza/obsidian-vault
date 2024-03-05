@@ -37,17 +37,13 @@
   "deleteFileOption": "trash",
   "expandedSpaces": [
     "//Spaces",
-    "//fondamenti di programmazione",
-    "//fondamenti di programmazione",
-    "//fondamenti di programmazione",
-    "//metodologie di programmazione",
-    "//fondamenti di programmazione",
-    "//metodologie di programmazione",
-    "//fondamenti di programmazione",
     "//metodologie di programmazione",
     "//metodologie di programmazione",
     "//metodologie di programmazione",
-    "//metodologie di programmazione"
+    "//metodologie di programmazione",
+    "//metodologie di programmazione",
+    "//metodologie di programmazione",
+    "//Spaces"
   ],
   "expandFolderOnClick": true,
   "menuTriggerChar": "/",
@@ -57,7 +53,8 @@
   "folderFrameFile": "frames",
   "spacesFolder": "Spaces",
   "hiddenFiles": [
-    "desktop.ini"
+    "desktop.ini",
+    "Spaces"
   ],
   "hiddenExtensions": [
     ".mdb"
