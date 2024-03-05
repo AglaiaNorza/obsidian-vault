@@ -1,3 +1,6 @@
+---
+sticker: lucide//globe-2
+---
 un programma java si salva in un file unicode, con il titolo dell'identificatore della dichiarazione della classe.
 
 HelloWorld.java

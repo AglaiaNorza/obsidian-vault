@@ -1,3 +1,6 @@
+---
+sticker: lucide//lock
+---
 - usare le parole chiave *public* e *private* permette di nascondere informazioni all'utente.
  
 **Incapsulamento** - processo che nasconde i dettagli realizzativi, rendendo privati i membri di una classe.

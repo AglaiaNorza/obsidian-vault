@@ -1,3 +1,6 @@
+---
+sticker: lucide//file-json-2
+---
 possono:
 - modellare oggetti nel mondo reale
 - rappresentare oggetti grafici, entità software, concetti astratti, stati di un processo
@@ -17,6 +20,7 @@ Un programma può creare e usare uno o più oggetti della stessa classe.
 
 ![[Screen Shot 2024-03-05 at 09.17.09.png]]
 
+****
 #### file sorgenti
 - ogni classe è memorizzata in un **file separato**
 - il **nome** del file deve essere lo **stesso della classe**, con estensione .java, iniziare con una maiuscola e seguire la CamelCase
@@ -28,6 +32,7 @@ Un programma può creare e usare uno o più oggetti della stessa classe.
 
 - [[esempio - classe contatore]]
 
+*****
 #### campi
 o variabili d'istanza
 - costituisce la memoria privata di un oggetto
@@ -116,7 +121,7 @@ static public void main(String[] args)
 il main è statico - non serve creare l'istanza della classe che lo riconosce.
 - Main e Counter possono ma non devono essere nella stessa classe (/file), basta che main sia in una classe che vede Counter.
 
-
+****
 #### variabili locali vs campi
 
 | *campi*                                                                  |     | *variabili locali*                                                                           |

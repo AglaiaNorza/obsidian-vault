@@ -1,3 +1,6 @@
+---
+sticker: lucide//arrow-left-right
+---
 ### conversione esplicita:
 utilizza un metodo che prende in ingresso  un argomento di un tipo e ne restituisce uno di un altro.
 ```java
