@@ -8,11 +8,11 @@ double min(double a, double b)
 ```
 ###### operazioni varie:
 ```java
-double abs(double a)
-double exp(double a)
-double log(double a)
-double pow(double a, double b)
-double sqrt(double a)
+double math.abs(double a)
+double math.exp(double a)
+double math.log(double a)
+double math.pow(double a, double b)
+double math.sqrt(double a)
 ```
 ###### angoli e simili:
 ```java
