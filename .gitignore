@@ -2,4 +2,13 @@
 .obsidian/appearance.json
 .makemd/fileCache.mdc
 .makemd/superstate.mdc
+<<<<<<< HEAD
 .obsidian/plugins/make.md/Spaces.mdb
+=======
+.makemd/superstate.mdc
+.makemd/fileCache.mdc
+.obsidian/plugins/make-md/Spaces.mdb
+.makemd/fileCache.mdc
+.makemd/fileCache.mdc
+.makemd/fileCache.mdc
+>>>>>>> origin/main
