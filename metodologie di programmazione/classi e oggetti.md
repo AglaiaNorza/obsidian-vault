@@ -65,6 +65,18 @@ o variabili d'istanza
 - dopo public - valore restituito - `void` se nessun valore
 - tra le parentesi - parametri in ingresso
 
+>[!tip] this
+>`this.var` risolve conflitti di omonomia se in un metodo (es. costruttore) si passano argomenti con lo stesso nome di variabili
+>> [!example] esempio
+>>```java
+>>public Persona(String nome, String cognome){
+>>	this.nome = nome;
+>>	this.cognome = cognome;
+>>} 
+>>//qui, this.nome si riferisce al campo "nome" della classe Persona 
+>>//(che sarà tra i campi)
+>>```
+
 >[!example]- esempi
 >```java
 >public void reset(int newValue)
