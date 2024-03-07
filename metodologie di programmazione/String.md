@@ -71,3 +71,4 @@ il metodo `split` prende in input un'espressione regolare s e restituisce un arr
 String[] parole = "uno due tre".split(" ");
 //parole contiene {"uno", "due", "tre"}
 ```
+

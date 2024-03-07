@@ -26,6 +26,7 @@ Un programma può creare e usare uno o più oggetti della stessa classe.
 | specifica la *struttura* (numero e tipi)<br>dei campi dei suoi oggetti |     | contiene *specifici valori* dei campi, che<br>possono variare durante l'esecuzione |
 | specifica il comportamento dei suoi<br>oggetti tramite i metodi        |     | si comporta nel modo descritto nella <br>classe quando il metodo viene *chiamato*  |
 
+
 ****
 #### file sorgenti
 - ogni classe è memorizzata in un **file separato**
@@ -51,6 +52,18 @@ o variabili d'istanza
 
 - *static* - se specificato, indica che il campo è condiviso da tutti
 - *final* - se specificato, indica che il campo è una costante (non è modificabile)
+
+##### inizializzazioni implicite 
+al momento della creazione di un oggetto, i campi di una classe sono inizializzati automaticamente:
+
+| campo            |     | inizializzato a |
+| ---------------- | --- | --------------- |
+| int, long        |     | 0, 0L           |
+| float, double    |     | 0.0f, 0.0       |
+| char             |     | '\0'            |
+| boolean          |     | False           |
+| classe qualsiasi |     | null            |
+questo succede per i campi di una classe, ma non per le variabili locali dei metodi
 
 #### metodi
 - tipicamente *pubblici* (visibili a tutti)
