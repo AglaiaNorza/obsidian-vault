@@ -1,5 +1,7 @@
 ---
 sticker: lucide//file-json-2
+tags:
+  - classi
 ---
 possono:
 - modellare oggetti nel mondo reale

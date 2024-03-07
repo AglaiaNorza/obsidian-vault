@@ -1,5 +1,7 @@
 ---
 color: ""
+tags:
+  - tipi
 ---
 tipi di dati di base built-in.
 
