@@ -1,3 +1,6 @@
+---
+sticker: lucide//database
+---
 oggetti e tipi primitivi hanno una diversa rappresentazione in memoria:
 
 | tipi primitivi                                                   | oggetti                                                                       |
