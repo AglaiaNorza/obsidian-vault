@@ -4,6 +4,12 @@ tags:
 sticker: lucide//text-cursor
 ---
 ## metodi:
+
+##### length:
+```java
+var.length()
+```
+##### upper/lower case:
 ```java
 var.toLowercase()
 var.toUppercase()
