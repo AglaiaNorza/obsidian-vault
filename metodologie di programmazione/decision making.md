@@ -49,3 +49,25 @@ switch(<espressione intera o Stringa>)
 	default : <istruzioni>; break;
 }
 ```
+
+sintassi alternativa: non serve il break:
+```java
+String s = switch(c){
+	case "k" -> "kappa";
+	case "h" -> "acca";
+	case "l" -> "elle";
+	case "c" -> "ci";
+	default -> "non so leggerlo";
+}
+```
+
+altra alternativa (senza break ma per usarlo per definire un valore) - lo yield ci permette di non usare break.
+```java
+String s = switch(c){
+	case "k" : yield "kappa";
+	case "h" : yield "acca";
+	case "l" : yield "elle";
+	case "c" : yield "ci";
+	default : yield "non so leggerlo";
+}
+```
