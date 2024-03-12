@@ -6,13 +6,5 @@
       ],
       "key": "C"
     }
-  ],
-  "obsidian-git:open-git-view": [
-    {
-      "modifiers": [
-        "Ctrl"
-      ],
-      "key": "G"
-    }
   ]
 }
