@@ -1,3 +1,6 @@
+---
+sticker: lucide//keyboard
+---
 la lettura dell'input si effettua con la classe `java.util.Scanner`
 ```java
 public class ChatBotNonCosiInterattivo{
