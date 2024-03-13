@@ -11,3 +11,4 @@ permettono di rappresentare progetti.
 
 - definire la staticità: `<static>`
 - si può taggare anche il metodo costruttore con `<constructor>`
+- `-->` indica la dipendenza generica tra due classi (es. punto e segmento) - la freccia parte dalla classe che dipende e arriva a quella da cui dipende
