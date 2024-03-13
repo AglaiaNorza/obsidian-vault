@@ -20,4 +20,5 @@ sticker: lucide//package
 >//invece di java.util.Scanner input...
 >```
 
+- quando si importa un package locale, si può o importare ogni classe (`import l_2_9.Punto`) oppure usare l'asterisco per importare tutto (`import l_2_9.*`)
 
