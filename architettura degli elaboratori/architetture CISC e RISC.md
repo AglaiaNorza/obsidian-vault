@@ -1,7 +1,7 @@
 ---
 sticker: lucide//cog
 ---
- 
+
 |CISC|RISC|
 |---|---|
 |**Istruzioni di dimensioni variabile**  <br>- Per il fetch della successiva è necessaria la decodifica della precedente|**Istruzioni di dimensione fissa**  <br>- Fetch della successiva senza decodifica della precedente|
