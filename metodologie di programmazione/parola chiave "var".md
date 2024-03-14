@@ -1,3 +1,6 @@
+---
+sticker: lucide//x-octagon
+---
 (non usare)
 a partire da Java 10, è possibile dichiarare una variabile senza specificarne il tipo.
 ```java

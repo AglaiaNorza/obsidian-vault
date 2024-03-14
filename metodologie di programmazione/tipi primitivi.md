@@ -13,6 +13,7 @@ tipi di dati di base built-in.
 
 #### variabili
 Una variabile è creata tramite una **dichiarazione**, nella quale deve essere specificato il tipo:
+(in realtà non per forzissima - [[parola chiave "var"]])
 ```java
 int contatore;
 ```
