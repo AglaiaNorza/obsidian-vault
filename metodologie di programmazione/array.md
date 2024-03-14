@@ -31,8 +31,8 @@ a = new int[] {5, 2, 10, -4, 5, 0, 8}
 - in questo caso, **non si può specificare la lunghezza**
 
 ##### accesso
-- si accede a un elemento dell’array specificando il nome dell’array seguito dalla posizione (indice) dell’elemento tra parentesi quadre
-- l'indice è **sempre positivo**
+- si accede a un elemento dell’array specificando il nome dell’array seguito dalla posizione (indice) dell’elemento tra parentesi quadre.
+- l'indice è **sempre positivo**.
 ```java
 System.out.println(a[5]);
 ```
