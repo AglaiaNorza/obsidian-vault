@@ -1,5 +1,5 @@
 ---
-sticker: emoji//2754
+sticker: lucide//file-question
 ---
 #### istruzione if:
 la sintassi è:

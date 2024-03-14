@@ -9,10 +9,8 @@ le direttive principali sono:
 - **`.asciiz`** -> stringa terminata da \0
 - **`.byte`** -> sequenza di byte
 - **`.double`** -> sequenza di double
-- `**.float**` -> sequenza di float
+- **`.float`** -> sequenza di float
 - **`.half`** -> sequenza di half words
 - **`.word`** -> sequenza di words
-<br/>
-**codici mnemonici delle istruzioni** (add, sub, beq)
-**codifica mnemonica dei registri** ($a0, $sp, $s0...)
-**etichette**(per calcolare gli indirizzi relativi)
+
+per le etichette vere e proprie, vedi [[etichette]]
