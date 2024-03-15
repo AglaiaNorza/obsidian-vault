@@ -1,6 +1,6 @@
 ---
 tags: 
-sticker: lucide//file-question
+sticker: lucide//corner-up-right
 ---
 #### if/else
 per eseguire un semplice if/else del tipo 
