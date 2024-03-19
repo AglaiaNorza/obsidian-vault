@@ -3,7 +3,7 @@
 vantaggi dei metodi:
 - i metodi *modularizzano* un programma dividendolo in unità autocontenute
 - le istruzioni di un metodo non sono visibili da un altro metodo - ma alcuni metodi non utilizzano lo stato dell'oggetto e si applicano all'intera classe -> **metodi statici**
-
+***
 ##### metodi statici
 un metodo statico si definisce specificando `static` nell'intestazione del metodo
 
@@ -29,6 +29,7 @@ un metodo statico si definisce specificando `static` nell'intestazione del metod
 >
 >```
 
+***
 ##### metodi get e set
 - l'accesso ad alcuni campi è garantito dai metodi `get()` e `set()`
 - garantiscono la *consistenza dei dati*, senza dare l'accesso pubblico al campo
