@@ -10,7 +10,11 @@ vantaggi [[fonte: ppt università di milano](https://pedersini.di.unimi.it/AER/A
 alcuni esempi di comandi "fittizi" sono:
 - il `move` - è in realtà un'addizione senza segno tra il registro 16 e il registro 0 (che contiene sempre 0)
  
-`addu $8, $0, $16` == `move $t0, $s0`
-
+	`addu $t0, $zero, $s0` == `move $t0, $s0`
+	o anche
+	`add $t0, $zero, $s0`
+	o anche
+	`or $t0, $zero, $s0`
+ 
 - il `ble` (branch on less than or equal) - è in realtà un `slt` (set if less than), scritto sul registro `$1` (`$at`). viene poi usato `beq` con tutti zero, per decidere se saltare all'indirizzo di memoria del check che si troverebbe nel `ble`![[ble.png]]
 
