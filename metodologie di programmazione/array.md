@@ -43,3 +43,22 @@ System.out.println(a[5]);
 >a.length //sì
 >a.length() //no
 >```
+
+##### modificare le dimensioni di un array
+- un array ha dimensioni prefissate che non possono essere modificate, ma è possibile creare un **nuovo array con nuove dimensioni** da quello iniziale:
+```java
+array = Arrays.copyOf(array, 5)
+```
+è un metodo statico della classe `java.util.Arrays`
+- se il numero specificato è minore della lunghezza dell'array originale, la copia avrà solo i primi n numeri
+- se invece si specifica un numero maggiore, vengono aggiunti elementi inizializzati ai loro valori di default (es. int a 0 ecc.)
+ 
+##### altri metodi utili
+- **formattazione a stringa** : `Arrays.toString(array)`
+	(restituisce "[elemento, elemento]")
+#### matrici
+- si possono creare **array a due dimensioni** specificando due coppie di parentesi quadre
+- si può accedere ai valori specificando le due coordinate/dimensioni dell'array
+```java
+String[][] matrix = new String[nRighe][nCol]
+```
