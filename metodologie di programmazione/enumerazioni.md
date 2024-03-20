@@ -12,6 +12,7 @@ un tipo enumerato viene dichiarato con la sintassi:
 public enum NomeEnumerazione{
 	COSTANTE1, COSTANTE2,..., COSTANTEN;
 }
+//in realtà il punto e virgola è opzionale
 ```
 
 >[!example]- esempio
