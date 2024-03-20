@@ -25,6 +25,9 @@ Una sottoclasse:
 - può **ridefinire i metodi che eredita** ma NON i campi
 
 In realtà, tutte le classi di Java estendono una classe object (che contiene cose come `equals()`, `toString()` ecc.)
+
+##### chiamata al super-costruttore
+quando si crea una classe derivata, il suo costruttore potrà (dovrà?) chiamare il costruttore della classe superiore.
 ***
 ##### esempio: classe forma
 per esempio, si potrebbe progettare una classe Forma, che rappresenta una forma generica, e poi specializzarla estendendo la classe
