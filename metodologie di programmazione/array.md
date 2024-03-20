@@ -10,6 +10,8 @@
 > int[] numeri = new int[numeroDiCifre];
 >```
 
+>[!info]- metodi con parametri variabili
+>In Java, si possono dichiarare [[metodi#numero variabile di parametri | metodi che ricevono un numero arbitrario di parametri]] del tipo specificato - di fatto, si fa riferimento a un array.
 ##### creazione array senza valori
 ```java
 //dichiarazione
@@ -56,6 +58,7 @@ array = Arrays.copyOf(array, 5)
 ##### altri metodi utili
 - **formattazione a stringa** : `Arrays.toString(array)`
 	(restituisce "[elemento, elemento]")
+- **riempire un Array di cose uguali**: `Arrays.fill(name, val)`
 #### matrici
 - si possono creare **array a due dimensioni** specificando due coppie di parentesi quadre
 - si può accedere ai valori specificando le due coordinate/dimensioni dell'array

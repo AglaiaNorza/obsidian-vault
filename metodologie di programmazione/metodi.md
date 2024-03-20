@@ -34,3 +34,13 @@ un metodo statico si definisce specificando `static` nell'intestazione del metod
 - l'accesso ad alcuni campi è garantito dai metodi `get()` e `set()`
 - garantiscono la *consistenza dei dati*, senza dare l'accesso pubblico al campo
 - fanno da filtro tra i dettagli implementativi e ciò che vede l'utente esterno
+---
+#### numero variabile di parametri 
+Si possono dichiarare metodi con un numero variabile di parametri - sintassi `type...` 
+- permette quindi di chiamare un metodo con un numero arbitrario di parametri del tipo specificato
+- di fatto è un riferimento ad un array
+- va specificato come **ultimo parametro**
+ 
+```java
+public double sum(double... values){}
+```

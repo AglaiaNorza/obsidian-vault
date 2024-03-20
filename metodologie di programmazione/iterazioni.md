@@ -20,6 +20,8 @@ do{
 while(<condizione booleana>)
 ```
 
+utile per cose legate allo user input (es. prima chiede l'input, poi lo controlla e se non va bene lo richiede)
+
 ##### for:
 sintassi:
 - inizializzazione di una variabile

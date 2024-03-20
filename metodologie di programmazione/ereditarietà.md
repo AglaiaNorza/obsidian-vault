@@ -23,6 +23,8 @@ Una sottoclasse:
 - eredita **campi e metodi d'istanza** secondo il livello di accesso specificato
 - può aggiungere **nuovi metodi e campi**
 - può **ridefinire i metodi che eredita** ma NON i campi
+
+In realtà, tutte le classi di Java estendono una classe object (che contiene cose come `equals()`, `toString()` ecc.)
 ***
 ##### esempio: classe forma
 per esempio, si potrebbe progettare una classe Forma, che rappresenta una forma generica, e poi specializzarla estendendo la classe
