@@ -82,9 +82,7 @@ SemeCarta seme = null;
 switch(seme){
 
 	case CUORI: System.out.println("comeE"); break;
-
-
-
+	
 }
 ```
 

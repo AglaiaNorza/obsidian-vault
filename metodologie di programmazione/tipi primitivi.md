@@ -2,6 +2,7 @@
 color: ""
 tags:
   - tipi
+sticker: lucide//carrot
 ---
 tipi di dati di base built-in.
 
@@ -51,11 +52,6 @@ rappresentazioni a livello di codice sorgente del valore di un tipo di dato.
 - Le costanti float hanno il suffisso f o F.
 - Il prefisso *0b* indica una rappresentazione binaria (es. 0b101 è 5)
 - Si può usare un trattino basso per separare le cifre (10_000 == 10000)
-#### array:
-```java
-String[] a = {"a", "b", "c", "d"}
-```
-
 #### caratteri e stringhe
 I char seguono la **codifica unicode** (basata su interi a 16 bit), e sono racchiusi da apici (singoli) - 'a'.
 >[!info]- caratteri di escape
@@ -65,3 +61,4 @@ I char seguono la **codifica unicode** (basata su interi a 16 bit), e sono racch
 >- `' \' '` - apice
 >- `'\"'` - virgolette
 
+per le stringhe, vedi [[String]]

@@ -71,7 +71,7 @@ le stringhe (e tutti gli altri oggetti) vanno sempre confrontate con il metodo `
 - l'operatore == confronta il riferimento (memoria) quindi dà `True` *solo se si confrontano gli stessi oggetti*.
 - l'operatore `equals` **confronta** la stringa **carattere per carattere** e restituisce `True` se le stringhe contengono la stessa sequenza di caratteri
 
-##### spezzare:
+##### split:
 il metodo `split` prende in input un'espressione regolare s e restituisce un array di sottostringhe separate da s.
 ```java
 String[] parole = "uno due tre".split(" ");

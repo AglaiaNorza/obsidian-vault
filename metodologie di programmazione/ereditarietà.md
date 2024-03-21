@@ -70,7 +70,10 @@ public class Paperoga extends PersonaggiDisney{
 ```
 
 #### visibilità
-- visibilità **protetta** - `protected` - rende visibile il campo o il metodo a tutte le sottoclassi, ma anche a tutte le classi del package.
+- **private** - visibile solo all'interno della classe
+- **public** - visibile a tutti
+- **default** (se non specificata) - visibile all'interno di tutte le classi del package
+- **protected**- visibile a tutte le sottoclassi (indipendentemente dal package), ma anche a tutte le classi del package.
 
 ### this e super
 
@@ -82,4 +85,18 @@ Ogni sottoclasse deve **esplicitamente definire un costruttore** se la superclas
 
 >[!example]- gerarchia di chiamate
 >![[chiamate.png]]
+
+### overriding e overloading
+- l'**overriding** consiste nel ridefinire (reimplementare) un metodo con la stessa intestazione presente in una superclasse - per overridare, il nuovo metodo deve avere lo **stesso nome**, gli **stessi parametri** e **tipi compatibili** (stesso tipo o una *sottoclasse*) di return.
+
+>[!tip] tip
+> - Non si può ridurre la visibilità del metodo (es. da public a private)
+
+---
+- l'**overloading** consiste nel creare un metodo con lo stesso nome, ma un'intestazione diversa - deve avere **diverso numero o tipo di parametri**
+ 
+>[!tip] tip
+>- Nell'overloading, i tipi di ritorno possono essere diversi - ma non si può cambiare SOLO il tipo di ritorno
+>-  Si può variare la visibilità in qualsiasi direzione
+
 

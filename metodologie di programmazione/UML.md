@@ -16,3 +16,6 @@ permettono di rappresentare progetti.
 ##### relazione di estensione
 per indicare il fatto che una classe è sottotipo di un'altra classe, si utilizza una freccia
 ![[estensione.png]]
+
+### is-a vs has-a
+c'è un'importante differenza tra le relazioni del tipo is 
