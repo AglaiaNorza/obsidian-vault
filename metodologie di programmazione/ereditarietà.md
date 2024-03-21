@@ -71,3 +71,15 @@ public class Paperoga extends PersonaggiDisney{
 
 #### visibilità
 - visibilità **protetta** - `protected` - rende visibile il campo o il metodo a tutte le sottoclassi, ma anche a tutte le classi del package.
+
+### this e super
+
+- La parola chiave `this`, usata come nome di metodo alla prima riga del costruttore, permette di richiamare un **altro costruttore della stessa classe**.
+
+- La parola chiave `super`, usata come nome di metodo alla prima riga del costruttore, permette di richiamare un **costruttore della superclasse**.
+
+Ogni sottoclasse deve **esplicitamente definire un costruttore** se la superclasse *non fornisce un costruttore senza argomenti* (cioè, se la superclasse ha un costruttore con argomenti, questi vanno "mandati" dalla sottoclasse con un costruttore).
+
+>[!example]- gerarchia di chiamate
+>![[chiamate.png]]
+
