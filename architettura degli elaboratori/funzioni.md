@@ -49,11 +49,52 @@ Viene realizzata con un **vettore** di cui si tiene l’indirizzo dell’*ultimo
 Lo stack si trova nella parte "alta" della memoria e cresce verso il basso.
 Supponiamo di voler salvare e ripristinare il registro `$ra`.
 
-** <font color="#b2a2c7">PUSH</font>**:
+###### push
 - si **decrementa** lo `$sp` della dimensione dell'elemento(in genere una word)
 - si **memorizza** l'elemento nella posizione 0 `$sp`
  
-** <font color="#b2a2c7">POP</font>**:
+###### pop
 - si legge l'elemento dalla posizione 0 `$sp`
 - si incrementa o
 
+
+
+##### in una funzione
+
+All'inizio della funzione:
+- **allocare** su stack abbastanza word da contenere i registri da preservare
+- **salvare** su stack i registri, ad offset multipli di 4 rispetto a `$sp`
+
+>[!tip] nota bene
+conviene allocare tutto lo spazio assieme per avere offset che restano costanti durante tutta l'esecuzione della funzione
+
+All'uscita della funzione:
+- **ripristinare** da stack i registri salvati agli stessi offset usati precedentemente
+- **disallocare** da stack lo stesso spazio allocato in precedenza
+- **tornare** alla funzione chiamante
+
+```
+addi $sp, $sp, -12 
+sw $ra, 8($sp)
+sw $a0, 4($sp)
+sw $a1, 0($sp)
+
+# corpo della funzione
+
+lw $a1, 0($sp)
+
+```
+- lo stack pointer parte da 1000 e scende, quindi faccio spazio per 3 word con -12
+
+##### stack frame / activation record
+La stack è usata anche per:
+- comunicare ulteriori argomenti (oltre `$a0..`) e ulteriori risultati (oltre `$v0, $v1`)
+- allocare variabili locali alla procedura.
+ 
+Lo **stack frame** o **activation record**:
+ 
+![[stack frame.png | 250]]
+- è allocato sullo stack *prima della chiamata* della funzione e rilasciato *subito dopo*
+- `$sp` - punta alla **fine** del record di attivazione (varia allocando dati dinamicamente)
+- `$fp` (frame pointer) - punta all'**inizio** del record di attivazione (resta fisso durante l'esecuzione della funzione)
+ 
