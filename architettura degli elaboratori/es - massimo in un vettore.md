@@ -1,3 +1,6 @@
+---
+sticker: lucide//align-end-horizontal
+---
  in C, il massimo di un vettore si trova così:
  
 ```C
@@ -41,7 +44,7 @@ j for
 endFor:
 ```
 
-il codice inizia con `.data`, la [[direttive assemblatore |direttiva]] usata per la definizione dei dati statici
+il codice inizia con `.data`, la [[direttive assemblatore (ed etichette)&nbsp;|direttiva]] usata per la definizione dei dati statici
 - `vettore:` è l'[[etichette |etichetta]] che rappresenta il vettore/array che useremo
 - `N` è la lunghezza del vettore
 
@@ -52,9 +55,15 @@ il codice inizia con `.data`, la [[direttive assemblatore |direttiva]] usata per
 
 `for:` indica l'inizio del for (a cui si potrà poi saltare)\
 - `bge $t2, $t1, endFor` è il controllo dell'indice - se il contenuto di `$t2` (l'indice) è maggiore del contenuto di `$t1`(N), si branch-a a `endFor`
-- 
+- `sll $t3, $t2, 2` - uso uno shift logico di 2 sull'indice e lo salvo in `$t3` per usarlo come "indice" del vettore (word = 4 byte)
+- `lw $t4, vettore($t3)` - load-o il valore all'indice corrente del vettore in `$t4`, per poterlo utilizzare
+ 
+check per il massimo (if):
+- `ble $t4, $t0, else` - se il valore del vettore è <= di quello che abbiamo già salvato come massimo temporaneo, si va all'`else`
+- `move $t0, $t4` - se non lo è, si copia il valore nel massimo temporaneo.
+
+`else`:
+- `addi $t2, $t2, 1` - incremento dell'indice e `j for` salto all'inizio del prossimo loop
 
 
-
-- `sll` - shift logico a sinistra di 2 per moltiplicare i per 4
 

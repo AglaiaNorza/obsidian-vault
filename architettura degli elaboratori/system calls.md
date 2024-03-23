@@ -1,16 +1,17 @@
-somma di una diagonale  
-
-### system calls
+---
+sticker: lucide//case-sensitive
+---
 ![[system calls.png | 350]]
+Set di servizi messi a disposizione dal Kernel del Sistema Operativo.
+Ogni sistema operativo gestisce le syscalls in maniera diversa, ma in generale si tende a seguire questa struttura:
 
-richieste al sistema operativo
+- **input**:
+	- registro `$v0` dentro il quale viene inserito il codice della syscall che si vuole richiedere
+	- registri `$a0, $a1, $a2, $f0`, dove vengono inseriti parametri aggiuntivi che verranno letti dalla syscall.
+ 
+- **output**:
+	- registri `$v0, $f0`, che contengono eventuali valori restituiti dalla syscall.
 
-input:
-- `$v0` - operazione richiesta
-- `&a0, $a2, $f0 `- eventuali parametri
-
-output:
-- `$v0, $f0` - eventuale risultato
 
 | syscall (`$v0`) | descrizione    | argomenti <br>(`$a0`...)                      | risultato <br>(`$v0`...) |
 | --------------- | -------------- | --------------------------------------------- | ------------------------ |
@@ -20,3 +21,14 @@ output:
 | 8               | leggi stringa  | `$a0` = buffer<br>address<br>`$a1` = n. chars |                          |
 | 10              | fine programma |                                               |                          |
 
+>[!example] esempio: hello world
+>```
+>.data
+>string: .asciiz "Hello, World!"
+>
+>.text
+>main:
+>la $a0, string
+>li $v0, 4
+>syscall
+>```

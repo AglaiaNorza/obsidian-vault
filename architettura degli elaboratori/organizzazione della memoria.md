@@ -20,5 +20,9 @@ Nel linguaggio MIPS, per leggere il contenuto di una word si usa la notazione `o
 ![[mips memory components.png | 350]]
 
 La memoria è divisa in:
-- **Stack** - operazioni legate alle funzioni(/procedure), salva le chiamate ricorsive e le variabili locali. Non ha dimensione fissa. Al suo interno opera il registro `$sp`, stack pointer.
-- **Heap o Dynamic Data** - contiene i dati dinamici  
+- **Stack** - operazioni legate alle funzioni(/procedure), salva le chiamate ricorsive e le variabili locali. Non ha dimensione fissa. Al suo interno opera il registro `$sp`, Stack Pointer.
+- **Heap o Dynamic Data** - contiene i dati dinamici immagazzinati durante l'esecuzione.
+- **Static Data** - contiene i dati statici definiti all'avvio del programma (etichette sotto `.data`). Il registro  `$gp`, Global Pointer, viene usato dall'assemblatore per gestire gli indicizzamenti all'interno di questa zona.
+- **Program Instructions** - contiene le istruzioni del programma (etichetta `.text`). Al suo interno opera il *Program Counter*, il registro che memorizza la posizione in memoria dell'istruzione successiva da eseguire.
+- **Kernel-reserved memory** - spazio di memoria inutilizzabile riservato al Kernel del sistema operativo.
+

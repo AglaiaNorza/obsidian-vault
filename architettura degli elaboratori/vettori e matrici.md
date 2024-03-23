@@ -1,61 +1,9 @@
-pseudoistruzioni:
-- il move in realtà è un comando fittizio - è in realtà un'addizione senza segno fra il registro 16 e quello 0 
-`addu $8, $0, $16` == `move $t0, $s0`
-
-anche il `ble` è fittizio: SLIDE
-
-##### trovare il massimo di un vettore 
-```C
-int vettore[6] = {11, 35, 2, 17, 29, 95}
-int N = 6;
-
-int max = vettore[0];
-
-for(i = 1; i<N; i++){
-	if (vettore[i]>max):
-	max = vettore[i];
-}
-```
-
-assembly:
-```
-.data
-
-vettore: .word 11, 35, 2, 17, 29, 95
-N: .word 6
-
-.text
-
-lw $t0, vettore($zero)   #max -> t0 (offset 0)
-lw $t1, N    #n -> t1
-li $t2, 1    #i = 1
-
-for: 
-bge $t2, $t1, endFor
-
-sll $t3, $t2, 2
-lw $t4, vettore($t3)
-
-ble $t4, $t0, else
-move $t0, $t4 #copiamo il valore in t0
-
-else:
-addi $t2, $t2, 1
-j for
-
-endFor:
-```
-
-- `sll` - shift logico a sinistra di 2 per moltiplicare i per 4
-
-***
-
-LOAD SIGNED/UNSIGNED CODICE CLASSROOM
-
-***
-#### vettori e matrici
+---
+sticker: lucide//grip
+---
 in assembly non esistono i tipi.
 
+### vettori
 **vettore**
 - sequenza di n elementi di dimensioni uguali
 - consecutivi in memoria
@@ -73,15 +21,11 @@ la prima word si trova a  `0x00001004`, la seconda a  `0x00001008` (offset di 4 
 prima word a `0x0001000`, seconda a `0x0001002` (metà di 4 byte)
 
 ##### vettori di byte in memoria
-- vettore di *byte*(valori da 0 a 255)
+- vettore di *byte* (valori da 0 a 255)
 `label1: .byte 1,2,3,4`
  <br/>
 - vettore di *caratteri* (byte) seguiti da \0 (carattere codificato con zero, 0x0)
 `label2: .asciiz "sopra la panca"` - ogni lettera occupa un byte
-
-unrelated ascii numbers
-(da stringa di numeri a intero, tolgo 48)
-
 ###### vettori di word
 numeri a 32 bit in CA2 codificati in 4 byte
 
@@ -98,16 +42,6 @@ L'ordine delle word è lo stesso, ma l'insieme dei singoli byte è specchiato.
  
 ![[little e big endian.png]]
 
-assegnare l'indirizzo del vettore:
-
-```
-la $t1, vector 
-#va a prendere questo vettore sotto
-
-.data
-vector .word ...
-```
-
 ##### cicli
 due stili di scansione di un vettore:
 
@@ -118,6 +52,21 @@ due stili di scansione di un vettore:
 | comoda se l'*indice serve* <br>per controlli o altro                         | *convertire* ogni volta <br>l'indice nel corrispondente <br>offset in byte |
 | l'incremento dell'indice *non<br>dipende dalla dimensione*<br>degli elementi |                                                                            |
 | comoda se il vettore è allocato<br>staticamente in `.data`                   |                                                                            |
+|                                                                              |                                                                            |
+
+> [!example]- codice
+> ```
+> .data
+> vector: 10, 123, 33
+>  
+> .text
+> main:
+> 	la $s0, vector # Carico in $s0 l'indirizzo del vettore
+> 	li $t0, 2      # Carico in $t0 il valore 2, indice dell'elemento
+> 	sll $t1, $t0, 2  # Carico in $t1 il valore $t0 * 4 (shifto di 2)
+> 	add $s0, $s0, $t1 # Sommo $s0 e $t1 (sposto il puntatore)
+> ```
+
 2) **scansione per puntatore**
 
 | pro                                               | contro                                                                     |
@@ -125,15 +74,29 @@ due stili di scansione di un vettore:
 | si lavora direttamente su<br>indirizzi di memoria | *non si ha l'indice*<br>dell'elemento                                      |
 | *meno calcoli* nel ciclo                          | l'incremento del puntatore<br>*dipende dalla dimensione degli<br>elementi* |
 |                                                   | bisogna calcolare l'indirizzo<br>successivo all'ultimo elemento            |
+>[!example]- codice
+>```
+>.data
+>vector: 10, 123, 33 
+>
+>.text
+>main:
+>li $t0, 2          # Carico 2 in $t0
+>sll $t1, $t0, 2         # Moltiplico per 4 e carico in $t1
+>lw $s0, vector($t1)       # Leggo l'indirzzo vettore+$t1
+>```
 
-
-#### matrici
+### matrici
 una matrice MxN è una successione di M vettori, ciascuno di N elementi.
 (la struttura bidimensionale è mentale, in realtà è solo una lunga serie di bit)
-- numero di elementi totali = M x N
-- dimensione totale in byte = M x N x dimensione elemento
+- numero di elementi totali = `M x N
+- dimensione totale in byte = `M x N x dimensione elemento`
 
 Si definisce staticamente come un vettore contenente M x N elementi uguali
 `Matrice: .word 0:91` - spazio per 7 x 13
 
-matrice 3d [ slide ]
+trovare la posizione di un elemento:
+![[posizione in matrice.png]]
+
+##### matrici 3D
+![[matrici3d.png]]
