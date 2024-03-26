@@ -56,3 +56,25 @@ utili per i numeri binari: ogni shift a sinistra moltiplica per 2 (aggiungo uno 
 ##### precedenza operatori aritmetici
 ![[operatori.png]]
 come in matematica.
+
+#### l'operatore instanceof
+L'operatore instanceof, applicato a un oggetto e a un nome di classe, restituisce `True` se l'oggetto è un'istanza di quella classe.
+```java
+i1 istanceof Impiegato;
+```
+
+#### metodi della classe Object
+
+| metodo                               | descrizione                                                                          |
+| ------------------------------------ | ------------------------------------------------------------------------------------ |
+| `Object clone()`                     | restituisce una  copia dell'oggetto                                                  |
+| `boolean equals(Object o)`           | confronta l'oggetto con quello in input                                              |
+| `Class<? extends Object> getClass()` | restituisce un oggetto di tipo Class che contiene informazioni sul tipo dell'oggetto |
+| `int hashCode()`                     | restituisce un intero associato all'oggetto                                          |
+| `String toString()`                  | restituisce una rappresentazione del tipo String dell'oggetto                        |
+
+il metodo getClass() su un'istruzione del tipo:
+```java
+Animale a = new Gatto()
+```
+restituisce Gatto, e non Animale.
