@@ -3,7 +3,7 @@
 
 Tuttavia, la classe Object non conosce il contenuto delle sottoclassi, quindi è necessario sovrascrivere il metodo.
 ```java
-public class Punto{
+public class Punto{ 
 	private int x, y, z;
 
 	public boolean equals(Object o){
