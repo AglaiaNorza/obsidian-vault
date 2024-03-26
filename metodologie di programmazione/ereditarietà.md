@@ -77,6 +77,8 @@ public class Paperoga extends PersonaggiDisney{
 
 ### this e super
 
+##### nei costruttori
+
 - La parola chiave `this`, usata come nome di metodo alla prima riga del costruttore, permette di richiamare un **altro costruttore della stessa classe**.
 
 - La parola chiave `super`, usata come nome di metodo alla prima riga del costruttore, permette di richiamare un **costruttore della superclasse**.
@@ -86,11 +88,22 @@ Ogni sottoclasse deve **esplicitamente definire un costruttore** se la superclas
 >[!example]- gerarchia di chiamate
 >![[chiamate.png]]
 
+##### chiamare un metodo di una superclasse
+La parola chiave `super` si usa anche per chiamare un metodo di una superclasse.
+Se ho sovrascritto un metodo e voglio usare quello "originale", uso `super.metodo()`
 ### overriding e overloading
 - l'**overriding** consiste nel ridefinire (reimplementare) un metodo con la stessa intestazione presente in una superclasse - per overridare, il nuovo metodo deve avere lo **stesso nome**, gli **stessi parametri** e **tipi compatibili** (stesso tipo o una *sottoclasse*) di return.
 
 >[!tip] tip
 > - Non si può ridurre la visibilità del metodo (es. da public a private)
+
+[[#chiamare un metodo di una superclasse | chiamare un metodo "originale" che è stato overridato ]]
+
+- quando si fa overriding, si può aggiungere il tag `@Override` prima del metodo per dare un'indicazione al compilatore (ma non è obbligatorio)
+```java
+  @Override
+  public String toString()
+```
 
 ---
 - l'**overloading** consiste nel creare un metodo con lo stesso nome, ma un'intestazione diversa - deve avere **diverso numero o tipo di parametri**
