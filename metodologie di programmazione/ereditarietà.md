@@ -100,6 +100,7 @@ Se ho sovrascritto un metodo e voglio usare quello "originale", uso `super.metod
 [[#chiamare un metodo di una superclasse | chiamare un metodo "originale" che è stato overridato ]]
 
 - quando si fa overriding, si può aggiungere il tag `@Override` prima del metodo per dare un'indicazione al compilatore (ma non è obbligatorio)
+
 ```java
   @Override
   public String toString()

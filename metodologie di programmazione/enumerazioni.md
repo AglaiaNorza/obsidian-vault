@@ -5,8 +5,12 @@ sticker: lucide//grip
 	- ogni identificatore corrisponde a una **costante**
 
 - le **costanti enumerative** sono implicitamente **static**
-- non è possibile creare un oggetto del tipo `enum`
- 
+- non è possibile creare un oggetto del tipo `enum` - quindi un'enumerazione ha tante istanze quante sono le costanti enumerative al suo interno
+--- 
+- le classi enumerative estendono la classe Enum, da cui ereditano i metodi `toString()` (restituisce il nome della costante) e `clone()` (restituisce l'oggetto enumerativo stesso senza farne copie, il che è impossibile)
+- Enum a sua volta estende Object, quindi `equals()` restituisce `true` solo se le costanti enumerative sono identiche
+
+--- 
 un tipo enumerato viene dichiarato con la sintassi:
 ```java
 public enum NomeEnumerazione{
@@ -27,6 +31,14 @@ Come tutte le classi, la dichiarazione di un'enumerazione può contenere altre c
 - costruttori
 - campi
 - metodi
+--- 
+#### costruzione istanze costanti
+Non si possono creare nuove istanze, ma possono essere costruite le istanze "costanti":
+- Si definisce un costruttore (NON pubblico, ma con *visibilità di default*)
+- Si costruisce ciascuna costante (un oggetto separato per ognuna)
+- Si possono definire altri metodi di accesso o modifica dei campi
+--- 
+
 
 ###### esempio - classe mese: 
 ```java
@@ -85,5 +97,4 @@ switch(seme){
 	
 }
 ```
-
 
