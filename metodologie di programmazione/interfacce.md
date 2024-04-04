@@ -33,3 +33,18 @@ Un'interfaccia è una classe che può contenere soltanto:
 Per realizzare un'interfaccia, è necessario che una classe la **implementi** tramite la parola chiave `implements`.
 - una classe che implementa un'interfaccia espone pubblicamente il comportamento descritto dall'interfaccia
 - è obbligatorio che ogni metodo abbia la *stessa intestazione* che presenta nell'interfaccia.
+
+buco
+
+---
+#### interfaccia java.util.Iterator
+- interfaccia che permette di **iterare su collezioni**.
+ 
+espone **3 metodi**:	
+
+| metodo              | descrizione                                                               |
+| ------------------- | ------------------------------------------------------------------------- |
+| `boolean hasNext()` | restituisce true se esiste ancora un successivo elemento nella collezione |
+| `E next()`          | restituise l'elemento successivo                                          |
+| `void remove`       | rimuove l'elemento corrente                                               |
+
