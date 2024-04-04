@@ -2,7 +2,7 @@
 sticker: lucide//monitor
 ---
 parola chiave `interface`.
-Le interfacce permettono di modellare **comportamenti comuni** a classi (anche se non sono in relazione gerarchica).
+Le interfacce permettono di modellare **comportamenti comuni** a classi (anche se non sono in relazione gerarchica) - infatti, in Java non è consentito estendere più di una classe, ma una classe può implementare tutte le interfacce desiderate.
 
 - definiscono e standardizzano l'interazione fra oggetti tramite un insieme di operazioni limitato
 - specificano solo il **comportamento** che un oggetto deve presentare all'esterno (quello che l'oggetto può fare) - l'*implementazione* di tale operazioni *non viene definita*.
@@ -47,4 +47,9 @@ espone **3 metodi**:
 | `boolean hasNext()` | restituisce true se esiste ancora un successivo elemento nella collezione |
 | `E next()`          | restituise l'elemento successivo                                          |
 | `void remove`       | rimuove l'elemento corrente                                               |
+ 
+ --- 
+##### relazione interfacce-classi
+Quando una classe C implementa un'interfaccia I, tra queste due classi c'è una relazione di tipo **is-a** - C è di tipo I.
 
+- anche per le interfacce valgono le regole del polimorfismo
