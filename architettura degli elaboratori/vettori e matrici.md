@@ -89,7 +89,7 @@ due stili di scansione di un vettore:
 ### matrici
 una matrice MxN è una successione di M vettori, ciascuno di N elementi.
 (la struttura bidimensionale è mentale, in realtà è solo una lunga serie di bit)
-- numero di elementi totali = `M x N
+- numero di elementi totali = `M x N`
 - dimensione totale in byte = `M x N x dimensione elemento`
 
 Si definisce staticamente come un vettore contenente M x N elementi uguali
