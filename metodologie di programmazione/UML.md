@@ -18,4 +18,10 @@ per indicare il fatto che una classe è sottotipo di un'altra classe, si utilizz
 ![[estensione.png]]
 
 ### is-a vs has-a
-c'è un'importante differenza tra le relazioni del tipo is 
+c'è un'importante differenza tra le relazioni del tipo **is-a** e quelle di tipo **has-a**:
+1) **is-a** rappresenta l'**ereditarietà** (un oggetto di una sottoclasse può essere trattato come uno della superclasse)
+2) **has-a** rappresenta la **composizione** (un oggetto contiene come membri riferimenti ad altri oggetti)
+ 
+![[isahasa.png | 500]]
+
+![[comp-aggreg.png | 500]]
