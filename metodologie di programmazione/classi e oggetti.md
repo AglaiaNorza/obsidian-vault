@@ -166,3 +166,8 @@ il main è statico - non serve creare l'istanza della classe che lo riconosce.
 
 
 
+
+#### classi e metodi final
+Per quanto riguarda le classi e i metodi, la parola chiave `final` permette di impedire ad altri programmatori di:
+- creare sottoclassi - se si tratta di una classe final
+- sovrascrivere metodi - se si tratta di metodi final
