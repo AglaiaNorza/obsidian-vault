@@ -1,12 +1,12 @@
 ---
-sticker: lucide//sigma
+sticker: lucide//list-video
 ---
 Da Java 8 è possibile specificare funzioni utilizzando le **espressioni lambda**
 ```java
 () -> {System.out.println("hello, lambda!");}
 ```
 
-Tali espressioni permettono di creare **oggetti anonimi** assegnabili a riferimenti a **interfacce funzionali** compatibili con l'intestazione della funzione creata (perché le interfacce funzionali hanno solo un metodo astratto)
+Tali espressioni permettono di creare **oggetti anonimi** assegnabili a riferimenti a [[interfacce#interfacce funzionali (o SAM) |interfacce funzionali ]] compatibili con l'intestazione della funzione creata (perché le interfacce funzionali hanno solo un metodo astratto)
 ```java
 @FunctionalInterface
 public interface Runnable{

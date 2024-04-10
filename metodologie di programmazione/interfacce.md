@@ -55,6 +55,11 @@ Quando una classe C implementa un'interfaccia I, tra queste due classi c'è una 
 >Quando ho una classe che sta implementando due classi con già definiti due metodi di default, quando chiamo questo metodo sulla classe che sto definendo quale metodo viene chiamato? Chiamo quello giusto con la sintassi `Interfaccia.super.metodo();`
 
 ---
+##### interfacce ed ereditarietà
+Le interfacce possono ereditare più interfacce, rendendo quindi possibile l'**ereditarietà multipla** in Java.
+Quando un'interfaccia eredita più interfacce, fa una specie di "merge" tra di esse.
+
+---
 ### interfacce funzionali (o SAM)
 a partire da Java8, è disponibile la nuova annotazione `@FunctionalInterface`, che **garantisce che l'interfaccia sia dotata di un solo metodo astratto** (può avere vari metodi di altri tipi)
 
