@@ -13,3 +13,5 @@ TipoDaEst unicoRifAOgg = new TipoDaEst(){
 	//codice della classe anonima
 };
 ```
+
+[[lambda functions#classi anonime ed espressioni lambda | differenze tra classi anonime ed espressioni lambda]]

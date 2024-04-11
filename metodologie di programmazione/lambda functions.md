@@ -18,6 +18,7 @@ Runnable r = ()->{System.out.println("hello");}
 r.run(); //stampa "hello"
 ```
 
+- sono da utilizzare principalmente quando il codice si scrive su una sola riga
 ##### sintassi:
 ```java
 (tipo_param nome_param) -> {codice}
@@ -51,3 +52,13 @@ Integer converted = converter.convert("123")
 Converter<String, MyString> stringConverter = a -> new MyString(a);
 //converte da String a Mystring
 ```
+
+#### classi anonime ed espressioni lambda
+>[!info] differenze
+>la parola chiave `this`:
+>- nelle **classi anonime** si riferisce all'oggetto anonimo
+>- nelle **espressioni lambda** si riferisce all'oggetto della classe che le racchiude
+> 
+>la compilazione:
+>- **classi anonime** - compilate come classi interne
+>- **espressioni lambda** - compilate come metodi privati invocati dinamicamente
