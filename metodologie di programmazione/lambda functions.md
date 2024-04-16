@@ -62,3 +62,9 @@ Converter<String, MyString> stringConverter = a -> new MyString(a);
 >la compilazione:
 >- **classi anonime** - compilate come classi interne
 >- **espressioni lambda** - compilate come metodi privati invocati dinamicamente
+
+#### visibilità dalle espressioni lambda
+- l'accesso alla variabili esterne da un'espressione lambda è simile a quello di una classe anonima
+- si può accedere a:
+	- **campi d'istanza** e **variabili statiche**
+	- variabili **final** del metodo che definisce la lambda
