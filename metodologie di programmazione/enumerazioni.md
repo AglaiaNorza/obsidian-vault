@@ -38,8 +38,6 @@ Non si possono creare nuove istanze, ma possono essere costruite le istanze "cos
 - Si costruisce ciascuna costante (un oggetto separato per ognuna)
 - Si possono definire altri metodi di accesso o modifica dei campi
 --- 
-
-
 ###### esempio - classe mese: 
 ```java
 //senza enumerazione
