@@ -43,8 +43,26 @@ for(int j=0; j<collezione.size(); j++){
 	- utilizza il **polimorfismo** (chiamerà il `forEach` della classe specifica)
 - `forEach` prende in input un **Consumer**, un'*interfaccia funzionale*
 
+### collezioni fondamentali
+- AbstractList:
+	- ArrayList
+	- LinkedList
+- AbstractSet:
+	- TreeSet
+	- HashSet
+		- LinkedHashSet
+- AbstractMap:
+	- TreeMap
+	-  HashMap
+		- LinkedHashMap
+ 
+(i sottoelementi estendono l'elemento che li contiene)
+
+
+
+
 ## liste: ArrayList e LinkedList
-- basate su **list** (interfaccia di Collection e Iterable)
+- basate su **List** (interfaccia di Collection e Iterable)
 - estendono `AbstractList` e implementano l'intefaccia `List`
 <br/>
 - **ArrayList** implementa la lista mediante un *array*
