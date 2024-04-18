@@ -46,7 +46,7 @@ Per una classe che implementa un'interfaccia, ci sono 3 possibilità:
 
 --- 
 #### relazione interfacce-classi
-Quando una classe C implementa un'interfaccia I, tra queste due classi c'è una relazione di tipo **is-a** (C è di tipo I).
+Quando una classe C implementa un'interfaccia I, tra queste due classi c'è una relazione di tipo **is-a** (la classe C è di tipo I).
 
 - anche per le interfacce valgono le regole del polimorfismo:
 	- si possono usare oggetti di sottoclassi come fossero del tipo dell'interfaccia: `Interfaccia oggetto = new Sottoclasse()`
@@ -66,3 +66,4 @@ a partire da Java8, è disponibile la nuova annotazione `@FunctionalInterface`, 
 - le interfacce funzionali si chiamano anche *Single Abstract Method*
 
 le interfacce funzionali implementano spesso [[lambda functions]].
+
