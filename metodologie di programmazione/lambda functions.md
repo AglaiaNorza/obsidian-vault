@@ -1,5 +1,7 @@
 ---
 sticker: lucide//list-video
+tags:
+  - interfacce
 ---
 Da Java 8 è possibile specificare funzioni utilizzando le **espressioni lambda**
 ```java
