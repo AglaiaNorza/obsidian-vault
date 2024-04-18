@@ -68,3 +68,53 @@ espone i metodi:
 >[!important] relazione iterator-iterable
 >L'interfaccia `iterator` è in relazione con `iterable` perché chi implementa iterable restituisce un iterator sull'oggetto-collezione.
 
+
+
+> [!example]- esempio implementazione - IntegerArray iterabile
+> 
+> ```java
+> import java.lang.Iterable;  
+> import java.util.Iterator;  
+>   
+> public class IntArray implements Iterable<Integer> {  
+>   
+>     private Integer[] array;  
+>   
+>     public IntArray(Integer[] array){  
+>         this.array = array;  
+>     }  
+>   
+>     public Iterator<Integer> iterator(){  
+>   
+>         return new Iterator<Integer>(){  //classe anonima
+>   
+>             private int k = 0;  
+>   
+>             @Override  
+>             public boolean hasNext(){  
+>                 return k < array.length;  
+>             }  
+>   
+>             @Override  
+>             public Integer next(){  
+>                 return array[k++];  
+>             }  
+>   
+>         };  
+>   
+>     }  
+>   
+>   //utilizzo
+>     public static void main(String[] args) {  
+>   
+>         Integer[] array = {1,2,3,4,5};  
+>   
+>         IntArray iterablearr = new IntArray(array);  
+>   
+>         for(Integer i : iterablearr){  
+>             System.out.println(i);  
+>         }  
+>   
+>     }  
+> }
+> ```
