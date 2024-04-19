@@ -75,3 +75,4 @@ Se un'unità funzionale può ricevere *dati da più sorgenti*, è necessario ins
 	 ![[register file.png|400]]
 - la **ALU**, che riceve due valori interi a 32 bit e svolge un'operazione indicata dai segnali **Op. ALU**
 	- output: risultato a 32 bit e segnale *"Zero"*, che indica se il risultato è zero
+#### memoria dati e unità di estensione del segno
