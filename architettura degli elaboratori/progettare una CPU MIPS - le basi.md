@@ -1,3 +1,6 @@
+---
+sticker: lucide//codesandbox
+---
 La CPU è una *macchina sequenziale* - è formata da:
 - uno **stato** (elementi che, se rimessi nella stessa condizione, fanno comportare la macchina allo stesso modo).
 - un **circuito combinatorio**.
@@ -73,6 +76,18 @@ Se un'unità funzionale può ricevere *dati da più sorgenti*, è necessario ins
 		- 1 ingresso per il *dato da scrivere*
  
 	 ![[register file.png|400]]
+
 - la **ALU**, che riceve due valori interi a 32 bit e svolge un'operazione indicata dai segnali **Op. ALU**
 	- output: risultato a 32 bit e segnale *"Zero"*, che indica se il risultato è zero
 #### memoria dati e unità di estensione del segno
+- l'**unità di memoria dati** scrive o legge dati in memoria
+	- input: 
+		- segnali **MemWrite** e **MemRead** - indicano lettura o scrittura (sono due ma solo uno può essere attivo)
+		- **indirizzo** dato da scrivere o leggere
+		- **dato** da scrivere (se MemWrite) 
+	- output: **dato letto** (se MemRead) 
+ 
+	![[memoria dati.png| 250]]
+- l'**unità di estensione del segno** del campo offset (16 bit meno significativi dell'istruzione) estende 16 bit a 32 (copia il bit del segno nei 16 MSB)
+ 
+	![[estensione segno.png | 200]]
