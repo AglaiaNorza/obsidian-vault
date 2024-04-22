@@ -41,9 +41,7 @@
     "//assembly",
     "//assembly",
     "//assembly",
-    "//architettura degli elaboratori",
-    "//attachments",
-    "//attachments"
+    "//architettura degli elaboratori"
   ],
   "expandFolderOnClick": true,
   "menuTriggerChar": "/",
