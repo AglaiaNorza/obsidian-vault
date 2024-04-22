@@ -77,8 +77,27 @@ while(i.hasPrevious()){
 
 ## Map
 
-| return  | metodo | descrizione |
-| ------- | ------ | ----------- |
-| void    |        |             |
-| boolean |        |             |
-| Set<>   |        |             |
+| metodo                                                    | descrizione                                                           |
+| --------------------------------------------------------- | --------------------------------------------------------------------- |
+| `V put(K key, V value)`                                   | associa la chiave k al valore V (aggiunge una coppia)                 |
+| `void putAll(`<br>  `Map<? extends K,? extends V> m)`<br> | copia tutti i valori dalla mappa in input alla mappa                  |
+| `V remove(Object key)`                                    | rimuove un mapping                                                    |
+| `void clear()`                                            | rimuove tutto dalla mappa                                             |
+| `V get(Object key)`                                       | ritorna il valore legato alla chiave, o `null` se esso non è presente |
+| `boolean containsKey(Object key)`                         | ritorna `true` se la mappa contiene un valore per la chiave           |
+| `boolean containsValue(Object value)`                     | ritorna `true` se una o più chiavi mappano al valore dato             |
+| `Set<Map, Entry<K,V>> entrySet()`                         | ritorna un `Set` dei contenuti (chiave = valore) della mappa          |
+| `Set<K> keySet()`                                         | ritorna un `Set` delle chiavi nella mappa                             |
+| `Collection<V> values()`                                  | ritorna una `Collection` dei valori presenti                          |
+| `int hashCode()`                                          | ritorna il valore hashcode della mappa                                |
+| `boolean isEmpty()`                                       | ritorna `true` se la mappa è vuota                                    |
+| `int size()`                                              | ritorna il numero di mapping                                          |
+| `boolean equals(object O)`                                | ritorna `true` se l'oggetto è uguale alla mappa                       |
+Java 8 e 9:
+
+| metodo                                  | descrizione                                                                                                                                                                                            |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `forEach(BiConsumer)`                   | itera su ciascuna coppia                                                                                                                                                                               |
+| `getOrDefault(chiave, val default)`     | restituisce il valore associato alla chiave e,<br>se non presente, valoreDefault<br>                                                                                                                   |
+| `merge(chiave, valore, BiFunction)`     | se la chiave non contiene un valore, <br>imposta il valore specificato, altrimenti<br>chiama una bifunzione che decide come<br>mettere insieme il valore precedente con<br>quello passato in input<br> |
+| `of(chiave, valore, chiave, valore...)` | statico, crea una mappa immutabile dei<br>tipi e con i valori corrispondenti                                                                                                                           |

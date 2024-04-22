@@ -58,39 +58,39 @@ for(int j=0; j<collezione.size(); j++){
  
 (i sottoelementi estendono l'elemento che li contiene)
 
-
-
-
 ## liste: ArrayList e LinkedList
 - basate su **List** (interfaccia di Collection e Iterable)
 - estendono `AbstractList` e implementano l'intefaccia `List`
 <br/>
-- **ArrayList** implementa la lista mediante un *array*
+- **ArrayList** implementa la lista mediante un *array*, e ha una dimensione flessibile (al contrario dell'array) (come lista python, ma con un unico tipo)
 	- [[metodi collection#ArrayList|metodi ArrayList]]
 - **LinkedList** implementa la lista mediante *elementi linkati*
+	- ogni elemento "contiene" il suo valore e un link all'elemento successivo, quindi per aggiungere un elemento basta linkarlo in uno degli elementi già presenti
+ 
+		![[Pasted image 20240422192724.png | 300]]
 	- [[metodi collection#LinkedList|metodi LinkedList]]
 
 >[!question] come iterare in entrambe le direzioni?
 >- `listIterator()` (interfaccia che estende `Iterator()` restituisce un iterator bidirezionale per la lista:
 > 	- [[metodi collection#ListIterator|metodi listIterator]]
-
-## insiemi: HashSet, TreeSet, LinkedHashSet
-- basati su **Set**, sottointerfaccia di `Collection` e di `Iterable`
-- gli insiemi sono Collection che contengono *elementi distinti*
-
-| set               | memorizzazione                                                              |
-| ----------------- | --------------------------------------------------------------------------- |
-| **HashSet**       | memorizza gli elementi in una *hashtable*                                   |
-| **TreeSet**       | memorizza gli elementi in un *albero* mantenendo un *ordine sugli elementi* |
-| **LinkedHashSet** | memorizza gli elementi in *ordine di inserimento*                           |
-
 ## mappe
 `java.util.Map`
 - mettono in corrispondenza **chiavi** e **valori**
 - non possono contenere chiavi duplicate
 	- [[metodi collection#Map |metodi Map]]
+
+è possibile ottenere: 
+- l'**insieme delle chiavi** di una mappa mediante il metodo `keySet`
+- l'**elenco dei valori** mediante il metodo `values` (con ripetizioni)
+- l'**insieme delle coppie** (chiave, valore) mediante il metodo `entrySet`:
+	- restituisce un insieme di oggetti di tipo `Map.Entry<K, V>`
+	- per ogni coppia è possibile conoscere chiave (`getKey()`) e valore (`getValue()`)
+
+#### HashMap
+`HashMap` memorizza le coppie in una tabella di hash.
+Quando aggiungiamo un valore alla mappa, viene applicata una funzione che restituisce un valore `hash` che rappresenta la locazione in memoria del valore. Quando dobbiamo ritrovare il valore, la stessa funzione viene riutilizzata al contrario.
  
-> [!Example]- mappa frequenze in un testo
+> [!Example]- mappa frequenze in un testo: HashMap
 > 
 > ```java
 > public class MappaDelleFrequenze{
@@ -113,12 +113,19 @@ for(int j=0; j<collezione.size(); j++){
 > }
 > ```
 
-è possibile ottenere: 
-- l'**insieme delle chiavi** di una mappa mediante il metodo `keySet`
-- l'**elenco dei valori** mediante il metodo `values` (con ripetizioni)
-- l'**insieme delle coppie** (chiave, valore) mediante il metodo `entrySet`:
-	- restituisce un insieme di oggetti di tipo `Map.Entry<K, V>`
-	- per ogni coppia è possibile conoscere chiave (`getKey()`) e valore (`getValue()`)
+- La `LinkedHashMap` estende `HashMap` e mantiene l'ordine di inserimento.
+#### TreeMap
+`TreeMap` implementa il red-black tree, e **ordina gli elementi per chiave**.
+
+## insiemi: HashSet, TreeSet, LinkedHashSet
+- basati su **Set**, sottointerfaccia di `Collection` e di `Iterable`
+- gli insiemi sono Collection che contengono *elementi distinti*
+
+| set               | memorizzazione                                                              |
+| ----------------- | --------------------------------------------------------------------------- |
+| **HashSet**       | memorizza gli elementi in una *hashtable*                                   |
+| **TreeSet**       | memorizza gli elementi in un *albero* mantenendo un *ordine sugli elementi* |
+| **LinkedHashSet** | memorizza gli elementi in *ordine di inserimento*                           |
 
 ## algoritmi sulle collezioni
 #### collezioni
@@ -146,3 +153,33 @@ la classe `java.util.Arrays` fornisce **metodi statici per la manipolazioni degl
 | `equals`       | confronta due array elemento per elemento                          |
 | `asList`       | restituisce una lista contenente gli elementi dell'array           |
 | `toString`     | restituisce una rappresentazione dell'array sotto forma di stringa |
+
+
+## ordinamento naturale
+come garantire un ordinamento sui tipi utilizzati nelle strutture dati che si basano su un ordinamento (come `TreeSet` o `TreeMap`)?
+- è necessario che le strutture implementino l'interfaccia `Comparable<T>` !
+	L'interfaccia `Comparable` è dotata di un solo metodo:
+	- `int compareTo(T o)`, che confronta sé stesso con l'oggetto o, e restituisce:
+		- 0 se uguali
+		- -1 se <= o
+		- +1 altrimenti
+
+> [!example]+ esempio
+>  ```java
+>  public class NomeCognome implements Comparable<NomeCognome>{
+> 	private String nome, cognome;
+> 	 // bla bla costruttore bla bla
+> 
+> 	@Override
+> 	public int compareTo(NomeCognome o){
+> 		int v = cognome.compareTo(o.cognome);
+> 
+> 		if(v = =0) return nome.compareTo(o.nome)
+> 		else return v;
+> 	}
+> }
+> ```
+
+ 
+---
+Se la classe non fornisce di suo l'ordinamento naturale, posso implementare un'interfaccia `Comparator<T>` e passarne un'istanza in input al costruttore delle strutture dati (es. TreeSet/TreeMap)
