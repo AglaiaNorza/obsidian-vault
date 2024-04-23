@@ -250,10 +250,14 @@ come garantire un ordinamento sui tipi utilizzati nelle strutture dati che si ba
 > }
 > ```
 
- 
----
 Se la classe non fornisce di suo l'ordinamento naturale, posso implementare un'interfaccia `Comparator<T>` e passarne un'istanza in input al costruttore delle strutture dati (es. TreeSet/TreeMap)
 
+metodi dell'interfaccia `Comparator`:
+- `int compare(T o1, T o2)` - compara due elementi
+- `boolean equals(Object ob)` - controlla se un oggetto è uguale al comparatore
+
+##### riferimenti a metodi esistenti
+è possibile passare
 ##### metodi di default dell'interfaccia comparator
 - confronto **inverso**:
 ```java

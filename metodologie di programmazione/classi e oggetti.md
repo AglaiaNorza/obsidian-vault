@@ -3,6 +3,21 @@ sticker: lucide//file-json-2
 tags:
   - classi
 ---
+
+> [!info]- index
+> - [[#classe|classe]]
+> - [[#oggetto|oggetto]]
+> - [[#file sorgenti|file sorgenti]]
+> - [[#campi|campi]]
+> 	- [[#campi#inizializzazioni implicite|inizializzazioni implicite]]
+> - [[#metodi|metodi]]
+> 		- [[#inizializzazioni implicite#chiamate di metodi|chiamate di metodi]]
+> - [[#costruttori|costruttori]]
+> 	- [[#costruttori#creazione di un oggetto|creazione di un oggetto]]
+> - [[#variabili locali vs campi|variabili locali vs campi]]
+> - [[#classi e metodi final|classi e metodi final]]
+
+
 possono:
 - modellare oggetti nel mondo reale
 - rappresentare oggetti grafici, entità software, concetti astratti, stati di un processo
