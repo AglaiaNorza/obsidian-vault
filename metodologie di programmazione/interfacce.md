@@ -2,6 +2,7 @@
 sticker: lucide//monitor
 tags:
   - interfacce
+  - classi
 ---
 parola chiave `interface`.
 Le interfacce permettono di modellare **comportamenti comuni** a classi (anche se non sono in relazione gerarchica -> in Java non è consentito estendere più di una classe, ma una classe può implementare tutte le interfacce desiderate).
@@ -69,3 +70,21 @@ a partire da Java8, è disponibile la nuova annotazione `@FunctionalInterface`, 
 
 le interfacce funzionali implementano spesso [[lambda functions]].
 
+#### interfacce funzionali built-in
+
+- `Predicate<T>` - funzione a valori booleani a un solo argomento generico T
+```java
+Predicate<String> predicate = s-> s.length() > 0;
+
+Predicate<String> predicate2 = s-> s.startsWith("f")
+```
+
+- `Function<T, R>` - argomenti T d'ingresso e R di ritorno entrambi generici
+```java
+Function<String, Integer> toInteger = Integer::valueOf;
+```
+
+- `Consumer<T>` - argomento di tipo generico T e nessun tipo di ritorno
+```java
+Consumer<Person> greeter1 = p-> System.out.println("hello"+p);
+```

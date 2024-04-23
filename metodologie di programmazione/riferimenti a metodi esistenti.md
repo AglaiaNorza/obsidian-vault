@@ -1,3 +1,6 @@
+---
+sticker: lucide//chevron-first
+---
 è possibile passare riferimenti a metodi esistenti, utilizzando la sintassi:
 - `Classe::metodoStatico`
 - `riferimentoOggetto::metodoNonStatico`

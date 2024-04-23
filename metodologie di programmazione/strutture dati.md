@@ -1,6 +1,29 @@
 ---
 sticker: lucide//clipboard-list
+tags:
+  - classi
+  - tipi
+  - interfacce
 ---
+>[!info]+ index
+>- [[#collection|collection]]
+>- [[#iterazione esterna su una collezione|iterazione esterna su una collezione]]
+	>	- [[#iterazione interna su una collezione|iterazione interna su una collezione]]
+> - [[#collezioni fondamentali|collezioni fondamentali]]
+>- [[#liste: ArrayList e LinkedList|liste: ArrayList e LinkedList]]
+>- [[#mappe|mappe]]
+>	- [[#collezioni fondamentali#HashMap|HashMap]]
+>	- [[#collezioni fondamentali#TreeMap |TreeMap]]
+>	- [[#insiemi: HashSet, TreeSet, LinkedHashSet|insiemi: HashSet, TreeSet, LinkedHashSet]]
+>- [[#pila e coda|pila e coda]]
+>- [[#alberi|alberi]]
+>- [[#algoritmi sulle collezioni|algoritmi sulle collezioni]]
+>	- [[#collezioni fondamentali#collezioni|collezioni]]
+>	- [[#collezioni fondamentali#array|array]]
+>- [[#ordinamento naturale|ordinamento naturale]]
+	>	- [[#array#metodi di default dell'interfaccia comparator|metodi di default dell'interfaccia comparator]]
+>- [[#for each|for each]]
+
 ### collection
 Strutture dati già pronte all'uso con interfacce e algoritmi per manipolarle.
 - contengono e "strutturano" riferimenti ad altri oggetti, tipicamente dello stesso tipo.
@@ -127,6 +150,53 @@ Quando aggiungiamo un valore alla mappa, viene applicata una funzione che restit
 | **TreeSet**       | memorizza gli elementi in un *albero* mantenendo un *ordine sugli elementi* |
 | **LinkedHashSet** | memorizza gli elementi in *ordine di inserimento*                           |
 
+
+## pila e coda
+**coda**: è FIFO (First In First Out)
+-  `LinkedList` implementa l'interfaccia `Queue`
+	- operazioni:
+		- `add` - aggiunge un elemento in coda
+		- `remove` - rimuove un elemento dall'inizio della coda
+		- `peek` - restituisce l'elemento all'inizio della coda senza rimuoverlo
+
+**pila**: è LIFO (Last In First Out)
+- la classe `Stack` implementa l'interfaccia `List`
+	- operazioni:
+		- `push` - inserisce un elemento in cima alla pila
+		- `pop` - rimuove l'elemento in cima alla pila
+		- `peek` - restituisce l'elemento in cima alla pila senza rimuoverlo
+
+
+
+
+
+
+## alberi
+struttura dati *ricorsiva* formata da nodi e figli (ogni nodo ha padre tranne la radice).
+
+utilizziamo una **classe annidata** (interna se ci serve il riferimento all'albero) per rappresentare un nodo
+```java
+public class BinaryTree{
+
+	private Nodo root;
+
+	static public class Nodo{
+		private Nodo left, right;
+		private int valore;
+
+		public Nodo(Nodo left, Nodo right, int valore){
+			this.left = left;
+			this.right = right;
+			this.valore = valore;
+		}	
+	}
+}
+```
+
+
+
+
+
 ## algoritmi sulle collezioni
 #### collezioni
 la classe `java.util.Collections` fornisce **metodi statici per la manipolazioni delle collezioni**
@@ -166,7 +236,7 @@ come garantire un ordinamento sui tipi utilizzati nelle strutture dati che si ba
 
 > [!example]+ esempio
 >  ```java
->  public class NomeCognome implements Comparable<NomeCognome>{
+>  public class NomeCognome implements Comparable< NomeCognome>{
 > 	private String nome, cognome;
 > 	 // bla bla costruttore bla bla
 > 
@@ -174,7 +244,7 @@ come garantire un ordinamento sui tipi utilizzati nelle strutture dati che si ba
 > 	public int compareTo(NomeCognome o){
 > 		int v = cognome.compareTo(o.cognome);
 > 
-> 		if(v = =0) return nome.compareTo(o.nome)
+> 		if(v = = 0) return nome.compareTo(o.nome)
 > 		else return v;
 > 	}
 > }
@@ -183,3 +253,35 @@ come garantire un ordinamento sui tipi utilizzati nelle strutture dati che si ba
  
 ---
 Se la classe non fornisce di suo l'ordinamento naturale, posso implementare un'interfaccia `Comparator<T>` e passarne un'istanza in input al costruttore delle strutture dati (es. TreeSet/TreeMap)
+
+##### metodi di default dell'interfaccia comparator
+- confronto **inverso**:
+```java
+comparator.reversed().compare(p1, p2);
+```
+
+- confronto **per una data chiave**:
+```java
+comparator = Comparator.comparing(p->p.getFirstName());
+```
+
+- confronto per **criteri multipli a cascata**
+```java
+comparator = Comparator.comparing(p->p.getFirstName()).thenComparing(p-> p.getLastName());
+```
+
+## for each
+Le collection sono ora dotate di un metodo `forEach`, che prende in input un'interfaccia `Consumer<? super T>` (con T tipo generico della collection)
+
+```java
+Collection<String>c = Arrays.asList("aa", "bb");
+
+//da Java 7:
+for(String s : c)System.out.println(s);
+
+//da Java 8:
+c.forEach(s->System.out.println(s));
+
+c.forEach(System.out::println);
+
+```
