@@ -57,6 +57,14 @@ anche Java implementa i metodi `startsWith` e `endsWith`.
 ```java
 var.startsWith("hel")
 ```
+
+si può vedere se una stringa contiene una sottostringa con il metodo `contains()`
+```java
+String myStr = "Hello";
+System.out.println(myStr.contains("Hel"));
+```
+
+
 ##### sostituire:
 Java implementa il metodo `replace` , che sostituisce tutte le occorrenze di un carattere o di una stringa.
 ```java
