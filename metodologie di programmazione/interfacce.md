@@ -79,9 +79,23 @@ Predicate<String> predicate = s-> s.length() > 0;
 Predicate<String> predicate2 = s-> s.startsWith("f")
 ```
 
+esiste anche `BiPredicate`, con due valori in input.
+```java
+BiPredicate<String, Integer> bp2_4_3 = (s, i) -> s.length() == i;
+```
+
 - `Function<T, R>` - argomenti T d'ingresso e R di ritorno entrambi generici
 ```java
 Function<String, Integer> toInteger = Integer::valueOf;
+```
+
+- `Supplier<T>` - funzione senza argomenti in input
+
+```java
+Supplier<String> stringSupplier = () -> "ciao";
+
+Supplier<Person> personSupplier = Person::new;
+personSupplier.get(); // new Person();
 ```
 
 - `Consumer<T>` - argomento di tipo generico T e nessun tipo di ritorno
