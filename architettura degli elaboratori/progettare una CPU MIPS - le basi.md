@@ -1,6 +1,17 @@
 ---
 sticker: lucide//codesandbox
 ---
+
+> [!info]+ index
+> - [[#CPU senza pipeline|CPU senza pipeline]]
+> 			- [[#fasi di esecuzione di un'istruzione|fasi di esecuzione di un'istruzione]]
+> 			- [[#unità funzionali necessarie|unità funzionali necessarie]]
+> 	- [[#CPU senza pipeline#ingredienti|ingredienti]]
+> 		- [[#ingredienti#memoria istruzioni, PC, adder|memoria istruzioni, PC, adder]]
+> 		- [[#ingredienti#registri e ALU|registri e ALU]]
+> 		- [[#ingredienti#memoria dati e unità di estensione del segno|memoria dati e unità di estensione del segno]]
+
+
 La CPU è una *macchina sequenziale* - è formata da:
 - uno **stato** (elementi che, se rimessi nella stessa condizione, fanno comportare la macchina allo stesso modo).
 - un **circuito combinatorio**.

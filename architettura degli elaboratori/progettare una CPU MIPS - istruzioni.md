@@ -1,3 +1,16 @@
+---
+sticker: lucide//codesandbox
+---
+> [!info]+ index
+> - [[#fetch e aggiornamento PC|fetch e aggiornamento PC]]
+> - [[#operazioni ALU e accesso memoria|operazioni ALU e accesso memoria]]
+> 	- [[#operazioni ALU e accesso memoria#esercizi|esercizi]]
+> - [[#salti condizionati (beq)|salti condizionati (beq)]]
+> - [[#con control unit|con control unit]]
+> - [[#segnali di controllo|segnali di controllo]]
+> - [[#tempi di esecuzione|tempi di esecuzione]]
+
+
 ### fetch e aggiornamento PC
 leggiamo l'istruzione corrente e, in parallelo, aggiorniamo il PC
  
@@ -30,7 +43,6 @@ Quindi il MUX a destra, con segnale di controllo **MemtoReg**, sceglie tra le du
 
 >[!example]- load word
 >![[MIPS load word.png]]
-
 
 >[!example]- store word
 >![[MIPS store word.png]]
@@ -84,4 +96,19 @@ il valore dell'ingresso di controllo della ALU viene generato dopo una decodific
 >[!info]+ input di controllo e tavola di verità
 >![[MIPS tavola verita opcode.png]]
 
+### segnali di controllo
 
+| segnale    | effetto se asserito                                                                                                                      | effetto se non asserito                                                                          |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| `RegDst`   | il numero del registro di scrittura<br>viene dal campo `rd` (but 15-11)                                                                  | il numero del registro di scrittura<br>viene dal campo `rt` (bit 20-16)                          |
+| `RegWrite` | il dato viene scritto nel register file<br>nel registro con il numero "registro<br>di scrittura"                                         | nulla                                                                                            |
+| `ALUsrc`   | il secondo operando della ALU viene<br>dall'estensione del segno dei 16 bit<br>meno significativi (tipo immediate?)                      | il secondo operando della ALU <br>viene dalla seconda uscita del<br>register file (dato letto 2) |
+| `MemRead`  | il dato della memoria nella posizione<br>indicata viene mandato in uscita sulla<br>linea "dato letto"                                    | nulla                                                                                            |
+| `MemWrite` | il contenuto della memoria nella<br>posizione puntata dall'indirizzo<br>viene sostituito con il contenuto <br>della linea "dato scritto" | nulla                                                                                            |
+| `MemtoReg` | il dato inviato al register file per la <br>scrittura viene dalla Memoria Dati                                                           | il dato inviato al register file per la<br>scrittura viene dalla ALU                             
+>[!info] segnali Control Unit
+>i segnali che la CU produrrà per i diversi tipi di istruzione saranno:
+>![[segnali control unit.png]]
+
+### tempi di esecuzione
+se conosciamo il tempo necessario a produrre i risultati delle diverse unità funzionali, siamo in grado di calcolare il tempo totale di ciascuna istruzione
