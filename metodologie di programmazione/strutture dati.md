@@ -166,11 +166,6 @@ Quando aggiungiamo un valore alla mappa, viene applicata una funzione che restit
 		- `pop` - rimuove l'elemento in cima alla pila
 		- `peek` - restituisce l'elemento in cima alla pila senza rimuoverlo
 
-
-
-
-
-
 ## alberi
 struttura dati *ricorsiva* formata da nodi e figli (ogni nodo ha padre tranne la radice).
 
@@ -192,11 +187,6 @@ public class BinaryTree{
 	}
 }
 ```
-
-
-
-
-
 ## algoritmi sulle collezioni
 #### collezioni
 la classe `java.util.Collections` fornisce **metodi statici per la manipolazioni delle collezioni**
@@ -223,7 +213,6 @@ la classe `java.util.Arrays` fornisce **metodi statici per la manipolazioni degl
 | `equals`       | confronta due array elemento per elemento                          |
 | `asList`       | restituisce una lista contenente gli elementi dell'array           |
 | `toString`     | restituisce una rappresentazione dell'array sotto forma di stringa |
-
 
 ## ordinamento naturale
 come garantire un ordinamento sui tipi utilizzati nelle strutture dati che si basano su un ordinamento (come `TreeSet` o `TreeMap`)?
