@@ -8,7 +8,7 @@
 
 |               Tipo | Metodo                                                                                                                                                                                                        |
 | -----------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `boolean add(E,e)` | <br>Appends the specific element to the end of the list                                                                                                                                                       |
+| `boolean add(E,e)` | Appends the specific element to the end of the list                                                                                                                                                           |
 |             `void` | **`add(int index, E element)`**  <br>Inserts the specific element at the specific position in the list                                                                                                        |
 |          `boolean` | **`addAll(Collection<? extends E> c)`**  <br>Appends all of the elements in the specified collection to the end of this list, in the order that they are returned by the specified collection’s Iterator      |
 |           `boolan` | **`addAll (int index, Collection<? extends E> c)`**  <br>Inserts all of the elements in the specified collection into this list, starting at the specified position                                           |
@@ -95,9 +95,10 @@ while(i.hasPrevious()){
 | `boolean equals(object O)`                                | ritorna `true` se l'oggetto è uguale alla mappa                       |
 Java 8 e 9:
 
-| metodo                                  | descrizione                                                                                                                                                                                            |
-| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `forEach(BiConsumer)`                   | itera su ciascuna coppia                                                                                                                                                                               |
-| `getOrDefault(chiave, val default)`     | restituisce il valore associato alla chiave e,<br>se non presente, valoreDefault<br>                                                                                                                   |
-| `merge(chiave, valore, BiFunction)`     | se la chiave non contiene un valore, <br>imposta il valore specificato, altrimenti<br>chiama una bifunzione che decide come<br>mettere insieme il valore precedente con<br>quello passato in input<br> |
-| `of(chiave, valore, chiave, valore...)` | statico, crea una mappa immutabile dei<br>tipi e con i valori corrispondenti                                                                                                                           |
+| metodo                                  | descrizione                                                                                                                                                                                            |     |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --- |
+| `forEach(BiConsumer)`                   | itera su ciascuna coppia                                                                                                                                                                               |     |
+| `getOrDefault(chiave, val default)`     | restituisce il valore associato alla chiave e,<br>se non presente, valoreDefault<br>                                                                                                                   |     |
+| `merge(chiave, valore, BiFunction)`     | se la chiave non contiene un valore, <br>imposta il valore specificato, altrimenti<br>chiama una bifunzione che decide come<br>mettere insieme il valore precedente con<br>quello passato in input<br> |     |
+| `of(chiave, valore, chiave, valore...)` | statico, crea una mappa immutabile dei<br>tipi e con i valori corrispondenti                                                                                                                           |     |
+esempio di `merge` : `mappa.merge(key, a, (oldValue, newValue)-> newValue);` - sostituisce al vecchio valore quello nuovo
