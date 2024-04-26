@@ -1,3 +1,6 @@
+---
+sticker: lucide//codesandbox
+---
  ### aggiungere una nuova istruzione
 supponiamo di voler creare una nuova istruzione.
 dobbiamo:
@@ -85,4 +88,9 @@ si comporta quasi come la `lw cost(rs)` ma invece di salvare si scrive sui regis
 **tempo necessario**: Fetch + Reg
 
 ![[circuito con jr.png|center|400]]
+
+>[!example]- esercizio: aggiungere jral
+>vogliamo aggiungere l'istruzione di tipo R
+>`jral $rs, $rt`, che salta incondizionatamente all'indirizzo di memoria in `$rs` e memorizza in `$rt` l'indirizzo dell'istruzione successiva.
+>![[jral es mips.png|center|400]]
 

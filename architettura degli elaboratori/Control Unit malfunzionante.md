@@ -1,0 +1,1 @@
+![[segnali di controllo CU.png]]
