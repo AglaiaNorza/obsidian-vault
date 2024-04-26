@@ -1,4 +1,4 @@
-### aggiungere una nuova istruzione
+ ### aggiungere una nuova istruzione
 supponiamo di voler creare una nuova istruzione.
 dobbiamo:
 - definire la sua **codifica**
@@ -44,11 +44,25 @@ si comporta come jump, ma salva PC+4 nel registro `$ra`
 \+ MUX per selezionare il valore di PC+4 come valore di destinazione, MUX per selezionare il registro `$ra` come destinazione
 
 **flusso dei dati**: `Istruzione[25-0] -> SL2 -> (OR) -> MUX -> PC`
-+
+e, in più
 `PC+4 -> MUX -> registri (dato da memorizzare)`
-(31 = `$ra`) `31 -> MUX -> registri (registro destinazione)`
+(31 = `$ra`) `31 -> MUX -> registri (registro destinazione)` 
 
-**segnali di controllo**: `jump` per il MUX, `RegWrite` e `MemWrite` = 0
+ **segnali di controllo**: `jump` per il MUX, `RegWrite` e `MemWrite` = 0
 
-**tempo necessario**: il WriteBack deve avvenire dopo che siano finiti sia il fetch che il calcolo di PC+4 (che va memorizzato in `$ra`), perciò il tempo sarà dato dal massimo tra fetch e add sommato al WB.
+**tempo necessario**: il WriteBack deve avvenire dopo che siano finiti sia il fetch che il calcolo di PC+4 (che va memorizzato in `$ra`), perciò il tempo sarà dato dal massimo tra fetch e add sommato al WB. 
 
+![[jal arch mips.png|center|400]]
+
+#### add immediate (addi)
+**cosa fa**: somma la parte immediata al registro `rs` e pone il risultato in `rt`
+
+**unità funzionali**: ALU per la somma (presente),
+MUX che seleziona la parte immediata come secondo argomento (presente),
+estensione del segno della parte immediata (presente)
+
+**flusso dei dati**: `Registri[rs] -> ALU`
+`Costante -> est. segno -> ALU`
+`ALU -> Registri[rt]`
+
+si comporta quasi come la `lw cost(rs)` ma invece di salvare si scrive sui registri.

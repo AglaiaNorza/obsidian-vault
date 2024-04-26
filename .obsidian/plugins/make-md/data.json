@@ -41,7 +41,9 @@
     "//assembly",
     "//assembly",
     "//assembly",
-    "//metodologie di programmazione"
+    "//metodologie di programmazione",
+    "//architettura degli elaboratori",
+    "//attachments"
   ],
   "expandFolderOnClick": true,
   "menuTriggerChar": "/",
