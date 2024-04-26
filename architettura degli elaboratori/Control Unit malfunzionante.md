@@ -16,7 +16,7 @@ se ho il dubbio che il segnale `RegWrite` sia determinato dal segnale `Branch` (
 1) quali istruzioni sono affette?
  
 ![[istr affette regwrite branch.png|center|400]]
-2
+2) 
 
 
 
