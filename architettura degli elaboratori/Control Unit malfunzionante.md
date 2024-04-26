@@ -16,7 +16,16 @@ se ho il dubbio che il segnale `RegWrite` sia determinato dal segnale `Branch` (
 1) quali istruzioni sono affette?
  
 ![[istr affette regwrite branch.png|center|400]]
-2) 
+- tutte le istruzioni che modificano un registro (tipo `r` e `lw`) lo lasceranno invece invariato
+- branch - oltre a saltare, modificherà uno dei registri:
+	- `rt` verrà sovrascritto (perché `RegDst` = 0)
+	- il valore scritto sarà la differenza tra i due registri confrontati dalla ALU (assumiamo `MemToReg = 0`)
+
+2) programma per mostrarlo
+
+scriviamo un programma che lasci il valore 0 nel registro `$s0` se la CPU è malfunzionante, e scriva 1 se funziona correttamente.
+- ricordiamo che non possiamo caricare un valore in un registro perché `RegWrite = 0`
+
 
 
 
