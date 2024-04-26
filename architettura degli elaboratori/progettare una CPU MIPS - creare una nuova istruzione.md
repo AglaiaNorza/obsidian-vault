@@ -8,7 +8,7 @@ dobbiamo:
 - individuare i **segnali di controllo** necessari
 - calcolare il **tempo** necessario per la nuova istruzione (e se modifica il tempo totale)
 
-#### aggiungere il jump
+#### aggiungere il jump (j)
 supponiamo che la codifica sia:
  
 ![[codifica jump.png|400]]
@@ -65,4 +65,24 @@ estensione del segno della parte immediata (presente)
 `Costante -> est. segno -> ALU`
 `ALU -> Registri[rt]`
 
+**segnali di controllo**: ALUsrc = 1, MemtoReg = 0, RegWrite = 1, MemWrite, Branch, Jump = 0;
+
+**tempo necessario** quanto un'istruzione di tipo R
+
 si comporta quasi come la `lw cost(rs)` ma invece di salvare si scrive sui registri.
+
+![[addi arch mips.png|center|400]]
+
+#### jump to register (jr)
+**cosa fa**: trasferisce in `PC` il contenuto del registro `rs`
+
+**unità funzionali**: MUX per selezionare il PC dall'uscita del blocco registri
+
+**flusso dei dati**: `Registri[rs] -> PC
+
+**segnali di controllo**: `JumpToReg`, che abilita il MUX per inserire in PC il valore del registro
+
+**tempo necessario**: Fetch + Reg
+
+![[circuito con jr.png|center|400]]
+
