@@ -90,7 +90,7 @@ for(int j=0; j<collezione.size(); j++){
 - **LinkedList** implementa la lista mediante *elementi linkati*
 	- ogni elemento "contiene" il suo valore e un link all'elemento successivo, quindi per aggiungere un elemento basta linkarlo in uno degli elementi già presenti
  
-		![[Pasted image 20240422192724.png | 300]]
+		![[linkedlist.png| 300]]
 	- [[metodi collection#LinkedList|metodi LinkedList]]
 
 >[!question] come iterare in entrambe le direzioni?
