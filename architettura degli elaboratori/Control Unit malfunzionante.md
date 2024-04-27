@@ -20,6 +20,7 @@ se ho il dubbio che il segnale `RegWrite` sia determinato dal segnale `Branch` (
 - *branch* - oltre a saltare, modificherà uno dei registri:
 	- `rt` verrà sovrascritto (perché `RegDst` = 0)
 	- il valore scritto sarà la differenza tra i due registri confrontati dalla ALU (assumiamo `MemToReg = 0`)
+	- ![[branch errato regwrite branch.png|300]]
 
 2) **programma** per mostrarlo
 
@@ -40,5 +41,6 @@ visto che il risultato del confronto tra i due registri (sub della ALU verrà ca
 ![[memwrite not regwrite valori.png|center|400]]
 
 - `j` e `beq` saltano correttamente, ma *scrivono in memoria*
-
+- ![[branch errato memwrite not regwrite.png|300]]
+- 
 
