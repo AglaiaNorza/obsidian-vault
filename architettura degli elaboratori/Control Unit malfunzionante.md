@@ -13,19 +13,32 @@ se ho il dubbio che il segnale `RegWrite` sia determinato dal segnale `Branch` (
 >[!Tip] tip
 >si assumano i delta come: `MemToReg` = 1 solo per la `lw`, `RegDest` = 1 solo per le istruzioni di tipo R (altrimenti zero).
 
-1) quali istruzioni sono affette?
+1) quali **istruzioni** sono affette?
  
 ![[istr affette regwrite branch.png|center|400]]
-- tutte le istruzioni che modificano un registro (tipo `r` e `lw`) lo lasceranno invece invariato
-- branch - oltre a saltare, modificherà uno dei registri:
+- tutte le *istruzioni che modificano un registro* (tipo `r` e `lw`) lo lasceranno invece invariato
+- *branch* - oltre a saltare, modificherà uno dei registri:
 	- `rt` verrà sovrascritto (perché `RegDst` = 0)
 	- il valore scritto sarà la differenza tra i due registri confrontati dalla ALU (assumiamo `MemToReg = 0`)
 
-2) programma per mostrarlo
+2) **programma** per mostrarlo
 
 scriviamo un programma che lasci il valore 0 nel registro `$s0` se la CPU è malfunzionante, e scriva 1 se funziona correttamente.
 - ricordiamo che non possiamo caricare un valore in un registro perché `RegWrite = 0`
 
+basta una qualsiasi istruzione che generi un valore diverso da 0:
+`li $s0, 1`
+`addi $s0, $zero, 1`
 
+oppure una `beq` che calcoli la differenza tra due valori uguali (`$s0` e se stesso), ma assumendo che inizialmente `$s0 = 1` 
+`beq $s0, $s0, ...`
+visto che il risultato del confronto tra i due registri (sub della ALU verrà caricato erroneamente nel registro, `$s0` varrà 0).
+
+#### MemWrite <- not(RegWrite)
+- istruzioni affette:
+ 
+![[memwrite not regwrite valori.png|center|400]]
+
+- `j` e `beq` saltano correttamente, ma *scrivono in memoria*
 
 
