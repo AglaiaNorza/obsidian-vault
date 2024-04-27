@@ -20,7 +20,8 @@ se ho il dubbio che il segnale `RegWrite` sia determinato dal segnale `Branch` (
 - *branch* - oltre a saltare, modificherà uno dei registri:
 	- `rt` verrà sovrascritto (perché `RegDst` = 0)
 	- il valore scritto sarà la differenza tra i due registri confrontati dalla ALU (assumiamo `MemToReg = 0`)
-	- ![[branch errato regwrite branch.png|300]]
+>[!Example]- branch errato
+> ![[branch errato regwrite branch.png|500]]
 
 2) **programma** per mostrarlo
 
@@ -36,11 +37,27 @@ oppure una `beq` che calcoli la differenza tra due valori uguali (`$s0` e se ste
 visto che il risultato del confronto tra i due registri (sub della ALU verrà caricato erroneamente nel registro, `$s0` varrà 0).
 
 #### MemWrite <- not(RegWrite)
-- istruzioni affette:
+1) istruzioni affette:
  
 ![[memwrite not regwrite valori.png|center|400]]
 
 - `j` e `beq` saltano correttamente, ma *scrivono in memoria*
-- ![[branch errato memwrite not regwrite.png|300]]
-- 
+>[!Example]- branch e jump errati
+![[branch errato memwrite not regwrite.png|500]]
+![[jump errato memwrite not regwrite.png|500]]
+
+2) codice:
+ 
+ci conviene usare la `beq`, perché memorizzerà il valore del registro `$rt` all'indirizzo calcolato dalla ALU come differenza tra `$rs` e `$rt`.
+```
+move $s0, $zero  // mettiamo 0 dentro $s0
+sw $s0, 0  // scriviamo il valore di $s0 (0) all'indirizzo 0
+li $s1, 1
+
+beq $s1, $s1, on // *
+on:
+lw $s0, 0 // caricando il contenuto
+```
+\* branch apparentemente inutile (compara due registri uguali e salta all'istruzione successiva), ma che serve a vedere se scrive all'indirizzo zero (la ALU fa sub tra due registri uguali, fa 0, e se la CPU è rotta va a scrivere `$s1` (1) in 0, sovrascrivendo lo 0)
+
 
