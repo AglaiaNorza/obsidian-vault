@@ -147,4 +147,6 @@ quando il compilatore traduce il metodo o la classe in bytecode:
 ![[cancellazione dei tipi java.png|center|400]]
 
 >[!warning] ottenere informazioni sull'istanza di un generico
->per via della cancellazione del tipo, non possiamo 
+>per via della cancellazione del tipo, non possiamo conoscere il tipo generico a tempo di esecuzione 
+>??? wildcard ?
+
