@@ -150,3 +150,29 @@ quando il compilatore traduce il metodo o la classe in bytecode:
 >per via della cancellazione del tipo, non possiamo conoscere il tipo generico a tempo di esecuzione 
 >??? wildcard ?
 
+#### PECS
+> Producer Extends, Consumer Supers
+
+- `extends` e `super` esistono per due necessità primarie: leggere da e scrivere in una collezione generica.
+
+ci sono 3 modi:
+
+| modo                                                  | effetti                                                                                                                                                                                                                            |
+| ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `List<?> lista = new ArrayList<Number>();`            | non so nulla sul tipo, posso **solo leggere ma non scrivere**                                                                                                                                                                      |
+| `List<? extends Number> l = new Arraylist<Number>();` | ho bisogno di una lista in input che "produca" valori di T, ma **non si possono aggiungere elementi** a quella lista (voglio leggere i dati sulla lista) (*posso fare operazioni su elementi esistenti* ma non scriverne di nuovi) |
+| `List<? super Number> l = new ArrayList<Number>();`   | posso "consumare" elementi di tipo T - sia **scrivere nella lista** che leggere                                                                                                                                                    |
+
+> [!Question] comparable e super
+> perché non posso scrivere `<T extends Comparable<T>>?`
+> 
+> per esempio:
+> ```java
+> public class Frutto implements 
+> 	Comparable< Frutto>
+> 
+> public class Pera extends 
+> 	Frutto implements 
+> 	Comparable< Pera> // non si può fare!!
+>```
+>  non si può implementare due volte la stessa interfaccia - (se volessi ordinare una collezione di Pera, non potrei perché estende `Comparable<Frutto>`)
