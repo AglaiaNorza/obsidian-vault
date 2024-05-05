@@ -29,8 +29,34 @@ invece, con la pipeline, il periodo può essere ridotto a quello della fase più
 
 #### criticità nell'esecuzione (hazard)
 Con l'anticipazione delle istruzioni, possono nascere alcune criticità all'interno dell'architettura.
-Immaginiamo il caso in cui l’istruzione 1 modifichi il valore di un registro e l’istruzione
-2 legga il valore di tale registro. Per via della suddivisione in fasi, durante la fase di
-ID dell’istruzione 2 non è ancora stata eseguita la fase di WB dell’istruzione 1,
-generando quindi una situazione critica in cui il dato del registro non sia ancora stato
-modificato. Di conseguenza, l’istruzione 2 leggerà il dato non ancora aggiornato. (exyss)
+>[!Example]- esempio (exyss)
+>Immaginiamo il caso in cui l’istruzione 1 modifichi il valore di un registro e l’istruzione 2 legga il valore di tale registro. Per via della suddivisione in fasi, durante la fase di ID dell’istruzione 2 non è ancora stata eseguita la fase di WB dell’istruzione 1, generando quindi una situazione critica in cui il dato del registro non sia ancora stato modificato. Di conseguenza, l’istruzione 2 leggerà il dato non ancora aggiornato. 
+
+le criticità possono essere di diversi tipi:
+- **structural hazard** - risorse hardware non sufficienti
+- **data hazard** - il dato necessario non è ancora pronto
+- **control hazard** - la presenza di un salto cambia il flusso di esecuzione delle istruzioni
+
+>[!Example] esempio: data hazard
+>immaginiamo di avere le due istruzioni:
+>`addi $s0, $s1, 5` 
+>`$sub $s2, $s0, $t0`
+>si verificherà un *data hazard* sul registro `$s0`, il cui valore non sarà ancora stato scritto perché non sarà stato eseguito il Write Back.
+>![[sub add data hazard.png|center|300]]
+>per risolvere l'hazard, dobbiamo quindi alineare le fasi di `WB` e `ID`, introducendo due "*stalli*" nella pipeline:
+>![[data hazard risolto con stalli.png|center|300]]
+>chiarimento: ricordiamo che la scrittura sul Register File viene eseguita nella prima metà del periodo di clock, mentre la lettura nella seconda metà, dunque è sufficiente sovrapporre le due fasi affinché venga letto il dato corretto, senza la necessità di dover inserire un terzo stallo.
+
+#### forwarding
+in alcuni casi, l'informazione necessaria è già presente nella pipeline prima del `WB`  - in questo caso, possiamo aggiungere delle "*scorciatoie*", che recapiteranno il dato necessario senza dover aspettare la fase di `WB`.
+>[!Example] continuando con un esempio come il precedente
+>![[forwarding esempio.png|center|350]]
+>in questo caso, visto che la seconda istruzione ha bisogno del registro `$s0` per effettuare la sottrazione, questo viene passato dal forwarding in avanti dopo la prima operazione
+>![[forwarding es 2.png|center|300]]
+
+Se la fase che ha bisogno del dato si trova prima di quella che lo produce, sarà comunque necessario inserire qualche stallo (o bolla) fino a quando esso non sarà generato.
+>[!Example] esempio (exyss)\
+>Nel seguente esempio, il dato aggiornato viene generato in fase di accesso alla memoria, dunque il dato rimarrà conservato nel banco di registri MEM/WB. Tuttavia, durante la fase di MEM viene svolta in contemporanea la fase di EXE dell’istruzione successiva, la quale necessiterebbe del dato aggiornato. Poiché il dato non può essere contemporaneamente generato e propagato tramite il forwarding, è necessario introdurre almeno uno stallo.
+> 
+>![[lw con stallo e fw.png|center|300]]
+>![[lw con e senza forwarding.png|center|300]]
