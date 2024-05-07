@@ -1,3 +1,6 @@
+---
+sticker: lucide//image
+---
 ### parte uno
 formata da **components** e **containers**:
 - components: offrono interazioni con l'utente (derivano dalla classe astratta `Component`)

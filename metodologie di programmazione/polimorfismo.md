@@ -1,5 +1,5 @@
 ---
-sticker: lucide//repeat
+sticker: lucide//chevrons-up-down
 ---
 - una variabile di un certo tipo può contenere un riferimento a un oggetto dello stesso tipo o di qualsiasi sua sottoclasse.
 ```java
