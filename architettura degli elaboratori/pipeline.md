@@ -1,3 +1,6 @@
+---
+sticker: lucide//align-vertical-distribute-center
+---
 l'istruzione ha cinque fasi (con relative unità funzionali):
 1) **instruction fetch** (IF) - memoria istruzioni e aggiornamento PC
 2) **instruction decode** - blocco registri e CU
@@ -71,4 +74,5 @@ possono infatti verificarsi due casi:
 ci sono tre modi per **<font color="#b7dde8">mitigare i control hazard</font>**:
 1) **branch not taken** - si assume che il salto venga sempre *considerato come falso* e si carica normalmente l'istruzione successiva, che viene poi scartata e rimpiazzata in caso il salto si verifichi
 2) **branch taken** - si assume che il salto venga sempre *considerato come vero* e si carica l'istruzione a cui si salta, che viene poi scartata e rimpiazzata in caso il salto non si verifichi
-3) **branch prediction**
+3) **branch prediction** - la CPU osserva i salti eseguiti e cerca di caricare l'opzione eseguita più spesso
+
