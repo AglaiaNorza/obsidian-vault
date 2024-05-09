@@ -60,3 +60,15 @@ Se la fase che ha bisogno del dato si trova prima di quella che lo produce, sar�
 > 
 >![[lw con stallo e fw.png|center|300]]
 >![[lw con e senza forwarding.png|center|300]]
+
+#### control hazard
+nel caso in cui venga effettuato un **salto**, l'esecuzione di un programma genera problemi per la sua sequenzialità.
+
+possono infatti verificarsi due casi:
+- il salto *non viene eseguito* - non serve lavorare sulla pipeline perché l'istruzione successiva è già stata caricata
+- il salto *viene eseguito* - servirà rimpiazzare l'istruzione attualmente caricata nella pipeline con quella a cui si salta
+
+ci sono tre modi per **<font color="#b7dde8">mitigare i control hazard</font>**:
+1) **branch not taken** - si assume che il salto venga sempre *considerato come falso* e si carica normalmente l'istruzione successiva, che viene poi scartata e rimpiazzata in caso il salto si verifichi
+2) **branch taken** - si assume che il salto venga sempre *considerato come vero* e si carica l'istruzione a cui si salta, che viene poi scartata e rimpiazzata in caso il salto non si verifichi
+3) **branch prediction**
