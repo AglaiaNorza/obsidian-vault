@@ -127,3 +127,27 @@ per **anticipare la decisione di salto** alla fase ID, occorre *non usare la ALU
 - inserendo un *comparatore* tra i due argomenti letti dal blocco registri
 - spostando la logica di salto e il calcolo del salto relativo dalla fase EXE alla *fase ID*
 - inserendo un'*unità di forwarding* apposita per la fase ID
+ 
+>[!info] CPU con branch anticipato
+>![[branch anticipato a id.jpeg|center|500]]
+
+il flush identifica il branch, e "scarica" la pipeline di IF/ID (rendendo l'operazione successiva una nop)
+ 
+![[flush pipeline.jpg|center|400]]
+
+ma l'abbassamento del numero di stalli (da 2 a 1) in caso di predizione sbagliata non è gratuito: infatti, la fase in cui `bneq` e `beq` necessitano dei dati viene anticipata da EXE ad ID
+
+??? chiedi ???
+
+---
+### cpu "finale" con pipeline
+![[cpu con pipeline.jpeg]]
+
+---
+### salto ritardato
+la tecnica del salto ritardato consiste nell'inserimento di una o più istruzioni che verrebbero eseguite in entrambi i casi (salto o non salto) per evitare di dover inserire salti dopo un branch.
+
+
+
+
+
