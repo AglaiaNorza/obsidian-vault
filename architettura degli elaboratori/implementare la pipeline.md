@@ -1,6 +1,7 @@
 ---
 sticker: lucide//align-vertical-distribute-center
 ---
+
 per poter implementare la pipeline all'interno di una CPU MIPS, per permettere il **forwarding** è necessario inserire dei registri tra le unità funzionali, per poterci inserire dati e utilizzarli quando necessari.
 ![[registri pipeline.jpg|center|400]]
  
@@ -72,3 +73,42 @@ i segnali di controllo sono i seguenti:
 ![[segnali di controllo fw exe.jpeg]]
 
 ### scoprire data hazard in MEM
+si ha un data hazard in MEM quando vengono fatti in sequenza un `lw` e uno `sw` con lo stesso registro `$rt` (creando quindi una sorta di swap di valori in memoria)
+ 
+![[fw mem.png]]
+
+è possibile rilevarlo se: 
+![[segnali hazard mem.png]]
+
+>[!info] CPU con forwarding MEM
+![[cpu fw mem.jpeg]]
+
+### stallo dell'istruzione
+a volte l'istruzione deve **attendere che sia pronto il dato** prima di poter effettuare il forwarding.
+
+![[stallo con fw.jpeg]]
+
+poiché il risultato della `lw` non è disponibile prima della fase MEM, bisognerà aggiungere uno stallo.
+
+per fermare l'istruzione con uno stallo dobbiamo (nella fase ID):
+- annullare l'istruzione che deve attendere (**bolla**)
+	- *azzerare i segnali di controllo* `MemWrite` e `RegWrite` e `IF/ID.Istruzione`
+- **rileggere** la stessa istruzione affinché possa essere eseguita un ciclo di clock dopo:
+	- *impedire che il PC si aggiorni*
+ 
+>[!Example] stallo in azione
+>![[stallo esempio.jpeg]]
+
+---
+quindi, la CPU in questo momento si presenterà così
+
+>[!Tip] CPU quasi completa
+>![[CPU quasi completa pipeline.jpeg]]
+
+---
+
+
+
+
+
+### 
