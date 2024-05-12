@@ -92,7 +92,7 @@ poiché il risultato della `lw` non è disponibile prima della fase MEM, bisogne
 
 per fermare l'istruzione con uno stallo dobbiamo (nella fase ID):
 - annullare l'istruzione che deve attendere (**bolla**)
-	- *azzerare i segnali di controllo* `MemWrite` e `RegWrite` e `IF/ID.Istruzione`
+	- *azzerare i segnali di controllo* `MemWrite` e `RegWrite` e `IF/ID.Istruzione` - rendendo l'istruzione una NOP 
 - **rileggere** la stessa istruzione affinché possa essere eseguita un ciclo di clock dopo:
 	- *impedire che il PC si aggiorni*
  
@@ -106,9 +106,24 @@ quindi, la CPU in questo momento si presenterà così
 >![[CPU quasi completa pipeline.jpeg]]
 
 ---
+### anticipare il jump
+la decisione di eseguire il Jump viene presa dalla Control Unit nella fase ID - nel frattempo, un'altra istruzione è stata caricata ed occorre che si annulli.
 
+ma è possibile *anticipare il jump alla fase IF*.
+per farlo, occorre:
+- anticipare il riconoscimento dell'istruzione (che di solito avviene nella fase ID) con un **comparatore con il valore dell'Opcode della j** (000010)
+- **spostare** la logica di aggiornamento del PC alla fase IF
 
+così, la jump anticipata non introduce stalli 
+ 
+![[jump anticipata.jpeg|center|250]]
 
+##### control hazard
+l'istruzione `beq` usa la ALU per fare il confronto tra i registri, per cui:
+- il salto avviene dopo la fase EXE (nella fase MEM) --> in caso di salto, le istruzioni seguenti già caricate vanno annullate
+- necessita degli argomenti nella fase EXE --> può aver bisogno di uno stallo se preceduta da una `lw`
 
-
-### 
+per **anticipare la decisione di salto** alla fase ID, occorre *non usare la ALU*
+- inserendo un *comparatore* tra i due argomenti letti dal blocco registri
+- spostando la logica di salto e il calcolo del salto relativo dalla fase EXE alla *fase ID*
+- inserendo un'*unità di forwarding* apposita per la fase ID
