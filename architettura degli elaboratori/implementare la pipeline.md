@@ -57,3 +57,18 @@ ma, dato che non tutte le istruzioni scrivono il risultato nel register file, qu
 >[!Important] quindi, si ha un data hazard in EXE se:
 >![[segnali hazard in EXE.png]]
 
+quindi, il forwarding in EXE si implementa così:
+![[forwarding in exe.png|center|500]]
+>[!info] cosa fa? 
+>consiste nel *sostituire* il valore letto dal blocco dei registri con quello prodotto dall'istruzione precedente (in fase EXE) o quella prima ancora (in fase MEM)
+- **modifiche al datapath**: inserire un MUX prima della ALU per selezionare tra i tre casi:
+	1) *non c'è forwarding* - il valore per la ALU viene letto dal registro `ID/EXE` della pipeline
+	2) *forwarding dall'istruzione precedente* - il valore per la ALU viene letto dal registro `EX/MEM` della pipeline
+	3) *forwarding da due istruzioni prima* - il valore per la ALU viene letto dal registro `MEM/WB` della ALU
+ 
+questo vale sia per il primo che per il secondo argomento della ALU (infatti sono presenti 2 MUX)
+
+i segnali di controllo sono i seguenti:
+![[segnali di controllo fw exe.jpeg]]
+
+### scoprire data hazard in MEM

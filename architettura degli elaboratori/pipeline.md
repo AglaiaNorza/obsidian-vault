@@ -1,6 +1,13 @@
 ---
 sticker: lucide//align-vertical-distribute-center
 ---
+
+> [!Info]+ index
+> - [[#esempio parallelizzazione|esempio parallelizzazione]]
+> - [[#criticità nell'esecuzione (hazard)|criticità nell'esecuzione (hazard)]]
+> - [[#forwarding|forwarding]]
+> - [[#control hazard|control hazard]]
+
 l'istruzione ha cinque fasi (con relative unità funzionali):
 1) **instruction fetch** (IF) - memoria istruzioni e aggiornamento PC
 2) **instruction decode** - blocco registri e CU
