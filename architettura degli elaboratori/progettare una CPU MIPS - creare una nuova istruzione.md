@@ -1,7 +1,15 @@
 ---
 sticker: lucide//codesandbox
 ---
- ### aggiungere una nuova istruzione
+
+>[!Info]+ index
+> - [[#aggiungere una nuova istruzione|aggiungere una nuova istruzione]]
+> 	- [[#aggiungere una nuova istruzione#aggiungere il jump (j)|aggiungere il jump (j)]]
+> 	- [[#aggiungere una nuova istruzione#jump and link (jal)|jump and link (jal)]]
+> 	- [[#aggiungere una nuova istruzione#add immediate (addi)|add immediate (addi)]]
+> 	- [[#aggiungere una nuova istruzione#jump to register (jr)|jump to register (jr)]]
+
+### aggiungere una nuova istruzione
 supponiamo di voler creare una nuova istruzione.
 dobbiamo:
 - definire la sua **codifica**
