@@ -1,5 +1,7 @@
 ---
 sticker: lucide//keyboard
+tags:
+  - classi
 ---
 (oltre agli String[] args)
 la lettura dell'input si effettua con la classe `java.util.Scanner`
