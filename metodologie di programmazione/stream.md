@@ -127,3 +127,20 @@ l.stream().map(String::toUpperCase)
 	2) la *funzione* per mappare l'oggetto dello stream nel *valore* della mappa
 	3) [<font color="#a5a5a5">opzionale</font>]:  la funzione da utilizzare per *unire* il valore preesistente nella mappa con quello nuovo nel caso la chiave esista già
 	4) [<font color="#a5a5a5">opzionale</font>]: il `Supplier`
+
+###### raggruppamento di elementi
+
+| metodo                                                                                                      | che fa                             |
+| ----------------------------------------------------------------------------------------------------------- | ---------------------------------- |
+| `groupingBy(lambda che mappa gli elementi di tipo T in bucket rappresentati da oggetti di un altro tipo S)` | restituisce una `Map<S, List<T>>`  |
+| `groupingBy(lambda, downStreamCollector)`                                                                   | per il raggruppamento multilivello |
+- essenzialmente fa una mappa chiave -> mappa/lista/set
+
+in raccolte multilivello, `Collectors.mapping` è utile per mappare il valore di raggruppamento a un altro tipo.
+```java
+Map<City, Set<String>> peopleSurnamesByCity =
+people.stream().collect(
+	groupingBy(Person::getCity,
+		 mapping(Person::getLastName, toSet())));
+
+```
