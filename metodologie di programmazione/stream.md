@@ -111,15 +111,15 @@ l.stream().map(String::toUpperCase)
 >- permette di scrivere il nome del metodo senza "Collectors" (`toList() vs Collectors.toList())`
 
 
-| metodo                                                                                  | cosa fa                                                      |
-| --------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
-| `counting()`                                                                            | restituisce il numero di elementi nello stream (con un long) |
-| `maxBy/minBy(comparator)`                                                               | restituisce un Optional con il minimo o il massimo           |
-| `summingInt(lambda che mappa elementi a intero)`                                        | somma in int                                                 |
-| `summingDouble()`                                                                       | somma in double                                              |
-| `averagingInt()`                                                                        | media                                                        |
-| `averagingDouble()`                                                                     | media come double                                            |
-| `joining()` e <br>`joining(separatore)` e <br>`joining(separatore, prefisso, suffisso)` | concatena gli elementi stringa dello stream                  |
+| metodo                                                                                  | cosa fa                                                                                         |
+| --------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `counting()`                                                                            | restituisce un collector con un solo elemento: il numero di elementi nello stream (con un long) |
+| `maxBy/minBy(comparator)`                                                               | ... con il minimo o il massimo                                                                  |
+| `summingInt(lambda che mappa elementi a intero)`                                        | ... con somma in int                                                                            |
+| `summingDouble()`                                                                       | somma in double                                                                                 |
+| `averagingInt()`                                                                        | media                                                                                           |
+| `averagingDouble()`                                                                     | media come double                                                                               |
+| `joining()` e <br>`joining(separatore)` e <br>`joining(separatore, prefisso, suffisso)` | concatena gli elementi stringa dello stream                                                     |
 
 ##### Collectors.toMap
 - prende in input fino a 4 argomenti:
