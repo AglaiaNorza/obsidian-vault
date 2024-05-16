@@ -10,7 +10,6 @@ sticker: lucide//codesandbox
 > - [[#segnali di controllo|segnali di controllo]]
 > - [[#tempi di esecuzione|tempi di esecuzione]]
 
-
 ### fetch e aggiornamento PC
 leggiamo l'istruzione corrente e, in parallelo, aggiorniamo il PC
  
