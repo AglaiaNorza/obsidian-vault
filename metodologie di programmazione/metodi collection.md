@@ -1,11 +1,5 @@
 ## ArrayList
 
-| metodo                                      | descrizione |
-| ------------------------------------------- | ----------- |
-| `boolean add(E, e)`                         |             |
-| `void add(int index, E element)`            |             |
-| `boolean addAll(Collection<? extends E> c)` |             |
-
 |               Tipo | Metodo                                                                                                                                                                                                        |
 | -----------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `boolean add(E,e)` | Appends the specific element to the end of the list                                                                                                                                                           |

@@ -134,7 +134,7 @@ l.stream().map(String::toUpperCase)
 | ----------------------------------------------------------------------------------------------------------- | ---------------------------------- |
 | `groupingBy(lambda che mappa gli elementi di tipo T in bucket rappresentati da oggetti di un altro tipo S)` | restituisce una `Map<S, List<T>>`  |
 | `groupingBy(lambda, downStreamCollector)`                                                                   | per il raggruppamento multilivello |
-- essenzialmente fa una mappa chiave -> mappa/lista/set
+- essenzialmente fa una mappa (chiave -> mappa/lista/set)
 
 in raccolte multilivello, `Collectors.mapping` è utile per mappare il valore di raggruppamento a un altro tipo.
 ```java
@@ -142,5 +142,125 @@ Map<City, Set<String>> peopleSurnamesByCity =
 people.stream().collect(
 	groupingBy(Person::getCity,
 		 mapping(Person::getLastName, toSet())));
-
 ```
+
+##### creare il proprio collector
+con il metodo statico `Collector.of`, che prende in input 4 argomenti:
+1) un **supplier** per creare la rappresentazione interna
+2) un **accumulator** che aggiorna la rappresentazione con il nuovo elemento
+3) un **combiner**, che "fonde" due rappresentazioni ottenute in modo parallelo 
+4) un **finisher**, che trasforma tutto nel tipo finale
+
+```java
+Collector<Person, StringJoiner, String> personNameCollector
+= Collector.of(
+	()-> new StringJoiner("|"), //supplier
+	(j,p) -> j.add(p.name.toUpperCase()), //accumulator
+	(j1,j2) -> j1.merge(j2), //combiner
+	StringJoiner::toString); //finisher
+
+String names = people.stream()
+		.collect(personNameCollector);
+//darebbe MAX|PETER|PAMELA|DAVID
+```
+
+##### partizionamento di elementi
+`partitioningBy(predicato)` raggruppa in una `Map<Boolean, List<T>>`
+- crea una mappa da booleano a lista di interi che soddisfano quel criterio di predicato in input (quindi una mappa a "due" elementi: le cose che rispettano la condizione e quelle che non la rispettano)
+
+##### distinct
+- restituisce un nuovo stream senza ripetizione di elementi (gli elementi sono tutti distinti tra loro)
+
+> [!Tip] quindi, per creare una lista con solo elementi distinti
+> ```java
+> List< Integer> distinti = l.stream().
+> distinct().collect(toList());
+> ```
+
+
+##### reduce
+operazione *terminale* che effettua una riduzione sugli elementi dello stream utilizzando la funzione data in input.
+
+- prende due input: 
+	1) elemento di identità: l' "accumulatore" su cui si reduce
+	2) la funzione con cui ridurre
+
+```java
+//invece di fare:
+for(int k : lista)
+	somma +=k;
+
+//fai
+lista.stream().reduce(0, (a,b)->a+b);
+//oppure
+lista.stream().reduce(0, Integer::sum);
+```
+
+**<font color="#31859b">versione con un parametro solo</font>**
+esiste anche una versione di `reduce` con un solo parametro - senza elemento di identità - che restituisce un `Optional<T>` perché, se lo stream è vuoto, non avendo l'elemento identità non si sa cosa restituire
+
+> [!Example]+ esempi
+> ```java
+> Optional< String> reduced = l.stream().sorted()
+> 	.reduce((s1,s2)->s1+"#"+s2);
+> ```
+> calcolare la somma del doppio dei valori pari di una lista
+>- con fiilter, map, reduce
+>```java
+>l.stream().filter(e-> e%2= = 0)
+>	.map(e-> e * 2)
+>	.reduce(0, Integer::sum)
+>```
+>- con filter, mapToInt e IntStream.sum
+> ```java
+>l.stream().filter(e-> e%2= = 0)
+>	.mapToInt(e-> e * 2)
+>	.sum();
+>```
+> 
+
+##### limit e skip
+- `limit` (intermedia) limita lo stream a k elementi (k long in input)
+ 
+`List<String> reduced = l.stream().limit(2).collect(toList());`
+
+- `skip` (intermedia) salta k elementi (k long passato in input)
+ 
+ `List<String> reduced = l.stream().skip(2).collect(toList());` (non contiene i primi due elementi della stream)
+
+##### takeWhile/dropWhile
+- `takeWhile` (intermedio) prende elementi finché si verifica la condizione del predicato
+- `dropWhile` (intermedio) salta elementi finché si verifica la condizione del predicato
+
+##### anyMatch/allMatch/noneMatch
+restituiscono un booleano relativo all'esito del matching (se gli elementi rispettano una condizione)
+ 
+`boolean anySwA = l.stream().anyMatch(s->s.startsWith("a");`
+
+##### findFirst e findAny
+operazioni terminali per ottenere il primo elemento e un qualsiasi elemento dello stream
+
+`Optiona<String>v = l2.stream().sorted().findFirst()`
+
+##### mapToInt e IntStream.summaryStatistics
+- è possibile convertire uno `Stream` in un `IntStream`
+- `IntStream` possiede il metodo `summaryStatistics` che restituisce un oggetto di `IntSummaryStatistics` con informazioni su min, max, media, conteggio
+
+```java
+IntSummaryStatistics stats = p.stream()
+	.mapToInt(x->x).summaryStatistics();
+	
+System.out.println(stats.getMin());
+```
+
+##### flatMap
+permette di "unire" gli stream in un unico stream
+- essenzialmente, "appiattisce" le collection (collection di collection -> collection di elementi dalle collection)
+```java
+Map<String, Long> letterToCount =
+words.map(w->w.split("")) //restituisce String[]
+//passi a flatmap il supplier che 
+//rende la collection uno stream
+	.flatMap(Arrays::stream)
+	.collect(groupingBy(identity(), counting()));
+``` 
