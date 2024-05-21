@@ -296,3 +296,43 @@ Stream<Integer> numbers = Stream.iterate(0, n->n+10)
 ```
 
 - è possibile **limitare** uno stream infinito con il metodo `limit`
+
+##### fare copie di stream
+gli stream non sono riutilizzabili, ma è possibile creare un builder di stream tramite una **lambda**.
+
+```java
+Supplier<Stream<String>> streamSupplier = () ->
+Stream.of("d2", "a2", "b1", "b3", "c")
+.filter(s -> s.startsWith("a"));
+```
+- ha più senso se, invece di un Supplier, abbiamo una funzione che prende in input una Collection e restituisce uno stream su tale collection
+
+#### stream paralleli
+- le operazioni su stream sequenziali sono effettuate in un *singolo thread*.
+- le operazioni su stream paralleli sono effettuate contemporaneamente su **thread multipli**
+
+lo stream parallelo è più veloce di quello sequenziale, ma non nel caso in cui le operazioni sono *bloccanti*.
+
+>[!Question] quando usare uno stream parallelo?
+>- quando il problema è parallelizzante
+>- quando posso permettermi di usare più risorse
+>- quando la dimensione del problema è tale da giustificare il sovraccarico dato dalla parallelizzazione
+
+#### mappe
+le mappe non supportano gli stream, ma, da Java8, forniscono numerose funzioni aggiuntive
+
+```java
+map.of() //da Java9
+
+map.computeIfPresent(3, (key, val) -> val + key); 
+//se l'elemento 3 è presente, modifica il valore 
+//associatogli utilizzando la bifunction in input
+
+map.merge(9, "val9", (value, newValue) -> value.concat(newValue));
+
+map.containsKey(9);
+
+map.computeIfAbsent(23, key -> "val" + key);
+
+map.remove(3, "val3"); map.get(3);
+```
