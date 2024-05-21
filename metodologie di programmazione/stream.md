@@ -25,6 +25,19 @@ le operazioni possono essere:
 >- int (`IntStream`), double (`DoubleStream`), long (`LongStream`)
 > 
 >tutte queste estendono l'interfaccia di base `BaseStream`
+> 
+>- si ottengono da uno stream con i metodi `mapToInt`, `mapToLong`, `mapToDouble`
+>- dispongono di due metodi statici: 
+>	- `range(inizio, fine)` - intervallo aperto a destra
+>	- `rangeClosed(inizio, fine)` - intervallo chiuso a destra 
+>>[!Example] IntStream ottenuto da stream di array di interi
+>>```java
+>>Arrays.stream(new int[]{1,2,3}) //restituisce un IntStream
+>>	.map(n->2 * n+1)
+>>	.average()
+>>	.ifPresent(System.out::println);
+>>```
+
 
 #### ottenere uno stream
 1) direttamente *dai dati* con il metodo statico generico
@@ -263,4 +276,23 @@ words.map(w->w.split("")) //restituisce String[]
 //rende la collection uno stream
 	.flatMap(Arrays::stream)
 	.collect(groupingBy(identity(), counting()));
-``` 
+```
+
+> [!Example] stampare i token (distinti) da file
+> ```java
+> Files.lines(Paths.get("stuff.txt"))
+> 
+> .map(line -> line.split("\\s+")) // Stream<String[]>
+> .flatMap(Arrays::stream) // Stream< String>
+> .distinct() // Stream< String>
+> .forEach(System.out::println);
+> ```
+##### ottenere uno stream infinito
+
+con il metodo `iterate()` che, partendo dal primo argomento, restituisce uno stream infinito con **valori successivi** applicando la funzione passata come secondo argomento
+ 
+```java
+Stream<Integer> numbers = Stream.iterate(0, n->n+10)
+```
+
+- è possibile **limitare** uno stream infinito con il metodo `limit`
