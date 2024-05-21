@@ -1,6 +1,34 @@
 ---
 sticker: lucide//align-left
 ---
+
+> [!Info]+ index
+> - [[#ottenere uno stream|ottenere uno stream]]
+> - [[#stream vs collection|stream vs collection]]
+> - [[#metodi delle stream|metodi delle stream]]
+> 	- [[#metodi delle stream#min e max|min e max]]
+> 	- [[#metodi delle stream#filter, forEach|filter, forEach]]
+> 	- [[#metodi delle stream#count|count]]
+> 	- [[#metodi delle stream#sorted|sorted]]
+> 	- [[#metodi delle stream#map|map]]
+> 	- [[#metodi delle stream#collect|collect]]
+> 	- [[#metodi delle stream#Collectors.toMap|Collectors.toMap]]
+> 		- [[#Collectors.toMap#raggruppamento di elementi|raggruppamento di elementi]]
+> 	- [[#metodi delle stream#creare il proprio collector|creare il proprio collector]]
+> 	- [[#metodi delle stream#partizionamento di elementi|partizionamento di elementi]]
+> 	- [[#metodi delle stream#distinct|distinct]]
+> 	- [[#metodi delle stream#reduce|reduce]]
+> 	- [[#metodi delle stream#limit e skip|limit e skip]]
+> 	- [[#metodi delle stream#takeWhile/dropWhile|takeWhile/dropWhile]]
+> 	- [[#metodi delle stream#anyMatch/allMatch/noneMatch|anyMatch/allMatch/noneMatch]]
+> 	- [[#metodi delle stream#findFirst e findAny|findFirst e findAny]]
+> 	- [[#metodi delle stream#mapToInt e IntStream.summaryStatistics|mapToInt e IntStream.summaryStatistics]]
+> 	- [[#metodi delle stream#flatMap|flatMap]]
+> 	- [[#metodi delle stream#ottenere uno stream infinito|ottenere uno stream infinito]]
+> 	- [[#metodi delle stream#fare copie di stream|fare copie di stream]]
+> - [[#stream paralleli|stream paralleli]]
+> - [[#mappe|mappe]]
+
 abbiamo già iniziato a parlare di *stream* in riferimento ai [[file]].
 
 `java.util.stream.Stream` è un'interfaccia che rappresenta una sequenza di elementi su cui possono essere effettuate una o più operazioni.
