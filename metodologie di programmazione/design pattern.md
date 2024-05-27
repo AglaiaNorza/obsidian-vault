@@ -89,3 +89,17 @@ il decorator:
 - è costruito con un'istanza concreta della classe astratta dell'oggetto
 - inoltra le richieste di tutti i comportamenti all'oggetto (componente)
 - effettua azioni aggiuntive
+
+![[decorator pattern.png|center|500]]
+
+>[!info] principio di design
+>le classi dovrebbero essere **aperte all'estensione ma chiuse alla modifica** (Open-Closed Principle)
+
+#### command/callback
+- a volte è necessario effettuare richieste ad oggetti senza sapere nulla sull'operazione richiesta
+- l'operazione va eseguita **in futuro**, quando necessario - è necessario rendere l'operazione modulare, in modo che possa essere associata a un oggetto (diverse associazioni possono essere fatte dinamicamente)
+
+##### implementazione
+1) si crea un'**interfaccia** che espone il metodo generale
+	- ogni funzione concreta implementa l'interfaccia `Callback`
+	- 
