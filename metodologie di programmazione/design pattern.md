@@ -102,4 +102,4 @@ il decorator:
 ##### implementazione
 1) si crea un'**interfaccia** che espone il metodo generale
 	- ogni funzione concreta implementa l'interfaccia `Callback`
-	- 
+
