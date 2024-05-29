@@ -50,8 +50,7 @@
 >
 >**svantaggi**:
 >- la costruzione richiede *più chiamate* a metodi
-
-
+ 
 #### singleton
 - serve a creare **classi con un'unica istanza**
 1) privatizzare tutti i costruttori e, se non presenti, privatizzare quello di default
