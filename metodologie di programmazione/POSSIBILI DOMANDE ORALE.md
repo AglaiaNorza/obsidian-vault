@@ -78,7 +78,13 @@
 >- un'interfaccia specifica il **comportamento** che un oggetto deve presentare all'esterno - l'implementazione delle operazioni non viene definita
 >- un'interfaccia è una classe astratta al 100%
 
->[!Question]- metodi statici e di default nelle interfacce
+>[!Question]- caratteristiche (componenti) delle interfacce
 >- è possibile definire implementazione di metodi statici o di default all'interno di un'interfaccia (i metodi statici non godono di polimorfismo vs google : Default methods allow you to add methods to existing interfaces without breaking existing implementations.)
+>- tutti i metodi di un'interfaccia sono implicitamente `public abstract`
+>- tutti i campi di un'interfaccia sono implicitamente `public static final`
 
+>[!Question]- iterable e iterator
+>- iterator è un'interfaccia che permette di iterare su collezioni. espone i metodi `hasNext()`, `next()` e `remove()`
+>- iterator è in relazione con l'interfaccia `Iterable` - chi implementa `Iterable` restituisce un `Iterator`
+>- 
 
