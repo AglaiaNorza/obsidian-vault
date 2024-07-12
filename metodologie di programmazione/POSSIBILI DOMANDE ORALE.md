@@ -59,3 +59,26 @@
 >- is-a rappresenta l'**ereditarietà**
 >- has-a rappresenta la **composizione** - un oggetto contiene come membri riferimenti ad altri oggetti
 
+>[!Question]- cos'è il polimorfismo?
+>- il polimorfismo permette a una variabile di un certo tipo di contenere un riferimento a un oggetto di qualsiasi sua sottoclasse.
+>- vengono chiamati i metodi in base al tipo effettivo dell'oggetto
+>- il polimorfismo sfrutta il **binding dinamico** - l'associazione tra una variabile e un metodo viene stabilita a runtime
+
+>[!Question]- come funzionano le conversioni con il polimorfismo?
+>- si può creare un oggetto di una sottoclasse e assegnarlo a una variabile della superclasse
+>- per fare `downcasting`, invece, serve casting esplicito
+>- quando si fa `upcasting`, si possono chiamare solo i metodi e vedere solo i campi della superclasse
+
+>[!Question]- classi e metodi final
+>- la parola chiave final impedisce di creare sottoclassi o di reimplementare metodi
+
+## slide 7 (interfacce)
+
+>[!Question]- cos'è un'interfaccia?
+>- un'interfaccia specifica il **comportamento** che un oggetto deve presentare all'esterno - l'implementazione delle operazioni non viene definita
+>- un'interfaccia è una classe astratta al 100%
+
+>[!Question]- metodi statici e di default nelle interfacce
+>- è possibile definire implementazione di metodi statici o di default all'interno di un'interfaccia (i metodi statici non godono di polimorfismo vs google : Default methods allow you to add methods to existing interfaces without breaking existing implementations.)
+
+
