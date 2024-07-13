@@ -86,5 +86,5 @@
 >[!Question]- iterable e iterator
 >- iterator è un'interfaccia che permette di iterare su collezioni. espone i metodi `hasNext()`, `next()` e `remove()`
 >- iterator è in relazione con l'interfaccia `Iterable` - chi implementa `Iterable` restituisce un `Iterator`
->- 
+
 
