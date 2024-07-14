@@ -82,9 +82,63 @@
 >- è possibile definire implementazione di metodi statici o di default all'interno di un'interfaccia (i metodi statici non godono di polimorfismo vs google : Default methods allow you to add methods to existing interfaces without breaking existing implementations.)
 >- tutti i metodi di un'interfaccia sono implicitamente `public abstract`
 >- tutti i campi di un'interfaccia sono implicitamente `public static final`
+>- in Java è permessa l'implementazione di molteplici interfacce, mentre non è permessa l'ereditarietà multipla
 
 >[!Question]- iterable e iterator
 >- iterator è un'interfaccia che permette di iterare su collezioni. espone i metodi `hasNext()`, `next()` e `remove()`
 >- iterator è in relazione con l'interfaccia `Iterable` - chi implementa `Iterable` restituisce un `Iterator`
->- 
 
+>[!Question]- classi nested e inner
+>- le classi presenti all'interno di altre classi si chiamano **nested classes**. queste si definiscono **inner** se non sono statiche.
+>- per istanziare una classe inner, è necessario prima istanziare la classe esterna che la contiene. (ogni classe interna ha un riferimento implicito alla classe che la contiene). dalla classe interna si può accedere a tutte le variabili e a tutti i metodi della classe esterna.
+>- una classe annidata statica non richiede l'esistenza di un oggetto della classe esterna, e non ha riferimenti impliciti ad essa.
+
+>[!Question]- interfacce SAM
+>- un'interfaccia SAM è un'interfaccia funzionale composta da un singolo metodo astratto (single abstract method)
+>- a ogni metodo che accetta una SAM si può passare una lambda compatibile
+
+>[!Question]- classi anonime vs espressioni lambda
+>- `this` - nelle classi anonime si riferisce all'oggetto anonimo, nelle lambda all'oggetto che le contiene
+>- compilazione - le anonime sono compilate come classi interne, le lambda come metodi privati
+
+## slide 8 (strutture dati)
+
+>[!Question]- gerarchia degli iterabili (collections)
+>![[gerarchia collections.png|center|300]]
+> - `Collection` è un'interfaccia alla base della gerarchia delle collezioni
+> - `Set` è una collezione senza duplicati
+> - `List` è una collezione ordinata che può contenere duplicati
+> - `Map` associa coppie chiave-valore senza chiavi duplicate
+> - `Queue` è una collezione FIFO (coda)
+>   
+>  altre sottocollezioni fondamentali: `ArrayList, LinkedList, HashSet, TreeSet, HashMap, TreeMap (ordinamento sulle chiavi)...`
+
+>[!Question]- come si può iterare sulle collezioni?
+>- con gli iterator
+>- con un foreach
+>- mediante indici (solo per le liste)
+
+>[!Question]- riferimenti a metodi
+>- sintassi `Classe::metodoStatico` oppure `oggetto::metodoNonStatico` oppure `classe::metodoNonStatico` - la differenza tra il riferimento alla classe e all'oggetto è che, nel caso della classe, non stiamo specificando su che oggetto applicare il metodo
+
+>[!Question]- a cosa possono accedere le lambda?
+>- (simile alle anonime) ai campi di istanza e variabili statiche
+>- a variabili final del metodo che le definisce
+
+>[!Question]- tipi di SAM
+>- `Predicate<T>` funzione booleana a un solo argomento generico
+>- `Function<T, R>` - funzione a un argomento e un tipo di ritorno generici
+>- `Supplier<T>` - funzione con un argomento generico e nessun tipo di ritorno
+
+## slide 9 (tipi generici)
+
+>[!Question]- sintassi tipi generici
+>- nelle classi, vanno inseriti dopo il nome della classe `public class Class<T>`
+>- nei metodi, prima del tipo di ritorno `public static <T> void`
+
+>[!Question]- come funzionano i generici negli array?
+>- è possibile creare un array di tipo `T extends Classe`, ma questo rende essenzialmente impossibile l'aggiunta di elementi all'array (visto che non si può avere un array eterogeneo)
+>- si può quindi creare un array del supertipo e aggiungere ad esso gli elementi dei diversi sottotipi - java farà upcasting a tempo di compilazione
+
+>[!Question]- il jolly
+>- nel caso in cui non sia necessario usare il tipo generico nel corpo di una classe che necessita di generici, è possibile utilizzare il jolly `?` (wildcard)
