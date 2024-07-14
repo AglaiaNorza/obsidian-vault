@@ -53,7 +53,7 @@
 >[!Question]- tipi di visibilità
 >- **private** - visibile solo all'interno della classe
 >- **public** - visibile a tutti
->- **default/package** - visibile all'interno del pacchetto
+>- **default/package** - visibile all'interno del pacchetto (il costruttore delle enum lo ha di default)
 >- **protected** - visibile all'interno del pacchetto e alle sottoclassi
 
 >[!Question]- is-a vs has-a
