@@ -13,6 +13,7 @@
 > 
 >metodi
 >- si può accedere a un metodo statico da dentro una classe con la sua segnatura, o da fuori con la segnatura `Classe.metodo()`
+>- non si possono usare i campi di classe ma solo statici
 >
 >classi
 >- una classe interna static non richiede l'esistenza di un oggetto della classe che la contiene e non ha riferimento implicito ad essa
