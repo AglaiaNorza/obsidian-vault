@@ -157,7 +157,7 @@
 >- `super` - posso leggere e scrivere nella lista (e posso metterci super e sub classi del tipo specificato), ma non posso assumere il tipo (il `get` mi ritornerà un Object)
 
 >[!Question]- come ottenere informazioni sull'istanza di un generico
->per via della cancellazione del tipo generico,
+>per via della cancellazione del tipo generico, non si può conoscere il tipo generico a tempo di esecuzione. per controllare il tipo di una collection, quindi, `instanceof List<Integer>` non funziona, mentre `instanceof List<?>` sì.
 >lista t e lista ?
 
 >[!Question]- vincoli sul tipo generico
