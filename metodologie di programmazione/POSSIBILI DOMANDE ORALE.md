@@ -1,3 +1,6 @@
+---
+sticker: lucide//message-square-dashed
+---
 ## slide 2/4 (oggetti)
 
 >[!Question]- incapsulamento: cos'è e perché farlo
