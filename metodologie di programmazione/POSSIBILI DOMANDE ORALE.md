@@ -145,10 +145,19 @@
 >- nel caso in cui non sia necessario usare il tipo generico nel corpo di una classe che necessita di generici, è possibile utilizzare il jolly `?` (wildcard)
 
 >[!Question]- come funziona la cancellazione del tipo?
+>quando si utilizza un tipo generico nella segnatura di un metodo/classe, il compilatore, nel tradurlo in bytecode, elimina la sezione del tipo parametrico e lo sostituisce con quello **reale**. (per esempio, di default, T viene sostituito con Object)
 
 >[!Question]- come funziona PECS?
+>"Producer Extends, Consumer Supers"
+>- `extends` e `super` esistono per due necessità principali: leggere e scrivere in una collezione generica.
+> 
+>ci sono 3 modi per farlo:
+>- `<?>` - non so nulla sul tipo, posso solo leggere ma non scrivere
+>- `extends` - so qualcosa sul tipo, posso comunque solo leggere ma posso svolgere operazioni sugli elementi della collezione (es. se sono `? extends Integer` usare le operazioni di Integer). infatti, il tipo dato dal `get` è quello che viene esteso
+>- `super` - posso leggere e scrivere nella lista (e posso metterci super e sub classi del tipo specificato), ma non posso assumere il tipo (il `get` mi ritornerà un Object)
 
->[!Question]- come ottenere informazioni sull'istanza di un generico?
+>[!Question]- come ottenere informazioni sull'istanza di un generico
+>per via della cancellazione del tipo generico,
 >lista t e lista ?
 
 >[!Question]- vincoli sul tipo generico
