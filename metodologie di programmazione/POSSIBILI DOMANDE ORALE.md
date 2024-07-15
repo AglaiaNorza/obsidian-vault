@@ -143,3 +143,45 @@
 
 >[!Question]- il jolly
 >- nel caso in cui non sia necessario usare il tipo generico nel corpo di una classe che necessita di generici, è possibile utilizzare il jolly `?` (wildcard)
+
+>[!Question]- come funziona la cancellazione del tipo?
+
+>[!Question]- come funziona PECS?
+
+>[!Question]- come ottenere informazioni sull'istanza di un generico?
+>lista t e lista ?
+
+>[!Question]- vincoli sul tipo generico
+>
+
+>[!Question]- overloading di metodi con tipo generico
+>
+
+>[!Question]- come funziona la cancellazione del tipo?
+>
+
+## slide 10 (eccezioni)
+
+>[!Question]- throware e catchare le eccezioni
+
+>[!Question]- differenza errori ed exception (gerarchie exception)
+
+>[!Question]- blocco finally
+
+>[!Question]- perché dovresti catchare errori più specifici?
+
+>[!Question]- come fare eccezioni personalizzate?
+
+>[!Question]- eccezioni checked e unchecked
+>java ti obbliga o no
+
+>[!Question]- come funziona la cancellazione del tipo?
+
+## slide 11/12 (file, ricorsione, stream)
+>[!Question]- come funziona la mutua ricorsione?
+
+>[!Question]- in che modi si può leggere un file?
+>	bufferedreader reader scanner printwriter formatter
+
+>[!Question]- optional
+>
