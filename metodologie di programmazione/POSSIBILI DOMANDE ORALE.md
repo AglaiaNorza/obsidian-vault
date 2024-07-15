@@ -190,7 +190,8 @@
 >[!Question]- come funziona la mutua ricorsione?
 
 >[!Question]- in che modi si può leggere un file?
->	bufferedreader reader scanner printwriter formatter
+>inputstream/outputstream sono byte-oriented, mentre reader/writer sono char-oriented (come Buffered... che derivano da loro).
+>Scanner sta per i cazzi suoi
 
 >[!Question]- optional
 >
