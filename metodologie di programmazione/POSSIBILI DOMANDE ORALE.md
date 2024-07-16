@@ -74,7 +74,7 @@ sticker: lucide//message-square-dashed
 >- quando si fa `upcasting`, si possono chiamare solo i metodi e vedere solo i campi della superclasse
 
 >[!Question]- classi e metodi final
->- la parola chiave final impedisce di creare sottoclassi o di reimplementare metodi
+>- per quantola parola chiave final impedisce di creare sottoclassi o di reimplementare metodi
 
 ## slide 7 (interfacce)
 
