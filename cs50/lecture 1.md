@@ -35,6 +35,23 @@ if(x<y){
 }
 ```
 
+
+```C
+switch(smth) {
+	case x:
+	//code
+	break;
+
+	case y:
+	//code
+	break;
+
+	default:
+	//code
+}
+```
+
+
 - **loops** follow this syntax:
 
 ```C
@@ -67,10 +84,11 @@ return name(type parameter){}
 
 ### types
 
-- `bool`
-- `char`
-- `double`
-- `float`
-- `int`
-- `long`
-- `string`
+- `bool` - 1 byte
+- `char` - 1 byte
+- `double` - 8 bytes
+- `float` - 4 bytes 
+- `int` - 4 bytes
+- `long` - 8 bytes
+- `string` - ? bytes
+
