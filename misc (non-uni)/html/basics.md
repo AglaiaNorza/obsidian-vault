@@ -43,15 +43,22 @@ an image element doesn't wrap content to affect it, so it doesn't have a closing
 - `<meta charset="utf-8" />` the character set should use utf-8
 - `<meta name="viewport" content="width=device-width" />` (the mobile browser's *viewport* is the area of the window in which web content can be seen, which is not necessarily the same size as the rendered page.)  - this element ensures the page renders at the width of the viewport.
 - `<title></title>` title of the page - appears in the browser tab the page is loaded in
-```
 - `<body></body>` contains **all the content that is shown**
-```
-
 ## main elements
 (comments are written inside `<!--` `-->`)
-#### headings
-HTML contains 6 heading levels (1-6)
-
+#### headings, paragraphs
+HTML contains 6 heading levels (1-6) `<h1></h1>`
+paragraphs contain text `<p></p>`
+#### lists
+the most common lists are:
+- **ordered lists** - `<ol>` element
+- **unordered lists** - `<ul>` element
+each item inside the list is put in a `<li>` element
+#### links
+links use the `<a>` element ("anchor"), which has a `href` ("hypertext reference") attribute for the actual link.
+```html
+<a href="https://www.mozilla.org/en-US/about/manifesto"/> Firefox</a>
+```
 #### images
 The `<img>` element contains: 
 - a `src` attribute - the path to the image
