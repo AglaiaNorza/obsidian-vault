@@ -59,8 +59,24 @@ links use the `<a>` element ("anchor"), which has a `href` ("hypertext reference
 ```html
 <a href="https://www.mozilla.org/en-US/about/manifesto"/> Firefox</a>
 ```
+- The `target` attribute specifies where to open the linked document. `target="_blank"` opens the linked document in a new tab or window.
 #### images
 The `<img>` element contains: 
 - a `src` attribute - the path to the image
 - a `alt` attribute - a description of the image (used for visually impaired people or for when the image doesn't load)
-
+The `figure` element represents self-contained content and allows you to associate an image with a caption.
+```html
+<figure>
+	<img src="https://cdn.freecodecamp.org/curriculum/cat-photo-app/lasagna.jpg" alt="A slice of lasagna on a plate.">
+	<figcaption>Cats love lasagna</figcaption>
+</figure>
+```
+#### section
+The `section` element is used to define sections in a document, such as chapters, headers, footers, or any other sections of the document. It is a semantic element that helps with SEO and accessibility.
+```html
+<section>
+  <h2>Section Title</h2>
+  <p>Section content...</p>
+</section>
+```
+ (when you adding a lower rank heading element to the page, it's implied that a new subsection is being started)
