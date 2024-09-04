@@ -18,3 +18,6 @@ the `<img>` element s a void element -it cannot have any child content and canno
   </figcaption>
 </figure>
 ```
+
+there are other ways to create and manipulate images with HTML, such as:
+- the `<canvas>` element - it provides sdhaushas
