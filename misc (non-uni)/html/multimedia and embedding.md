@@ -20,4 +20,14 @@ the `<img>` element s a void element -it cannot have any child content and canno
 ```
 
 there are other ways to create and manipulate images with HTML, such as:
-- the `<canvas>` element - it provides sdhaushas
+- the `<canvas>` element - it provides APIs to draw 2D graphics w/JavaScript
+- SVG 
+- WebGL (graphics API)
+
+### video and audio
+The `video` element allows the embedding of videos.
+it has the `src` attribute, and a `controls` keyword (other than the default controls, custom ones can be created with JavaScript)
+```html
+<video src="video.mp4" controls/>
+```
+

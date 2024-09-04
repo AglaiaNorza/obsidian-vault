@@ -10,5 +10,6 @@
   "make-md",
   "cycle-through-panes",
   "obsidian-latex-suite",
-  "obsidian-plugin-toc"
+  "obsidian-plugin-toc",
+  "obsidian-relative-line-numbers"
 ]
