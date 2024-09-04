@@ -44,7 +44,8 @@
     "//algoritmi 1",
     "//misc (non-uni)",
     "//misc (non-uni)/misc (non-uni)/html",
-    "misc (non-uni)/misc (non-uni)/cs50"
+    "misc (non-uni)/misc (non-uni)/cs50",
+    "//misc (non-uni)/misc (non-uni)/html"
   ],
   "expandFolderOnClick": true,
   "menuTriggerChar": "/",
