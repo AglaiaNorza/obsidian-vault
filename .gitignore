@@ -3,8 +3,7 @@
 .obsidian/themes
 .makemd/fileCache.mdc
 .makemd/superstate.mdc
-.obsidian/plugins/make-md/data.json
-<<<<<<< HEAD
+#.obsidian/plugins/make-md/data.json
 .obsidian/plugins/make.md/Spaces.mdb
 =======
 .makemd/superstate.mdc
@@ -13,4 +12,4 @@
 .makemd/fileCache.mdc
 .makemd/fileCache.mdc
 .makemd/fileCache.mdc
->>>>>>> origin/main
+.space/context.md

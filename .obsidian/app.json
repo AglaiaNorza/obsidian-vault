@@ -8,5 +8,7 @@
     "downscalePercent": 100
   },
   "attachmentFolderPath": "attachments",
-  "alwaysUpdateLinks": true
+  "alwaysUpdateLinks": true,
+  "vimMode": true,
+  "showLineNumber": true
 }
