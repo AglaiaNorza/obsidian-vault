@@ -77,3 +77,43 @@ The bare essentials needed for an `<iframe>` are:
 
 The `<embed>` and `<object>` elements are general purpose embedding tools for external content (like pdfs).
 
+### vector graphics
+SVG is a XML-based language for describing vector images.
+It defines elements for creating basic and complex shapes.
+
+SVGs can be embedded via an `<img>` element like a normal image, or the SVG code can be pasted inside an HTML document (*inlining SVG*) with `<svg></svg>`. Another way to embed SVGs is through `iframe`, but it's not recommended.
+
+### responsive images
+Sometimes the need to display images with varying sizes arises - this can be fixed with the `srcset` and `sizes` attributes.
+- `srcset` defines the set of images the browser can choose between, and what size each image is. Each set of image information is separated from the others by a comma. The syntax is:
+	1) image filename
+	2) space
+	3) image's intrinsic width in pixels (not `px`)
+- `sizes` defines a set of media conditions (like screen widths) and indicates what image size would be the best choice. The syntax is:
+	1) a media condition (ex `max-width:600px`)
+	2) space
+	3) the width of the slot the image will fill when the media condition is true
+
+With these attributes in place, the browser will:
+
+- Look at screen size, pixel density, zoom level, screen orientation, and network speed.
+- Work out which media condition in the sizes list is the *first one to be true*.
+- Look at the slot size given to that media query.
+- Load the image referenced in the srcset list that has the same size as the slot or, if there isn't one, the first image that is bigger than the chosen slot size.
+
+For resolution issues, the browser can choose an appropriate resolution image with the use of `srcset` with x-descriptors (1.5x, 2x) and without sizes.
+```html
+<img
+  srcset="elva-fairy-320w.jpg, elva-fairy-480w.jpg 1.5x, elva-fairy-640w.jpg 2x"
+  src="elva-fairy-640w.jpg"
+  alt="Elva dressed as a fairy" />
+```
+
+The `<picture>` element allows us to implement the changing of sizes. It contains multiple `<source>` elements that provide different sources for the browser to choose from, followed by the `<img>` element.
+```html
+<picture>
+  <source media="(max-width: 799px)" srcset="elva-480w-close-portrait.jpg" />
+  <source media="(min-width: 800px)" srcset="elva-800w.jpg" />
+  <img src="elva-800w.jpg" alt="Chris standing up holding his daughter Elva" />
+</picture>
+```
