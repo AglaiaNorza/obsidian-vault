@@ -42,7 +42,10 @@
     "//assembly",
     "//assembly",
     "//algoritmi 1",
-    "//cs50"
+    "//cs50",
+    "//misc (non-uni)",
+    "//misc (non-uni)/misc (non-uni)/html",
+    "//misc (non-uni)/misc (non-uni)/html + css"
   ],
   "expandFolderOnClick": true,
   "menuTriggerChar": "/",
