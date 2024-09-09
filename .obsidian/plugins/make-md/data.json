@@ -42,8 +42,10 @@
     "//assembly",
     "//assembly",
     "//algoritmi 1",
-    "//cs50",
     "//misc (non-uni)",
+    "//misc (non-uni)/misc (non-uni)/html",
+    "misc (non-uni)/misc (non-uni)/cs50",
+    "//misc (non-uni)/misc (non-uni)/html",
     "//misc (non-uni)/misc (non-uni)/html",
     "//misc (non-uni)/misc (non-uni)/html + css"
   ],
@@ -71,7 +73,8 @@
   "waypoints": [
     "Spaces/Home",
     "/",
-    "spaces://$tags"
+    "spaces://$tags",
+    "misc (non-uni)"
   ],
   "spacesUseAlias": false,
   "fmKeyAlias": "aliases",
