@@ -12,3 +12,7 @@ p {
   border: 1px solid black;
 }
 ```
+
+#### element selectors
+- element selectors select all of the elements of  one type
+- class selectors (which start with a `.`) only target elements belonging to that class
