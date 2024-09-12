@@ -1,1 +1,1 @@
-In 
+In CSS, you can create internal or external style sheets:q:
