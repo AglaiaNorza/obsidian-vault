@@ -53,7 +53,7 @@ the most popular ones are:
 - `rem` (typically used for font size) - relative to the size of the root element (by default, most browsers use a font size value of 16px. so, if the root element is 16px, an element with the value 1rem will also equal 16px)
 ```CSS
 p {
-	font-size: 2rem; /* typically 32px (16*2) */
+	font-size: 2rem; /* typically 32px (16*2) /
 }
 ```
 - `em` depends on the font-size of the parent element - it could be used in something like this:
@@ -62,7 +62,7 @@ h1 {
 	font-size: 3rem;
 	padding: 1em;
 }
-/* here, 1em is equivalent to the 3em font-size (because the element's size is 3em) */
+/* here, 1em is equivalent to the 3em font-size (because the element's size is 3em) /
 ```
 
 - `ch` - the width of the glyph "0" of the element's font (helps to set the character width) - for example, one could give a paragraph a width of 40ch to make it span around 40 characters:
@@ -92,8 +92,19 @@ p {
 a basic CSS reset's goal is to reset settings like margin, paddings etc
 ```CSS
 * {
-	  marigin: 0;
+	  margin: 0;
 	  padding: 0;
-	  box-sizing: content-box;
+	  box-sizing: content-box;:
   }
+```
+
+another box-sizing option is: `border-box`. `border-box` calculates the dimensions based on a sum of the contents of the border:
+(it includes the border and the padding, but not the margin)
+```CSS
+h1 {
+	border: 2px dashed red;
+	width: 400px;
+	padding: 0.5em;
+}
+*/ in this case, the content would be 348px, plus the 24 px of padding and 2px of border *
 ```
