@@ -87,3 +87,13 @@ p {
 - `vw` - relative to  the viewport width 
 
 ### box models
+![[boxmodel.png]]
+
+a basic CSS reset's goal is to reset settings like margin, paddings etc
+```CSS
+* {
+	  marigin: 0;
+	  padding: 0;
+	  box-sizing: content-box;
+  }
+```
