@@ -49,7 +49,7 @@ Anche gli interi hanno un formato da 16 bit: 1 bit per il segno, e 15 per la mag
 
 ![[formato-istruzioni.png|400]]
 #### interruzioni
-le interruzioni interrompono la normale esecuzione sequenziale del processore.
+le interruzioni interrompono la normale esecuzione sequenziale del processore (who would have thought).
 - come consequenza, viene eseguito software "di sistema", parte del sistema operativo.
 
 Le cause sono molteplici, e danno luogo a diverse *classi* di interruzioni:
@@ -57,6 +57,21 @@ Le cause sono molteplici, e danno luogo a diverse *classi* di interruzioni:
 - da I/O, da fallimento hardware, da timer (asincrone)
 
 Le interruzioni sincrone interrompono immediatamente l'esecuzione del programma, mentre mentre quelle asincrone vengono sollevate successivamente.
+
+>[!example] classi di interruzioni asincrone
+>- interruzioni da I/O
+>- interruzioni da fallimento HW (es. power failure)
+>- interruzioni da comunicazione tra CPU
+>- interruzioni da timer
+> 
+>per i processori intel, sono chiamati *interrupt*
+
+>[!example] classi di interruzioni sincrone
+>- interruzioni di programma causate da: overflow, divisione per 0, debugging, errori di riferimenti a memoria, istruzioni errate, syscall
+> 
+> per i processori intel, sono chiamate *exception*
+
+
 
 Per le interruzioni asincrone, una volta che l'handler è terminato, si riprende dall'istruzione *successiva a quella interrotta*. Per quanto riguarda le interruzioni sincrone, invece, non è detto.
 Esistono infatti diversi tipi di errori:
@@ -66,3 +81,10 @@ Esistono infatti diversi tipi di errori:
 | fault             | errore *corregibile*, viene rieseguita la stessa istruzione       |
 | abort             | errore *non corregibile*, si esegue software collegato all'errore |
 | trap, system call | si continua dall'istruzione successiva                            |
+### fase di interruzione
+ad ogni ciclo fetch-execute, viene controllato anche se c'è stata un'interruzione o un'exception - in quel caso, il programma viene sospeso e viene eseguita la 
+ *interrupt-handler routine*.
+ 
+![[interrupt-handler.png]]
+
+Nell'interrupt handler, sistema operativo e hardware collaborano per salvare le informazioni e settare il PC.

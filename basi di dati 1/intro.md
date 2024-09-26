@@ -17,7 +17,6 @@ Gli elementi di un modello relazionale sono:
 - **campi** - informazioni di interesse
 
 questi elementi sono intesi come tuple, e vengono raccolti in una tabella (**istanza**)
-ciao sono gay, pero per te faro un-e''lxception
-grz
+
 
 una **transazione** è una sequenza di operazioni che costituiscono un'unica operazione logica
