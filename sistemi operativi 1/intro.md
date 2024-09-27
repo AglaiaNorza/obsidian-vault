@@ -71,8 +71,6 @@ Le interruzioni sincrone interrompono immediatamente l'esecuzione del programma,
 > 
 > per i processori intel, sono chiamate *exception*
 
-
-
 Per le interruzioni asincrone, una volta che l'handler è terminato, si riprende dall'istruzione *successiva a quella interrotta*. Per quanto riguarda le interruzioni sincrone, invece, non è detto.
 Esistono infatti diversi tipi di errori:
 
@@ -88,3 +86,88 @@ ad ogni ciclo fetch-execute, viene controllato anche se c'è stata un'interruzio
 ![[interrupt-handler.png]]
 
 Nell'interrupt handler, sistema operativo e hardware collaborano per salvare le informazioni e settare il PC.
+
+
+yada yada yada slide
+
+![[interruzione.png|200]]
+
+>[!info] istruzioni disabilitate
+>In alcuni casi, le interruzioni possono essere disabilitate.
+> 
+>![[interruzioni-disabilitate.png|400]]
+
+
+**interruzioni annidate**: se, mentre eseguo un'interruzione, mi arriva una seconda interruzione, metto momentaneamente in pausa la prima per eseguire la seconda
+**interruzioni sequenziali**: se, mentre ... , finisco di eseguire la prima per passare alla seconda
+
+### gestione I/O
+![[io-programmato.png|200]]
+ 
+In passato, il modo di gestire l'I/O era l'**input/output programmato**: 
+- l'azione viene effettuata, invece che dal processore, dal modulo di I/O, che setta i bit appropriati sul registro di stato dell'I/O
+- non ci sono interruzioni
+- il processore controlla lo status finché l'operazione non è completa (busy waiting)
+
+![[io-interruzioni.png|200]]![[io-interruzioni.png|200]]![[io-interruzioni.png|200]]![[io-interruzioni.png|200]]![[io-interruzioni.png|200]]![[io-interruzioni.png|200]]![[io-interruzioni.png|200]]![[io-interruzioni.png|200]]
+
+Una gestione più moderna è quella dell'**input/output da interruzioni**:
+- il processore viene interrotto quando il modulo I/O è pronto a scambiare dati (la CPU non deve aspettare e controllare costantemente, ma può fare altre cose)
+- il processore salva il contesto del programma che stava eseguendo e comincia ad eseguire il gestore dell'interruzione
+- non c'è inutile attesa, ma consuma comunque tempo di processore, poiché ogni singolo dato letto o scritto interrompe l'esecuzione del processore
+ > [!example] flusso di controllo
+> ![[flusso-IO.png|400]]
+>  
+>  1) nel primo caso, si può notare che il processore deve finire di eseguire il write prima di continuare con le operazioni precedenti <br></br>
+>  2) nel secondo caso, il processore, una volta ricevuto un write, manda un comando al modulo dell'I/O e continua a svolgere le operazioni fino a quando l'interrupt handler non lo notifica del fatto che l'operazione è terminata <br></br>
+>  3) nel terzo caso vediamo come, se l'operazione di I/O è particolarmente lunga, se riceve una seconda richiesta di write prima che la prima sia terminata, la CPU termina la prima prima di mandare il comando per la seconda e continuare le altre operazioni
+
+![[DMA.png|300]]
+Il processo utilizzato dai computer più attuali è invece quello dell'**accesso diretto in memoria**:
+- le istruzioni di I/O tipicamente richiedono di trasferire informazioni tra dispositivo di I/O e memoria: la *DMA* trasferisce un blocco di dati direttamente da/alla memoria
+- un'interruzione viene mandata quando il trasferimento è completato
+
+
+### multiprogrammazione
+- un processore deve eseguire più programmi contemporaneamente
+- la sequenza con cui i programmi sono eseguiti dipende dalla loro priorità e dal fatto che siano o meno in attesa di I/O
+- Alla fine della gestione di un’interruzione, il controllo potrebbe non tornare al programma che era in esecuzione al momento dell’interruzione
+
+## gerarchia della memoria
+![[gerarchia-memoria.png|300]]
+
+La memoria ha una gerarchia, organizzata in modo che, dall'alto verso il basso:
+- diminuisce la velocità di accesso
+- diminuisce il costo al bit
+- aumenta la capacità
+- diminuisce la frequenza di accesso alla memoria da parte della CPU
+
+
+### cache
+anche all'interno dell'inboard memory stessa ci sono importanti differenze di velocità: infatti, la velocità del processore è maggiore della velocità di accesso alla memoria principale.
+- per evitare eccessivi tempi di attesa, tutti i computer hanno una memoria *cache*, piccola e veloce, che sfrutta il principio di località (se si utilizzano dei dati a un determinato indirizzo, è probabile che a breve serviranno i dati ad esso vicini)
+- la cache contiene copie di porzioni della RAM (quelle a cui accedere più velocemente)
+- il processore controlla se un dato è nella cache: se non è presente (miss), il blocco corrispettivo viene caricato (per il principio di località)
+- è gestita completamente dall'hardware: assembler, compilatore, SO ecc. non la vedono
+
+
+
+
+SLIDE
+
+
+
+### servizi offerti da un sistema operativo
+- rilevamento di/reazione ad errori
+- accounting
+- programma che 
+
+
+## kernel
+il kernel è la parte di sistema operativo 
+
+## caratteristiche hardware
+- protezione della memoria: non permette che la zona di memoria contenente il monitor venga modificate
+	- i pro
+- timer: impedisce che un job monopolizzi l'intero sistema
+- istruzioni privilegiate: possono essere eseguite solo dal monitor (es. interruzioni)
