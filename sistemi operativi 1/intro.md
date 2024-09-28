@@ -85,43 +85,54 @@ ad ogni ciclo fetch-execute, viene controllato anche se c'è stata un'interruzio
  
 ![[interrupt-handler.png]]
 
-Nell'interrupt handler, sistema operativo e hardware collaborano per salvare le informazioni e settare il PC.
+Nell'interrupt handler, sistema operativo e hardware collaborano per salvare le informazioni e settare il Program Counter.
+
+![[PC-interrupt-handler.png|300]]
+
+>[!info] iter dell'interruzione di un programma
+> ![[interruption-iter.png|300]] ![[interruzione.png|200]]
+>Una volta completato l'handler, si torna all'indirizzo N+1 (o N, nel caso fosse una fault corregibile)
 
 
-yada yada yada slide
+>[!question] interruzioni disabilitate
+In alcuni casi, le interruzioni possono essere disabilitate.
+In quel caso
+![[interruzioni-disabilitate.png|400]]
 
-![[interruzione.png|200]]
-
->[!info] istruzioni disabilitate
->In alcuni casi, le interruzioni possono essere disabilitate.
-> 
->![[interruzioni-disabilitate.png|400]]
-
-
-**interruzioni annidate**: se, mentre eseguo un'interruzione, mi arriva una seconda interruzione, metto momentaneamente in pausa la prima per eseguire la seconda
-**interruzioni sequenziali**: se, mentre ... , finisco di eseguire la prima per passare alla seconda
+#### interruzioni annidate e sequenziali
+Le interruzioni possono essere di due tipi:
+- **interruzioni annidate**: se, mentre eseguo un'interruzione, mi arriva una seconda interruzione, metto momentaneamente in pausa la prima per eseguire la seconda
+- **interruzioni sequenziali**: se, mentre eseguo un'interruzione, mi arriva una seconda interruzione , finisco di eseguire la prima per poi passare alla seconda
 
 ### gestione I/O
+
+**INPUT/OUTPUT PROGRAMMATO**
+
 ![[io-programmato.png|200]]
- 
+
 In passato, il modo di gestire l'I/O era l'**input/output programmato**: 
 - l'azione viene effettuata, invece che dal processore, dal modulo di I/O, che setta i bit appropriati sul registro di stato dell'I/O
 - non ci sono interruzioni
 - il processore controlla lo status finché l'operazione non è completa (busy waiting)
 
-![[io-interruzioni.png|200]]![[io-interruzioni.png|200]]![[io-interruzioni.png|200]]![[io-interruzioni.png|200]]![[io-interruzioni.png|200]]![[io-interruzioni.png|200]]![[io-interruzioni.png|200]]![[io-interruzioni.png|200]]
+**INPUT/OUTPUT DA INTERRUZIONI**
+
+![[io-interruzioni.png|200]]
 
 Una gestione più moderna è quella dell'**input/output da interruzioni**:
 - il processore viene interrotto quando il modulo I/O è pronto a scambiare dati (la CPU non deve aspettare e controllare costantemente, ma può fare altre cose)
 - il processore salva il contesto del programma che stava eseguendo e comincia ad eseguire il gestore dell'interruzione
 - non c'è inutile attesa, ma consuma comunque tempo di processore, poiché ogni singolo dato letto o scritto interrompe l'esecuzione del processore
  > [!example] flusso di controllo
-> ![[flusso-IO.png|400]]
+> ![[flusso-IO.png|500]]
 >  
 >  1) nel primo caso, si può notare che il processore deve finire di eseguire il write prima di continuare con le operazioni precedenti <br></br>
 >  2) nel secondo caso, il processore, una volta ricevuto un write, manda un comando al modulo dell'I/O e continua a svolgere le operazioni fino a quando l'interrupt handler non lo notifica del fatto che l'operazione è terminata <br></br>
 >  3) nel terzo caso vediamo come, se l'operazione di I/O è particolarmente lunga, se riceve una seconda richiesta di write prima che la prima sia terminata, la CPU termina la prima prima di mandare il comando per la seconda e continuare le altre operazioni
 
+
+**ACCESSO DIRETTO IN MEMORIA**
+ 
 ![[DMA.png|300]]
 Il processo utilizzato dai computer più attuali è invece quello dell'**accesso diretto in memoria**:
 - le istruzioni di I/O tipicamente richiedono di trasferire informazioni tra dispositivo di I/O e memoria: la *DMA* trasferisce un blocco di dati direttamente da/alla memoria
@@ -136,24 +147,41 @@ Il processo utilizzato dai computer più attuali è invece quello dell'**accesso
 ## gerarchia della memoria
 ![[gerarchia-memoria.png|300]]
 
-La memoria ha una gerarchia, organizzata in modo che, dall'alto verso il basso:
+La memoria è organizzata in modo gerarchico, ed è divisa in:
+- **inboard memory**:
+	- registri
+	- cache
+	- main memory (RAM)
+- **outboard storage**
+	- disco magnetico, CD-ROM, CD-RW, DVD-RW, DVD-RAM
+- **off-line storage**
+	- nastro magnetico
+
+Dall'alto verso il basso:
 - diminuisce la velocità di accesso
 - diminuisce il costo al bit
 - aumenta la capacità
 - diminuisce la frequenza di accesso alla memoria da parte della CPU
 
+### memoria secondaria
 
+corrisponde ad outboard e offline storage.
+- è una memoria ausiliaria ed esterna
+- non è volatile, quindi il contenuto non si perde allo spegnimento del computer
+- viene usata per memorizzare files
 ### cache
-anche all'interno dell'inboard memory stessa ci sono importanti differenze di velocità: infatti, la velocità del processore è maggiore della velocità di accesso alla memoria principale.
+anche all'interno dell'inboard memory stessa ci sono importanti differenze di velocità: infatti, la velocità del processore è maggiore della velocità di accesso alla memoria principale (RAM).
 - per evitare eccessivi tempi di attesa, tutti i computer hanno una memoria *cache*, piccola e veloce, che sfrutta il principio di località (se si utilizzano dei dati a un determinato indirizzo, è probabile che a breve serviranno i dati ad esso vicini)
 - la cache contiene copie di porzioni della RAM (quelle a cui accedere più velocemente)
 - il processore controlla se un dato è nella cache: se non è presente (miss), il blocco corrispettivo viene caricato (per il principio di località)
 - è gestita completamente dall'hardware: assembler, compilatore, SO ecc. non la vedono
 
-
-
-
-SLIDE
+>[!info] altre info cache
+>(architettura degli elaboratori de base)
+> - cache anche piccole hanno un grande impatto sulla performance 
+> - bisogna trovare un "sweet spot" per la dimensione di una cache: l'accesso a una cache più piccola è più veloce, ma una cache più grande può contenere più dati
+> - la cache utilizza una funzione di mappatura per determinare dove mettere il blocco proveniente dalla RAM, e un algoritmo di rimpiazzamento per scegliere quale blocco eliminare (comunemente LRU)
+> - la politica di scrittura della cache determina quando scrivere in memoria (o quando un blocco viene modificato - write through, o quando un blocco viene rimpiazzato - write through)
 
 
 
