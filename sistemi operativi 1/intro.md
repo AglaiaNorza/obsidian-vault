@@ -2,6 +2,23 @@
 sticker: lucide//git-compare
 ---
 
+> [!index]
+> - [[#sistema operativo (e i suoi componenti)|sistema operativo (e i suoi componenti)]]
+> 	- [[#sistema operativo (e i suoi componenti)#registri visibili all'utente|registri visibili all'utente]]
+> 	- [[#sistema operativo (e i suoi componenti)#registri interni|registri interni]]
+> 	- [[#sistema operativo (e i suoi componenti)#registri di controllo e stato|registri di controllo e stato]]
+> - [[#esecuzione di istruzioni|esecuzione di istruzioni]]
+> 	- [[#esecuzione di istruzioni#caratteristiche di una macchina ipotetica|caratteristiche di una macchina ipotetica]]
+> 	- [[#esecuzione di istruzioni#interruzioni|interruzioni]]
+> - [[#fase di interruzione|fase di interruzione]]
+> 	- [[#fase di interruzione#interruzioni annidate e sequenziali|interruzioni annidate e sequenziali]]
+> - [[#gestione I/O|gestione I/O]]
+> - [[#multiprogrammazione|multiprogrammazione]]
+> - [[#gerarchia della memoria|gerarchia della memoria]]
+> 	- [[#multiprogrammazione#memoria secondaria|memoria secondaria]]
+> 	- [[#multiprogrammazione#cache|cache]]
+> - [[#gerarchia della memoria#kernel|kernel]]
+> 	- [[#kernel#caratteristiche hardware|caratteristiche hardware]]
 
 ### sistema operativo (e i suoi componenti)
 gestisce le risorse hardware di un sistema computerizzato (processori, RAM, i/o) e fornisce un insieme di servizi agli utenti. 
@@ -204,8 +221,12 @@ anche all'interno dell'inboard memory stessa ci sono importanti differenze di ve
 il kernel ("nucleo") è la parte di sistema operativo che si trova sempre **nella RAM**.
 - contiene le funzioni più usate
 
-#### caratteristiche hardware
-- protezione della memoria: non permette che la zona di memoria contenente il monitor venga modificate
-	- i pro
-- timer: impedisce che un job monopolizzi l'intero sistema
-- istruzioni privilegiate: possono essere eseguite solo dal monitor (es. interruzioni)
+### caratteristiche hardware
+- protezione della memoria - non permette che la zona di memoria contenente il monitor venga modificate
+	- i programmi utente vengono eseguiti in *modalità utente*, mentre il monitor viene eseguito in *modalità sistema* o kernel - (le istruzioni privilegiate possono essere eseguite e si può accedere alle aree protette della memoria)
+- timer - impedisce che un job monopolizzi l'intero sistema
+- istruzioni privilegiate - possono essere eseguite solo dal monitor (es. interruzioni)
+
+>[!question] programmazione singola vs multiprogrammazione
+> - con la *programmazione singola*, il processore deve aspettare che le istruzioni I/O siano completate prima di procedere
+> - con la *multiprogrammazione*, se un job deve aspettare che un'istruzione I/O sia completata, il processore può passare ad un altro job
