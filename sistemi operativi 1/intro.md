@@ -1,6 +1,8 @@
 ---
 sticker: lucide//git-compare
 ---
+
+
 ### sistema operativo (e i suoi componenti)
 gestisce le risorse hardware di un sistema computerizzato (processori, RAM, i/o) e fornisce un insieme di servizi agli utenti. 
 
@@ -130,7 +132,6 @@ Una gestione più moderna è quella dell'**input/output da interruzioni**:
 >  2) nel secondo caso, il processore, una volta ricevuto un write, manda un comando al modulo dell'I/O e continua a svolgere le operazioni fino a quando l'interrupt handler non lo notifica del fatto che l'operazione è terminata <br></br>
 >  3) nel terzo caso vediamo come, se l'operazione di I/O è particolarmente lunga, se riceve una seconda richiesta di write prima che la prima sia terminata, la CPU termina la prima prima di mandare il comando per la seconda e continuare le altre operazioni
 
-
 **ACCESSO DIRETTO IN MEMORIA**
  
 ![[DMA.png|300]]
@@ -161,14 +162,13 @@ Dall'alto verso il basso:
 - diminuisce il costo al bit
 - aumenta la capacità
 - diminuisce la frequenza di accesso alla memoria da parte della CPU
-
-### memoria secondaria
+#### memoria secondaria
 
 corrisponde ad outboard e offline storage.
 - è una memoria ausiliaria ed esterna
 - non è volatile, quindi il contenuto non si perde allo spegnimento del computer
 - viene usata per memorizzare files
-### cache
+#### cache
 anche all'interno dell'inboard memory stessa ci sono importanti differenze di velocità: infatti, la velocità del processore è maggiore della velocità di accesso alla memoria principale (RAM).
 - per evitare eccessivi tempi di attesa, tutti i computer hanno una memoria *cache*, piccola e veloce, che sfrutta il principio di località (se si utilizzano dei dati a un determinato indirizzo, è probabile che a breve serviranno i dati ad esso vicini)
 - la cache contiene copie di porzioni della RAM (quelle a cui accedere più velocemente)
@@ -182,16 +182,29 @@ anche all'interno dell'inboard memory stessa ci sono importanti differenze di ve
 > - la cache utilizza una funzione di mappatura per determinare dove mettere il blocco proveniente dalla RAM, e un algoritmo di rimpiazzamento per scegliere quale blocco eliminare (comunemente LRU)
 > - la politica di scrittura della cache determina quando scrivere in memoria (o quando un blocco viene modificato - write through, o quando un blocco viene rimpiazzato - write through)
 
-### servizi offerti da un sistema operativo
-- rilevamento di/reazione ad errori
-- accounting
-- programma che 
+# sistema operativo
+- gestisce le risorse hardware (processori, RAM, I/O)
+- il suo scopo è fornire servizi agli utenti
 
+> [!info] servizi offerti da un sistema operativo
+> - esecuzioni di programmi
+> - accesso ad I/O e al sistema operativo stesso (shell)
+> - sviluppo di programmi
+> - rilevamento di/reazione ad errori
+> - accounting (statistiche dell'uso, monitoraggio performance...)
 
-## kernel
-il kernel è la parte di sistema operativo 
+- controlla l'esecuzione dei programmi applicativi e fornisce un'interfaccia tra applicazioni e hardware
 
-## caratteristiche hardware
+>[!abstract] obiettivi di un sistema operativo
+> - convenienza, efficienza, capacità di evolvere
+
+- è responsabile anche della gestione delle risorse: funziona come un software, ma con privilegi più alti.
+	- concede il controllo del processore ad altri programmi e controlla l'accesso alle altre risorse
+### kernel
+il kernel ("nucleo") è la parte di sistema operativo che si trova sempre **nella RAM**.
+- contiene le funzioni più usate
+
+#### caratteristiche hardware
 - protezione della memoria: non permette che la zona di memoria contenente il monitor venga modificate
 	- i pro
 - timer: impedisce che un job monopolizzi l'intero sistema
