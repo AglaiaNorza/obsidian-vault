@@ -138,7 +138,6 @@ Il processo utilizzato dai computer più attuali è invece quello dell'**accesso
 - le istruzioni di I/O tipicamente richiedono di trasferire informazioni tra dispositivo di I/O e memoria: la *DMA* trasferisce un blocco di dati direttamente da/alla memoria
 - un'interruzione viene mandata quando il trasferimento è completato
 
-
 ### multiprogrammazione
 - un processore deve eseguire più programmi contemporaneamente
 - la sequenza con cui i programmi sono eseguiti dipende dalla loro priorità e dal fatto che siano o meno in attesa di I/O
@@ -182,8 +181,6 @@ anche all'interno dell'inboard memory stessa ci sono importanti differenze di ve
 > - bisogna trovare un "sweet spot" per la dimensione di una cache: l'accesso a una cache più piccola è più veloce, ma una cache più grande può contenere più dati
 > - la cache utilizza una funzione di mappatura per determinare dove mettere il blocco proveniente dalla RAM, e un algoritmo di rimpiazzamento per scegliere quale blocco eliminare (comunemente LRU)
 > - la politica di scrittura della cache determina quando scrivere in memoria (o quando un blocco viene modificato - write through, o quando un blocco viene rimpiazzato - write through)
-
-
 
 ### servizi offerti da un sistema operativo
 - rilevamento di/reazione ad errori
