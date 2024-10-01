@@ -1,3 +1,16 @@
+- il modello relazionale è un modello basato sulla nozione matematica di <u>**relazione**</u>.
+- le relazioni si traducono in maniera naturale in **tabelle** (quindi i termini tabella e relazione sono interscambiabili)
+- dati e relazioni (riferimenti) tra dati di tabelle diverse sono rappresentati come **valori**
+
+### relazioni
+
+>[!warning] tre interpretazioni di "relazione"
+>- relazione matematica (teoria degli insiemi)
+>- relazione secondo il modello relazionale dei dati
+>- relazione (relationship) o associazione, che rappresenta una classe di fatti nel modello concettuale Entity-Relationship - un tipo di collegamento concettuale tra entità diverse
+
+una relazione matematica è un qualsiasi sottoinsieme del prodotto cartesiano di 1+ domini. una relazione sottoinsieme del prodotto cartesiano di k domini si dice di grado k.
+
 - un **attributo** è definito da un *nome* A e dal *dominio* dell'attributo A, `dom(A)`
 - dato un insieme di attributi R, un'*ennupla* (tuple) su R è una **funzione definita su R che associa ad ogni attributo A in R un elemento di dom(A)**
 - se t è un'ennupla su R e A è un attributo in R, allora indichiamo con t(a) il **valore assunto dalla funzione** t in corrispondenza dell'attributo A
