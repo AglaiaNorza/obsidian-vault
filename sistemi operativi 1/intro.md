@@ -230,3 +230,44 @@ il kernel ("nucleo") è la parte di sistema operativo che si trova sempre **nell
 >[!question] programmazione singola vs multiprogrammazione
 > - con la *programmazione singola*, il processore deve aspettare che le istruzioni I/O siano completate prima di procedere
 > - con la *multiprogrammazione*, se un job deve aspettare che un'istruzione I/O sia completata, il processore può passare ad un altro job
+
+### sistemi a time sharing
+- usano la multiprogrammazione per gestire contemporaneamente più jobs *interattivi* 
+- il tempo del processore è condiviso tra più utenti, che accedono contemporaneamente al sistema tramite terminali
+
+> [!info] batch vs time sharing
+> (il *batch* è un semplice sistema non interattivo degli anni 60.
+> utilizza un programma esterno di monitoraggio, del software per controllare le sequenze di eventi, e permette di raggruppare jobs da eseguire insieme - il programma, una volta concluso, ritorna il controllo al programma esterno di monitoraggio)
+> 
+> |                                    | batch                                                          | time sharing                     |
+> | ---------------------------------- | -------------------------------------------------------------- | -------------------------------- |
+> | **scopo**                          | massimizzare l'uso del processore                              | minimizzare il tempo di risposta |
+> | provenienze delle direttive all'OS | comandi del job control language, sottomessi con il job stesso | comandi dati da terminale        |
+> 
+
+### dal job al processo
+il **processo** riunisce in un unico concetto il job non-interattivo e quello interattivo.
+- incorpora anche il job "transazionale real-time" (degli anni 70, es. prenotazione biglietti aerei)
+è un'unità di attività caratterizzata da:
+- un singolo *thread* di esecuzione
+- uno *stato* corrente e un insieme di risorse di sistema ad esso associate
+
+>[!warning] difficoltà della multiprogrammazione dei processi
+>- errori di *sincronizzazione*: gli interrupt si perdono o vengono ricevuti due volte
+>- violazione della *mutua esclusione*: ci sono problemi se due processi vogliono accedere alla stessa risorsa
+>- programmi con *esecuzione non deterministica*: un processo accede ad una porzione di memoria modificata da un altro processo
+>- *deadlock* (stallo): processo A attende processo B che attende A
+
+per questo, è necessaria una buona *gestione della memoria*
+#### gestione della memoria
+- i **processi** vengono **isolati**
+- gli **accessi** sono **protetti e controllati**
+- la gestione della memoria (compresa allocazione/deallocazione) è automatica
+- è supportata la **programmazione modulare** (stack)
+- memorizzazione a lungo termine
+
+>[!info] protezione dell'informazione e sicurezza
+>- **disponibilità** - il dover proteggere il sistema contro l'interruzione di servizio (DoS)
+>- **confidenzialità** - garanzia che gli utenti non leggano informazioni per le quali non hanno l'autorizzazione
+>- **integrità dei dati** - protezione dei dati da modifiche non autorizzate
+>- **autenticità** - dover verificare l'identità degli utenti/la validità di messaggi e datib
