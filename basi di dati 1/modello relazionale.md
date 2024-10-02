@@ -1,4 +1,4 @@
-- il modello relazionale è un modello basato sulla nozione matematica di <u>**relazione**</u>.
+- il modello relazionale è un modello basato sulla nozilone matematica di **relazione**.
 - le relazioni si traducono in maniera naturale in **tabelle** (quindi i termini tabella e relazione sono interscambiabili)
 - dati e relazioni (riferimenti) tra dati di tabelle diverse sono rappresentati come **valori**
 
@@ -9,19 +9,23 @@
 >- relazione secondo il modello relazionale dei dati
 >- relazione (relationship) o associazione, che rappresenta una classe di fatti nel modello concettuale Entity-Relationship - un tipo di collegamento concettuale tra entità diverse
 
-una relazione matematica è un qualsiasi sottoinsieme del prodotto cartesiano di 1+ domini. una relazione sottoinsieme del prodotto cartesiano di k domini si dice di grado k.
+una **relazione matematica** è un qualsiasi sottoinsieme del prodotto cartesiano di 1+ domini. una relazione sottoinsieme del prodotto cartesiano di k domini si dice di grado k. gli elementi di una relazione si dicono *tuple* o *ennuple*. ogni tupla di una relazione di grado k ha k componenti ordinate, ma non c'è ordinamento tra le tuple.
+	`{(nero, 0), (nero, 2), (bianco, 0)} è una relazione di grado 2, cardinalità 3`.
+- si usano quasi sempre domini predifiniti, comuni ai linguaggi di programmazione (es. stringhe, interi)
+
+ma come interpretare i dati delle tabelle? assegnando nomi alla tabella e alla colonna.
 
 - un **attributo** è definito da un *nome* A e dal *dominio* dell'attributo A, `dom(A)`
 - dato un insieme di attributi R, un'*ennupla* (tuple) su R è una **funzione definita su R che associa ad ogni attributo A in R un elemento di dom(A)**
 - se t è un'ennupla su R e A è un attributo in R, allora indichiamo con t(a) il **valore assunto dalla funzione** t in corrispondenza dell'attributo A
 
-![[relazioni1.png|300]]
-![[relazioni2.png|300]]
+![[relazioni1.png|300]]   ![[relazioni2.png|300]]
 
-Ogni relazione può essere implementata come una tabella in cui **ogni riga è una tupla** della relazione e *ogni colonna è una componente* (valori omogenei, provenienti dallo stesso dominio).
+Ogni relazione può essere implementata come una tabella in cui **ogni riga è una tupla** della relazione (differente da ogni altra) e *ogni colonna è una componente* (valori omogenei, provenienti dallo stesso dominio).
+Le colonne corrispondono ai domini D1, D2, ..., Dk e hanno associati i *nomi degli attributi*, nomi univici che descrivono il loro ruolo.
+La coppia nome di attributo-dominio è chiamata *attributo*. L'insieme di attributi di una relazione è detto *schema*. Uno schema è invariante nel tempo e descrive la struttura di una relazione (mentre un'istanza è volatile).
 
-FINISCI DI COPIARE
-
+- se t è una tupla, t[nome] indica il valore dell'attributo con nome nome.
 
 >[!warning] valori null
 >i valori null rappresentano mancanza di informazione o impossibilità di applicare un'informazione 
