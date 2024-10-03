@@ -81,12 +81,51 @@ $$ \rho_{CC\#<-C\#}(Ordine) $$
 >
 
 AGGIUNGI ALTRI PEZZI SLIDE
-
 ### join naturale
 Consente automaticamente di selezionare le tuple del prodotto cartesiano dei due operandi che soddisfano la condizione
-$$ R_{1}.A_{1}=R_{2}.A_{2} \space\land\space ... \space\land R_{1}.A_{k}=R_{2}.A_{k} $$
+$$ R_{1}.A_{1}=R_{2}.A_{1} \space\land\space ... \space\land R_{1}.A_{k}=R_{2}.A_{k} $$
 vengono unite le tuple i cui attributi con lo stesso nome hanno lo stesso valore.
 
-$$ r_{1} \triangleright\triangleleft \space r_{2} = \pi_{XY}(\sigma_{C}(r_{1}\times r_{2}))$$
+$$ r_{1} \bowtie \space r_{2} = \pi_{XY}(\sigma_{C}(r_{1}\times r_{2}))$$
 
 Essenzialmente, le **colonne duplicate vengono eliminate automaticamente** e vengono unite solo le tuple con **stesso valore negli attributi con lo stesso nome**.
+
+>[!tip] query più corretta
+se ci sono duplicati e si fa una proiezione su un attributo con duplicati, questi vengono eliminati - conviene *aggiungere una chiave*
+
+>[!warning] casi limite join naturale
+>- le relazioni contengono attributi con lo stesso nome ma non esistono ennuple per tali attributi in entrambe le relazioni
+>	- risultato: il *join è vuoto*
+>- le relazioni non contengono attributi con lo stesso nome
+>	- risultato: si degenera nel *prodotto cartesiano*
+> - perché il join abbia senso, gli attributi con lo stesso nome devono anche avere lo stesso significato.
+
+> [!example] esempio
+> query: nomi e città dei clienti che hanno ordinato più di 100 pezzi per almeno un articolo con prezzo superiore a 2.
+> - join naturale tra cliente e ordine: rimangono Nome, C#, Città, O#, A#, N-pezzi
+> - join naturale con articolo: rimangono Nome, C#, Città, O#, A#, N-pezzi, Denom., Prezzo
+> - 
+> ![[es-query.png]]
+> $$ \pi_{Nome, Città}(\sigma_{N-pezzi>100 \land Prezzo>2})((Cliente\bowtie Ordine)\bowtie Articolo) $$
+> 
+Se noi sappiamo che una selezione riguarda solo un attributo, possiamo anticipare una condizione:
+es.  $$ \sigma_{N-pezzi>100}(Ordine)$$
+e poi $$Cliente\bowtie \sigma_{N-pezzi>100}(Ordine)$$
+ecc., fino ad arrivare a
+$$ Cliente \bowtie \sigma$$
+
+### θ join
+![[es-thetajoin.png]]
+perché l'unione tra queste tabelle abbia senso, bisogna stare attenti ai due C#: in artista, rappresenta il codice dell'artista ("Artista" in Quadro) mentre in Quadro rappresenta il codice del quadro.
+Quindi, o bisognerebbe rinominare gli attributi così che Artista.C# == Quadro.Artista, o si può effettuare un **theta join**
+
+Consente di selezionare le tuple del prodotto cartesiano dei due operandi che soddisfano una condizione del tipo:
+$$A \theta B$$
+
+dove:
+- θ è un operatore di confronto (`∈{<, <=, >, >=, =}`)
+- A è un attributo dello schema del primo operando
+- B è un attributo dello schema del secondo operando
+- `dom(A)=dom(B)`
+Si denota con:
+$$r_{1}\bowtie r_{2} = \sigma_{A\theta B}(r_{1}\times r_{2}$$
