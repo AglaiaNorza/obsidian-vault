@@ -46,10 +46,6 @@
     "misc (non-uni)/misc (non-uni)/cs50",
     "//misc (non-uni)/misc (non-uni)/html",
     "//misc (non-uni)/misc (non-uni)/html",
-    "//misc (non-uni)/misc (non-uni)/html + css",
-    "//misc (non-uni)/misc (non-uni)/html + css",
-    "//misc (non-uni)/misc (non-uni)/cs50",
-    "//misc (non-uni)/misc (non-uni)/html + css",
     "//sistemi operativi",
     "//sistemi operativi",
     "//basi di dati 1",
@@ -63,8 +59,7 @@
     "//sistemi operativi 1",
     "//basi di dati 1",
     "//sistemi operativi 1",
-    "//misc (non-uni)",
-    "//misc (non-uni)/misc (non-uni)/html + css"
+    "//misc (non-uni)"
   ],
   "expandFolderOnClick": true,
   "menuTriggerChar": "/",
