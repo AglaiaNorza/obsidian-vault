@@ -1,4 +1,4 @@
-(la prima parte dello scritto comprende due query di algebra relazionale)
+h(la prima parte dello scritto comprende due query di algebra relazionale)
 
 L'algebra relazionale è un *linguaggio formale* che ci permette di interrogare una base di dati relazionale. Consiste di:
 - un insieme di **operatori** che possono essere applicati a una (unari) o due (binari) istanze di relazione, e forniscono come risultato:
@@ -129,3 +129,26 @@ dove:
 - `dom(A)=dom(B)`
 Si denota con:
 $$r_{1}\bowtie r_{2} = \sigma_{A\theta B}(r_{1}\times r_{2}$$
+
+### join SQL-style
+Serve quando si vogliono effettuare query che chiedono di confrontare campi di tuple della stessa relazione.
+>[!example]
+>![[es-joinsql.png|400]]
+>(anche il capo è un impiegato - associazione riflessiva asimmetrica in questo caso)
+> 1) creiamo una copia dell'istanza (assegnata a una variabile relazionale)
+> 2) *theta join* - per associare i capi ai dipendenti corrispondenti, usiamo il theta join su `C# = Capo`
+> 	![[es-joinsql2.png|300]]
+> 3) ![[es-joinsql3.png|300]]
+
+>[!Tip] come gestire gli attributi su un join SQL-style
+>- si può fare finta che, nel join, gli attributi abbiano mantenuto il nome dell'istanza di provenienza (`ImpiegatiC.Capo e Impiegati.Capo`), ma non è ideale perché non funziona così
+>- si possono rinominare tutti gli attributi (necessari) 
+
+---
+### problemi con quantificatori diversi
+>[!tip] fino ad ora
+>fino ad ora abbiamo visto query che implicavano condizioni equivalenti al *quantificatore esietenziale* `∃`
+>- infatti, in qualunque posizione appaiano, la valutazione delle condizioni avviene in sequenza
+
+Quando si cerca qualcosa che succede **sempre** o **mai**, non si può semplicemente eliminare con una selezione i casi necessari - per esempio, se cerco gli equipaggi che non hanno mai volato nel 2018, se escludo gli equipaggi con voli nel 2018, non posso sapere che gli stessi equipaggi non ricompariranno con un altro volo.
+
