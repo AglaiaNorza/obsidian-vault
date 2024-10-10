@@ -1,3 +1,6 @@
+---
+sticker: lucide//plus-square
+---
 h(la prima parte dello scritto comprende due query di algebra relazionale)
 
 L'algebra relazionale è un *linguaggio formale* che ci permette di interrogare una base di dati relazionale. Consiste di:

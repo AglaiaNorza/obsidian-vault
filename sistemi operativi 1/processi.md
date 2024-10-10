@@ -1,3 +1,6 @@
+---
+sticker: lucide//file-clock
+---
 Il compito fondamentale di un sistema operativo è la **gestione dei processi** - computazioni di tipi diversi.
 Deve quindi: 
 - permettere l'esecuzione alternata di processi multipli (interleaving)

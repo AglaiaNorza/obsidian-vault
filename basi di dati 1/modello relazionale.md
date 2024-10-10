@@ -1,3 +1,6 @@
+---
+sticker: lucide//copy
+---
 - il modello relazionale è un modello basato sulla nozilone matematica di **relazione**.
 - le relazioni si traducono in maniera naturale in **tabelle** (quindi i termini tabella e relazione sono interscambiabili)
 - dati e relazioni (riferimenti) tra dati di tabelle diverse sono rappresentati come **valori**
