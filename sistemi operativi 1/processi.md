@@ -39,7 +39,7 @@ per ogni processo ancora in esecuzione, esiste un **process control block**, che
 - è creato e gestito dal sistema operativo, e gli permette di gestire più processi contemporaneamente
 - la sua funzione principale è di avere abbastanza informazioni per poter fermare un programma in esecuzione e farlo riprendere dallo stesso punto in cui si trovava.
 
-### traccia ed esecuzione di un processo
+#### traccia ed esecuzione di un processo
 La traccia di un processo (**trace**) è la *sequenza di istruzioni che vengono eseguite*.
 - il *dispatcher* è un piccolo programma che sospende un processo per farne andare in esecuzione un altro.
 
@@ -47,7 +47,7 @@ La traccia di un processo (**trace**) è la *sequenza di istruzioni che vengono 
 >![[es-processo.png|100]]
 >![[es-processo2.png|400]]
 
-### stato di un processo
+#### stato di un processo
 >[!info] modello dei processi a due stati
 >- in esecuzione
 >- non in esecuzione (ma comunque "attivo")
@@ -96,8 +96,50 @@ il processore è più veloce dell'I/O, quindi potrebbe succedere che tutti i pro
 | periodicità                  | il processo viene eseguito periodicamente e può venire sospeso nell'attesa |
 | richiesta del padre          | il padre lo vuole sospendere per motivi di efficienza computazionale       |
 
-### processi e risorse
+#### processi e risorse
 Il Sistema Operativo è l'entità che gestisce l'uso delle risorse di sistema da parte dei processori, e deve dunquem conoscere lo stato di ogni processo e di ogni risorsa.
 Per ogni processo/risorsa, il SO costruisce tabelle.
 
 ![[tabelle-so.png|400]]
+
+(soprattutto i processi, si trovano nella parte di RAM riservata al kernel)
+Nel **process control block** ci sono solo le informazioni essenziali i cosiddetti "attributi" - nella Primary Process Table.
+Tutta la memoria necessaria al processo è nella Process Image (programma sorgente, dati, stack, PCB).
+- eseguire un'istruzione cambia l'immagine del processo
+
+(le tabelle saranno trattate in maniera più approfondita).
+
+>[!info] attributi di un processo
+![[attributi-processo.png|300]]
+Le informazioni relative a un processo possono essere divise in tre categorie:
+> - identificazione
+> - stato
+> - controllo
+
+#### come si identifica un processo
+Ad ogni processo è assegnato un numero identificativo unico: il **PID** (Process Identifier).
+Questo numero viene utilizzato da molte tabelle del sistema operativo per realizzare collegamenti con la tabella dei processi (es. tabella I/O mantiene una lista dei PID dei processi che stanno usando I/O).
+
+>[!tip] stato del processore
+(diverso dallo stato del processo) o Hardware Context.
+Dato dai contenuti dei registri del processore in un dato momento:
+> - visibili all'utente
+> - di controllo e stato
+> - puntatori allo stack
+> - PSW (Program Status Word)
+
+>[!Info] control block del processo
+>Contiene informazioni di cui il sistema operativo ha bisogno per controllare e coordinare i vari processi attivi.
+>(ovvero)
+>- *PID*
+>- ID del processo padre: PPID
+>- ID dell'utente proprietario
+> - l'*hardware context* (registri, PC, stack pointer ecc) può essere copiato sul PCB stesso in alcune occasioni.
+> - informazioni per il *controllo del processo* (stato, priorità, informazioni sullo scheduling)
+> - supporto per *strutture dati* (puntatori ad altri processi)
+> - *comunicazioni* tra processi (flag, segnali, messaggi)
+> - permessi speciali
+> - gestione della memoria (puntatori)
+> - uso delle risorse (file aperti, quante volte ho usato un processo ecc.)
+>  
+>   ![[control-block.png|400]]
