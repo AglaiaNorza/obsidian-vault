@@ -46,3 +46,58 @@ La traccia di un processo (**trace**) è la *sequenza di istruzioni che vengono 
 >[!example] esecuzione di un processo
 >![[es-processo.png|100]]
 >![[es-processo2.png|400]]
+
+### stato di un processo
+>[!info] modello dei processi a due stati
+>- in esecuzione
+>- non in esecuzione (ma comunque "attivo")
+> 
+avrebbe una struttura del genere:
+>![[stati-processo.png|450]]
+
+- in ogni istante, in un sistema operativo, ci sono n>=1 processi (come minimo una CLI o una GUI)
+- ad ogni comando dell'utente, quasi sempre si crea un nuovo processo - attraverso il processo di **process spawning**
+
+>[!tip] process spawning
+>la creazione di un processo da parte di un altro processo.
+>- il processo *padre* crea il nuovo processo
+>- il processo *figlio* è il nuovo processo
+>- (tipicamente) il numero di processi aumenta, perché il padre rimane in esecuzione
+
+>[!error] terminazione di un processo
+>avviene per:
+>- normale completamento: viene generato un HALT che genera un'interruzione per il sistema
+>- uccisioni: dal SO per errori (es. memoria non disponibile, operazioni fallite, errore fatale), dall'utente, da un altro processo
+>
+>e si passa da n>=2 processi a n-1
+
+>[!info] modello di processi a 5 stati
+>![[stati-processo-5.png|450]]
+>
+>(in realtà si può passare anche da ready a blocked o exit se un processo viene killato da un altro processo)
+> 
+>![[stati-processo-5-dati.png|400]]
+
+##### processi sospesi
+il processore è più veloce dell'I/O, quindi potrebbe succedere che tutti i processi in memoria siano in attesa di I/O - questi vengono swappati su disco, così da liberare memoria e non lasciare il processore inoperoso.
+- lo stato *blocked* diventa *suspended* quando il processo è swappato su disco.
+- ci sono quindi due nuovi stati:
+	- *blocked/suspend* - swappato mentre era bloccato
+	- *ready/suspend* - swappato mentre non era bloccato
+
+![[stati-processo-tutti.png|450]]
+
+
+| motivo                       | commento                                                                   |
+| ---------------------------- | -------------------------------------------------------------------------- |
+| swapping                     | la memoria serve per un processo ready                                     |
+| interno al SO                | il SO sospetta che il processo stia causando problemi                      |
+| richiesta utente interattiva | es. debugging                                                              |
+| periodicità                  | il processo viene eseguito periodicamente e può venire sospeso nell'attesa |
+| richiesta del padre          | il padre lo vuole sospendere per motivi di efficienza computazionale       |
+
+### processi e risorse
+Il Sistema Operativo è l'entità che gestisce l'uso delle risorse di sistema da parte dei processori, e deve dunquem conoscere lo stato di ogni processo e di ogni risorsa.
+Per ogni processo/risorsa, il SO costruisce tabelle.
+
+![[tabelle-so.png|400]]
