@@ -33,3 +33,16 @@ Finché il processo è in esecuzione, ad esso è associato un insieme di informa
 - puntatori alla memoria
 - informazioni sullo stato dell'I/O
 - informazioni di accounting - quale utente lo segue
+
+#### process control block
+per ogni processo ancora in esecuzione, esiste un **process control block**, che racchiude le informazioni sul processo e si trova nella zona di memoria riservata al kernel.
+- è creato e gestito dal sistema operativo, e gli permette di gestire più processi contemporaneamente
+- la sua funzione principale è di avere abbastanza informazioni per poter fermare un programma in esecuzione e farlo riprendere dallo stesso punto in cui si trovava.
+
+### traccia ed esecuzione di un processo
+La traccia di un processo (**trace**) è la *sequenza di istruzioni che vengono eseguite*.
+- il *dispatcher* è un piccolo programma che sospende un processo per farne andare in esecuzione un altro.
+
+>[!example] esecuzione di un processo
+>![[es-processo.png|100]]
+>![[es-processo2.png|400]]
