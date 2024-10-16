@@ -120,6 +120,8 @@ Le informazioni relative a un processo possono essere divise in tre categorie:
 Ad ogni processo è assegnato un numero identificativo unico: il **PID** (Process Identifier).
 Questo numero viene utilizzato da molte tabelle del sistema operativo per realizzare collegamenti con la tabella dei processi (es. tabella I/O mantiene una lista dei PID dei processi che stanno usando I/O).
 
+> [!info] se un processo viene terminato il suo PID può essere riassegnato
+
 >[!tip] stato del processore
 (diverso dallo stato del processo) o Hardware Context.
 Dato dai contenuti dei registri del processore in un dato momento:
@@ -143,3 +145,93 @@ Dato dai contenuti dei registri del processore in un dato momento:
 > - uso delle risorse (file aperti, quante volte ho usato un processo ecc.)
 >  
 >   ![[control-block.png|400]]
+>   - è la struttura più importante del sistema operativo, perché definisce il suo stato
+>   - richiede protezione
+
+### modalità di esecuzione
+la maggior parte dei processori supporta almeno due modalità di esecuzione:
+- modalità sistema: pieno controllo, si può accedere a qualsiasi locazione per la RAM - serve al kernel
+- modalità utente: molte operazioni sono vietate - serve ai programmi utente
+
+>[!warning] kernel mode
+>esempi di operazioni kernel mode:
+>- gestione dei processi (creazione e terminazione, scheduling, switching, sincronizzazione e comunicazione)
+>- gestione della memoria principale (allocazione di spazio, gestione memoria virtuale)
+>- gestione I/O
+>- funzioni di supporto (interrupt, eccezioni, accounting (chi ha richiesto un'operazione), monitoraggio)
+
+#### passaggio da user mode a kernel mode e ritorno
+Un processo utente inizia sempre in modalità utente: per poter cambiare modalità, serve un *interrupt* (l'hardware fa partire una procedura all'interno del kernel, ma prima di farlo cambia la modalità da utente a kernel)
+Quindi, *tutti gli interrupt handler sono gestiti in modalità kernel*.
+Prima di restituire il controllo all'utente, l'ultima istruzione dell'interrupt handler fa lo switch a modalità utente.
+
+- quindi, un processo utente può passare alla modalità kernel *solo per eseguire software di sistema*.
+
+alcuni casi in cui può capitare:
+- codice eseguito per conto dello stesso processo interrotto - che lo ha voluto (es. system call)
+- codice eseguito per conto dello stesso processo interrotto - che non lo ha voluto (es. abort - processo viene terminato, fault - non fatale, viene eseguito qualcosa e poi si torna in user mode e si continua il processo)
+- codice eseguito per conto di un altro processo
+
+>[!example] system call sui pentium
+>una system call è un pezzo di codice che 
+>1) prepara gli argomenti della chiamata in opportuni registri - tra questi, il primo è un numero che identifica una system call - *system call number*
+>2) esegue l'istruzione `int 0x80`, che solleva un'eccezione (dal Pentium 2 in poi, `sysenter`, che omette alcuni controlli
+
+### creazione di un processo
+per creare un processo, il sistema operativo deve:
+- assegnargli un PID unico
+- allocargli spazio in memoria principale
+- inizializzare il process control block (con, come minimo, il nuovo PID)
+- inserire il processo nella giusta coda (es. ready o ready/suspended)
+- creare o espandere altre strutture dati (es. per l'accounting)
+
+### switching tra processi
+lo switching tra processi pone svariati problemi:
+- quali eventi determinano uno switch? perché il sistema operativo decide di rimpiazzare un processo?
+- cosa deve fare il sistema operativo per tenere aggiornate tutte le strutture dati dopo uno switch tra processi?
+
+quando effettuare uno switch?
+
+| meccanismo                              | causa                                             | uso                                                                                                                                               |
+| --------------------------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| interruzione                            | esterna all'esecuzione dell'istruzione corrente   | reazione ad un evento asincrono (es. a chiede I/O, a diventa blocked e si passa a b, arriva la risposta ad a e il SO lo fa tornare in esecuzione) |
+| eccezione                               | associata all'esecuzione dell'istruzione corrente | gestione di un controllo sincrono (es. pagina sbagliata della memoria virtuale)                                                                   |
+| chiamata al sistema operativo (syscall) | richiesta esplicita                               | chiamata a funzione di sistema                                                                                                                    |
+passaggi (in kernel mode):
+- *salvare il contesto* del programma (registri CPU) nel process control block 
+- aggiornare il process control block (che è running)
+- spostare il PCB nella *coda* appropriata: ready, blocked, ready/suspend
+- scegliere il *nuovo processo* (può avvenire anche prima) - fatto dal dispatcher
+ 
+(passi di sopra al contrario per il nuovo processo)
+- *aggiornare il process control block* del nuovo processo
+- aggiornare le strutture dati per la gestione della memoria
+- *ripristinare il contesto* del processo selezionato (si prende il context dal PCB e si ripristina ciò che è necessario)
+
+### il sistema operativo è un processo?
+- il sistema operativo è solo un **insieme di programmi**, ed è eseguito dal processore come ogni altro programma.
+- semplicemente, ogni tanto, il SO "lascia" il processore ad altri programmi
+
+dipende da sistema operativo a sistema operativo:
+![[strutture-OS-kernel.png|400]]
+1) **kernel eseguito al di fuori dei processi** 
+	- il concetto di processo si applica solo ai programmi utente
+	- il SO è eseguito come un'entità separata, con privilegi più elevati e una sua zona di memoria dedicata (sia per i dati che per il codice sorgente)
+2) **esecuzione all'interno dei processi utente**
+	- il SO viene eseguito nel contesto di un processo utente (e cambia solo la modalità di esecuzione) 
+	- non c'è bisogno di un process switch per eseguire una funzione del SO, ma solo di un mode switch
+	- lo stack delle chiamate (user stack) è comunque separato, mentre dati e codice macchina sono condivisi con i processi
+	- il process switch avviene solo, eventualmente, alla fine, se lo scheduler decide che tocca ad un altro processo
+3) **SO basato su processi** (tutto è un processo)
+	- il SO è implementato come un insieme di processi di sistema, con privilegi più alti
+	- l'unica cosa che non è un processo è lo switch tra processi
+
+>[!info] caso concreto: linux
+>Linux utilizza una via di mezzo tra la seconda e la terza opzione
+>- le funzioni del kernel sono per lo più eseguite tramite interrupt, on behalf of il processo corrente
+>- ci sono però dei processi di sistema che partecipano alla normale competizione del processore senza essere evocati esplicitamente (tipicamente processi ciclici)
+>	- creati in fase di inizializzazione del SO
+>	- es: creare spazio usabile nella RAM liberando zone non usate, eseguire operazioni di rete
+> 
+>diagramma degli stati di UNIX (molto simile ai sette stati)
+> ![[unix-dgstati.png|450]]
