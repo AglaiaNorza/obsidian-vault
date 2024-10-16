@@ -1,3 +1,6 @@
+---
+sticker: lucide//arrow-right
+---
 >[!info] definizione di dipendenza funzionale
 >una **dipendenza funzionale** su R è una coppia ordinata di sottoinsiemi non vuoti X ed Y di R
 >$$X \to Y$$
@@ -21,10 +24,11 @@ un'istanza si dice **legale** se rispetta *tutte le dipendenze* in F
 ![[ist-legali1.png|450]]
 dato uno schema di relazione R e un insieme F di dipendenze funzionali su R, ci sono delle dipendenze funzionali che non sono in F, ma sono soddisfatte da ogni istanza legale di R.
 
-![[ist-legali2.png|450]]
+per esempio:
 
----
+$$\text{Matricola} \rightarrow \text{CodiceFiscale} \rightarrow \text{DataNascita} $$
 
+sarà sempre vero per ogni istanza legale - quindi, sarà soddisfatta anche `Matricola -> DataNascita`
 ### chiusura di un insieme di dipendenze fuzionali
 
 >[!info] definizione
@@ -34,12 +38,35 @@ dato uno schema di relazione R e un insieme F di dipendenze funzionali su R, ci 
 >si denota con:
 >$$F^+$$
 >
->e si ha che $$ F \subseteq F$$
+>e si ha che:  $F \subseteq F$
 
 ### chiave
 >[!info] definizione
->dati uno schema di relazione R e un insieme F di dipendenze funzionali,
->un sottoinsieme K di uno schema di relazione R è una **chiave** di R se:
->1) $$ K \implies R \in F^+$$
+>dati uno schema di relazione R e un insieme F di dipendenze funzionali, un sottoinsieme K di uno schema di relazione R è **una chiave** di R se:
+>1) $$ K \rightarrow R \in F^+$$
+>(in qualche modo, in questo insieme di dipendenze è presente la dipendenza `K -> R` - questa condizione la rende *superchiave* -perché sia chiave serve: )
 >2) non esiste un sottoinsieme proprio `K'` di `K` tale che:
->	$$K'\implies R \in F^+$$
+>	$$K'\rightarrow R \in F^+$$
+
+per esempio, per uno schema Studente = Matricola, Cognome, Nome, Data: 
+- il numero di matricola viene assegnato allo studente per identificarlo  
+- poiché non ci possono essere due studenti con lo stesso numero di matricola, non ci possono essere due tuple con la stessa Matricola. 
+- quindi `Matricola -> Matricola, Cognome, Nome, Data` deve essere soddisfatta da ogni istanza legale - matricola è chiave per studente.
+
+>[!tip] chiave primaria
+>dato uno schema di relazione R e un insieme F di dipendenze funzionali, possono esistere *più chiavi di R*
+>- in SQL, una chiave sarà scelta come **chiave primaria**, e questa non potrà assumere valore nullo
+
+
+### dipendenze funzionali banali
+Sono dipendenze che non vale la pena specificare.
+Sono date da:
+$$ \text{Sottoinsiemi non vuoti X, Y di R tali che } Y \subseteq sub=X$$
+
+perciò, ogni istanza di r soddisfa necessariamente la dipendenza funzionale `X->Y`
+(es. Nome, Cognome -> Nome)
+
+Pertanto, se `Y ⊆X`, `X->Y ∈ F+` - **dipendenza banale**.
+
+Dati uno schema di relazione R e un insieme di dipendenze funzionali F, si ha:
+$$X\rightarrow Y \in F^+ \iff \forall A \in Y (X\rightarrow A \in F^+)$$
