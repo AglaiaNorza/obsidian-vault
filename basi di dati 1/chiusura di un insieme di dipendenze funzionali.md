@@ -51,3 +51,4 @@ $$X_{F}^+ = \{ A|X\rightarrow A\in F^A\}$$
 - essenzialmente, fanno parte della chiusura di un insieme di attributi X tutti quelli che sono **determinati funzionalmente da X** eventualmente applicando gli assiomi di Armstrong.
 - banalmente:
 $$X\subseteq X_{F}^+$$
+
