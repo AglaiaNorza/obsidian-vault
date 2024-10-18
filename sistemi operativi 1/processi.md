@@ -24,7 +24,7 @@ Dietro ogni processo c'è un *programma* (tipicamente memorizzato su archiviazio
 >un processo ha 3 macrofasi: **creazione**, **esecuzione**, **terminazione**.
 >- la terminazione può essere *prevista* (es. quando ha finito di eseguire le istruzioni, o quando un utente lo chiude) o *non prevista* (es. interrupt, eccezioni, accessi non consentiti)
 
-#### elementi di un processo
+### elementi di un processo
 Finché il processo è in esecuzione, ad esso è associato un insieme di informazioni, tra cui: 
 - un identificatore (il sistema operativo deve poter identificare i processi)
 - uno stato
@@ -58,12 +58,6 @@ avrebbe una struttura del genere:
 - in ogni istante, in un sistema operativo, ci sono n>=1 processi (come minimo una CLI o una GUI)
 - ad ogni comando dell'utente, quasi sempre si crea un nuovo processo - attraverso il processo di **process spawning**
 
->[!tip] process spawning
->la creazione di un processo da parte di un altro processo.
->- il processo *padre* crea il nuovo processo
->- il processo *figlio* è il nuovo processo
->- (tipicamente) il numero di processi aumenta, perché il padre rimane in esecuzione
-
 >[!error] terminazione di un processo
 >avviene per:
 >- normale completamento: viene generato un HALT che genera un'interruzione per il sistema
@@ -96,7 +90,7 @@ il processore è più veloce dell'I/O, quindi potrebbe succedere che tutti i pro
 | periodicità                  | il processo viene eseguito periodicamente e può venire sospeso nell'attesa |
 | richiesta del padre          | il padre lo vuole sospendere per motivi di efficienza computazionale       |
 
-#### processi e risorse
+### processi e risorse
 Il Sistema Operativo è l'entità che gestisce l'uso delle risorse di sistema da parte dei processori, e deve dunquem conoscere lo stato di ogni processo e di ogni risorsa.
 Per ogni processo/risorsa, il SO costruisce tabelle.
 
@@ -116,7 +110,7 @@ Le informazioni relative a un processo possono essere divise in tre categorie:
 > - stato
 > - controllo
 
-#### come si identifica un processo
+### come si identifica un processo
 Ad ogni processo è assegnato un numero identificativo unico: il **PID** (Process Identifier).
 Questo numero viene utilizzato da molte tabelle del sistema operativo per realizzare collegamenti con la tabella dei processi (es. tabella I/O mantiene una lista dei PID dei processi che stanno usando I/O).
 
@@ -178,13 +172,45 @@ alcuni casi in cui può capitare:
 >2) esegue l'istruzione `int 0x80`, che solleva un'eccezione (dal Pentium 2 in poi, `sysenter`, che omette alcuni controlli
 
 ### creazione di un processo
+
+>[!tip] process spawning
+>la creazione di un processo da parte di un altro processo.
+>- il processo *padre* crea il nuovo processo
+>- il processo *figlio* è il nuovo processo
+>- (tipicamente) il numero di processi aumenta, perché il padre rimane in esecuzione
+
+
 per creare un processo, il sistema operativo deve:
+- allocargli spazio in memoria principale (nella tabella dei processi)
 - assegnargli un PID unico
-- allocargli spazio in memoria principale
+- (<font color="#953734">solo unix</font>) copiare l'immagine del padre (escludendo dalla copia alcune cose)
+- (<font color="#953734">solo unix</font>) incrementare i contatori di ogni file aperto dal padre (ora sono anche del figlio)
 - inizializzare il process control block (con, come minimo, il nuovo PID)
 - inserire il processo nella giusta coda (es. ready o ready/suspended)
 - creare o espandere altre strutture dati (es. per l'accounting)
+- (<font color="#953734">solo unix</font>) far ritornare alla syscall fork il PID del figlio al padre, e 0 al figlio.
 
+[da [appunti exyss](https://raw.githubusercontent.com/Exyss/university-notes/main/Secondo%20Anno/Sistemi%20Operativi%20I.pdf):]
+
+> [!info]
+> Per poter creare i processi figli vengono utilizzate le seguenti syscall:
+> - `fork()` (solo su UNIX), dove il *figlio creato è una copia esatta del padre*, condividendo con esso le stesse risorse ed ognuno avente il proprio PCB
+> - `spawn()` (solo su Windows), dove *il figlio creato è un processo legato ad un programma diverso* da quello del padre e avente uno spazio d’indirizzamento diverso, dunque con istruzioni, dati e PCB diversi dal padre.
+>  
+> Nei sistemi UNIX-like, viene utilizzata la syscall `exec()` a seguito della chiamata `fork()` per poter ottenere lo stesso effetto della chiamata `spawn()` di Windows. 
+> In particolare, la syscall `exec()` rimpiazza completamente il processo precedente, evitando di riprendere l’esecuzione del precedente una volta completato il processo avviato dalla syscall.
+> 
+
+il decision tree del processo fork si sviluppa quindi così
+
+![[dt-fork.png]]
+[back to lezioni]
+(quindi, se il pid è zero, sono il figlio e faccio la parte di computazione del figlio, e altrimenti sono il padre e devo aspettare il figlio)
+ 
+Dopodiché il Kernel può scegliere se:
+- continuare ad eseguire il padre
+- switchare al figlio
+- switchare a un altro processo
 ### switching tra processi
 lo switching tra processi pone svariati problemi:
 - quali eventi determinano uno switch? perché il sistema operativo decide di rimpiazzare un processo?
@@ -235,3 +261,30 @@ dipende da sistema operativo a sistema operativo:
 > 
 >diagramma degli stati di UNIX (molto simile ai sette stati)
 > ![[unix-dgstati.png|450]]
+> - si passa per forza per Kernel Running prima di arrivare a User Running perché vuol dire che si fa uno swap
+> - quando un processo finisce, passa allo stato *Zombie* - perché ci si aspetta che il padre sopravviva al figlio e, finché il figlio non comunica al padre il suo exit status, resta nello stato di Zombie - l'immagine sparisce
+> - lo schema non è interrompibile quando è in Kernel-Mode (ora per Linux non è così)
+
+### processo Unix
+Un processo Unix è diviso in vari livelli: utente, registro, sistema.
+##### livello utente
+- **process text**: codice sorgente in linguaggio macchina del processo
+- **process data**: dati (valori variabili ecc)
+- **user stack**: stack delle chiamate del processo (e argomenti con cui è stato chiamato)
+- **shared memory**: memoria confivisa con altri processi
+
+##### livello registro
+i vari registri nel PCB, che vengono copiati al momento di un process switch (PC, Processor Status Register, SP, General Purpose Registers)
+
+##### livello sistema
+- **process table entry**: puntatore alla tabella di tutti i processi, dove individua il corrente
+![[process-table-entry.png|450]]
+- **u area**: informazioni per il controllo del processo
+- **per process region table**: definisce il mapping tra indirizzi virtuali e fisici (page table)
+- **kernel stack**: stack delle chiamate, usato per le funzioni da eseguire in modalità sistema
+
+## thread
+Per alcune applicazioni è importante essere organizzate in maniera parallela - un'applicazione viene suddivisa in diverse esecuzioni (i thread)
+
+
+
