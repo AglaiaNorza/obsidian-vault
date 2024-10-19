@@ -1,6 +1,31 @@
 ---
 sticker: lucide//file-clock
 ---
+
+> [!info] index
+> - [[#elementi di un processo|elementi di un processo]]
+> 	- [[#elementi di un processo#process control block|process control block]]
+> 	- [[#elementi di un processo#traccia ed esecuzione di un processo|traccia ed esecuzione di un processo]]
+> 	- [[#elementi di un processo#stato di un processo|stato di un processo]]
+> 		- [[#stato di un processo#processi sospesi|processi sospesi]]
+> - [[#processi e risorse|processi e risorse]]
+> - [[#come si identifica un processo|come si identifica un processo]]
+> - [[#modalità di esecuzione|modalità di esecuzione]]
+> 	- [[#modalità di esecuzione#passaggio da user mode a kernel mode e ritorno|passaggio da user mode a kernel mode e ritorno]]
+> - [[#creazione di un processo|creazione di un processo]]
+> - [[#switching tra processi|switching tra processi]]
+> - [[#il sistema operativo è un processo?|il sistema operativo è un processo?]]
+> - [[#processo Unix|processo Unix]]
+> 		- [[#passaggio da user mode a kernel mode e ritorno#livello utente|livello utente]]
+> 		- [[#passaggio da user mode a kernel mode e ritorno#livello registro|livello registro]]
+> 		- [[#passaggio da user mode a kernel mode e ritorno#livello sistema|livello sistema]]
+> - [[#thread|thread]]
+> 	- [[#processo Unix#ULT vs KLT|ULT vs KLT]]
+> - [[#thread#processi e thread in Linux|processi e thread in Linux]]
+> 	- [[#processi e thread in Linux#stati dei processi in linux|stati dei processi in linux]]
+> 	- [[#processi e thread in Linux#segnali ed interrupt in linux|segnali ed interrupt in linux]]
+
+
 Il compito fondamentale di un sistema operativo è la **gestione dei processi** - computazioni di tipi diversi.
 Deve quindi: 
 - permettere l'esecuzione alternata di processi multipli (interleaving)
@@ -284,7 +309,96 @@ i vari registri nel PCB, che vengono copiati al momento di un process switch (PC
 - **kernel stack**: stack delle chiamate, usato per le funzioni da eseguire in modalità sistema
 
 ## thread
-Per alcune applicazioni è importante essere organizzate in maniera parallela - un'applicazione viene suddivisa in diverse esecuzioni (i thread)
+Per alcune applicazioni è importante essere organizzate in maniera parallela (al loro interno) - un'applicazione viene suddivisa in diverse esecuzioni (i thread).
 
+Diversi thread di uno stesso processo *condividono tutte le risorse* del processo tranne:
+- lo stack delle chiamate (e variabili locali) - ogni thread può chiamare funzioni diverse
+- il processore (se il sistema ha più processori, i diversi thread possono andare in esecuzione su processori diversi)
 
+Il codice sorgente, variabili globali, memoria, I/O ecc. sono condivisi.
 
+> [!info] info
+> Quindi, si può dire che il concetto di processo incorpora:
+>  - gestione delle risorse - i processi vanno presi come blocco unico
+>  - scheduling/esecuzione - i processi possono contenere diversi thread 
+
+Quindi, in un sistema operativo che utilizza i thread, non ci sarà più un PCB, un'immagine e una stack, ma un PCB e un'immagine comuni, e, per ogni thread, la sua gestione:
+ 
+![[thread-model.png|450]]
+
+>[!question] perché introdurre i thread?
+>- sono più semplici: la creazione, la terminazione, lo switch, la comunicazione
+
+Quindi, ogni processo viene creato con un thread ed è poi possibile fare le seguenti **operazioni**:
+- `spawn` - creazione di un nuovo thread (più veloce della `fork` perché non deve creare spazio, stato risorse ecc)
+- `block` - blocco del thread esplicito (es. se deve aspettare un altro thread) e `unblock`
+- `finish`
+
+#### ULT vs KLT
+(integrato [appunti exyss](<[appunti exyss](https://raw.githubusercontent.com/Exyss/university-notes/main/Secondo%20Anno/Sistemi%20Operativi%20I.pdf>))
+
+>[!info] User-Level-Thread
+>Se si usano gli ULT, significa che il sistema operativo non prevede l'utilizzo di thread, e che questi sono quindi gestiti da librerie a livello utente.
+> 
+>*pros*:
+>- lo switch è molto facile ed efficiente perché non prevede il mode switch a kernel
+>- si può attuare una politica di scheduling diversa per ogni applicazione
+>- permettono di usare i thread anche su sistemi operativi che non li offrono nativamente
+>
+>*cons*:
+>- il kernel non è a conoscenza degli user thread attivi
+>- se un thread si blocca, si bloccano tutti i thread di quel processo (a meno che non sia un blocco causato da una `block`)
+>- tutti i thread del processo possono utilizzare comunque un solo core
+>- le decisioni prese dallo scheduler sono spesso inefficienti
+
+>[!tip] Kernel-Level-Thread
+>Il sistema operativo è responsabile per il supporto e la gestione di tutti i kernel thread attivi, e fornisce delle syscall per poterli creare e gestire dall’user space. Ogni kernel thread è dotato di un Thread Control Block (TCB).
+> 
+>*pros*:
+>- il kernel è a conoscenza di tutti i kernel thread avviati
+>- lo scheduler può decidere di cedere più tempo di esecuzione a un processo con più thread
+>- passare da un thread all'altro è più veloce di passare da un processo all'altro
+>
+>*cons*:
+>- rende il kernel più complesso
+>- è un sistema lento perché si fanno spesso chiamate al kernel
+
+![[ULT-KLT.png]]
+
+### processi e thread in Linux
+In Linux, l'unità di base sono i thread (quindi, essenzialmente una fork crea thread), che Linux chiama **Lightweight process**.
+
+>[!info] def exyss LWP
+>Un lightweight process (LWP) è un processore virtuale attivo nello user space contenente un singolo kernel thread, mentre multipli user thread vengono posti su uno o più LWP, i quali assumono un ruolo di "tramite" tra le due tipologie di thread.
+
+- sono possibili sia i KLT che gli ULT
+
+l'utente e il sistema usano due terminologie diverse per "identificazione":
+per l'*utente*: 
+- il PID è unico per tutti i thread di un processo
+- il tid (task identifier) identifica un singolo thread
+	- il tid non va da 1 al numero di thread del processo - anzi, c'è sempre un tid che coincide con il PID
+ 
+(perché,) per il *sistema*:
+-  c'è una entry del PCB che dà il PID comune a tutti i thread di un processo: il `tgid` (thread group leader identifier), che coincide con il PID del primo thread del processo
+ 
+(se si crea un nuovo processo con un thread, il PID del thread coincide con il PID del processo, e, quando si crea un nuovo thread - quel thread ha un nuovo PID, e il tgid del nuovo thread coincide con il PID di prima)
+
+- la chiamata a `getpid()` restituisce il tgid 
+- c'è **un PCB per ogni thread**
+
+#### stati dei processi in linux
+la gestione degli stati in linux è sostanzialmente come quella a 5 stati (quindi, non fa esplicita menzione allo stato suspended).
+Ma, internamente, usa stati "atipici":
+- non distingue tra ready e running: `task_running`
+- lo stato blocked è diviso in base al motivo in: `task_stopped` (esplicitamente bloccato), `task_traced` (debugging), `task_interruptible` (non presenta problemi), `task_uninterruptible` (problematico - c'è poco da fare)
+- due stati per exit: `exit_dead`, `exit_zombie`
+
+#### segnali ed interrupt in linux
+Non bisogna confondere segnali con interrupt (o eccezioni).
+I **segnali** possono essere inviati da un processo utente ad un altro tramite syscall (`kill`).
+L'opportuno campo del PCB del processo ricevente viene aggiornato - quando il processo viene nuovamente schedulato per l'esecuzione, il kernel controlla prima se ci sono segnali pendenti - se sì, esegue un `signal handler` (in user mode), che può anche essere riscritto dal programmatore  (tranne sig begin e sig stop).
+
+Quindi, le differenze tra signal e interrupt sono:
+- signal handler sono eseguiti in user mode, mentre interrupt handler in kernel mode
+- signal handler possono essere riscritti dal programmatore, interrupt handler no
