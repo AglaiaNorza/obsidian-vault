@@ -49,3 +49,41 @@ Il suo scopo è *allocare tempo di esecuzione* su un processore per ottimizzare 
 >Occorre distinguere i criteri per lo short term scheduling in utente e di sistema.
 >
 >I criteri per l'*utente* sono quelli che un singolo utente può apprezzare (es. tempo di risposta), mentre quelli per il *sistema* sono legati all'uso efficiente di un procesore.
+
+>[!bug] criteri prestazionali e non
+>Un'altra distinzione che occorre fare è tra criteri correlati e non correlati alle *prestazioni*.
+>Quelli prestazionali sono quelli **quantitativi** e facili da misurare.
+>Quelli non prestazionali sono **qualitativi** e molto più difficili da misurare.
+
+##### criteri utente:
+*prestazionali*:
+- **turnaround time** (tempo di ritorno) - tempo tra la creazione di un processo e il suo completamento. (di solito si parla di batch)
+- **response time** -  tempo tra la sottomissione di una richiesta e l'inizio della risposta (processi interattivi) - duplice obiettivo dello scheduler: minimizzare il tempo medio, o massimizzare il numero di utenti con un buon tempo di risposta.
+- **deadline** - massimizzare il numero di scadenze rispettate
+
+*non prestazionali*:
+- **predictability** - non deve esserci troppa variabilità nei tempi di risposta e/o ritorno
+
+##### criteri di sistema:
+*prestazionali*:
+- **throughput** (volume di lavoro nel tempo) - massimizzare il numero di processi completati per unità di tempo
+- **processor utilization** - percentuale di tempo in cui il processore viene utilizzato - il processore deve essere idle il minor tempo possibile
+
+*non prestazionali*:
+- **fairness** - se non ci sono indicazioni dall'utente o dal sistema, tutti i processi devono essere trattati allo stesso modo
+- **enforcing priorities** - se ci sono priorità, lo scheduler deve favorire processi a priorità più alta
+- **balancing resources** - lo scheduler deve far sì che le risorse del sistema siano usate il più possibile - dovranno essere favoriti processi che useranno meno le risorse attualmente più usate
+
+>[!warning] priorità e starvation
+>Un processo a bassa priorità potrebbe soffrire di starvation a causa di un altro processo a priorità più alta.
+>- Soluzione: man mano che l'"età" aumenta (o anche sulla base di quante volte sarebbe potuto andare in esecuzione), la priorità cresce
+
+### politiche di scheduling
+![[scheduling-politics.png]]
+
+#### funzione di selezione
+è quella che sceglie il processo da mandare in esecuzione.
+
+Si basa tipicamente su alcuni parametri:
+- w(ait) = tempo trascorso in attesa
+- e(xecution) = tempo trascorso in esecuzione 
