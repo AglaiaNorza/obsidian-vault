@@ -87,3 +87,79 @@ Il suo scopo è *allocare tempo di esecuzione* su un processore per ottimizzare 
 Si basa tipicamente su alcuni parametri:
 - w(ait) = tempo trascorso in attesa
 - e(xecution) = tempo trascorso in esecuzione 
+- s = tempo totale richiesto (incluso quello già servito - e) (viene o stimato, o fornito come input)
+
+#### modalità di decisione
+specifica in quali istanti di tempo la funzione di selezione viene invocata.
+Può essere:
+- **non-preemptive** - se un processo è in esecuzione, o arriva fino a terminazione, o fa una richiesta bloccante (quindi resta in esecuzione se non fa chiamate bloccanti)
+- **preemptive** - il dispatcher può interrompere un processo in esecuzione "liberamente" - (se non è terminato o blocked), il processo diventa `ready` 
+	- la preemption può avvenire per diversi motivi: o sono arrivati *nuovi processi* appena creati, o per un *interrupt* (di I/O, o di clock, per evitare che un processo monopolizzi il sistema)
+
+#### esempi classici su un esempio comune
+Abbiamo 5 processi batch, ABCDE, che arrivano a distanza di due unità di tempo.
+
+![[es-scheduling.png]]
+
+##### first come first served (FIFO)
+- non-preemptive
+- tutti i processi vengono aggiunti alla coda dei `ready`
+- quando un processo smette di essere eseguito, si passa al processo che ha aspettato di più nella coda
+
+![[FCFS.png|400]]
+
+problemi:
+- un processo corto potrebbe attendere molto prima di essere eseguito (es. E)
+- favorisce i processi molto CPU-bound (che non verranno rilasciati fino alla loro terminazione)
+
+##### round-robin 
+- preemptive, si basa su un *clock*
+- ogni processo ha una fetta di tempo - in ordine di arrivo (FIFO), hanno un'unità di clock a testa 
+
+![[round-robin.png|400]]
+
+- un'interruzione di clock viene generata periodicamente - quando arriva, il processo attualmente in esecuzione viene rimesso nella coda dei `ready` e il prossimo viene selezionato tra quelli già ready (se la coda è vuota, il processo rimane in esecuzione)
+
+>[!question] Quanto lungo deve essere il quanto di tempo?
+> - Il round robin funziona bene se il quanto è non troppo più grande del tipico tempo di interazione di un processo:
+> 	- ![[quantum-robin.png|200]]
+> 
+> - invece, se il quanto di tempo è minore del tempo di risposta, diventa non ottimale:
+> 	- al processo viene sottratto il processore prima che riesca a computare la risposta, e il tempo di risposta per il processo si allunga
+> 	- ![[quanto-robin2.png|300]]
+> 	  
+> ma:
+> - se il quanto è troppo lungo, si rischia di degenerare in FCFS
+
+quindi, quando si sceglie il round robin, è necessario studiare i tempi di risposta e scegliere bene il quanto.
+
+>[!tip] CPU-bound vs IO-bound
+>anche il round-robin *favorisce i processi CPU-bound*: il quanto di tempo di un processo viene usato del tutto (o quasi) - mentre i processi I/O-bound ne usano solo la porzione fino alla richiesta di I/O
+>
+>- soluzione: **round-robin virtuale**
+>se un processo fa una richiesta bloccante (es. I/O), quando la richiesta viene esaudita, il processo non va in una coda di ready - ma esiste un'altra coda, la *conda ausiliare*, usata per i processi per i quali una richiesta bloccante è appena stata esaurita. Il dispatcher sceglie quindi prima dalla auxiliary queue (mandando in esecuzione solo per il tempo che rimaneva al quanto di quei processi), e, solo se questa è vuota, passa alla ready queue.
+
+##### shortest process next
+- richiede che i processi forniscano la propria *durata*, o che questa venga stimata
+- il prossimo processo da mandare in esecuzione è quello più breve = il cui tempo di esecuzione stimato è minore
+- senza preemption
+
+![[SPN-es.png|400]]
+ 
+- i processi lunghi potrebbero soffrire di starvation 
+- il tempo di esecuzione è stimato, e se viene stimato erroneamente il sistema operativo può abortire il processo
+
+>[!info] come stimare il tempo di esecuzione?
+>- in alcuni sistemi ci sono processi che sono eseguiti svariate volte
+>- si può usare il passato ($T_{i}$) per predire il futuro ($S_{i}$):
+>$$S_{n+1}=\frac{1}{n} \sum_{i=1}^n T_{i}$$
+>questa è una media - ma per calcolarla, servirebbe mantenere n valori. ma si può fare anche:
+>$$S_{n+1}=\frac{1}{n}T_{n}+\frac{n-1}{n}S_{N}$$
+>così basta tenere l'ultimo valore e la stima precedente.
+>
+>- ma sarebbe meglio far pesare di più le istanze più recenti:
+>(se chiamo alpha 1/n noto che:)
+>$$S_{n+1} = \alpha \,T_{n}+(1-\alpha )S_{n}, \,\,\,0<\alpha <1$$ 
+>e notiamo che è equivalente a:
+>$$S_{n+1} = \alpha \,T_{n}+\dots+ \alpha (1-\alpha )^iT_{n-i}+\dots +(1-\alpha )^n S_{1}$$ 
+>che è l'*exponential averaging*
