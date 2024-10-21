@@ -14,7 +14,7 @@ $$\text{se } Y \subseteq X \subseteq R \text{ allora } X\rightarrow Y \in F^A$$
 - **assioma dell'aumento**:
 	$$\text{se } X \rightarrow Y \in F^A \text{ allora } XZ \rightarrow YZ \in F^A \,\,\, \forall Z \subseteq R $$
 - **assioma della transitività**:
-$$\text{se} X\rightarrow Y \in F^A \text{ e } Y\rightarrow Z \in F^A \text{ allora } X\to Z \in F^A$$
+$$\text{se } X\rightarrow Y \in F^A \text{ e } Y\rightarrow Z \in F^A \text{ allora } X\to Z \in F^A$$
 
 >[!example] esempio
 >- CF -> COGNOME in F
@@ -29,8 +29,9 @@ $$\text{se} X\rightarrow Y \in F^A \text{ e } Y\rightarrow Z \in F^A \text{ allo
 
 altre tre regole che producono elementi di $F^A$
 
-- se $X\rightarrow Y\in F^A$ e $X\rightarrow Z \in F^A$, allora $X\rightarrow YZ \in F^A$ - **regola dell'unione**
+- **regola dell'unione** se $X\rightarrow Y\in F^A$ e $X\rightarrow Z \in F^A$, allora $X\rightarrow YZ \in F^A$ - **regola dell'unione**
 
+- se $X\to Y \in F^A$ e $Z \subseteq Y$ allora $X\to Z \in F^A$ 
 
 nome, cognome -> nome, padre
 CF->nome
