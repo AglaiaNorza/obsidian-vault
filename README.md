@@ -1,7 +1,7 @@
 i miei appunti per il corso di laurea triennale in Informatica della Sapienza.
 
 gli appunti di Calcolo delle Probabilità e Algebra, che prendo a mano, sono ai link:
-- [Algebra](https://drive.google.com/file/d/1KuGslbgLNU1U9rboeNKxsBptnqXS95rY/view?usp=sharing)
+- [Algebra](https://drive.google.com/file/d/1KuGslbgLNU1U9rboeNKxsBptnqXS95rY/view?usp=sharing) (senza insiemistica)
 - [Calcolo delle Probabilità](https://drive.google.com/file/d/1z5yY9wkeVek5W3LhSf8P8mh2xpbsMRAs/view?usp=sharing)
 
 (per algebra, faccio anche il re-file degli appunti in sub-file):
