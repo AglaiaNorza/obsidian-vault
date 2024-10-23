@@ -10,5 +10,6 @@
   "attachmentFolderPath": "attachments",
   "alwaysUpdateLinks": true,
   "vimMode": true,
-  "showLineNumber": true
+  "showLineNumber": true,
+  "spellcheck": false
 }
