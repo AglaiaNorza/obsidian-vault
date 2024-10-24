@@ -95,3 +95,11 @@ $$X_{F}^+ = \{ A|X\rightarrow A\in F^A\}$$
 - banalmente:
 $$X\subseteq X_{F}^+$$
 
+
+
+---
+
+>[!question] a cosa ci serve $F^+$?
+>\]['.,l;p-0=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=--=-=---===----===]
+
+==aglaia== 
