@@ -96,5 +96,26 @@ Siano R uno schema di relazione e F un insieme di dipendenze funzionali su R.
  $$\text{lo schema R è in 3NF} \implies \forall X\to A\in F^+,\,A\not\in X$$
 
 abbiamo due casi:
-- o A appartiene a una chiave, o
-- 
+- o A appartiene a una chiave (è primo)
+- o X contiene una chiave
+
+da qui:
+- se A primo, viene a mancare la prima condizione per avere una dipendenza parziale o trainsitiva 
+- se A non è primo, allora X è superchiave (contiene una chiave). (se faccio K-X ottengo il vuoto, perché tutti gli elementi di X K sono contenuti in X) Visto che è superchiave, può contenere una chiave ma non essere contenuto propriamente SLIDE
+ 
+dasda
+
+- seconda parte
+ 
+supponiamo per assurdo che R non sia 3NF - allora c'è almeno una dipendenza che viola la 3NF, quindi:
+- a non è primo 
+- E x non è superchiave
+
+Siccome X non è superchiave, ci sono due casi mutualmente esclusivi:
+- per ogni chiave K di R, X non è contenuto propriamente in nessuna chiave e K-X != vuoto - ma questa è la definizione di dipendenza transitiva (contraddizione)
+- esiste una chiave che contiene completamente X - ma è una dipendenza parziale (contraddizione)
+
+
+
+
+la decomposizione preserva le dipendenze
