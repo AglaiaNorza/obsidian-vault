@@ -95,11 +95,68 @@ $$X_{F}^+ = \{ A|X\rightarrow A\in F^A\}$$
 - banalmente:
 $$X\subseteq X_{F}^+$$
 
+>[!example] esempio
+>- $\text{CF}\rightarrow\text{COMUNE}$
+>- $\text{COMUNE}\rightarrow\text{PROVINCIA}$
+>
+>$\text{CF}\rightarrow\text{COMUNE}$ è diretta, mentre $\text{CF}\rightarrow\text{PROVINCIA}$ è indiretta
+>$$
+>\text{CF}^+_{F}=\{\text{COMUNE, PROVINCIA, CF}\}
+>$$
 
+#### determinare la chiave di una relazione
+La chiusura di un insieme di attributi ci può essere utile per determinare le chiavi di una relazione.
+
+>[!example] esempio
+>- $\text{Auto(MODELLO, MARCA, CILINDRATA, COLORE)}$
+>- $F=\{\text{MODELLO} \rightarrow \text{MARCA, MODELLO }\rightarrow\text{COLORE}\}$
+>
+>Le chiusure sono:
+>- $(\text{MODELLO})^+_{F}=\{\text{MODELLO, MARCA, COLORE}\}$
+>- $(\text{MARCA})^+_{F}=\{\text{MARCA}\}$
+>- $(\text{CILINDRATA})^+_{F}=\{\text{CILINDRATA}\}$
+>- $(\text{COLORE})^+_{F}=\{\text{COLORE}\}$
+>
+>Il che ci fa capire che:
+>$$\text{chiave}=\text{MODELLO, CILINDRATA}$$
+>(modello e cilindrata, insieme, determinano tutti gli altri)
 
 ---
+### lemma 1
+Siano $R$ uno schema di relazione ed $F$ un insieme di dipendenze funzionali su $R$.
+Si ha:
+$$X \to Y \in F^A \iff Y \subseteq X^+$$
+>[!info] dimostrazione
+>Sia $Y=A_{1}, A_{2}, \dots, A_{n}$
+>
+>>(dimostro $X \to Y \in F^A \impliedby Y \subseteq X^+$)
+>
+>Poiché $Y \subseteq X^+$, per ogni $i$, $i=1,\, \dots,\, n$ si ha che $X\rightarrow A_{i} \in F^A$. Pertanto per la regola dell’unione, $X\rightarrow Y \in F^A$
+>
+>>(dimostro $X \to Y \in F^A \implies Y \subseteq X^+$)
+>
+>Poiché $X\rightarrow Y \in F^A$, per la regola della decomposizione si ha che, per ogni $i$, $i=1, \dots, n$, $X \rightarrow A_{i} \in F^A$, cioè $A_{i} \in X^+$ per ogni $i, i=1,\, \dots,\, n$, e, quindi, $Y \subseteq X^+$
+>$\begin{flalign}&& \square\end{flalign}$
 
->[!question] a cosa ci serve $F^+$?
->\]['.,l;p-0=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=--=-=---===----===]
 
-==aglaia== 
+### teorema: $F^+=F^A$
+
+Siano $R$ uno schema di relazione ed $F$ un insieme di dipendenze funzionali su $R$.
+Si ha: $$F^+=F^A$$
+
+>[!info] dimostrazione
+>Per dimostrare l’uguaglianza tra due insiemi ci basta dimostrare la doppia inclusione:
+>$$F^A \subseteq F^+\land F^+ \subseteq F^A$$
+>
+>##### Dimostriamo che  $F^A\subseteq F^+$
+>Sia $X \to Y \in F^A$. Dimostriamo che $X \to Y \in F^+$ per induzione su $i$ applicazioni di uno degli assiomi di Armstrong.
+>- caso base: ($i=0$): $X\to Y\in F\implies X\to Y\in F^+\,\,\,\, F\subseteq F^+$
+>- ipotesi induttiva: ($i>0$): $X\to Y\in F^A\implies X\to Y\in F^+\implies X\to Y$ è soddisfatto da ogni istanza legale
+>
+> Passo induttivo: $i$: $X\to Y\in F^A$ ottenuto in $i$ passi.
+> 
+> Ci sono tre casi:
+> 1) **riflessività** $X\to Y$ ottenuto perchè $Y\subseteq X$:
+> 	- in questo caso,  $\forall r\text{ legale}\,\, t_{1}[x]=t_{2}[x] \,\land Y\subseteq X\implies t_{1}[y]=t_{2}[y]$.
+>  $$  $$
+> 2) **aumento** ($X \to Y$ ottenuto per aumento): significa che $V\to W \in F^+$ è stata ottenuta in $i-1$ passi (perché se $V\to W \in F^A$, per ipotesi induttiva, allora $V\to W\in F^A$)
