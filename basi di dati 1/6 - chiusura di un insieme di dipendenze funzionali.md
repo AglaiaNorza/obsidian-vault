@@ -1,6 +1,3 @@
----
-sticker: lucide//arrow-left-right
----
 [ quasi tutto da [appunti flavio](https://github.com/thegeek-sys/Vault) (grz)]
  
 (due insiemi che hanno la stessa chiusura avranno le stesse istanze legali - perché la chiusura è l'insieme di dipendenze che viene soddisfatto da ogni istanza legale)

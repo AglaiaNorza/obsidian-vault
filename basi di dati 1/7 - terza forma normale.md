@@ -1,7 +1,4 @@
----
-sticker: lucide//asterisk
----
-Torniamo al nostro eempio di base di dati che contiene informazioni su studenti ed esami (soluzione "buona" trovata alla fine)
+Torniamo al nostro esempio di base di dati che contiene informazioni su studenti ed esami (soluzione "buona" trovata alla fine)
 
 La base di dati consiste di quattro schemi di relazione:
 - Studente (**Matr**, *CF*, Cogn, Nome, Data, Com)

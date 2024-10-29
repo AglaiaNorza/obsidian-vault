@@ -1,6 +1,3 @@
----
-sticker: lucide//file-clock
----
 
 > [!info] index
 > - [[#elementi di un processo|elementi di un processo]]
@@ -283,8 +280,9 @@ dipende da sistema operativo a sistema operativo:
 >- ci sono però dei processi di sistema che partecipano alla normale competizione del processore senza essere evocati esplicitamente (tipicamente processi ciclici)
 >	- creati in fase di inizializzazione del SO
 >	- es: creare spazio usabile nella RAM liberando zone non usate, eseguire operazioni di rete
-> 
->diagramma degli stati di UNIX (molto simile ai sette stati)
+
+### stati in LINUX
+>diagramma degli stati di LINUX (molto simile ai sette stati)
 > ![[unix-dgstati.png|450]]
 > - si passa per forza per Kernel Running prima di arrivare a User Running perché vuol dire che si fa uno swap
 > - quando un processo finisce, passa allo stato *Zombie* - perché ci si aspetta che il padre sopravviva al figlio e, finché il figlio non comunica al padre il suo exit status, resta nello stato di Zombie - l'immagine sparisce

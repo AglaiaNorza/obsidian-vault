@@ -1,6 +1,3 @@
----
-sticker: lucide//align-vertical-distribute-end
----
 - Un **database** è un insieme di file mutualmente connessi, organizzati in strutture di dati che ne facilitano la gestione.
 - I **Database Management Systems** sono strumenti software per la gestione di grandi masse di dati.
 

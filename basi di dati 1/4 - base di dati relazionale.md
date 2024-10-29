@@ -1,6 +1,3 @@
----
-sticker: lucide//copy-plus
----
 Supponiamo di voler creare una base di dati contenente i seguenti dati di studenti universitari:
 - dati anagrafico-identificativi (nome, cognome, data, comune, provincia, matricola, CF)
 - dati curricolari (per ogni esame: voto, data, codice, titolo e docente)

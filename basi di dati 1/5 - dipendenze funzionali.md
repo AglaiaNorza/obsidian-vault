@@ -1,6 +1,3 @@
----
-sticker: lucide//arrow-right
----
 >[!info] definizione di dipendenza funzionale
 >una **dipendenza funzionale** su R è una coppia ordinata di sottoinsiemi non vuoti X ed Y di R
 >$$X \to Y$$

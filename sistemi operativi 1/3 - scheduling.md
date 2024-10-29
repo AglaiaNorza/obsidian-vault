@@ -1,6 +1,26 @@
----
-sticker: lucide//alarm-clock
----
+
+> [!info] index
+> - [[#tipi di scheduling|tipi di scheduling]]
+> - [[#stati dei processi e scheduling|stati dei processi e scheduling]]
+> 	- [[#stati dei processi e scheduling#long-term scheduling|long-term scheduling]]
+> 	- [[#stati dei processi e scheduling#medium-term scheduling|medium-term scheduling]]
+> 	- [[#stati dei processi e scheduling#short-term scheduler|short-term scheduler]]
+> 		- [[#short-term scheduler#criteri utente:|criteri utente:]]
+> 		- [[#short-term scheduler#criteri di sistema:|criteri di sistema:]]
+> - [[#politiche di scheduling|politiche di scheduling]]
+> 	- [[#politiche di scheduling#funzione di selezione|funzione di selezione]]
+> 	- [[#politiche di scheduling#modalità di decisione|modalità di decisione]]
+> 	- [[#politiche di scheduling#esempi classici su un esempio comune|esempi classici su un esempio comune]]
+> 		- [[#esempi classici su un esempio comune#first come first served|first come first served]]
+> 		- [[#esempi classici su un esempio comune#round-robin|round-robin]]
+> 		- [[#esempi classici su un esempio comune#shortest process next (SPN)|shortest process next (SPN)]]
+> 		- [[#esempi classici su un esempio comune#shortest remaining time (SRT)|shortest remaining time (SRT)]]
+> 		- [[#esempi classici su un esempio comune#Highest Response Ratio First (HRRN)|Highest Response Ratio First (HRRN)]]
+> - [[#scheduling tradizionale di unix|scheduling tradizionale di unix]]
+> - [[#architetture multiprocessore|architetture multiprocessore]]
+> - [[#scheduling in linux|scheduling in linux]]
+> 	- [[#scheduling in linux#classi di scheduling|classi di scheduling]]
+
 Un sistema operativo deve allocare risorse tra diversi processi che ne fanno richiesta contemporaneamente: tra le risorse, c'è il processore (e quindi il tempo di esecuzione). Questa risorsa viene allocata tramite lo **scheduling**.
 
 >[!question] qual è lo scopo dello scheduling?
@@ -14,7 +34,7 @@ Un sistema operativo deve allocare risorse tra diversi processi che ne fanno ric
 >- usare il processore in modo efficiente
 >- avere un **overhead** basso (overhead = lavoro fatto in più - lo scheduler deve essere veloce ed efficiente)
 
-#### tipi di scheduling
+### tipi di scheduling
 Ci sono diversi tipi di scheduling (a seconda di quanto spesso vengono eseguiti)
 - **long-term** (eseguito molto di rado) - decide l'aggiunta ai processi da essere eseguiti
 - **medium-term** (eseguito ogni tanto)- decide l'aggiunta ai processi in memoria principale
@@ -22,7 +42,7 @@ Ci sono diversi tipi di scheduling (a seconda di quanto spesso vengono eseguiti)
 - **I/O** - decide a quale processo assegnare un dispositivo I/O, tra quelli che lo stanno richiedendo
 
 ### stati dei processi e scheduling
-molte delle transizioni del [[processi#stato di un processo|modello a sette stati]] sono dovute a uno scheduler.
+molte delle transizioni del [[2 - processi#stato di un processo|modello a sette stati]] sono dovute a uno scheduler.
  
 ![[transizioni-scheduler.png|500]]
 
@@ -199,7 +219,7 @@ $$P_{j}=Base_{J}+\frac{CPU_{j}}{2}+nice_{j}$$
 	- $Base_{j}$ è la priorità iniziale (da 0 a 4, con swapper = 0)
 	- $nice_{j}$ - (ricordiamo che se $P_{j}$ è alto, la priorità è bassa) - è un valore di "cortesia" che un processo può auto-settare a un valore > 0 per far passare avanti altri processi
 
->[!example]
+>[!example] esempio
 >Supponiamo che ci siano 3 processi utente con stessa priorità e nice=0.
 >Inizialmente, tutti hanno priority 60.
 >- Lo scheduler sceglie quindi A (il primo).
@@ -214,3 +234,91 @@ $$P_{j}=Base_{J}+\frac{CPU_{j}}{2}+nice_{j}$$
 >![[unix-scheduling.png|300]]
 
 
+### architetture multiprocessore
+> Le cose dette sopra valgono per le architetture con un solo processore. Come si fa per quelle multiprocessore?
+
+Esistono diversi tipi di architetture multiprocessore:
+- **cluster** - multiprocessori con memoria non condivisa (connessione con rete locale superveloce)
+- **processori specializzati** - ad esempio, ogni I/O ha il suo processore
+- **multiprocessore o multicore** - condividono la RAM, un solo sistema operativo controlla tutto
+
+Noi ci concentreremo sulle architetture multicore.
+
+>[!question] qual è la questione
+>Ho dei processi ready, e non devo più solo decidere quale mandare in esecuzione, ma anche quale processo va su quale processore - *assegnamento*.
+
+Ci sono due possibilità: assegnamento statico o dinamico.
+- **assegnamento statico**
+	- quando unprocesso viene creato, gli viene assegnato *un processore*, che manterrà *per tutta la sua esecuzione* 
+	- si può usare uno *scheduler per ogni processore*
+	- vantaggi: semplice da realizzare, poco overhead
+	- svantaggi: un processore potrebbe rimanere idle (mentre altri hanno molti processi)
+
+- **assegnamento dinamico**
+	- un processo, nel corso della sua vita, può essere eseguito su diversi processori
+	- complicato da realizzare:
+		- con *Sistema Operativo su un processore fisso*:
+			- più semplice, solo i processi utenti possono "vagare"
+			- il processore del sistema operativo può avere più carico degli altri (diventare il "bottleneck")
+			- se il processore del SO fallisce, fallisce tutto
+		- con *Sistema operativo sul processore che capita*
+			- flessibile, ma richiede più overhead per gestire la mobilità del SO
+
+### scheduling in linux
+(è cambiato varie volte da quando linux esiste)
+- *non esistono long-term* (i processi creati sono subito ready) *o medium-term* (non esistono i processi suspended) scheduler, perché Linux cerca la massima velocità di esecuzione tramite semplicità
+	- c'è un embrione del long-term (caso limite: quando creo un nuovo processo, il sistema è già saturo, e questo scheduler non lascia che il processo sia creato - la syscall fallisce -)
+
+Esistono le **wait queues** (plurale perché ci sono diverse code per evento che si attende) e le **runqueues** (plurale perché ci sono diverse code per diverse priorità):
+- *waitqueues* - code dei blocked
+	- in un'architettura multiprocessore, sono condivise tra tutti i processori
+- *runqueues* - code dei ready
+	- in un'architettura multiprocessore, ogni processore ha la propria
+
+Lo scheduling è quindi derivato da quello di Unix - è *preemptive* a *priorità dinamica*.
+Ci sono però correzioni per:
+- essere veloce ed operare in tempi quasi costanti
+- servire nel modo appropriato i processi real-time
+
+Linux si fa mandare un interrupt ogni `1ms`. Quindi, il quanto di tempo per ciascun processo all'interno delle varie priorità è un multiplo di 1ms.
+
+Per capire qual è il tempo, bisogna capire che tipi di processi Linux consideri:
+>[!info] tipi di processi in Linux
+>- **interattivi**
+>	- non appena si agisce sul mouse o sulla tastiera (per una risposta veloce), è importante dare il controllo al processo in max `150ms`
+>	- vanno quindi favoriti
+>- **batch**
+>	- tipicamente penalizzati dallo scheduler (es. compilazioni)
+>- **real-time**
+>	-  dichiarati esplicitamente come tali (mentre per batch e interattivi, Linux cerca di capire la loro categoria) se il loro codice usa la syscall `sched_setscheduler` (es. audio/video)
+>
+>Tutti questi possono essere sia CPU-bound che I/O-bound
+
+#### classi di scheduling
+Ci sono 3 classi di scheduling:
+- per i processi real-time, `SCHED_FIFO` e `SCHED_RR` (round-robin)
+- per tutti gli altri, `SCHED_OTHER`
+
+Prima si eseguono i processi in `SCHED_FIFO` e `SCHED_RR` (priorità da 1 a 99), e solo dopo quelli in `SCHED_OTHER` (priorità da 100 a 130)
+- la priorità 0 viene usata per casi particolari
+
+Ci sono quindi 140 runqueues per ogni processore.
+
+Lo **scheduler**, per decidere chi mandare in esecuzione, considera prima il livello 0, poi 1, poi 2 ecc...
+- e, può passare dal livello $n$ a $n+1$ solo se o non ci sono processi in $n$, o nessun processo in $n$ è nello stato `RUNNING` (ready)
+
+La **preemption** per `SCHED_OTHER` può avvenire in due casi:
+- si esaurisce il quanto di tempo del processo in esecuzione (di solito nel round robin c'è solo questa condizione)
+- un altro processo passa dagli stati blocked a `RUNNING` (serve per poter servire il prima possibile i processi interattivi)
+	- molto spesso, quel processo sarà quindi effettivamente eseguito
+
+>[!tip] regole generali
+>Un processo `SCHED_FIFO` viene preempted solo se:
+>- si blocca per I/O o lascia volontariamente la CPU
+>- un altro processo passa da blocked a `RUNNING` e ha priorità più alta
+> 
+>(quindi, i processi in `SCHED_FIFO` devono essere pochi, importanti e veloci)
+> 
+>Tutti gli altri processi vanno a quanto di tempo, compreso `SCHED_RR`.
+>- i processi real-time non cambiano mai la priorità (o fanno chiamate bloccanti o lasciano la CPU), mentre quelli `SCHED_OTHER` sì (in maniera simile a UNIX)
+>- per sistemi con CPU multiple, c'è una routine periodica che ridistribuisce il carico se necessario
