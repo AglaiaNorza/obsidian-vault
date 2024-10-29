@@ -3,11 +3,11 @@
   "obsidian-style-settings",
   "url-into-selection",
   "obsidian-icon-folder",
-  "obsidian-folder-index",
   "table-editor-obsidian",
   "cycle-through-panes",
   "obsidian-latex-suite",
   "obsidian-plugin-toc",
   "obsidian-relative-line-numbers",
-  "abbreviations"
+  "abbreviations",
+  "folder-note-plugin"
 ]
