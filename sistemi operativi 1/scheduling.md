@@ -1,3 +1,6 @@
+---
+sticker: lucide//alarm-clock
+---
 Un sistema operativo deve allocare risorse tra diversi processi che ne fanno richiesta contemporaneamente: tra le risorse, c'è il processore (e quindi il tempo di esecuzione). Questa risorsa viene allocata tramite lo **scheduling**.
 
 >[!question] qual è lo scopo dello scheduling?
@@ -101,10 +104,10 @@ Abbiamo 5 processi batch, ABCDE, che arrivano a distanza di due unità di tempo.
 
 ![[es-scheduling.png]]
 
-##### first come first served (FIFO)
+##### first come first served 
 - non-preemptive
 - tutti i processi vengono aggiunti alla coda dei `ready`
-- quando un processo smette di essere eseguito, si passa al processo che ha aspettato di più nella coda
+- quando un processo smette di essere eseguito, si passa al processo che ha aspettato di più nella coda (FIFO)
 
 ![[FCFS.png|400]]
 
@@ -139,7 +142,7 @@ quindi, quando si sceglie il round robin, è necessario studiare i tempi di risp
 >- soluzione: **round-robin virtuale**
 >se un processo fa una richiesta bloccante (es. I/O), quando la richiesta viene esaudita, il processo non va in una coda di ready - ma esiste un'altra coda, la *conda ausiliare*, usata per i processi per i quali una richiesta bloccante è appena stata esaurita. Il dispatcher sceglie quindi prima dalla auxiliary queue (mandando in esecuzione solo per il tempo che rimaneva al quanto di quei processi), e, solo se questa è vuota, passa alla ready queue.
 
-##### shortest process next
+##### shortest process next (SPN)
 - richiede che i processi forniscano la propria *durata*, o che questa venga stimata
 - il prossimo processo da mandare in esecuzione è quello più breve = il cui tempo di esecuzione stimato è minore
 - senza preemption
@@ -158,8 +161,56 @@ quindi, quando si sceglie il round robin, è necessario studiare i tempi di risp
 >così basta tenere l'ultimo valore e la stima precedente.
 >
 >- ma sarebbe meglio far pesare di più le istanze più recenti:
->(se chiamo alpha 1/n noto che:)
+>(se chiamo 1/n alpha noto che:)
 >$$S_{n+1} = \alpha \,T_{n}+(1-\alpha )S_{n}, \,\,\,0<\alpha <1$$ 
 >e notiamo che è equivalente a:
 >$$S_{n+1} = \alpha \,T_{n}+\dots+ \alpha (1-\alpha )^iT_{n-i}+\dots +(1-\alpha )^n S_{1}$$ 
->che è l'*exponential averaging*
+>che è l'*exponential averaging*.
+>Quindi, usando degli $\alpha$ fissati (invece che dipendenti da n), la stima è molto più vicina ai tempi reali di una semplice media.
+
+##### shortest remaining time (SRT)
+- come SPN, ma preemptive:
+	- un processo può essere interrotto solo quando *ne arriva uno nuovo*, appena creato
+- stima il tempo rimanente richiesto per l'esecuzione, e prende quello più breve
+
+##### Highest Response Ratio First (HRRN)
+- risolve anche il problema della starvation
+- non preemptive
+- massimizza il rapporto:
+$$\frac{w+s}{s}=\frac{\text{tempo trascorso in attesa + tempo totale richiesto}}{\text{tempo totale richiesto}}$$
+
+### scheduling tradizionale di unix
+- lo scheduling tradizionale di UNIX si basa sui concetti di **priorità** e round-robin
+- un processo resta in esecuzione per massimo un secondo (a meno che non termini o si blocchi)
+- i processi sono organizzati in *diverse code in base alla priorità*, e all'interno di esse si fa **round-robin**
+- la priorità viene ricalcolata ogni secondo: più un processo rimane in esecuzione, meno priorità ha:
+	- le priorità iniziali sono:
+		- swapper (alta)
+		- controllo di dispositivo I/O a blocchi (dischi)
+		- gestione di file
+		- controllo di dispositivo a caratteri
+		- processi utente
+
+La priorità viene calcolata con le formule:
+$$CPU_{j}(i)=\frac{CPU(i-1)}{2}$$
+$$P_{j}=Base_{J}+\frac{CPU_{j}}{2}+nice_{j}$$
+- $CPU_{j}$ misura quanto il processo j ha usato il processore nell'intervallo i (con exponential averaging dei tempi passati)
+- $P_{j}(i)$ è la priorità del processo $j$ all'inizio di $i$ (valore basso = priorità alta)
+	- $Base_{j}$ è la priorità iniziale (da 0 a 4, con swapper = 0)
+	- $nice_{j}$ - (ricordiamo che se $P_{j}$ è alto, la priorità è bassa) - è un valore di "cortesia" che un processo può auto-settare a un valore > 0 per far passare avanti altri processi
+
+>[!example]
+>Supponiamo che ci siano 3 processi utente con stessa priorità e nice=0.
+>Inizialmente, tutti hanno priority 60.
+>- Lo scheduler sceglie quindi A (il primo).
+>- I processi non in esecuzione mantengono il CPU-count a 0, mentre A lo incrementa di 1 ogni 1/60 (fino a 60).
+>- Quando arriva l'interrupt e lo scheduler deve scegliere tra A, B e C, per A il 60 diventa 30 (per la formula $CPU_{j}$ e la priorità quindi 75 (per $P_{j}$).
+>- Quindi, lo scheduler sceglie B (o C, è indifferente) e succede la stessa cosa: C, a fine secondo, avrà priorità 75.
+>- Il processo A, intanto, essendo rimasto fermo, divide per 2 il 30 ($CPU_{j}$) e riapplica $P_{j}$ - la sua priorità diventa 67
+>- Va in esecuzione C (che ha la priorità minore)
+>
+>e si va avanti così fino al termine dei processi
+>
+>![[unix-scheduling.png|300]]
+
+
