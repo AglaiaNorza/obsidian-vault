@@ -1,6 +1,3 @@
----
-sticker: lucide//package
----
 - le classi sono categorizzate in **packages** (fisicamente, cartelle).
 - ogni package racchiude classi e le loro funzionalità.
 - quando si utilizza una classe è necessario **specificare il package**

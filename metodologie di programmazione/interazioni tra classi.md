@@ -1,6 +1,3 @@
----
-sticker: lucide//file-lock
----
 una classe interagisce con le altre quasi solo attraverso **costruttori e metodi pubblici**.
 
 - le altre classi non devono conoscere i dettagli implementativi di una classe per usarla efficacemente

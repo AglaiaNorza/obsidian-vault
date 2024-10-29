@@ -1,6 +1,3 @@
----
-sticker: lucide//folder-closed
----
 - un file è una *collezione di dati* salvata su supporto di memorizzazione di massa.
 - non è parte del codice sorgente di un programma
 - il programma deve conoscere il formato dei dati nel file

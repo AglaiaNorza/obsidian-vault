@@ -1,6 +1,3 @@
----
-sticker: lucide//align-vertical-distribute-center
----
 
 per poter implementare la pipeline all'interno di una CPU MIPS, per permettere il **forwarding** è necessario inserire dei registri tra le unità funzionali, per poterci inserire dati e utilizzarli quando necessari.
 ![[registri pipeline.jpg|center|400]]

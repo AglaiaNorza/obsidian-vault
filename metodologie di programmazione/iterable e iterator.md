@@ -1,8 +1,3 @@
----
-sticker: lucide//align-horizontal-justify-start
-tags:
-  - interfacce
----
 Molte classi diverse che rappresentano sequenze hanno in comune il fatto di poter iterare sui loro elementi.
 Le classi iterabili hanno tipicamente in comune i metodi `hasNext` (che controlla se c'è un elemento successivo al corrente), `next()` (che passa all'elemento successivo), e `reset()` (che resetta l'iterazione).
 ```java

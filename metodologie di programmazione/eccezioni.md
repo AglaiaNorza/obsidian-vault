@@ -1,6 +1,3 @@
----
-sticker: lucide//file-warning
----
 Le eccezioni in Java sono ben definite.
 
 | eccezione                    | descrizione                                                               |

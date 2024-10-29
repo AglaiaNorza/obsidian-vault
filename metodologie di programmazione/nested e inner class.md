@@ -1,8 +1,3 @@
----
-sticker: lucide//folder-open
-tags:
-  - classi
----
 Java consente di scrivere classi **all'interno di altre classi** - classi annidate, **nested class**.
 Le nested class possono essere:
 - `static`

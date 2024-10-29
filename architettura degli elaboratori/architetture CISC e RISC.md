@@ -1,6 +1,3 @@
----
-sticker: lucide//cog
----
 
 |CISC|RISC|
 |---|---|

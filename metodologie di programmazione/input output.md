@@ -1,6 +1,3 @@
----
-sticker: lucide//folder-input
----
 #### output
 - l'output su console viene generato usando la classe `System.out` 
 - è un campo *statico*, *pubblico*, *final* di `System` di tipo `java.io.PrintStream` (che estende `java.io.OutputStream`)

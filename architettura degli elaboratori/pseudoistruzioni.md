@@ -1,6 +1,3 @@
----
-sticker: lucide//box-select
----
 molte istruzioni in realtà sono *pseudoistruzioni*: hanno un significato intuitivo, ma non un corrispondente 1 a 1 con le istruzioni che la macchina esegue effettivamente.
 
 vantaggi [[fonte: ppt università di milano](https://pedersini.di.unimi.it/AER/AE2_14_L3.pdf)]:

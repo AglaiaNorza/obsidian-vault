@@ -1,9 +1,3 @@
----
-color: ""
-tags:
-  - tipi
-sticker: lucide//carrot
----
 tipi di dati di base built-in.
 
 ![[tipi primitivi java.png]]

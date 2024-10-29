@@ -1,8 +1,3 @@
----
-tags:
-  - tipi
-sticker: lucide//text-cursor
----
 ## metodi:
 
 ##### length:

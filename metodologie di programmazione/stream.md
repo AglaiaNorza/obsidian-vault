@@ -1,6 +1,3 @@
----
-sticker: lucide//align-left
----
 
 > [!Info]+ index
 > - [[#ottenere uno stream|ottenere uno stream]]

@@ -1,6 +1,3 @@
----
-sticker: lucide//divide
----
 ##### incrementi:
 - `var++ (var = var +1)`
 - `var--`

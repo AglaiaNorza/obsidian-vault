@@ -1,6 +1,3 @@
----
-sticker: lucide//file-question
----
 #### istruzione if:
 la sintassi è:
 ```java

@@ -1,6 +1,3 @@
----
-sticker: lucide//grip-horizontal
----
 - un gruppo di variabili (elementi) tutte **dello stesso tipo**
 - sono **oggetti** (quindi le variabili di array contengono il riferimento all'array)
 - gli elementi di un array possono essere tipi primitivi o riferimenti a oggetti (anche altri array)

@@ -1,6 +1,3 @@
----
-sticker: lucide//grip
----
 - spesso è utile definire dei tipi detti **enumerazioni**, i cui valori possono essere scelti tra un insieme predefinito di identificatori univoci:
 	- ogni identificatore corrisponde a una **costante**
 

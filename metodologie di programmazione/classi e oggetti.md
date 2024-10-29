@@ -1,8 +1,3 @@
----
-sticker: lucide//file-json-2
-tags:
-  - classi
----
 
 > [!info]- index
 > - [[#classe|classe]]

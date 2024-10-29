@@ -1,6 +1,3 @@
----
-sticker: lucide//repeat
----
 >[!Info] come funziona?
 >- ogni volta che viene effettuata una chiamata a un metodo viene creato un **nuovo ambiente**, un "*record di attivazione*"
 >- il record di attivazione contiene la zona di *memoria per le variabili locali* del metodo e l'*indirizzo di ritorno al metodo chiamante* - ad ogni chiamata, il record corrispondente viene aggiunto sullo stack

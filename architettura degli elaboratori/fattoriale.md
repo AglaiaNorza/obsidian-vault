@@ -1,6 +1,3 @@
----
-sticker: lucide//wrap-text
----
 
 > [!note]- fattoriale iterativo
 > ```

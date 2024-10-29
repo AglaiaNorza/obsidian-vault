@@ -1,6 +1,3 @@
----
-sticker: lucide//codesandbox
----
 
 >[!Info]+ index
 > - [[#aggiungere una nuova istruzione|aggiungere una nuova istruzione]]

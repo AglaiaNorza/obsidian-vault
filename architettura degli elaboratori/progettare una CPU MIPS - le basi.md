@@ -1,6 +1,3 @@
----
-sticker: lucide//codesandbox
----
 
 > [!info]+ index
 > - [[#CPU senza pipeline|CPU senza pipeline]]

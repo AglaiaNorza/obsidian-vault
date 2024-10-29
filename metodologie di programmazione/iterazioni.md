@@ -1,6 +1,3 @@
----
-sticker: lucide//chevrons-right
----
 #### while
 - le istruzioni sono eseguite fino a quando la condizione è vera
 - la condizione viene controllata ad ogni ciclo

@@ -1,9 +1,3 @@
----
-sticker: lucide//monitor
-tags:
-  - interfacce
-  - classi
----
 parola chiave `interface`.
 Le interfacce permettono di modellare **comportamenti comuni** a classi (anche se non sono in relazione gerarchica -> in Java non è consentito estendere più di una classe, ma una classe può implementare tutte le interfacce desiderate).
 

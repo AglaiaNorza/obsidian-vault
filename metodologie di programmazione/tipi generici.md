@@ -1,8 +1,3 @@
----
-sticker: lucide//locate
-tags:
-  - tipi
----
 I tipi generici sono un *modello di programmazione* che permette di definire, con una sola dichiarazione, un intero **insieme di metodi o classi**.
 
 ```java

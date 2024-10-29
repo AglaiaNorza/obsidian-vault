@@ -1,6 +1,3 @@
----
-sticker: lucide//plus-circle
----
 ###### massimo e minimo
 ```java
 double max(double a, double b)

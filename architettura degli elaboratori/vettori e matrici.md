@@ -1,6 +1,3 @@
----
-sticker: lucide//grip
----
 in assembly non esistono i tipi.
 
 ### vettori

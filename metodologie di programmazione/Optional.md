@@ -1,8 +1,3 @@
----
-sticker: lucide//check-square
-tags:
-  - classi
----
 #### optional
 `java.util.Optional` è un contenitore di un riferimento che potrebbe essere o non essere null.
 - un metodo può restituire un `Optional` invece di restituire un riferimento potenzialmente null.

@@ -1,10 +1,3 @@
----
-sticker: lucide//clipboard-list
-tags:
-  - classi
-  - tipi
-  - interfacce
----
 >[!info]+ index
 >- [[#collection|collection]]
 >- [[#iterazione esterna su una collezione|iterazione esterna su una collezione]]

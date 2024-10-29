@@ -1,6 +1,3 @@
----
-sticker: lucide//files
----
 - permettono di **convertire i valori di un tipo primitivo in un oggetto**
 - forniscono metodi di accesso e visualizzazione dei valori
  

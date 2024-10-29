@@ -1,6 +1,3 @@
----
-sticker: lucide//align-left
----
 ### aritmetiche
 ![[arithmetic ops.png]]
 ### logiche

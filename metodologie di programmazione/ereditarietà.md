@@ -1,6 +1,3 @@
----
-sticker: lucide//corner-right-down
----
 l'ereditarietà è una forma di **riuso del software** in cui una classe è creata:
 - assorbendo i membri di una classe esistente
 - aggiungendo nuove caratteristiche (o migliorando quelle esistenti)

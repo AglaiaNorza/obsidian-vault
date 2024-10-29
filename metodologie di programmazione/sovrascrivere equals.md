@@ -1,6 +1,3 @@
----
-sticker: lucide//equal
----
 - Il metodo `equals` viene invocato per confrontare il contenuto di due oggetti.
 - Per default, se i due sono "uguali", il metodo restituisce `true`.
 

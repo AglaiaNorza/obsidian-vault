@@ -1,7 +1,3 @@
----
-sticker: lucide//align-vertical-distribute-center
----
-
 > [!Info]+ index
 > - [[#esempio parallelizzazione|esempio parallelizzazione]]
 > - [[#criticità nell'esecuzione (hazard)|criticità nell'esecuzione (hazard)]]

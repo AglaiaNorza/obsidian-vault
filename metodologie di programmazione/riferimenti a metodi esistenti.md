@@ -1,4 +1,0 @@
----
-sticker: lucide//chevron-first
----
-
