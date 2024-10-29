@@ -30,4 +30,3 @@ they can be accepted by changing the *main* function's header to `int main(int a
 
 when a program ends, the computer is provided with an exit code.
 the code will be **0** if the program ended without error, or **1** if an error occurred.
-
