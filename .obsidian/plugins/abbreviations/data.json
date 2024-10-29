@@ -1,7 +1,7 @@
 {
   "abbreviations": {
-    "sout": {
-      "value": "System.out.println(\"",
+    "SO": {
+      "value": "Sistema Operativo",
       "isEnabled": true,
       "position": 0,
       "isCaseSensitive": false
