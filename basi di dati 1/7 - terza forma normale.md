@@ -119,3 +119,54 @@ Siccome X non è superchiave, ci sono due casi mutualmente esclusivi:
 
 
 la decomposizione preserva le dipendenze
+
+
+----
+(appunti nuovi)
+	- se il lavoro è stato fatto accuratamente, lo schema relazionale dovrebbe essere in 3NF
+		- in caso non lo sia, è sempre possibile trovare una decomposizione che sia in 3NF, e che rispetti altre due proprietà:
+
+Abbiamo uno schema ABC con dipendenze funzionali $F=\{A\to B, \,B\to C\}$ - non è in 3NF perché in $F^+$ è presente $B\to C$ (la chiave è A).
+
+- $R$ può essere decomposto in:
+	- $R_{1}=AB\text{ con }\{A\to B\}$
+	- $R_{2}=AB\text{ con }\{B\to C\}$
+- oppure
+	- $R_{1}=AB\text{ con }\{A\to B\}$
+	- $R_{2}=AC\text{ con }\{A\to C\}$
+
+entrambi sono in 3NF, ma il secondo *non è soddisfacente*.
+
+> [!question] perché?
+ > Consideriamo due istanze legali degli schemi ottenuti:
+ > 
+> ![[3nf-non-basta.png]]
+> 
+> - l'istanza dello schema originario R che posso ricostruire (con il join naturale) è:
+> 
+> ![[3nf-non-basta2.png|300]]
+> 
+> - questa non è però un'istanza legale di R, perché non soddisfa la dipendenza funzionale $B\to C$
+
+>[!warning] join senza perdita
+>deve essere preservato il join senza perdita (devono essere mantenute *tutte le dipendenze originarie*) - una "perdita" non significa tuple in meno, ma presenza di tuple estranee alla realtà di interesse.
+
+(esempi esattamente come da slide)
+
+(l'esempio con schema vuoto non si può decomporre)
+
+In conclusione, quando si decompone uno schema per ottenerne uno 3NF, occorre tenere presente altri due *requisiti* per lo schema decomposto:
+- deve **preservare le dipendenze funzionali** che valgono su ogni istanza legale dello schema originale
+- deve permettere di **ricostruire tramite join naturale** ogni istanza legale dello schema originario senza aggiunta di informazione estranea.
+
+### forma normale di Boyce-Codd
+Una relazione è in forma normale di Boyce-Codd se in essa **ogni determinante è una superchiave** (ricordiamo che ogni chiave è superchiave).
+
+> Ogni relazione in Boyce-Codd è anche in 3NF, ma non vale il contrario
+
+può non essere possibile decomporre uno schema non BCNF ottenendo sottoschemi BNCF e preservando allo stesso tempo tutte le dipendenze
+
+chirurgo dataintervento paziente -> sala, oraintervento
+
+se ci sono delle dipendenze che rispettano la seconda condizione del 3NF (determinato primo) devo fare attenzione ad aggiungeer dei constraints nella decomposizione dello schema in quanto si potrebbe violare una dipendenza funzionale
+
