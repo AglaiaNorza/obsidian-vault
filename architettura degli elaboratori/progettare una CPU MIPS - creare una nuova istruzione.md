@@ -1,5 +1,4 @@
-
->[!Info]+ index
+>[!Info]- index
 > - [[#aggiungere una nuova istruzione|aggiungere una nuova istruzione]]
 > 	- [[#aggiungere una nuova istruzione#aggiungere il jump (j)|aggiungere il jump (j)]]
 > 	- [[#aggiungere una nuova istruzione#jump and link (jal)|jump and link (jal)]]

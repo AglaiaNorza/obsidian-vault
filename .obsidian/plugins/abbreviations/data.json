@@ -3,8 +3,13 @@
     "SO": {
       "value": "Sistema Operativo",
       "isEnabled": true,
-      "position": 0,
+      "position": 1,
       "isCaseSensitive": false
+    },
+    "ESEMPIO": {
+      "value": ">[!example] esempio",
+      "isEnabled": true,
+      "position": 0
     }
   }
 }

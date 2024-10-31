@@ -2,7 +2,7 @@
 sticker: lucide//git-compare
 ---
 
-> [!info] index
+> [!info]- index
 > - [[#sistema operativo (e i suoi componenti)|sistema operativo (e i suoi componenti)]]
 > 	- [[#sistema operativo (e i suoi componenti)#registri visibili all'utente|registri visibili all'utente]]
 > 	- [[#sistema operativo (e i suoi componenti)#registri interni|registri interni]]

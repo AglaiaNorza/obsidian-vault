@@ -1,5 +1,5 @@
 
-> [!info] index
+> [!info]- index
 > - [[#elementi di un processo|elementi di un processo]]
 > 	- [[#elementi di un processo#process control block|process control block]]
 > 	- [[#elementi di un processo#traccia ed esecuzione di un processo|traccia ed esecuzione di un processo]]

@@ -1,5 +1,4 @@
-
-> [!info] index
+> [!info]- index
 > - [[#tipi di scheduling|tipi di scheduling]]
 > - [[#stati dei processi e scheduling|stati dei processi e scheduling]]
 > 	- [[#stati dei processi e scheduling#long-term scheduling|long-term scheduling]]

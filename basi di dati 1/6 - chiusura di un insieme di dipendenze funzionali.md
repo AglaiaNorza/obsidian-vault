@@ -126,11 +126,11 @@ $$X \to Y \in F^A \iff Y \subseteq X^+$$
 >[!info] dimostrazione
 >Sia $Y=A_{1}, A_{2}, \dots, A_{n}$
 >
->>(dimostro $X \to Y \in F^A \impliedby Y \subseteq X^+$)
+>- (dimostro $X \to Y \in F^A \impliedby Y \subseteq X^+$)
 >
 >Poiché $Y \subseteq X^+$, per ogni $i$, $i=1,\, \dots,\, n$ si ha che $X\rightarrow A_{i} \in F^A$. Pertanto per la regola dell’unione, $X\rightarrow Y \in F^A$
 >
->>(dimostro $X \to Y \in F^A \implies Y \subseteq X^+$)
+>- (dimostro $X \to Y \in F^A \implies Y \subseteq X^+$)
 >
 >Poiché $X\rightarrow Y \in F^A$, per la regola della decomposizione si ha che, per ogni $i$, $i=1, \dots, n$, $X \rightarrow A_{i} \in F^A$, cioè $A_{i} \in X^+$ per ogni $i, i=1,\, \dots,\, n$, e, quindi, $Y \subseteq X^+$
 >$\begin{flalign}&& \square\end{flalign}$

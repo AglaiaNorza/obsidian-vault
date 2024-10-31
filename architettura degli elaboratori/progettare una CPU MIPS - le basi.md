@@ -1,5 +1,4 @@
-
-> [!info]+ index
+> [!info]- index
 > - [[#CPU senza pipeline|CPU senza pipeline]]
 > 			- [[#fasi di esecuzione di un'istruzione|fasi di esecuzione di un'istruzione]]
 > 			- [[#unità funzionali necessarie|unità funzionali necessarie]]
