@@ -114,6 +114,9 @@ Siano R uno schema di relazione e F un insieme di dipendenze funzionali su R.
 >>
 >>Abbiamo $Matr\to Com$ e $Com\to Prov$.
 >>Per transitività, $Matr\to Prov$. Ma $Com$ non è contenuto propriamente nella chiave.
+>
+>> [!error] attenzione
+> >- la dipendenza transitiva non è quella che si trova per transitività, ma quella che "permette di usare la transitività" - $A\to B,\,B\to C$ implica $A\to C$, ma la dipendenza transitiva è $B\to C$.
 
 >[!tip] definizione alternativa di 3NF
 >Dato uno schema R e un insieme di dipendenze funzionali F, R è in 3NF se e solo se *non ci sono attributi che dipendono parzialmente o transitivamente da una chiave*.
@@ -131,32 +134,25 @@ da qui:
 1) se *$A$ primo*, viene a mancare la prima condizione per avere una dipendenza parziale o transitiva (entrambe vogliono $A$ non primo)
 2) se *$A$ non primo*, allora X è superchiave (contiene una chiave). (se faccio K-X ottengo il vuoto, perché tutti gli elementi di X K sono contenuti in X) Visto che è superchiave, può contenere una chiave ma non essere contenuto propriamente SLIDE
 
-.
+ora passiamo alla
 
 - seconda parte
  $$\text{lo schema R è in 3NF} \impliedby \text{non esistono dipendenze parziali o transitive}$$
   
 (per ipotesi, non esistono dipendenze parziali o transitive)
 supponiamo per assurdo che $R$ non sia 3NF - allora c'è almeno una dipendenza che viola la 3NF, quindi: $X\to A\in F^+$ tale che:
-- $A$ non è primo 
-- **e** $X$ non è superchiave
+- *$A$ non è primo* **E**
+- *$X$ non è superchiave*
 
-Siccome $X$ non è superchiave, ci sono due casi mutualmente esclusivi:
-- per ogni chiave K di R, X non è contenuto propriamente in nessuna chiave e K-X != vuoto - ma questa è la definizione di dipendenza transitiva (contraddizione)
-- esiste una chiave che contiene completamente X - ma è una dipendenza parziale (contraddizione)
+Siccome *$X$ non è superchiave*, ci sono due casi mutualmente esclusivi:
+1) per ogni chiave $K$ di $R$, $X$ non è contenuto propriamente in nessuna chiave e $K-X\neq \emptyset$ -  ma questa è la *definizione di dipendenza transitiva* (contraddizione)
+2) $X\subset K$ - esiste una chiave che contiene completamente $X$ (e non è uguale a $X$) - in questo caso, $X\to A$ è una *dipendenza parziale* (contraddizione)
+### cosa vogliamo ottenere?
+- un obiettivo da tenere presente quando si progetta una base di dati è quello di produrre uno schema in cui **ogni relazione sia in 3NF** 
+	- in caso non lo sia, è sempre possibile trovare una *decomposizione* che sia in 3NF, e che rispetti altre due proprietà:
 
-
-
-
-la decomposizione preserva le dipendenze
-
-
-----
-(appunti nuovi)
-	- se il lavoro è stato fatto accuratamente, lo schema relazionale dovrebbe essere in 3NF
-		- in caso non lo sia, è sempre possibile trovare una decomposizione che sia in 3NF, e che rispetti altre due proprietà:
-
-Abbiamo uno schema ABC con dipendenze funzionali $F=\{A\to B, \,B\to C\}$ - non è in 3NF perché in $F^+$ è presente $B\to C$ (la chiave è A).
+Abbiamo uno schema $ABC$ con dipendenze funzionali 
+$$F=\{A\to B, \,B\to C\}$$ lo schema non è in 3NF perché in $F^+$ è presente $B\to C$ (la chiave è $A$).
 
 - $R$ può essere decomposto in:
 	- $R_{1}=AB\text{ con }\{A\to B\}$
@@ -181,22 +177,42 @@ entrambi sono in 3NF, ma il secondo *non è soddisfacente*.
 >[!warning] join senza perdita
 >deve essere preservato il join senza perdita (devono essere mantenute *tutte le dipendenze originarie*) - una "perdita" non significa tuple in meno, ma presenza di tuple estranee alla realtà di interesse.
 
-(esempi esattamente come da slide)
-
-(l'esempio con schema vuoto non si può decomporre)
+>[!example]- esempio 
+>consideriamo lo schema
+>$$\text{R = (Matricola, Comune, Provincia)}$$
+>$$F=\{Matricola\to Comune,\, Comune\to Provincia\}$$
+>(con chiave $Matricola$)
+>non è in 3NF a causa della dipendenza transitiva $Comune\to Provincia$.
+>
+>Può essere scomposto in:
+>- $R_{1}=(Matricola, Comune)$ con $\{Matricola\to Comune\}$
+>- $R_{2}=(Comune, Provincia)$ con $\{Comune\to Provincia\}$
+> 
+>oppure
+>- $R_{1}=(Matricola, Comune)$ con $\{Matricola\to Comune\}$
+>- $R_{2}=(Matricola, Provincia)$ con $\{Matricola\to Provincia\}$
+>
+>entrambi sono in 3NF, ma la seconda soluzione non è soddisfacente.
+>
+>Consideriamo le istanze legali degli schemi ottenuti:
+>
+>![[decomposizione-3NF1.png|center|500]]
+>
+>L'istanza dello schema originario $R$ che ricostruisco tramite join naturale è la seguente:
+>
+>![[decomposizione-3NF2.png|center|400]]
+>
+>- ma questa **non è un'istanza legale** di $R$ !! perché non soddisfa la dipendenza funzionale $Comune\to Provincia$
 
 In conclusione, quando si decompone uno schema per ottenerne uno 3NF, occorre tenere presente altri due *requisiti* per lo schema decomposto:
 - deve **preservare le dipendenze funzionali** che valgono su ogni istanza legale dello schema originale
 - deve permettere di **ricostruire tramite join naturale** ogni istanza legale dello schema originario senza aggiunta di informazione estranea.
-
 ### forma normale di Boyce-Codd
-Una relazione è in forma normale di Boyce-Codd se in essa **ogni determinante è una superchiave** (ricordiamo che ogni chiave è superchiave).
+>[!info] definizione
+>Una relazione è in forma normale di Boyce-Codd (BCNF) se in essa **ogni determinante è una superchiave** (ricordiamo che ogni chiave è superchiave).
+
+(boy's code per gli amici)
 
 > Ogni relazione in Boyce-Codd è anche in 3NF, ma non vale il contrario
 
-può non essere possibile decomporre uno schema non BCNF ottenendo sottoschemi BNCF e preservando allo stesso tempo tutte le dipendenze
-
-chirurgo dataintervento paziente -> sala, oraintervento
-
-se ci sono delle dipendenze che rispettano la seconda condizione del 3NF (determinato primo) devo fare attenzione ad aggiungeer dei constraints nella decomposizione dello schema in quanto si potrebbe violare una dipendenza funzionale
-
+- **può non essere possibile** decomporre uno schema non BCNF ottenendo sottoschemi BNCF e preservando allo stesso tempo tutte le dipendenze - invece, è **sempre possibile** per la 3NF
