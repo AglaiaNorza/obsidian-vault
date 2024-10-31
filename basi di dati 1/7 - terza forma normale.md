@@ -80,6 +80,7 @@ Altra definizione - se si vuole usare un insieme (Y) invece del singleton A:
 
 >[!example]- esempio 2
 >$$R=ABCD\;\;\;\;\{F=AB\to CD,\, BC\to A, \,D\to AC\}$$
+> 
 >le chiavi sono:
 >- $AB$ ($\to CD$) 
 >- $BD$ (ho $D\to AC$ - per aumento, aggiungo $B$ e ho $BD\to AC$)
