@@ -6,3 +6,4 @@
 > - [[5 - dipendenze funzionali]]
 > - [[6 - chiusura di un insieme di dipendenze funzionali]]
 > - [[7 - terza forma normale]]
+> - [[8 - chiusura di un insieme di attributi]]
