@@ -4,12 +4,13 @@
       "value": "Sistema Operativo",
       "isEnabled": true,
       "position": 1,
-      "isCaseSensitive": false
+      "isCaseSensitive": true
     },
     "ESEMPIO": {
       "value": ">[!example] esempio",
       "isEnabled": true,
-      "position": 0
+      "position": 0,
+      "isCaseSensitive": true
     }
   }
 }
