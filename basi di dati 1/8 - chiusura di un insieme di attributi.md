@@ -13,4 +13,4 @@ Infatti, ricordiamo il [[6 - chiusura di un insieme di dipendenze funzionali|lem
 ![[algoritmo-X+.png]]
 
 
-dimostrazione da aggiungere
+dimostrazione da aggiungere i guess
