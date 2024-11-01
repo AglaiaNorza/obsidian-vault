@@ -11,3 +11,6 @@ Infatti, ricordiamo il [[6 - chiusura di un insieme di dipendenze funzionali|lem
 
 #### come calcolare $X^+$
 ![[algoritmo-X+.png]]
+
+
+dimostrazione da aggiungere
