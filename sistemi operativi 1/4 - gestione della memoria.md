@@ -155,3 +155,10 @@ rimangono dei problemi irrisolti:
 
 #### buddy-system
 - compromesso tra partizionamento fisso e dinamico
+
+Abbiamo a disposizione una dimensione per lo spazio utente di $2^U$.
+Supponiamo che arrivi un processo che richiede $s$ bytes di RAM.
+Il buddy-system comincia a dividere per due fino a che non si arriva a una dimensione che è un logaritmo intero di quello che voglio (un $X$ tale che $2^X-1<s\leq 2^X$) 
+- con $L\leq X\leq U$  ($L$ lower bound: non si possono creare partizioni troppo piccole).
+ 
+Ho quindi creato due partizioni, e una si userà per il processo.
