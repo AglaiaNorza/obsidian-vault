@@ -294,4 +294,46 @@ Anche la memoria virtuale ha bisogno di supporto hardware per la paginazione e s
 ![[paginazione-bit.png|center|350]]
 
 >[!error] traduzione degli indirizzi
+>![[trad-indirizzi.png|center|500]]
 >
+>- come detto prima, il virtual address è formato da numero di pagina e offset, con il numero di bit dell'offset = x con $2^x$ dimensione della pagina.
+>- i bit del numero di pagina vanno sommati al punto di partenza della page table, ma in realtà $Page\#$ deve anche essere moltiplicato per il numero di byte che occupa una page table entry.
+>- il frame, come prima, sostituisce il numero di pagina, lasciando inalterato l'offset.
+>  
+> Affinché lo schema funzioni, il Sistema Operativo deve, non appena un processo viene caricato per la prima volta o c'è un process switch, mettere l'indirizzo della page table del processo in un apposito registro. 
+> 
+
+>[!warning] problema dell'overhead
+>- le tabelle delle pagine potrebbero contenere molti elementi
+>- quando un processo viene eseguito, viene assicurato che almeno una parte della sua tabella delle pagine sia in memoria principale
+>
+>Supponiamo 8GB di RAM con 1kB per ogni pagina -> (8gb/1kB) $2^{23}=8\text{milioni}$ di entries per ogni tabella delle pagine. 
+>- in un'architettura a 32 bit, mi servono: (l'indirizzo max 32 bit - 10 bit dei frame) quindi 22 bit=3byte per indicizzare i frame, + 1 byte per i bit di controllo = 4 byte per ogni entry
+>- per ogni processo, il Sistema Operativo si prende $4\cdot2^{23}=32\text{MB}$ di overhead che non potranno essere usati per la memoria di un processo
+>	- quindi, per esempio, con una RAM di 1GB, bastano 20 processi per occupare più di metà RAM
+
+#### tabella delle pagine a 2 livelli
+(ovviamente, l'hardware deve essere già costruito pensando a una tabella a due livelli)
+
+- c'è una tabella di livello 1 che, invece di puntare a zone di RAM con al loro interno il processo, punta a zone di RAM che a loro volta contengono altre tabelle di pagine, e da lì si arriva ai processi
+
+![[ram-due-pagine.png|center|550]]
+
+>[!error] traduzione
+>la traduzione si complica un pochino (va spezzata in k+1 parti con k=numero di livelli)
+>- la prima tabella delle pagine è indicizzata dalla primissima parte dell'indirizzo - "**directory**" (bit che si sommano al punto di partenza della "root page table")
+>- quello che si trova, sommato con la parte "di mezzo" dell'indirizzo virtuale, permette di accedere ad un'altra tabella delle pagine, che porta al numero di frame che, come prima, va solo affiancato all'offset
+> 
+>![[ram-due-pagine.png|center]]
+
+>[!question] perché conviene?
+>Supponiamo nuovamente di avere 8GB di spazio virtuale e 33bit di indirizzo; dividiamoli in 15bit per il primo livello, 8bit per il secondo, e i rimanenti 10 per l’offset
+>- (spesso i processori impongono che una page table di secondo livello entri in una pagina)
+>  
+>Così, l'overhead di ogni processo:
+>- dovrebbe essere 32MB per ogni livello (come prima), più $2^{15+2}=128\text{kB}$ per l'occupazione del primo livello (la moltiplicazione per 2 dell'esponente è perché continuo a supporre che 1 entry occupi 4byte), MA:
+>- a questo punto diventa facile paginare la tabella delle pagine: ci basta che in RAM ci sia il primo livello (128kB), più solo *una* tabella del secondo livello (che entra in una pagina)
+>- ora, con una RAM da 1GB, ci vorrebbero 1000 processi
+
+### translation lookaside buffer
+- spesso usato insieme alla memoria virtuale
