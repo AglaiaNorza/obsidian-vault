@@ -90,14 +90,17 @@ a livello hardware, la memoria è organizzata in modo lineare (si parte da 0 e s
 ##### organizzazione fisica
 - gestione del **flusso di dati tra RAM e disco**
 - non può essere lasciata al programmatore - per esempio, se si scrive un programma che richiede troppa memoria, in passato il programmatore doveva gestire manualmente lo swapping attraverso l'overlaying (sovrapposizione di moduli nella stessa zona di memoria in tempi diversi), ma ora ci pensa il Sistema Operativo
-### partizionamento
+### partizionamento (senza memoria virtuale)
 uno dei primi metodi per la gestione della memoria è quello del **partizionamento** (oggi non molto usato), che può essere:
 - fisso - uniforme e variabile
 - dinamico
 - paginazione semplice
 - segmentazione semplice
-- paginazione con memoria virtuale
-- segmentazione con memoria virtuale
+
+>Con la memoria virtuale, i metodi invece saranno:
+>- paginazione con memoria virtuale
+> - segmentazione con memoria virtuale
+
 
 #### partizionamento fisso uniforme
 la memoria è suddivisa in **partizioni di ugual lunghezza**.
@@ -208,7 +211,7 @@ I Sistemi Operativi che adottano la paginazione devono mantenere una **tabella d
 #### segmentazione
 - un programma può essere diviso in segmenti di lunghezza variabile con un limite massimo
 - un indirizzo di memoria è un numero di segmento e uno spiazzamento al suo interno
-- (come per la tabella delle pagine, ci deve essere una tabella dei segmenti)
+- come per la tabella delle pagine, ci deve essere una tabella dei segmenti, che comunichi da dove parte il segmento in RAM e la sua lunghezza
 - simile al partizionamento dinamico, ma è il programmatore a decidere come deve essere segmentato un processo (a mettere i segmenti i RAM e risolvere gli indirizzi ci pensa il Sistema Operativo)
 
 #### paginazione e segmentazione: indirizzi
@@ -231,3 +234,64 @@ Per la **paginazione**:
 
 Per i **segmenti**:
 - funziona in maniera analoga rispetto alla paginazione, ma bisogna considerare che i segmenti sono di dimensione variabile
+
+>[!example] come funziona
+>- supponiamo che si riceva un indirizzo logico di 16 bit, e che non possano esserci segmenti più grandi di $2^{12}$ bytes
+>	- si prende sempre la parte iniziale dell'indirizzo ignorando i 12 bit (dimensione massima) finali
+>	- la tabella dei segmenti non può solo dirmi il numero di frame, ma da dove parte il segmento in RAM e quanto è lungo
+>	- per ottenere l'indirizzo, bisogna sommare (vera e propria somma) l'indirizzo vero e sommare i 12 bit di offset
+>	- ![[seg-address.png|350]]
+
+### memoria virtuale
+>[!info]- (veloce ripasso) concetti fondamentali
+>- i riferimenti alla memoria sono indirizzi logici che vanno tradotti in indirizzi fisici a tempo di esecuzione
+>- un processo può essere spezzato in più parti, che non devono per forza occupare sezioni contigue di memoria
+
+>[!tip] l'idea geniale
+>Non occorre che tutte le pagine o tutti i segmenti di un processo siano in memoria principale per far sì che al processo venga concesso il processore:
+>- l'unica cosa che serve è che ci sia **la pagina** che contiene l'istruzione che va eseguita, e **i dati** di cui essa ha bisogno
+
+- il sistema operativo porta in memoria principale solo *alcuni pezzi (pagine) del programma* - l'insieme di queste viene chiamato **resident set**
+- quando un processo accede a una zona di memoria che non è nel resident set, avviene un **page fault** 
+	- viene generato un interrupt, il Sistema Operativo va a prendere la pagina dalla memoria secondaria e la porta in RAM - questa è una *richiesta di I/O* a tutti gli effetti, quindi, fino a quando non sarà completata, il Sistema Operativo metterà il processo in stato blocked (e altri processi andranno in esecuzione).
+	- quando l'operazione viene completata, un interrupt farà sì che il processo torni ready
+	- quando verrà eseguito, dovrà eseguire nuovamente la stessa istruzione che aveva causato il fault
+
+Quindi, ci sono molti benefit:
+- possono esserci **molti più procssi in memoria virtuale**
+- è molto più probabile che ci sia sempre un processo ready - il processore viene sfruttato al meglio senza che diventi idle
+- un processo **può richiedere più dell'intera RAM** disponibile
+
+>[!info] definizioni e terminologia / recap
+>La memoria virtuale è uno schema di allocazione di memoria, in cui la memoria secondaria può essere usata come se fosse principale
+>- gli indirizzi usati nei programmi (logici) e quelli usati nel sistema sono diversi (fisici) - c'è una fase di traduzione automatica da logici a fisici
+>- la dimensione della memoria virtuale è limitata dallo schema di indirizzamento, oltre che dalla dimensione della memoria secondaria
+>- si può andare ben oltre la dimensione della memoria principale 
+>- **indirizzo virtuale**: indirizzo associato ad una locazione della memoria virtuale (*indirizzo logico*)
+>- **spazio degli indirizzi virtuali**: quantità di memoria virtuale assegnata ad un processo
+>- **spazio degli indirizzi**: quantità di memoria assegnata ad un processo (limitato alla dimensione della RAM)
+>- **indirizzo reale**: indirizzo di una locazione di memoria principale (*indirizzo fisico*)
+
+#### effetti collaterali: il thrashing
+avviene quando il Sistema Operativo passa la maggior parte del suo tempo a swappare pezzi di processi invece di eseguire istruzioni - ovvero quando *quasi ogni richiesta di pagina dà luogo ad un page fault*.
+- per evitarlo, il Sistema Operativo cerca di indovinare quali pezzi di processo saranno utilizzati con quanta probabilità nella prossima istruzione da eseguire (sulla base della storia recente)
+
+>[!summary] principio di località
+>trovare quali pezzi di processo saranno utilizzati, ci si basa sul principio di località, ovvero il fatto che **i riferimenti che un processo fa tendono ad essere vicini** (sia per i dati che per le istruzioni) - quindi si può prevedere abbastanza bene quali pezzi processi saranno necessari
+
+#### supporto hardware
+Anche la memoria virtuale ha bisogno di supporto hardware per la paginazione e segmentazione: il Sistema Operativo deve essere in grado di muovere pagine tra disco e RAM e tenere traccia di dove mette le cose.
+
+##### paginazione
+- ogni processo ha la sua **tabella delle pagine**
+	-  il control block di un processo punta a quella tabella (alla prima entry)
+- ogni entry della tabella contiene:
+	- il numero di frame in memoria principale
+	- (il numero di pagina è usato per indicizzare la tabella: pagina 0 riga 0 ecc)
+	- un bit per indicare se è in memoria principale o bisogna andarla a prendere su disco - *bit di presenza*
+	-  un altro bit per indicare se la pagina è stata modificata dopo l'ultima volta che è stata caricata in memoria principale - *modified bit*
+
+![[paginazione-bit.png|center|350]]
+
+>[!error] traduzione degli indirizzi
+>
