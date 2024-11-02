@@ -160,5 +160,74 @@ Abbiamo a disposizione una dimensione per lo spazio utente di $2^U$.
 Supponiamo che arrivi un processo che richiede $s$ bytes di RAM.
 Il buddy-system comincia a dividere per due fino a che non si arriva a una dimensione che è un logaritmo intero di quello che voglio (un $X$ tale che $2^X-1<s\leq 2^X$) 
 - con $L\leq X\leq U$  ($L$ lower bound: non si possono creare partizioni troppo piccole).
- 
+
 Ho quindi creato due partizioni, e una si userà per il processo.
+ 
+Quando un processo finisce, dovrei farlo *combaciare con un altro (buddy) per creare una partizione libera più grande* - la fusione può essere effettuata solo nel caso in cui è possibile costruire una partizione di dimensione $2^{x+1}$ (il successivo multiplo di due)
+
+> [!example]- esempio
+> ![[buddy-sys.png|center|400]]
+> - bisogna stare attenti a come si ricreano le partizioni del buddy system - se rilascio B (release B), ora la sua partizione è libera, ma andrebbe ricomposta: dovrei farlo *combaciare con un suo compagno per creare una porzione libera più grande* (a release B non posso, perché la successiva di 256 sarebbe 512 ma non posso ancora formarla perché la memoria contigua non basta - la formo a release E)
+> 
+> il buddy system si presta bene ad essere rappresentato con un albero:
+> 
+> ![[buddy-tree.png|center|400]]
+
+#### paginazione semplice
+(non usata, importante concettualmente)
+- sia la memoria che i processi vengono spezzettati in pezzetti di grandezza uguale e piccola
+	- i pezzetti di processi sono chiamati **pagine**
+	- i pezzetti di memoria sono chiamati **frame**
+<br>
+- ogni pagina, per essere usata, *deve essere collocata in un frame* (visto che pagine e frame hanno la stessa dimensione, avviene in maniera semplice)
+	- pagine contigue di uno stesso processo possono essere collocate in frame distanti (perché una pagina può essere messa in qualunque frame)
+
+I Sistemi Operativi che adottano la paginazione devono mantenere una **tabella delle pagine** per ogni processo - (gli indirizzi devono essere reali, la tabella dice in quale frame effettivo si trova)
+
+- quando c'è un process switch, la tabella delle pagine del nuovo processo deve essere ricaricata
+
+>[!example] esempio 
+>(i numeri rappresentano i numeri di frame - es. se il frame è grande 1k, dentro 0 ci saranno gli indirizzi da 0 a 1023)
+>
+>partiamo con la RAM vuota:
+>![[es-pag-1.png|center|200]]
+>
+>- supponiamo che arrivino prima un processo da 4 pagine, poi uno da 3 e un altro da 4
+>  
+>  ![[es-pag-2.png|center|200]]
+>  
+>  - supponiamo poi che il processo B se ne vada, e che ne arrivi uno da 5 pagine: con il partizionamento dinamico, avrei dovuto compattare A e C per avere lo spazio necessario - qui invece non devo:
+>    
+> ![[es-pag-3.png|center|200]]
+> 
+> da un punto di vista delle tabelle delle pagine, la situazione è questa:
+> 
+> ![[es-pag-4.png|center|350]]
+
+
+#### segmentazione
+- un programma può essere diviso in segmenti di lunghezza variabile con un limite massimo
+- un indirizzo di memoria è un numero di segmento e uno spiazzamento al suo interno
+- (come per la tabella delle pagine, ci deve essere una tabella dei segmenti)
+- simile al partizionamento dinamico, ma è il programmatore a decidere come deve essere segmentato un processo (a mettere i segmenti i RAM e risolvere gli indirizzi ci pensa il Sistema Operativo)
+
+#### paginazione e segmentazione: indirizzi
+Bisogna gestire gli indirizzi:
+- anche qui, gli indirizzi sono logici - non sono i veri indirizzi in memoria
+
+Per la **paginazione**:
+- sappiamo che la frammentazione interna, se c'è, è molto piccola e si trova solo nell'ultima pagina del processo
+- per trovare un indirizzo devo: 
+	- capire in quale pagina si trova
+	- ho un offset rispetto all'inizio della pagina
+	- devo usare la tabella delle pagine per capire dove si trova quella pagina (dal numero di frame so dove si trova ogni pagina) e sommare l'offset
+
+>[!example] come funziona
+>- supponiamo che si riceva un indirizzo logico di 16 bit
+>	- le dimensioni delle pagine sono sempre scelte per essere una potenza di 2 - per trovare la pagina dovrei dividere per la potenza di due, ma a quel punto posso direttamente ignorare gli ultimi x bit (con x=esponente di 2), e prendere i bit rimanenti - quelli avranno il risultato corretto
+>	- invece, l'offset sarà rappresentato dal resto dei bit
+>	- quindi, trovata la pagina nella process page table, prendo l'indirizzo e lo sostituisco a quello che era il numero della pagina (essenzialmente concatenandolo all'offset)
+>	- ![[bit-paginazione.png|center|300]]
+
+Per i **segmenti**:
+- funziona in maniera analoga rispetto alla paginazione, ma bisogna considerare che i segmenti sono di dimensione variabile
