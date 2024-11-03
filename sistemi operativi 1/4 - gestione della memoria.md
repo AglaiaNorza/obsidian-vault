@@ -451,4 +451,25 @@ risponde a due necessità:
 	- *allocazione fissa*: il numero di frame è deciso al tempo di creazione di un processo
 	- *allocazione dinamica* - il numero di frame varia durante la vita del processo
 - **replacement scope** - molto spesso la memoria si riempie e bisogna rimpiazzare i frame: quando questo succede, devo scegliere solo tra i frame del processo corrente o si può sostituire un frame qualsiasi?
-	- 
+	- *politica locale* - si rimpiazzano solo frame dello stesso processo
+	- *politica globale* - si può scegliere qualsiasi frame
+
+>[!tip] possibili strategie
+>Nonostante io abbia quattro opzioni, le possibili combinazioni non sono 4 ma 3: infatti, se scelgo l'allocazione fissa, non posso usare la politica globale (altrimenti si amplierebbe il numero di frame di un processo e non sarebbe più fissa)
+
+> [!example]- sweet spot
+> ![[resident-set-page-faults.png|center|350]]
+> si nota come nel secondo grafico, lo “sweet spot” è W, non N (se carico tutte le pagine di un processo in RAM, la multiprogrammazione diminuisce drasticamente)
+
+#### frame locking
+bisogna tenere a mente che alcuni frame potrebbero essere bloccati: se è il caso, non possono essere sostituiti.
+- di solito vengono bloccati i frame del Sistema Operativo o alcuni di altri processi
+- avviene a livello di kernel tramite l'assegnazione di un bit ad ogni frame
+
+#### politica di pulitura
+Se un frame viene modificato, la modifica va riportata anche nella corrispondente pagina su disco.
+Il problema è: quando farlo?
+- non appena *avviene la modifica*
+- non appena il *frame viene sostituito*
+
+(di solito, si fa una via di mezzo tra le due opzioni, intrecciata con il page buffering)
