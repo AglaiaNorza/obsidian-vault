@@ -444,6 +444,66 @@ decide *dove mettere una pagina* in memoria quando *non ci sono frame liberi*.
 	- prendere la pagina che ha appena sostituito nella tabella delle pagine e mettere il bit di presenza a 0
 
 - bisogna evitare che la pagina appena sostituita non venga subito richiesta
+#### algoritmi di sostituzione
+la RAM è piena, e per un dato processo sappiamo quanti frame bisogna allocare. 
+come decidiamo cosa sostituire?
+
+>[!example] esempi
+>gli esempi che seguono usano la sequenza di richiesta a pagine: 
+2 3 2 1 5 2 4 5 3 2 5 2
+si suppone inoltre che ci siano solo 3 frame in memoria principale
+##### sostituzione ottima
+- sostituisce la pagina che verrà chiesta più in là nel futuro
+- ovviamente non è implementabile (perché bisognerebbe conoscere il futuro) ma viene usato per confronti sperimentali
+
+>[!example] esempio
+>questa policy causerebbe solo tre page faults
+>
+>![[replacement1.png|center|500]]
+
+##### LRU
+- sostituisce la pagina a cui *non è stato fatto riferimento per il tempo più lungo*, (per il principio di località, dovrebbe essere la pagina che ha meno probabilità di essere usata nel futuro)
+- l’implementazione è problematica: 
+	- bisogna etichettare ogni frame con il *time stamp dell'ultimo accesso*, e, mentre la cache usa questa tecnica perchè è implementata in hardware, per la quantità di frame della RAM è troppo costoso - *tanto overhead*
+
+>[!example] esempio 
+>questa policy causerebbe solo 4 page faults (solo uno in più della soluzione ottimale)
+>
+>![[replacement2.png|center|450]]
+
+##### FIFO
+- si ricerca l'overhead minore possibile
+- i frame allocati ad un qualche processo vengono trattati come una *coda circolare*, da cui le pagine vengono rimosse a turno (round robin)
+- l'implementazione è semplice
+- si rimpiazzano le pagine che sono state in memoria per più tempo (che però potrebbero servire - magari avevano molti accessi)
+
+>[!example] esempio 
+>questa policy causa 6 page faults (non si accorge che 2 e 5 sono molto richieste)
+>
+>![[replacement3.png|center|450]]
+
+##### sostituzione ad orologio (clock)
+- *compromesso* tra LRU e FIFO
+- per ogni frame, viene aggiunto uno **"use bit"**, che indica se la pagina caricata nel frame è stata riferita di recente
+- faccio FIFO 
+	- quando carico una pagina, lo use bit è 1, e ogni volta che c'è un riferimento (page hit) viene messo a 1
+	- viene invece messo a 0 durante la ricerca stile FIFO - se il Sistema Operativo incontra una pagina con il bit a 1, lo mette a 0 e procede con la prossima
+
+![[clock-replacement.png|center||400]]
+- in questo caso, il Sistema Operativo settera gli use bit di 2 e 3 a 1 e sostituirà 4.
+
+>[!example] esempio 
+>questa policy causa 5 page faults, e si accorge che 2 e 5 sono molto richieste
+>
+>![[replacement4.png|center|450]]
+#### buffering delle pagine
+una cache non hardware per le pagine
+- serve per avvicinare il FIFO alle prestazioni del clock 
+ 
+Si dà un po' di memoria in meno al processo, e quella in più si uilizza come una cache.
+- se decido di rimpiazzare una pagina, non la butto ma la metto in questa cache (così da riportarla velocemente in memoria se viene nuovamente referenced)
+- tipicamente è divisa tra pagine modificate e non
+	- si cerca di scrivere le pagine modificate tutte insieme (si scrive su disco quando la lista delle pagine modificate diventa piena o quasi)
 
 #### gestione del resident set
 risponde a due necessità:
@@ -473,6 +533,64 @@ Il problema è: quando farlo?
 - non appena il *frame viene sostituito*
 
 (di solito, si fa una via di mezzo tra le due opzioni, intrecciata con il page buffering)
-
 #### controllo del carico (medium-term scheduler)
-L'idea è di cercare di mantenere più alta possibile la multiprogrammazione (quanti processi sono presenti in RAM, ovvero nel caso della memoria vi)
+L'idea è di cercare di mantenere più alta possibile la multiprogrammazione (quanti processi sono presenti in RAM, ovvero, nel caso della memoria virtuale, hanno un resident set maggiore di 0).
+- ma non deve essere troppo alta - il resident set di ogni processo sarebbe troppo basso e ci sarebbero troppi page fault
+
+![[m-term-scheduler.png|center|400]]
+
+>[!tip] compiti del medium-term scheduler
+>![[compiti-mterm-sch.png|center|400]]
+
+si può controllare il carico in due modi:
+- o si prende un processo `suspend(ed)` e lo si rende "attivo"
+	- si deve cercare di scegliere processi che sono o saranno ready, perché possano andare in esecuzione
+- o il contrario: si prende un processo con un resident set>0 e lo si fa diventare `suspend(ed)`
+	- si deve cercare di scegliere processi o bloccati o che si bloccheranno tra poco
+
+Per fare ciò, si usano delle politiche di monitoraggio, invocate ogni tot page fault (fanno parte dell'algoritmo di rimpiazzamento).
+
+> [!question] come si sceglie un processo da sospendere?
+> - processo con minore priorità
+> - processo che ha causato l'ultimo page fault 
+> - ultimo processo attivato
+> - processo con il working set (numero di frame allocati in memoria principale) più piccolo
+> - processo con immagine più grande (più grande numero di pagine)
+> - processo con più alto tempo rimanente di esecuzione
+### gestione della memoria in linux
+in Linux, c'è una netta **distinzione tra richieste di memoria da parte del kernel e di processi utente**.
+- il *kernel si fida di se stesso*, quindi ci sono pochi controlli (se non nessuno) per richieste da parte di se stesso
+- invece, per i processi utente ci sono *controlli di protezione e di rispetto dei limiti assegnati* 
+
+#### cenni di gestione di memoria del kernel
+il kernel potrebbe dover aver bisogno di RAM.
+Può fare sia richieste di RAM molto piccole o anche molto grandi, tutte contemporaneamente. 
+I due tipi di richieste sono gestite in maniera diversa:
+- se la richiesta è piccola - fa in modo di avere alcune pagine già pronte da cui prendere i pochi bytes richiesti (**slab allocator**)
+- se la richiesta è grande (fino a 4MB) - fa in modo di allocare più pagine contigue in frame contigue
+	- importante per il DMA (che permette a un dispositivo di I/O di scrivere direttamente in RAM), che ignora la paginazione e va direttamente in RAM
+	- usa essenzialmente il buddy system
+
+#### gestione della memoria utente
+- fetch policy - paging on demand
+- placement policy - primo frame libero
+- replacement policy - [citato sotto]
+- gestione del resident set - politica dinamica con replacement scope molto globale (vi rientra anche la cache del disco)
+- politica di pulitura: ritardare il più possibile le scritture
+	-  o quando la page cache (cache del disco) è molto piena con molte richieste pending
+	- o quando ci sono pagine troppo "sporche" (modificate solo in RAM ma non su disco) o una pagina sporca da troppo tempo
+- controllo del carico: assente
+
+#### replacement policy
+(in realtà, kernel più recenti usano un LRU corretto, che ha meno overhead)
+
+è un algoritmo dell'orologio "corretto":
+- ci sono due flag in ogni entry delle page table: `PG_referenced` (è stato fatto riferimento) e `PG_active` (effettivamente attive)
+	- sulla base di `PG_active`, tiene due liste di pagine: attive e inattive
+- c'è il kernel thread `kswapd`, di esecuzione periodica, che scorre solo le pagine inattive
+	- `PG_referenced` è settato quando la pagina viene richiesta, e poi ci sono due possibilità: 
+		- o arriva prima `kswapd` - `PG_referenced` torna a 0
+		- o un altro riferimento - quindi è stata chiesta due volte in poco tempo ed è quindi importante - diventa attiva
+- chiaramente, solo le pagine inattive possono essere rimpiazzate
+
+![[linux-replacement.png|center|500]]
