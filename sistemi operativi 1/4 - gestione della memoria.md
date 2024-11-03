@@ -473,3 +473,6 @@ Il problema è: quando farlo?
 - non appena il *frame viene sostituito*
 
 (di solito, si fa una via di mezzo tra le due opzioni, intrecciata con il page buffering)
+
+#### controllo del carico (medium-term scheduler)
+L'idea è di cercare di mantenere più alta possibile la multiprogrammazione (quanti processi sono presenti in RAM, ovvero nel caso della memoria vi)
