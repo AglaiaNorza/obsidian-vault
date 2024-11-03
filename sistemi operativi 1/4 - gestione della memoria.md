@@ -4,7 +4,6 @@
 
 Quindi, il Sistema Operativo gestisce la memoria, illudendo i processi di lasciare loro tutta la memoria.
 - gestire la memoria include lo swap intelligente di blocchi di dati alla memoria secondaria (disco)
-
 ### requisiti per la gestione della memoria
 il sistema operativo, per la gestione della memoria, deve garantire:
 - **rilocazione** e **protezione**
@@ -206,8 +205,6 @@ I Sistemi Operativi che adottano la paginazione devono mantenere una **tabella d
 > da un punto di vista delle tabelle delle pagine, la situazione è questa:
 > 
 > ![[es-pag-4.png|center|350]]
-
-
 #### segmentazione
 - un programma può essere diviso in segmenti di lunghezza variabile con un limite massimo
 - un indirizzo di memoria è un numero di segmento e uno spiazzamento al suo interno
@@ -337,3 +334,121 @@ Anche la memoria virtuale ha bisogno di supporto hardware per la paginazione e s
 
 ### translation lookaside buffer
 - spesso usato insieme alla memoria virtuale
+- potremmo tradurlo con "memoria temporanea per la traduzione futura"
+
+Ogni riferimento alla memoria virtuale può generare due accessi alla memoria:
+- uno per la tabella delle pagine
+- uno per prendere il dato
+ 
+L'idea è che si usa una specie di **cache per gli elementi delle tabelle delle pagine** che contiene gli indirizzi di frame
+- contiene le parti delle tabelle delle pagine usate più recentemente
+
+>[!question] come funziona?
+>- Dato un indirizzo virtuale, il processore esamina prima il TLB
+>- se la pagina è presente (*TLB hit*), prende il frame number e ricava l'indirizzo reale
+>- altrimenti (*TLB miss*) accede alla "normale" tabella delle pagine del processo 
+>- dopodiché, il TLB viene *aggiornato* includendo la pagina appena consultata
+>
+>![[tlb.png|center|500]]
+>![[tlb-logic.png|center|400]]
+
+Il TLB è completamente hardware (come la cache), ma il sistema operativo entra in gioco.
+- il Sistema Operativo deve poter *resettare il TLB* (che è relativo ad un processo, quindi ad ogni process switch deve essere resettato)
+- alcuni processori permettono:
+	- di etichettare con il PID ciascuna entry del TLB (quindi non serve resettarlo, basta controllare il PID attuale e quello della entry del TLB)
+	- di invalidare alcune parti del TLB (alla fine inefficiente)
+
+Anche senza TLB, è necessario dire al processore dov'è la nuova tabella delle pagine (step del process switch - ogni volta che cambio processo, il Sistema Operativo sa dove si trova almeno il primo livello delle page tables, e quell'indirizzo va caricato).
+
+#### mapping associativo
+Mentre la tabella delle pagine contiene tutte le pagine di un processo, il TLB (che deve essere veloce) contiene solo alcuni elementi. Quindi non si può accedere via indice alle entry del TLB - serve controllare, per ogni entry, se è quella che si sta cercando:
+- visto che il TLB è hardware, è possibile controllare *tutte le entry contemporaneamente* per capire se c'è TLB hit
+- questa ricerca veloce si chiama **mapping associativo**
+
+![[TLB-mapping.png|center|500]]
+
+c'è un altro problema: bisogna fare in modo che il *TLB contenga solo pagine che sono in RAM* (una volta ottenuto il real address, non possono esserci page fault perché potrebbe essere difficile accorgersene) - quindi, ogni volta che il Sistema Operativo swappa una pagina dalla tabella delle pagine (quindi mettere il bit di presenza a 0), deve anche eliminarla dal TLB.
+
+>[!example] schema generale più o meno completo
+>![[tlb-cache.png|center|500]]
+
+
+### dimensione delle pagine
+
+- più piccola è una pagina, *minore è la frammentazione all'interno* delle pagine
+- ma anche *maggiore il numero di pagine per processo* 
+- (e più grande è la tabella delle pagine)
+- quindi la maggior parte delle tabelle delle pagine finisce in memoria secondaria
+- ma maggiore è il numero di pagine che si trovano in memoria principale, e quindi i *page fault saranno pochi* (visto che i riferimenti saranno vicini)
+
+Bisogna quindi trovare un giusto compromesso:
+
+![[dim-pagine-ideale.png|center|400]]
+
+Le moderne architetture hardware supportano diverse dimensioni delle pagine (anche fino ad 1GB).
+- il sistema operativo ne sceglie una: Linux sugli x86 va con 4kB 
+- Le dimensioni più grandi sono usate in sistemi operativi di architetture grandi: cluster, grandi server, ma anche per alcuni casi particolari di sistemi operativi stessi (kernel mode)
+### segmentazione (con memoria virtuale)
+permette al programmatore di vedere la memoria come un insieme di segmenti di indirizzi.
+- la dimensione degli indirizzi può anche essere variabile e dinamica
+- semplifica la gestione di strutture dati che crescono (per esempio, lo stack delle chiamate - è tipico fare un segmento che se ne occupa)
+- permette di condividere e proteggere dati in maniera semplice (metto i dati condivisi in un segmento e quelli protetti in un altro)
+
+#### organizzazione
+- ogni processo ha una sua tabella dei segmenti (puntata dal control block)
+- ogni entry della tabella contiene:
+	- indirizzo di partenza in memoria principale del segmento
+	- lunghezza del segmento
+	- bit di presenza in memoria principale
+	- modified bit (se è stato modificato dopo l'ultima volta che è stato caricato in memoria principale)
+
+![[segmentazione-traduzione.png|center|450]]
+
+### paginazione e segmentazione
+- la paginazione è **trasparente** al programmatore (egli non ne è a conoscenza)
+- la segmentazione è **visibile** al programmatore (se programma in assembler)
+
+tipicamente, *paginazione e segmentazione sono combinate* - i segmenti possono essere enormi, e li divido in pagine.
+
+- prima uso una parte dell'indirizzo per accedere alla tabella dei segmenti e vedo di che segmento si tratta
+- quel segmento è paginato, quindi prendo il giusto frame dalla tabella delle pagine
+
+![[segmentazione-E-paginazione.png|center|500]]
+
+### elementi centrali per il progetto di un sistema operativo
+- fetch policy
+- placement policy
+- replacement policy
+- gestione del resident set
+- politica di pulitura
+- controllo del carico 
+- il tutto, cercando di minimizzare i page fault; non c’è una politica sempre vincente
+
+#### fetch policy
+(partiamo con l'immagine di un processo tutta su disco)
+Decide *quando una pagina data debba essere portata in memoria principale*.
+Si usano principalmente due politiche:
+- **demand paging** - quando chiedo una pagina che non è in RAM, vado su disco e la porto in memoria principale
+	- all'inizio ci saranno molti page fault (quando parto, in RAM c'è solo la pagina che contiene la prima istruzione da eseguire)
+- **prepaging** - cerca di anticipare le necessità del processo, portando in RAM più pagine di quelle richieste (in base al principio di località e alla capacità dei dischi moderni (ottimizzati per trasferimento di grandi blocchi)
+
+#### placement policy
+decide *dove mettere una pagina* in memoria quando c'è *almeno un frame libero*.
+- tipicamente, si mette nel primo frame libero (indirizzo numericamente più basso).
+
+#### replacement policy
+decide *dove mettere una pagina* in memoria quando *non ci sono frame liberi*.
+- come con la cache, qualche pagina va sostituita
+- una volta deciso il frame, il Sistema Operativo deve: 
+	- prendere la pagina che ha appena preso da disco e sostituirla nella tabella delle pagine mettendo il bit di presenza a 1 e il giusto frame 
+	- prendere la pagina che ha appena sostituito nella tabella delle pagine e mettere il bit di presenza a 0
+
+- bisogna evitare che la pagina appena sostituita non venga subito richiesta
+
+#### gestione del resident set
+risponde a due necessità:
+- **resident set management** - decidere, per ogni processo non ancora terminato, quanti frame vanno allocati
+	- *allocazione fissa*: il numero di frame è deciso al tempo di creazione di un processo
+	- *allocazione dinamica* - il numero di frame varia durante la vita del processo
+- **replacement scope** - molto spesso la memoria si riempie e bisogna rimpiazzare i frame: quando questo succede, devo scegliere solo tra i frame del processo corrente o si può sostituire un frame qualsiasi?
+	- 
