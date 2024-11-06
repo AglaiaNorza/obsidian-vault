@@ -142,6 +142,7 @@ Siano $R$ uno schema di relazione ed $F$ un insieme di dipendenze funzionali su 
 Si ha: $$F^+=F^A$$
 
 >[!info] dimostrazione
+>
 >Per dimostrare l’uguaglianza tra due insiemi ci basta dimostrare la doppia inclusione:
 >$$F^A \subseteq F^+\land F^+ \subseteq F^A$$
 >

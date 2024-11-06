@@ -54,7 +54,12 @@ $$
 L'algoritmo "calcolo di $X^+$" calcola correttamente la chiusura di un insieme di attributi $X$ rispetto ad un insieme $F$ di dipendenze funzionali.
 
 >[!info] dimostrazione
->Indichiamo con $Z^0$ il valore iniziale di Z $Z^0=X$ e con $Z^i$ ed $S^i$, con $i\geq1$, i valori di $Z$ e $S$ dopo l'i-esima esecuzione del corpo del ciclo.
+>
+>![[algo-dim-1.jpg]]
+>![[algo-dim-2.jpg]]
+>DA FINIRE IL LATEX: v
+>
+>Indichiamo con $Z^0$ il valore iniziale di $Z$ ($Z^0=X$) e con $Z^i$ ed $S^i$, con $i\geq1$, i valori di $Z$ e $S$ dopo l'i-esima esecuzione del corpo del ciclo.
 >È facile vedere che $Z^i \subseteq Z^{i+1}$
 >
 >Sia $j$ tale che $Z^j$ è $Z^\text{finale}$, ovvero $Z$ al termine dell'algoritmo. Quindi $S(j)\subseteq Z(j)$. 
