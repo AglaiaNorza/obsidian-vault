@@ -7,3 +7,4 @@
 > - [[6 - chiusura di un insieme di dipendenze funzionali]]
 > - [[7 - terza forma normale]]
 > - [[8 - chiusura di un insieme di attributi]]
+> - [[9 - identificare le chiavi di uno schema]]
