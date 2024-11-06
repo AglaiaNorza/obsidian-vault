@@ -8,8 +8,6 @@ Le dipendenze funzionali che si vogliono preservare sono tutte quelle che sono *
 
 Vogliamo quindi calcolare $F^+$, ma questo richiede tempo - è sufficiente avere un metodo per decidere se una dipendenza funzionale $X\to Y\in F^+$. Questo può essere fatto **calcolando $X^+$** e **verificando se $Y\subseteq X^+$**.
 Infatti, ricordiamo il [[6 - chiusura di un insieme di dipendenze funzionali|lemma 1]]: $X\to Y\in F^A\iff Y\subseteq X^+$ e il  [[6 - chiusura di un insieme di dipendenze funzionali|teorema]] che dimostra che $F^A=F^+$.
-
-<<<<<<< HEAD
 ### come calcolare $X^+$
 ![[algoritmo-X+.png]]
 
