@@ -29,6 +29,26 @@ $$
 &\text{end}\\
 \end{flalign}
 $$
+
+
+$$
+\begin{aligned}
+&\text{begin} \\
+&Z := X \\
+&S := \{A \mid Y \to V \in F,\, A \in V,\, Y \subseteq Z\} \\
+&\text{while } S \not\subset Z \\
+&\quad \text{do} \\
+&\quad \text{begin} \\
+&\quad \quad Z := Z \cup S \\
+&\quad \quad S := \{A \mid Y \to V \in F,\, A \in V,\, Y \subseteq Z\} \\
+&\quad \text{end} \\
+&\text{end}
+\end{aligned}
+$$
+
+
+
+
 (latex rubato a flavio)
 
 - per prima cosa, si definisce $Z$ come $X$ stessa (infatti, per riflessività, come minimo $X\to X$) 

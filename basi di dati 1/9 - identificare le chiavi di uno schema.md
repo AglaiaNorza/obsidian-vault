@@ -11,7 +11,6 @@ un sottoinsieme $K$ di uno schema di relazione $R$ è una chiave di $R$ se
 >5) non è detto che una chiave debba apparire come determinante - è possibile che un determinante con un pezzo aggiunto sia chiave
 >6) aver trovato una chiave **non è sufficiente** - in uno stesso schema possiamo avere più chiavi
 
-
 >[!example] esempio
 >$R=(A,B,C,D,E,H)$ 
 >$F=\{AB\to D,\,\, G\to A,\,\, G\to B, H\to E,\,\, H\to G,\,\, D\to H\}$
@@ -19,23 +18,32 @@ un sottoinsieme $K$ di uno schema di relazione $R$ è una chiave di $R$ se
 >cose da tenere a mente in questo caso: in tutte le chiavi ci deve essere $C$, perché non è in $F$, e in nessuna ci sarà $E$, perché non determina niente.
 >
 >le chiavi sono quindi:
->- $GC$ 
+>- $GC$ ($G\to A, \,G\to B,\,AB\to D,\,D\to H,\,H\to E$ e si aggiunge $C$)
 >- $ABC$
 >	- per questa dobbiamo verificare che $AC$ e $BC$ non siano chiavi
 >- $DC$
 >- $CH$
 
+> [!example]- esempio 2
+> ![[esempio-3nfchiavi.png|300]]
+> (trovare dipendenze, chiave/i, se è 3NF)
+> 
+> le dipendenze sono:
+> - $\text{O\#}\to\text{C\#}$ (un cliente può fare più di un ordine ma ogni ordine ha un cliente solo)
+> - $\text{O\#, C}\to\text{N-pezzi}$
+> 
+> la chiave è: $(O\#, A\#)$
+> 
+> non è 3nf (es: $\text{O\#}\to\text{C\#}$ non la rispetta - $\text{O\#}$ è sottochiave e non superchiave, e $\text{C\#}$ non è primo)
+
+#### metodo alternativo
 - in alternativa, si può anche cominciare dagli insiemi individuati dalle dipendenze funzionali: data una dipendenza funzionale $V\to W \in F$ , calcoliamo la chiusura dell'insieme di attributi $X=R-(W-V)$
 	- la differenza interna evita di considerare dipendenze vuote dovute alla riflessività
 	- la differenza esterna esclude gli attributi "solo" dipendenti nella dipendenza in esame
 
-[ test di unicità non importante ]
+#### test di unicità di una chiave
+dati uno schema di relazione $R$ e un insieme di dipendenze funzionali $F$, calcoliamo l'intersezione degli insiemi $X=R-(W-V)$ con $V\to W\in F$.
+- se l'intersezione di questi insiemi determina tutto $R$, allora questa è l'unica chiave di $R$
+- se invece non determina tutto $R$, allora esistono più chiavi
 
-![[esempio-3nfchiavi.png]]
-
-ordine determina codice cliente
-ordine e codice articolo determina n pezzi
-
-chiave: codice ordine, codice articolo
-
-non è 3nf (es: codice ordine determina codice cliente non lo rispetta)
+[questa verifica non può essere usata all'esame per trovare le chiavi]
