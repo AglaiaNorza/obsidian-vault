@@ -14,23 +14,6 @@ per il calcolo di $X^+$ possiamo usare il seguente algoritmo:
 - output: la chiusura di $X$ rispetto a $F$ (nella variabile $Z$)
 
 algoritmo:
-
-$$
-\begin{flalign}
-&\text{begin}\\
-&Z:=X\\
-&S:=\{A \mid Y\to V\in F,\,\, A\in V,\,\, Y\subseteq Z\}\\
-&\text{while } S\not\subset Z\\
-&\qquad\text{do}\\
-&\qquad\text{begin}\\
-&\qquad\qquad Z:=Z\cup S\\
-&\qquad\qquad S:=\{A \mid Y\to V\in F,\,\, A\in V,\,\, Y\subseteq Z\}\\
-&\qquad\text{end}\\
-&\text{end}\\
-\end{flalign}
-$$
-
-
 $$
 \begin{aligned}
 &\text{begin} \\
@@ -46,10 +29,7 @@ $$
 \end{aligned}
 $$
 
-
-
-
-(latex rubato a flavio)
+(latex rubato a flavio cambiato alignment)
 
 - per prima cosa, si definisce $Z$ come $X$ stessa (infatti, per riflessività, come minimo $X\to X$) 
 - poi si definisce $S$, un accumulatore per i nuovi attributi, come 
