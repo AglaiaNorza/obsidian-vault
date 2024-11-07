@@ -76,3 +76,8 @@ L'algoritmo "calcolo di $X^+$" calcola correttamente la chiusura di un insieme d
 
 ### proprietà dell'insieme vuoto
 - l'insieme vuoto $\emptyset$ è un **sottoinsieme di ogni insieme** A: $\forall A:A$
+- l'**unione** di qualunque insieme $A$ con l'insieme vuoto è $A$ stesso: $\forall A:A\cup \emptyset=A$
+- l'**intersezione** di qualunque insieme $A$ con l'insieme vuoto è l'insieme vuoto: $\forall A:A\cap \emptyset=\emptyset$
+- il **prodotto cartesiano** di un qualunque insieme $A$ con l'insieme vuoto è l'insieme vuoto: $\forall A:A\times \emptyset=\emptyset$
+- l'unico **sottoinsieme** dell'insieme vuoto è l'insieme vuoto stesso
+- la **cardinalità** dell'insieme vuoto è zero: l'insieme vuoto *è finito*
