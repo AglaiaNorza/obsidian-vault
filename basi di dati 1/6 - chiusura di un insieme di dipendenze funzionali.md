@@ -123,7 +123,7 @@ La chiusura di un insieme di attributi ci può essere utile per determinare le c
 Siano $R$ uno schema di relazione ed $F$ un insieme di dipendenze funzionali su $R$.
 Si ha:
 $$X \to Y \in F^A \iff Y \subseteq X^+$$
->[!info] dimostrazione
+>[!inote] dimostrazione
 >Sia $Y=A_{1}, A_{2}, \dots, A_{n}$
 >
 >- (dimostro $X \to Y \in F^A \impliedby Y \subseteq X^+$)
@@ -141,7 +141,7 @@ $$X \to Y \in F^A \iff Y \subseteq X^+$$
 Siano $R$ uno schema di relazione ed $F$ un insieme di dipendenze funzionali su $R$.
 Si ha: $$F^+=F^A$$
 
->[!info] dimostrazione
+>[!note] dimostrazione
 >
 >Per dimostrare l’uguaglianza tra due insiemi ci basta dimostrare la doppia inclusione:
 >$$F^A \subseteq F^+\land F^+ \subseteq F^A$$
