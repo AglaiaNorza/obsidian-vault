@@ -106,16 +106,18 @@ $$
 	- poi la chiusura di quell'intersezione rispetto ad $F$, per trovare tutti gli attributi che ci interessano (tutti quelli determinati da dipendenze in $F^+$)
 	- dopodiché l'intersezione con $R_i$, perché dobbiamo *tenere solo gli attributi che sono effettivamente in $R_i$* (per la questione dipendenze con det e dip in $R_i$)
 	- e infine l'unione con l'accumulatore $S$, dove salviamo questo passo fatto per *tutti i sottoinsiemi $R_i$*
+		- nota: ad ogni iterazione (prima dell'unione con $S$), potremo ottenere massimo $R_i$ stesso (per l'intersezione con $R_i$)
+	- ho trovato quindi la chiusura rispetto a ogni singolo $R_{i}$, e quindi rispetto a $G$
+	- quindi, avremo **gli attributi che dipendono funzionalmente da $X$, anche se appartengono a sottoschemi in cui $X$ non è incluso** - perché dipendono da attributi che si trovano nello stesso sottoschema di $X$ e dipendono da $X$, e anche in altri sottoschemi
 
->[!info]
->Con $S:=S\cup(Z\cap R_{i})^+_{F}\cap R_{i}$ sostanzialmente si calcola la chiusura in $F$ degli elementi (di cui cerchiamo di calcola la chiusura in $G$) rispetto al sottoschema $R_{i}$, infine facciamo l’intersezione con $R_{i}$ in modo tale da avere al massimo tutti gli attributi contenuti di $R_{i}$.
->In questo modo rispettiamo la definizione di $G=\cup_{i=1}^k\pi_{R_{i}}(F)$
-
-
-ma l'algo di calcolare chiusura x rispetto a g va usato solo per quelle dipendenze "a cavallo"
-
-l'algo a partire da F ricalca le definizioni di proiezioni di F.
-Z iniz a X per riflessività.
-accumulatore inizializzato al vuoto.
-
-Ciclo sui sottoschemi - vado a verificare le proiezioni di F, prendo i pezzi della chiusura di X che sono imputabili a qualche sottoschema.
+>[!example]- esempio inventato del passo cruciale
+>$R=(A,\,B,\,C,\,D,\,E,\,H)$
+>- $R_{1}=(A,\,B),\;R_{2}=(C,\,D),\; R_{3}=(E,\,H)$
+>
+>cerchiamo $(AE)_{G}^+$
+>- $Z=AE$
+>- il passo prima dell'unione con $S$:
+>	- $Z\cap R_{1}=A$
+>	- trovo $A_{F}^+$
+>	- $A^+_{F}\cap R_{1}\subseteq AB$
+>- poi aggiungo a $S$
