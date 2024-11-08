@@ -73,7 +73,6 @@ L'algoritmo "calcolo di $X^+$" calcola correttamente la chiusura di un insieme d
 >- **ipotesi induttiva**: $Z^{i-1}\subseteq X^+_{f}\implies X\to Z^{i-1}\in F^A$ (per il *lemma 1*: $X\to Y\in F^A\iff Y\subseteq X^+$)
 >- **passo induttivo**: 
 
-
 ### proprietà dell'insieme vuoto
 - l'insieme vuoto $\emptyset$ è un **sottoinsieme di ogni insieme** A: $\forall A:A$
 - l'**unione** di qualunque insieme $A$ con l'insieme vuoto è $A$ stesso: $\forall A:A\cup \emptyset=A$
