@@ -30,7 +30,8 @@ Siano $F$ e $G$ due insiemi di dipendenze funzionali. Se $F\subseteq G^+$ allora
 >[!info] definizione
 >Sia $R$ uno schema di relazione, $F$ un insieme di dipendenze funzionali su $R$, e $\rho=\{ R_{1},R_{2},\dots,R_{K}\}$ una decomposizione di $R$.
 >Diciamo che **$\rho$ preserva $F$** se:
->$$\large F=\bigcup_{i=1}^k\pi_{Ri}(F)$$
+>$$\large F\equiv\bigcup_{i=1}^k\pi_{Ri}(F)$$
+>dove $\pi_{Ri}(F)=\{ X\to Y\mid X\to Y\in F^+\land XY\subseteq R_{i} \}$
 >- ogni $\pi_{Ri}$ è un insieme di dipendenze funzionali dato dalla proiezione di $F$ su $R_i$
 >	- proiettare un insieme di dipendenze su un sottoschema significa prendere tutte e sole le dipendenze in *$F^+$* che hanno *tutti gli attributi in $R_i$*
 #### verifica
@@ -45,9 +46,71 @@ La verifica di $G\subseteq F^+$ è superflua, perché tutti gli elementi di $G$ 
 
 Quindi, bisogna solo verificare che $F\subseteq G^+$.
 
-Grazie al [[6 - chiusura di un insieme di dipendenze funzionali#lemma 1|lemma 1]] - mi basta verificare che $\forall X\to Y \in F,\, Y\subseteq X_{G^+}$ e che $\forall V\to W \in G,\, W\subseteq V^+_{F}$
+Grazie al [[6 - chiusura di un insieme di dipendenze funzionali#lemma 1|lemma 1]], mi basta verificare che 
+$$\forall X\to Y \in F,\,\,Y\subseteq X_{G}^+$$
 
-g contenuto in f+ superfluo perché g ha vari pezzi di f+ al suo interno (perché è l'unione delle proiezioni di F sulle varie decomposizioni, quindi le dipendenze di f+ che hanno entrambi determinante e determinato in una stessa decomposizione) - il problema sono le dipendenze di f "a cavallo"
+Si può fare con l'algoritmo che segue:
+- basta verificare che **una sola dipendenza non appartiene alla chiusura di G** per affermare che l'equivalenza non sussiste
+
+> [!summary] algoritmo
+> - input - due insiemi $F$, $G$ di dipendenze funzionali su $R$
+> - output - la variabile `successo`, che indica se $F\subseteq G^+$
+> 
+> $$
+> \begin{align}
+> &\text{begin}\\
+> &\qquad\text{successo}:=true\\
+> &\qquad \text{for every }X\to Y\in F\\
+> &\qquad\text{do}\\
+> &\qquad \text{begin}\\
+> &\qquad\qquad\text{calcola } X^+\\
+> &\qquad\qquad \text{if }Y\not\subset X^+_{G} \text{ then successo}:=false\\
+> &\qquad\text{end} \\
+> &\text{end}
+> \end{align}
+> $$
+>
+>- se $Y\not\subset X^+_{G}$, allora $X\to Y \not\in G^A$ per il lemma, ovvero $X\to Y\not\in G^+$ per il Teorema
+> 
+
+Nasce un problema: come calcoliamo $X^+_{G}$? Potremmo usare l'[[8 - chiusura di un insieme di attributi#come calcolare $X +$|algoritmo]] per il calcolo della chiusura di un insieme di attributi, ma dovremmo prima calcolare $G$, e quindi $F^+$, il che richiederebbe tempo esponenziale.
+
+Per questo, esiste un algoritmo:
+### calcolo della chiusura di X rispetto a G a partire da F
+
+- **input** - uno schema $R$, un insieme $F$ di dipendenze funzionali su $R$, una decomposizione $\rho=\{ R_{1},R_{2},\dots,R_{k} \}$, un sottoinsieme $X$ di $R$.
+- **output** - la chiusura di $X$ rispetto a $G=\cup_{i=1}^k\pi_{Ri}(F)$
+
+$$
+\begin{align}
+&\text{begin}\\
+&\qquad Z:=X \\
+&\qquad S:=\varnothing \\
+&\qquad \text{for }i:=1\text{ to }k\\
+&\qquad\text{do}\qquad S:=S\cup(Z\cap R_{i})^+_{F}\cap R_{i}  \\
+&\qquad\text{while } S\not\subset Z \\
+&\qquad\qquad\text{do}\\
+&\qquad\qquad \text{begin}\\
+&\qquad\qquad\qquad Z:=Z\cup S\\
+&\qquad\qquad\qquad \text{for }i:=1\text{ to }k \\
+&\qquad\qquad\qquad\text{do}\qquad S:=S\cup(Z\cap R_{i})^+_{F}\cap R_{i} \\
+&\qquad\qquad\text{end} \\
+&\text{end}
+\end{align}
+$$
+
+- partendo da un sottoinsieme di attributi $X$ di $R$, per prima cosa definiamo $Z$ come $X$ stesso per riflessività.
+- dopodiché, ad ogni iterazione:
+	$$S:=S\cup(Z\cap R_{i})^+_{F}\cap R_{i}$$fa: 
+	- prima l'interzezione tra $Z$ e $R_i$, per considerare *solo gli elementi di $Z$ che riguardano quello specifico sottoinsieme*
+	- poi la chiusura di quell'intersezione rispetto ad $F$, per trovare tutti gli attributi che ci interessano (tutti quelli determinati da dipendenze in $F^+$)
+	- dopodiché l'intersezione con $R_i$, perché dobbiamo *tenere solo gli attributi che sono effettivamente in $R_i$* (per la questione dipendenze con det e dip in $R_i$)
+	- e infine l'unione con l'accumulatore $S$, dove salviamo questo passo fatto per *tutti i sottoinsiemi $R_i$*
+
+>[!info]
+>Con $S:=S\cup(Z\cap R_{i})^+_{F}\cap R_{i}$ sostanzialmente si calcola la chiusura in $F$ degli elementi (di cui cerchiamo di calcola la chiusura in $G$) rispetto al sottoschema $R_{i}$, infine facciamo l’intersezione con $R_{i}$ in modo tale da avere al massimo tutti gli attributi contenuti di $R_{i}$.
+>In questo modo rispettiamo la definizione di $G=\cup_{i=1}^k\pi_{R_{i}}(F)$
+
 
 ma l'algo di calcolare chiusura x rispetto a g va usato solo per quelle dipendenze "a cavallo"
 

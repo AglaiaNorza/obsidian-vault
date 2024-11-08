@@ -29,7 +29,7 @@ $$
 \end{aligned}
 $$
 
-(latex rubato a flavio cambiato alignment)
+(latex algoritmo rubato a [flavio](https://github.com/thegeek-sys/Vault/blob/main/Class/Basi%20di%20dati/Chiusura%20di%20un%20insieme%20di%20attributi.md) con piccoli cambiamenti)
 
 - per prima cosa, si definisce $Z$ come $X$ stessa (infatti, per riflessività, come minimo $X\to X$) 
 - poi si definisce $S$, un accumulatore per i nuovi attributi, come 
