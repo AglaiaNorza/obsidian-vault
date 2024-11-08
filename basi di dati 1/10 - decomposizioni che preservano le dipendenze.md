@@ -121,3 +121,5 @@ $$
 >	- trovo $A_{F}^+$
 >	- $A^+_{F}\cap R_{1}\subseteq AB$
 >- poi aggiungo a $S$
+
+(anche qui il latex dell'algoritmo rubato a [flavio](https://github.com/thegeek-sys/Vault/blob/main/Class/Basi%20di%20dati/Decomposizioni%20che%20preservano%20le%20dipendenze.md), che si diverte a fare queste cose)
