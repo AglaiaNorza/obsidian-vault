@@ -129,14 +129,16 @@ Le interruzioni possono essere di due tipi:
 
 ### gestione I/O
 
+[ questo argomento viene approfondito [[5 - gestione dell'IO|qui]]]
+
 **INPUT/OUTPUT PROGRAMMATO**
 
 ![[io-programmato.png|200]]
 
 In passato, il modo di gestire l'I/O era l'**input/output programmato**: 
-- l'azione viene effettuata, invece che dal processore, dal modulo di I/O, che setta i bit appropriati sul registro di stato dell'I/O
+- l'azione (di lettura/scrittura) viene effettuata, invece che dal processore, dal modulo di I/O, che setta i bit appropriati sul registro di stato dell'I/O
+- il processore controlla lo status finché l'operazione non è completa (busy waiting) e rimane quindi bloccato
 - non ci sono interruzioni
-- il processore controlla lo status finché l'operazione non è completa (busy waiting)
 
 **INPUT/OUTPUT DA INTERRUZIONI**
 
@@ -146,6 +148,7 @@ Una gestione più moderna è quella dell'**input/output da interruzioni**:
 - il processore viene interrotto quando il modulo I/O è pronto a scambiare dati (la CPU non deve aspettare e controllare costantemente, ma può fare altre cose)
 - il processore salva il contesto del programma che stava eseguendo e comincia ad eseguire il gestore dell'interruzione
 - non c'è inutile attesa, ma consuma comunque tempo di processore, poiché ogni singolo dato letto o scritto interrompe l'esecuzione del processore
+ 
  > [!example] flusso di controllo
 > ![[flusso-IO.png|500]]
 >  
@@ -159,7 +162,6 @@ Una gestione più moderna è quella dell'**input/output da interruzioni**:
 Il processo utilizzato dai computer più attuali è invece quello dell'**accesso diretto in memoria**:
 - le istruzioni di I/O tipicamente richiedono di trasferire informazioni tra dispositivo di I/O e memoria: la *DMA* trasferisce un blocco di dati direttamente da/alla memoria
 - un'interruzione viene mandata quando il trasferimento è completato
-
 ### multiprogrammazione
 - un processore deve eseguire più programmi contemporaneamente
 - la sequenza con cui i programmi sono eseguiti dipende dalla loro priorità e dal fatto che siano o meno in attesa di I/O
