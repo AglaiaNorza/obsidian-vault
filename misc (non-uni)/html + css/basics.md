@@ -72,4 +72,4 @@ The `section` element is used to define sections in a document, such as chapters
   <p>Section content...</p>
 </section>
 ```
- (when you adding a lower rank heading element to the page, it's implied that a new subsection is being started)
+ (when you're adding a lower rank heading element to the page, it's implied that a new subsection is being started)

@@ -112,6 +112,3 @@ h1 {
 >[!tip] settings multiple values at once
 > To simplify margin/border(/similar elements) assignment, the different sizes can be assigned together:
 > 	`margin: top right bottom left` (or they can be shortened as `margin top&bottom right&left`, or `margin top right&left bottom`)
-
- $\text{Aglaia}\to\text{Gay}\leftrightarrow\text{Alessio}\to\text{Gay}$
-qyuindi tautologia (è in 3NF)
