@@ -16,7 +16,7 @@ Visto che due insiemi di dipendenze si possono scambiare quando hanno la stessa 
 >- ovvero non sono uguali ma hanno la *stessa chiusura*.
 
 ### lemma 2
-Siano $F$ e $G$ due insiemi di dipendenze funzionali. Se $F\subseteq G^+$ allora $F^+\subseteq G^+$ (in realtà è un $\iff$, ma l'altra implicazione è banale).
+Siano $F$ e $G$ due insiemi di dipendenze funzionali. $F\subseteq G^+ \iff F^+\subseteq G^+$.
 
 >[!note] dimostrazione $F\subseteq G^+\implies F^+\subseteq G^+$
 >Sia $f\in F^+-F$ (una dipendenza di $F^+$ che non compare in $F$).
@@ -73,13 +73,15 @@ Si può fare con l'algoritmo che segue:
 >- se $Y\not\subset X^+_{G}$, allora $X\to Y \not\in G^A$ per il lemma, ovvero $X\to Y\not\in G^+$ per il Teorema
 > 
 
+basta fare i controlli solo per le dipendenze "a cavallo" - quelle che hanno sia determinante che dipendente in una decomposizione sono rispettate per forza
+
 Nasce un problema: come calcoliamo $X^+_{G}$? Potremmo usare l'[[8 - chiusura di un insieme di attributi#come calcolare $X +$|algoritmo]] per il calcolo della chiusura di un insieme di attributi, ma dovremmo prima calcolare $G$, e quindi $F^+$, il che richiederebbe tempo esponenziale.
 
 Per questo, esiste un algoritmo:
 ### calcolo della chiusura di X rispetto a G a partire da F
 
 - **input** - uno schema $R$, un insieme $F$ di dipendenze funzionali su $R$, una decomposizione $\rho=\{ R_{1},R_{2},\dots,R_{k} \}$, un sottoinsieme $X$ di $R$.
-- **output** - la chiusura di $X$ rispetto a $G=\cup_{i=1}^k\pi_{Ri}(F)$
+- **output** - la chiusura di $X$ rispetto a $G=\cup_{i=1}^k\pi_{Ri}(F)$ 
 
 $$
 \begin{align}
@@ -123,3 +125,7 @@ $$
 >- poi aggiungo a $S$
 
 (anche qui il latex dell'algoritmo rubato a [flavio](https://github.com/thegeek-sys/Vault/blob/main/Class/Basi%20di%20dati/Decomposizioni%20che%20preservano%20le%20dipendenze.md), che si diverte a fare queste cose)
+
+>[!note] dimostrazione
+>dimostrare che l'algoritmo funziona significa mostrare che, alla fine dell'algoritmo, Z conterrà tutta e sola la chiusura di X rispetto a G.
+>Quindi, che $X^+_{G}\subseteq Z\land$
