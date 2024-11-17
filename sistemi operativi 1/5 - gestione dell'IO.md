@@ -195,7 +195,7 @@ Per ovviare a questo problema, si utilizza l'architettura del **buffer zero copy
 ### HDD vs SSD
 Per gestire l'I/O, il Sistema Operativo deve essere il più efficiente possibile. Uno degli ambiti in cui i progettisti di sistemi operativi si sono dati più da fare è quello dei dispositivi di archiviazione di massa.
 
-Quello che vedremo riguarda solo gli HDD (Hard Drive Disk) e non le SSD (Solid State Disk).
+Quello che vedremo riguarda solo gli HDD (Hard Drive Disk) e non gli SSD (Solid State Disk).
 
 ### il disco
 
@@ -316,10 +316,29 @@ Se $N=1$, si usa il FIFO per fairness.
 >![[IO-sch-2.png|center|500]]
 
 ## SSD: cenni
-Ad alto livello, le SSD (Solid State Drive) sono costituiti da stack (*flash chips*) di *die* (matrici), gestite da un *controller*.
+Ad alto livello, gli SSD (Solid State Drive) sono costituiti da stack (*flash chips*) di *die* (matrici), gestite da un *controller*.
 
 - ciascun die ha un certo numero di *planes*, divise a loro volta in *blocks*.
 - ciascun blocco è composto da un numero variabile di *pages* (~4KB)
 - le pagine sono a loro volta composte da *cells*, che possono immagazzinare un solo bit
 
-![[SSD-die.png|left|300]] ![[SSD-plane.png|right|300]]
+![[SSD-die.png|left|300]] ![[SSD-plane.png|300]]
+
+### operazioni
+le operazioni sugli SSD hanno granularità diversa in base al loro tipo:
+- in lettura, l'unità di accesso minimo sono le *pagine*
+- lo sono anche in scrittura, ma:
+	- una pagina può essere scritta *solo se è vuota*
+	- non è possibile la sovrascrittura
+
+Sovrascrivere una pagina implica dover *azzerare l'intero blocco* che la contiene:
+1) si fa una copia dell'intero blocco
+2) si azzera il blocco
+3) si scrive la nuova pagina
+4) si copiano le pagine rimanenti dalla copia effettuata in precedenza
+
+Gli SSD sono preferiti rispetto agli HDD, in quanto sono estremamente veloci
+- nessun tempo richiesto per effettuare seek come negli HDD (quindi non ci si preoccupa di dove sono i dati)
+- consentono l'accesso parallelo a diversi flash chip
+
+Esistono anche algoritmi di accesso e file system progettati per massimizzare le performance degli SSD.
