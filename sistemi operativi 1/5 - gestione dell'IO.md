@@ -160,3 +160,116 @@ Invece di un blocco, si bufferizza una linea di input o output.
 Invece, per i dispositivi in cui va gestito un singolo carattere premuto, viene bufferizzato un byte alla volta.
 - in pratica, è un'istanza di un ben noto problema di concorrenza: producer/consumer
 
+### buffer doppio
+Vista la piccola dimensione di un buffer, per poter gestire al meglio tutti i dispositivi I/O (senza avere il buffer sempre pieno) è utile usare un buffer multiplo.
+
+Un processo può trasferire dati da o a uno dei buffer, mentre il Sistema Operativo svuota o riempie l'altro.
+- lettura e scrittura nel buffer sono *parallele*: uno letto, l'altro scritto.
+
+![[buffer-doppio-IO.png|center|450]]
+
+### buffer circolare
+Vengono utilizzati più di due buffer.
+Ciascun buffer viene utilizzato quando l'operazione di I/O dev tenere il passo del processo.
+- questo è proprio il caso producer/consumer
+![[buffer-circ-IO.png|center|450]]
+
+### buffer: pro e contro 
+Il buffering smussa i picchi di richieste di I/O (permettendo di non mantenere il processore idle), ma, se la domanda è molta, i buffer si riempiono e il vantaggio si perde.
+- è utile soprattutto quando ci sono molti dispositivi I/O diversi tra di loro
+
+#### overhead e buffer zero copy
+Il buffering introduce overhead a causa della copia intermedia che viene fatta in Kernel Memory:
+![[buffer-overhead.png|center|500]]
+
+(i dati vengono prima copiati nel kernel buffer, poi nella zona utente, e solo poi nella sezione dell'I/O).
+
+Per ovviare a questo problema, si utilizza l'architettura del **buffer zero copy**:
+
+![[buffer-zerocopy.png|center|500]]
+
+- evita inutili copie intermedie non passando per lo user space - fa direttamente un trasferimento da un Kernel Buffer ad un altro.
+
+## scheduling del disco
+
+### HDD vs SSD
+Per gestire l'I/O, il Sistema Operativo deve essere il più efficiente possibile. Uno degli ambiti in cui i progettisti di sistemi operativi si sono dati più da fare è quello dei dispositivi di archiviazione di massa.
+
+Quello che vedremo riguarda solo gli HDD (Hard Drive Disk) e non le SSD (Solid State Disk).
+
+### il disco
+
+![[disco-strutt.png|center|400]]
+
+(una traccia è una corona circolare che diventa sempre più piccola avvicinandosi al centro; un settore è una parte di cerchio determinata da due raggi; l'intertrack gap separa due tracce, l'intersector gap separa due settori)
+
+- i *dati* si trovano sulle *tracce*, su un certo numero di settori -> per leggere e scrivere occorre sapere su che traccia e settore si trovano i dati 
+
+Per selezionare una traccia, bisogna
+- spostare una testina (se ha testine mobili) (*seek*)
+- selezionare una testina (se ha testine fisse)
+
+Per selezionare un settore, bisogna aspettare che il disco ruoti (ruota a velocità costante).
+Se i dati sono tanti, potrebbero trovarsi su più settori o addirittura più tracce. (un settore misura in media 512 bytes).
+
+### prestazioni del disco
+La linea generale di un'operazione su disco può essere riassunta come segue:
+
+![[timeline-disco.png|center|500]]
+
+**access time**, che è la somma di:
+- tempo di posizionamento (*seek time*): la testina si posiziona sulla traccia desiderata
+- ritardo di rotazione (*rotational delay*): l'inizio del settore raggiunge la testina
+
+**tempo di trasferimento**: tempo necessario a trasferire i dati che scorrono sotto la tesitna.
+
+A parte rispetto a questi:
+- *wait for device*: attesa che il dispositivo sia assegnato alla richiesta
+- *wait for channel*: attesa che il sottodispositivo sia assegnato alla richiesta (se ci sono più dischi che condividono un solo canale di comunicazione)
+
+### politiche di scheduling per il disco
+Come per la RAM, anche nel caso di un disco con testine mobili ci sono diverse vie per poter rendere efficienti possibile le operazioni di read/write.
+
+>[!example] termine di confronto
+>le politiche saranno confrontate su un esempio comune:
+>- all'inizio la testina si trova sulla traccia numero 100.
+>- ci sono 200 tracce
+> 
+>vengono richieste (in ordine): 55, 58, 39, 18, 90, 160, 150, 38, 184
+>
+>viene considerato solo il seek time, confrontato con il random (scheduling peggiore)
+
+#### FIFO
+Le richieste sono servite in modo sequenziale
+- è equo nei confronti dei processi 
+- se ci sono molti process in esecuzione, si comporta in modo simile al random
+
+> [!example] tempi
+> ![[FIFO-IO.png|center|500]]
+
+### priorità
+Per questa politica, l'obiettivo non è ottimizzare il disco.
+- i processi batch corti potrebbero avere priorità più alta
+- è desiderabile fornire un buon tempo di risposta ai processi interattivi, ma i processi più lunghi potrebbeo dover aspettare troppo
+- non va bene per i DBMS
+
+>[!example] tempi
+>impossibile fare il grafico: bisognerebbe conoscere la priorità dei processi che hanno fatto le richieste
+
+### LIFO
+- ottimo per i DBMS con transazioni (quindi per sequenze di istruzioni che non possono essere interrotte). 
+
+Il dispositivo è dato all'utente più recente - se un utente continua a fare richieste su disco, si potrebbe arrivare alla starvation.
+
+È usata perché, se si tratta dello stesso utente, probabilmente sta accedendo sequenzialmente ad un file (ed è più efficiente mandarlo avanti).
+
+>[!example] tempi
+>impossibile fare il grafico: bisognerebbe sapere a che utente appartiene ogni richiesta
+
+### minimo tempo di servizio
+[Da questa politica in poi, l'obiettivo è di minimizzare il seek time - e serve conoscere la posizione della testina]
+
+Sceglie la richiesta che minimizza il movimento del braccio dalla posizione attuale (quindi il tempo di posizionamento minore).
+- è possibile la starvation se arrivano continuamente richieste più vicine
+
+![[IO-mts.png|center|500]]
