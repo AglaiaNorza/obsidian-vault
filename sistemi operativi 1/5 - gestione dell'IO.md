@@ -93,7 +93,6 @@ come gestirlo?
 i dispositivi I/O sono molto diversi tra di loro, ma sarebbe bene gestirli in modo uniforme.
 - bisogna quindi nascondere la maggior parte dei dettagli dei dispositivi I/O nelle procedure di basso livello
 - si offrono una serie di funzionalità (quasi) uguali per tutti: `read`, `write`, `lock`, `unlock`, `open`, `close`, che sanno come gestire i diversi dispositivi
-
 ### progettazione gerarchica
 è una gerarchia simile a quella del progetto di un sistema operativo, che ci permette di nascondere dettagli specifici ai livelli più alti.
 - ogni livello si basa sul fatto che il livello sottostante sa effettuare operazioni più primitive, fornendo servizi al livello superiore
@@ -123,4 +122,41 @@ i livelli sono:
 3) **organizzazione fisica** - si occupa di allocare e deallocare spazio su disco
 
 ## buffering dell'I/O
+Per mitigare molte delle difficoltà associate alla gestione dell'I/O, è stata introdotta la tecnica dell'I/O buffering.
+
+In particolare, i problemi principali sono:
+- diversi dispositivi I/O hanno velocità diverse e
+- sono ottimizzati per operazioni di certe dimensioni in base al loro tipo (per esempio, se un dispositico scrive 4mb alla volta, aspetterà di avere 4mb prima di scrivere)
+
+la soluzione è creare un **buffer** - una zona di memoria principale che il Sistema Operativo dedica al mantenimento dei dati che saranno spostati. 
+(quindi, si fanno trasferimenti di input in anticipo e di output in ritardo rispetto all'arrivo della richiesta)
+
+### senza buffer
+Senza buffer, il Sistema Operativo accede al dispositivo nel momento in cui ne ha necessità:
+![[no-buffer-io.png|center|400]]
+
+### buffer singolo
+Il Sistema Operativo crea un buffer in memoria principale (nel kernel space, spesso statica, a volte dinamica). Quando arriva una richiesta di I/O, viene letta e scritta prima3 nel sistema operativo e, in un secondo momento, passata al processo utente
+
+![[single-buffer-IO.jpg|center|500]]
+
+- lettura e scrittura sono *separate e sequenziali*
+
+### buffer singolo orientato ai blocchi
+(riguarda i dispositivi orientati a blocchi, come i dischi)
+ 
+I trasferimenti di **input** sono fatti al buffer in system memory - il blocco viene poi mandato nello spazio utente quando necessario.
+A questo punto, nonostante non sia arrivata nessun'altra richiesta di input, il blocco successivo viene comunque letto nel buffer (*input anticipato*, o *read ahead*) 
+- (si legge il blocco richiesto, ma anche intorno ad esso - per principio di località, probabilmente serviranno le informazioni vicine al blocco richiesto).
+
+L'**output**, invece, viene posticipato (per efficienza - raccolgo quanti dati voglio e poi li do in output)
+
+(per questo quando si fa debugging in C serve la syscall `flush` - un errore può verificarsi ben dopo un print, ma a causa dell'output posticipato non si ha niente a schermo, quindi si usa per svuotare il buffer).
+
+### buffer singolo orientato agli stream
+(riguarda i dispostitivi stream-oriented, come i terminali)
+
+Invece di un blocco, si bufferizza una linea di input o output.
+Invece, per i dispositivi in cui va gestito un singolo carattere premuto, viene bufferizzato un byte alla volta.
+- in pratica, è un'istanza di un ben noto problema di concorrenza: producer/consumer
 
