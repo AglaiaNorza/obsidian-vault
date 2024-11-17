@@ -245,7 +245,7 @@ Le richieste sono servite in modo sequenziale
 - se ci sono molti process in esecuzione, si comporta in modo simile al random
 
 > [!example] tempi
-> ![[FIFO-IO.png|center|500]]
+> ![[FIFO-IO.png|center|400]]
 
 ### priorità
 Per questa politica, l'obiettivo non è ottimizzare il disco.
@@ -272,4 +272,54 @@ Il dispositivo è dato all'utente più recente - se un utente continua a fare ri
 Sceglie la richiesta che minimizza il movimento del braccio dalla posizione attuale (quindi il tempo di posizionamento minore).
 - è possibile la starvation se arrivano continuamente richieste più vicine
 
-![[IO-mts.png|center|500]]
+> [!example] tempi
+> ![[IO-mts.png|center|400]]
+
+### SCAN
+Si scelgono le richieste in modo che il braccio si muova sempre in un verso per poi tornare indietro.
+- niente starvation, ma è poco fair:
+	- favorisce le richieste ai bordi (attraversati due volte in poco tempo: in discesa e in salita)
+	- favorisce le richieste appena arrivate (se ben piazzate rispetto alla testina
+
+> [!example] tempi
+> ![[IO-SCAN.png|center|400]]
+
+### C-SCAN
+Come SCAN, ma risolve il problema del favoritismo verso le richieste ai bordi: 
+- nella "marcia indietro", non si scelgono richieste
+- quindi i bordi non sono più visitati due volte in poco tempo
+
+>[!example] tempi
+>![[IO-CSCAN.png|center|400]]
+
+### FSCAN
+Vengono utilizzate due code anziché una: $F$ e $R$.
+- Quando SCAN inizia, tutte le richieste sono nella coda $F$, e $R$ è vuota.
+- mentre SCAN serve tutta $F$, ogni nuova richiesta è aggunta ad $R$.
+- quando SCAN finisce di servire $F$, si scambiano $F$ ed $R$.
+
+Le richieste vecchie non vengono superate perché ogni richiesta nuova deve aspettare le precedenti.
+
+### N-step-SCAN
+È una generalizzazione di FSCAN a $N>2$ code.
+- si accodano le richieste nella coda i-esima fino a che non si riempie; poi si passa alla $(i+1) \mod N$ 
+- non si aggiungono mai richieste alla coda attualmente richiesta
+
+Se $N$ è alto, le prestazioni sono come SCAN, ma più fair.
+Se $N=1$, si usa il FIFO per fairness.
+
+### summa
+>[!info] confronto prestazionale
+>![[IO-sch-1.png|center|500]]
+
+>[!tip] prospetto
+>![[IO-sch-2.png|center|500]]
+
+## SSD: cenni
+Ad alto livello, le SSD (Solid State Drive) sono costituiti da stack (*flash chips*) di *die* (matrici), gestite da un *controller*.
+
+- ciascun die ha un certo numero di *planes*, divise a loro volta in *blocks*.
+- ciascun blocco è composto da un numero variabile di *pages* (~4KB)
+- le pagine sono a loro volta composte da *cells*, che possono immagazzinare un solo bit
+
+![[SSD-die.png|left|300]] ![[SSD-plane.png|right|300]]
