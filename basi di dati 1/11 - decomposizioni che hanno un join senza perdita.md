@@ -86,3 +86,4 @@ terza iterazione (fine):
 - non c'è più nulla da cambiare quindi l'algoritmo termina.
 
 Bisogna verificare se c'è una tupla con tutte $a$ - non c'è, quindi il join *non è senza perdita*.
+
