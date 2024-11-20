@@ -66,15 +66,23 @@ ha un join senza perdite
 ![[esempio-losslessjoin.png|center|500]]
 
 prima iterazione:
-![[es-llj-2.png|center|500]]
+![[llj-es1.png|center|500]]
 
 in ordine rispetto alle dipendenze funzionali:
 - $C\to D$: la prima e la terza riga coincidono su $C=a3$ - cambiamo $b14$ in $a4$ in modo che la dipendenza funzionale sia soddisfatta
 - $AB\to E$ è già soddisfatta
 - $D\to B$: nelle prime quattro righe, $D=a4$, quindi cambiamo $b22$, $b 32$, $b 42$ in $b 12$ 
 
-fine della prima iterazione.
-
 seconda iterazione:
 ![[llj-es2.png|center|500]]
 
+- $C\to D$ è già soddisfatta
+- $AB\to E$: prima, seconda e quarta riga coincidono su $AB$, quindi cambiamo $b 15$ e $b 45$ in $a 5$ 
+- $D\to B$ è già soddisfatta
+
+terza iterazione (fine):
+![[llj-es3.png|center|500]]
+
+- non c'è più nulla da cambiare quindi l'algoritmo termina.
+
+Bisogna verificare se c'è una tupla con tutte $a$ - non c'è, quindi il join *non è senza perdita*.
