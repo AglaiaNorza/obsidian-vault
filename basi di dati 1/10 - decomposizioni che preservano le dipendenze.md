@@ -84,7 +84,7 @@ Per questo, esiste un algoritmo:
 - **output** - la chiusura di $X$ rispetto a $G=\cup_{i=1}^k\pi_{Ri}(F)$ 
 
 $$
-\begin{align}
+\begin{align*}
 &\text{begin}\\
 &\qquad Z:=X \\
 &\qquad S:=\varnothing \\
@@ -98,7 +98,7 @@ $$
 &\qquad\qquad\qquad\text{do}\qquad S:=S\cup(Z\cap R_{i})^+_{F}\cap R_{i} \\
 &\qquad\qquad\text{end} \\
 &\text{end}
-\end{align}
+\end{align*}
 $$
 
 - partendo da un sottoinsieme di attributi $X$ di $R$, per prima cosa definiamo $Z$ come $X$ stesso per riflessività.

@@ -15,7 +15,7 @@ per il calcolo di $X^+$ possiamo usare il seguente algoritmo:
 
 algoritmo:
 $$
-\begin{aligned}
+\begin{align*}
 &\text{begin} \\
 &Z := X \\
 &S := \{A \mid Y \to V \in F,\, A \in V,\, Y \subseteq Z\} \\
@@ -26,7 +26,7 @@ $$
 &\quad \quad S := \{A \mid Y \to V \in F,\, A \in V,\, Y \subseteq Z\} \\
 &\quad \text{end} \\
 &\text{end}
-\end{aligned}
+\end{align*}
 $$
 
 (latex algoritmo rubato a [flavio](https://github.com/thegeek-sys/Vault/blob/main/Class/Basi%20di%20dati/Chiusura%20di%20un%20insieme%20di%20attributi.md) con piccoli cambiamenti)

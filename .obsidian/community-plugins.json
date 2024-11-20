@@ -9,5 +9,6 @@
   "obsidian-plugin-toc",
   "obsidian-relative-line-numbers",
   "abbreviations",
-  "folder-note-plugin"
+  "folder-note-plugin",
+  "nuke-orphans"
 ]
