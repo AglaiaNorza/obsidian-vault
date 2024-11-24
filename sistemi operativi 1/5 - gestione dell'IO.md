@@ -9,7 +9,7 @@
 > - [[#RAID|RAID]]
 > - [[#I/O in Linux|I/O in Linux]]
 
-[ rilettura utile: [[1 - sistemi operativi#gestione I/O|gestione I/O generale]]]
+[ rilettura utile: [[1 - sistemi operativi#gestione I/O|gestione IO generale]]]
 ## dispositivi di I/O
 
 ci sono tre macrocategorie di IO:
