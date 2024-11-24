@@ -342,3 +342,149 @@ Gli SSD sono preferiti rispetto agli HDD, in quanto sono estremamente veloci
 - consentono l'accesso parallelo a diversi flash chip
 
 Esistono anche algoritmi di accesso e file system progettati per massimizzare le performance degli SSD.
+
+## cache del disco
+La cache del disco è un buffer in memoria principale usato esclusivamente per i settori del disco, che contiene una loro copia.
+- quando si fa una richiesta di I/O, si vede prima se il settore che si cerca si trova nella cache.
+- se non c'è, viene copiato al suo interno
+
+Spesso viene chiamata *page cache*, ma non va confusa con quella spesso presente direttamente sui dischi, che è hardware.
+
+Ci sono svariati modi per gestire la cache:
+### LRU
+- se occorre rimpiazzare qualche settore nella cache si prende quello *least recently used*
+- la cache viene puntata da uno "stack" di puntatori
+	- quello most recently used è in cima allo stack - ogni volta che un settore viene referenziato o copiato, il suo puntatore viene spostato in cima allo stack
+	- (non è proprio un vero stack, perché è acceduto solo usando push, pop e top)
+
+### LFU 
+- si rimpiazza il settore con *meno referenze* 
+- serve un contatore per ogni settore (incrementato ad ogni riferimento)
+- sembra più sensato, ma la località potrebbe avere un effetto dannoso: se, per esempio, un settore venisse acceduto varie volte di fila per il principio di località e poi non più, avrebbe un valore alto senza essere effettivamente utile
+
+### sostituzione basata su frequenza
+Utilizza uno stack di puntatori come l'LRU:
+- quando un blocco viene referenziato, lo si sposta all'inizio dello stack
+
+Ma lo *stack è diviso in due*: una parte nuova e una vecchia:
+- ogni volta che si fa riferimento ad un settore nella cache, l'incremento avviene solo se si trova nella parte vecchia
+- si passa dalla parte nuova a quella vecchia per *scorrimento*: quando un blocco vecchio viene riferito e "diventa nuovo", spinge l'ultimo dei nuovi a diventare il primo dei vecchi
+- per la sostituzione, si sceglie il blocco con contatore minimo *nella parte vecchia* (in caso di parità, quello più recente)
+
+![[cache-frequenza.png|center|500]]
+
+Non è ancora efficiente al massimo:
+- se un blocco è appena arrivato nella parte vecchia, se non viene riferito presto, potrebbe essere sostituito anche se magari utile a breve
+
+### sostituzione basata su frequenza: 3 segmenti
+Invece di organizzare lo stack in due segmenti, lo si organizza in tre:
+1) *nuovo*
+	- unica parte in cui i contatori non vengono incrementati
+	- non c'è rimpiazzamento
+2) *medio*
+	- i contatori vengono incrementati
+	- non c'è rimpiazzamento
+3) *vecchio*
+	- i contatori vengono incrementati
+	- i blocchi sono eleggibili per rimpiazzamento
+ 
+![[cache-freq-3seg.png|center|500]]
+
+## RAID
+sta per **Redundant Array of Indipendent Disks**.
+- in alcuni casi, si hanno a disposizione più dischi fisici, ed è possibile sia trattarli separatamente che come un unico disco
+
+### dischi multipli e RAID
+In Linux, il trattamento separato di dischi viene chiamato Linux LVM (**Logical Volume Manager**).
+Permette di avere alcuni files memorizzati su un disco, e altri su un altro, con una *gestione da parte del Kernel* (dell'LVM nello specifico).
+- l'utente può quindi non occuparsi di decidere dove salvare i file 
+- l'LVM serve ad evitare che, per esempio, una directory cresca fino a riempire il relativo disco mentre un'altra resta vuota.
+
+Ma l'LVM va bene per pochi dischi, e se non si è interessati alla **ridondanza** (memorizzazione di un dato su diversi dispositivi). Con la ridondanza, se si rompesse un disco, si potrebbero recuperare alcuni dei dati persi da un altro disco.
+
+Per risolvere questo problema esiste il RAID, che permette anche di velocizzare alcune operazioni.
+
+>[!tip] (fun?) fact
+>esistono device composti da più dischi fisici gestiti da un RAID direttamente a livello di dispositivo - il Sistema Operativo fa solo read e write, il dispositivo stesso gestisce internamente il RAID
+
+### gerarchia dei dischi RAID
+
+#### RAID 0 (nonredundant)
+I dischi sono divisi in **strip** e ogni strip contiene un certo numero di settori.
+- un insieme di strip su vari dischi (una riga) si chiama *stripe*
+
+![[RAID0.png|center|400]]
+
+Lo scopo del RAID 0 è la *parallelizzazione* - uno stesso file viene diviso su un'intera stripe (su vari dischi).
+Non c'è ridondanza, il file system è dato dall'unione di tutti i dischi.
+
+#### RAID 1 (mirrored)
+Come RAID0, ma ogni dato viene duplicato.
+Fisicamente ci sono $2N$ dischi, ma con capacità di memorizzazione $N$.
+
+![[RAID1.png|center|400]]
+
+Se si rompe un disco, si recuperano tutti i dati.
+- se se ne rompono due, dipende da quali si sono rotti
+
+#### RAID 2 (redundancy through Hamming code)
+>[!info]- hamming code
+>Il codice di Hamming aggiunge tre bit di controllo addizionali ad ogni quattro bit di messaggio. L'algoritmo di Hamming (7,4) può correggere ogni errore di singolo bit, oppure rivelare tutti gli errori di singolo bit e gli errori su due bit, ma senza poterli correggere.
+
+(non usato)
+ 
+La ridondanza non viene fatta attraverso una semplice copia, ma tramite opportuni codici. Serve per proteggersi nei casi (rari) in cui gli errori non sono il fallimento di un intero disco, ma magari il *flip di qualche singolo bit*.
+
+![[RAID2.png|center|400]]
+
+Non ci sono più $N$ dischi di overhead, ma tanti quanti servono per memorizzare il codice di Hamming (proporzionale al logaritmo della capacità dei dischi).
+
+#### RAID 3 (bit-interleaved parity)
+(non usato)
+
+Memorizza, per ogni bit, la parità dei bit con la stessa posizione (pari: 1, dispari: 0).
+- nonostante la sua semplicità, resta possibile recuperare i dati se fallisce un unico disco
+- irrecuperabile se fallisce il disco di parità
+
+![[RAID3.png|center|400]]
+
+#### RAID 4 (block-level parity)
+(non usato)
+
+Come RAID3, ma ogni strip è un "blocco" (quindi si fa la parità di ogni strip).
+- recuperabile nel caso di fallimento di un unico disco
+- migliore parallelismo di RAID3, ma più complicato gestire piccole scritture
+
+![[RAID4.png|center|400]]
+
+#### RAID 5 (block-level distributed parity)
+Come RAID4, ma le informazioni di parità non si trovano su un unico disco.
+Evita il bottleneck del disco di parità (prima, ogni scrittura aveva effetto sul disco di parità - qui non c'è un disco privilegiato)
+
+![[RAID5.png|center|400]]
+
+#### RAID 6 (dual redundancy)
+Come RAID5, ma con due dischi di parità indipendenti.
+- permette d recuperare anche due fallimenti di disco, ma con una penalità del 30% in più rispetto a RAID5 sulla scrittura (si equivalgono invece per la lettura)
+
+### riassunto
+![[RAID-riassunto.png|center|600]]
+
+_Parallel access_ - se faccio un’operazione sul RAID, tutti i dischi effettuano in sincrono quell’operazione  
+_Indipendent_ - un’operazione sul RAID è un’operazione su un sottoinsieme dei suoi dischi (permette il completamento in parallelo di richieste I/O distinte)  
+_Data availability_ - capacità di recupero in caso di fallimento  
+_Small I/O request rate_ - velocità nel rispondere a piccole richieste di I/O
+
+## I/O in Linux
+Linux utilizza un'**unica page cache** per tutti i trasferimenti tra disco e memoria, compresi quelli dovuti alla gestione della memoria virtuale (sorta di page buffering).
+
+Ci sono due vantaggi:
+1) scritture condensate
+2) sfruttando la località dei riferimenti, si risparmiano accessi a disco
+
+Quando scrive su disco? 
+- è rimasta poca memoria: una parte della page cache è ridestinata all'uso diretto dei processi
+- quando l'età delle pagine "sporche" supera una certa soglia
+
+Non c'è una replacement policy separata: è la stessa per il rimpiazzo delle pagine
+- la page cache è paginata, le pagine sono rimpiazzate con l'[[4 - gestione della memoria#gestione della memoria in linux|algoritmo]] visto per la gestione della memoria
