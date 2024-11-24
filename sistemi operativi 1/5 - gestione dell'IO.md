@@ -1,4 +1,4 @@
-> [!NO]
+> [!info]
 > - [dispositivi di I/O](#dispositivi-di-io)
 > 	- [funzionamento](#funzionamento)
 > 	- [differenze tra dispositivi I/O](#differenze-tra-dispositivi-io)
