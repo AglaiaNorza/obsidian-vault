@@ -19,6 +19,19 @@ bisogna affrontare il problema di come ottenere una decomposizone che soddisfi l
 >[!info] definizione
 >Sia $F$ un insieme di dipendenze funzionali.
 >Una **copertura minimale** di $F$ è un insieme $G$ di dipendenze funzionali *equivalente a $F$* tale che:
->- per ogni dipendenza funzionale in $G$, la *parte destra è un singleton* <small>(ogni attributo nella parte destra è non ridondante)</small>
->- per nessuna dipendenza funzionale $X\to A \in G$ esiste $X'\subset X$ tale che $G\equiv G-\{ X\to A \}\cup \{ X'\to A \}$ <small>(ogni attributo nella parte sinistra non è ridondante)</small>
->- per nessuna dipendenza funzionale $X\to A \in G$, $G\equiv G-\{ X\to A \}$  <small>(ogni dipendenza non è ridondante)</small>
+>- per ogni dipendenza funzionale in $G$, la *parte destra è un singleton* - <small>(ogni attributo nella parte destra è non ridondante)</small>
+>- per nessuna dipendenza funzionale $X\to A \in G$ esiste $X'\subset X$ tale che $G\equiv G-\{ X\to A \}\cup \{ X'\to A \}$ - <small>(ogni attributo nella parte sinistra non è ridondante)</small>
+>- per nessuna dipendenza funzionale $X\to A \in G$, $G\equiv G-\{ X\to A \}$  - <small>(ogni dipendenza non è ridondante)</small>
+
+riformulato in modo più informale:
+- i dipendenti devono essere singleton
+- $AB\to C$ può trovarsi nella copertura minimale solo se nella chiusura di $A$ e di $B$ non si trova $C$ (in caso contrario viene sostituito da $A\to C$ o $B\to C$
+- posso eliminare una dipendenza se è possibile ricostruirla in $F^+$ tramite altre dipendenze
+
+### come si calcola
+Per ogni insieme di dipendenze funzionali $F$ esiste una copertura minimale equivalente ad $F$ che si può ottenere in *tempo polinomiale* in tre passi:
+1) usando la decomposizione, le parti destre delle dipendenze vengono ridotte a singleton
+2) si rendono le parti sinistre non ridondanti (da approfondire)
+3) $\forall X\to A$, devo verificare che $F\equiv F-\{ X\to A \}$a
+
+(chiedere altre info....)

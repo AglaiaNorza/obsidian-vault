@@ -4,3 +4,4 @@
 > - [[3 - scheduling]]
 > - [[4 - gestione della memoria]]
 > - [[5 - gestione dell'IO]]
+> - [[6 - file system]]
