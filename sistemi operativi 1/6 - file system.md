@@ -50,5 +50,32 @@ Si introduce della terminologia utile:
 - vengono realizzati con uno o più file
 - i DBMS (database managing systems) sono tipicamente processi di un Sistema Operativo 
 
-### sistemi per la gestione di file
-![[5 - gestione dell'IO#problemi nel progetto del sistema operativo#3 - file system]]
+### file managing systems
+I sistemi per la gestione di file forniscono servizi agli utenti e alle applicazioni per l'uso di file, e definiscono il modo in cui i file sono usati.
+#### obiettivi
+- rispondere alla *necessità* degli utenti riguardo la gestione dei dati
+- garantire he i dati nei file siano *validi*
+- ottimizzare le *prestazioni* (sia dal punto di vista del Sistema Operativo - throughput - che dell'utente - tempo di risposta -)
+- fornire supporto per diversi tipi di memoria secondaria
+- *minimizzare la perdita* di dati
+- fornire un insieme di *interfacce standard* per i processi utente
+- fornire supporto per l'I/O effettuato da *più utenti in contemporanea*
+
+#### requisiti
+1) ogni utente deve essere in grado di creare, cancellare, leggere, scrivere e modificare un file
+2) ogni utente deve poter accedere, in modo controllato, ai file di un altro utente
+3) ogni utente deve poter leggere e modificare i permessi di accesso ai propri file
+4) ogni utente deve poter ristrutturare i propri file in modo attinente al problema affrontato
+5) ogni utente deve poter muovere dati da un file a un altro
+6) ogni utente deve poter mantenere una copia di backup dei propri file (in caso di danno)
+7) ogni utente deve poter accedere ai propri file tramite nomi simbolici
+
+#### organizzazione del codice
+[[4 - gestione della memoria#elementi centrali per il progetto di un sistema operativo]]
+
+- **Directory Management** - tutte le operazioni utente che hanno a che fare con i file
+- **File System** - struttura logica ed operazioni fisiche
+- **Organizzazione Fisica** - da identificatori di file a indirizzi fisici su disco (allocazione/deallocazione)
+- **Scheduling & Control** - qui ci sono i vari SCAN ecc.
+
+## le directory
