@@ -31,7 +31,25 @@ riformulato in modo più informale:
 ### come si calcola
 Per ogni insieme di dipendenze funzionali $F$ esiste una copertura minimale equivalente ad $F$ che si può ottenere in *tempo polinomiale* in tre passi:
 1) usando la decomposizione, le parti destre delle dipendenze vengono ridotte a singleton
-2) si rendono le parti sinistre non ridondanti (da approfondire)
-3) $\forall X\to A$, devo verificare che $F\equiv F-\{ X\to A \}$a
+2) si rendono le parti sinistre non ridondanti:
+	![[copertura-min-ragionamento.png|center]]
+	ora, $G$ diventa il nuovo $F$ per le verifiche successive
+3) $\forall X\to A$, devo verificare che $F\equiv F-\{ X\to A \}$ 
+	- sappiamo che i due differiscono per una sola dipendenza, $X\to A$, dunque basta verificare che $X\to A\in G^+$, ovvero (per il lemma 1), se $A\in X^+_{G}$
+		- **nota**: se $X\to A\in F$, ma non esiste $Y\to A\in F$ con $X\neq Y$, è *inutile provare ad eliminare* $X\to A$ (non potremmo più determinare funzionalmente $A$)
 
-(chiedere altre info....)
+### esempi
+>[!example] esempio 1
+>$$R = (A,\,B,\,C,\,D,\,E,\,H)$$
+>$$F = \{ AB\to CD,\,C\to E,\,AB\to E,\,ABC\to D \}$$
+>
+>**passo 1**
+>riduciamo le parti destre a singleton
+>$$F = \{ AB\to C,\,AB\to D,\,C\to E,\,AB\to E,\,ABC\to D \}$$
+>
+>**passo 2**
+>dobbiamo verificare se ci sono ridondanze nelle parti sinistre.
+>- cominciamo da $AB\to C$, e verifichiamo se $A\to C\in F^+$, ovvero se $C\in A^+_{F}$
+>	- non ci sono dipendenze che hanno a sinistra solo $A$, quindi $A^+_{F}=\{ A \}$.
+>- la stessa cosa vale per $AB\to D$ e $AB\to E$.
+>- proviam
