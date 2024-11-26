@@ -124,7 +124,7 @@ $$
 >	- $A^+_{F}\cap R_{1}\subseteq AB$
 >- poi aggiungo a $S$
 
-(anche qui il latex dell'algoritmo rubato a [flavio](https://github.com/thegeek-sys/Vault/blob/main/Class/Basi%20di%20dati/Decomposizioni%20che%20preservano%20le%20dipendenze.md), che si diverte a fare queste cose)
+<small>(anche qui il latex dell'algoritmo rubato a [flavio](https://github.com/thegeek-sys/Vault/blob/main/Class/Basi%20di%20dati/Decomposizioni%20che%20preservano%20le%20dipendenze.md), che si diverte a fare queste cose)</small>
 
 >[!note] dimostrazione
 >dimostrare che l'algoritmo funziona significa mostrare che, alla fine dell'algoritmo, Z conterrà tutta e sola la chiusura di X rispetto a G.
