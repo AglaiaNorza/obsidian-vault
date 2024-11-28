@@ -57,3 +57,7 @@ L'algoritmo di decomposizione permette di calcolare in tempo polinomiale una dec
 > 
 >Poiché per ogni dipendenza funzionale $X\to A\in F$ si ha $XA\in \rho$, si ha che questa dipendenza di $F$ sarà sicuramente in $G$. 
 >Quindi, $G\subseteq F$ e quindi $G^+\subseteq F^+$ (l'inclusione $G^+\subseteq F^+$ è banale, in quanto, per definizione, $G\subseteq F^+$)
+>
+>###### ogni schema di $\rho$ è in 3NF
+>abbiamo tre diversi casi che si possono presentare:
+>1) 
