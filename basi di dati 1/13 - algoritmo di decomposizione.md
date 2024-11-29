@@ -60,4 +60,18 @@ L'algoritmo di decomposizione permette di calcolare in tempo polinomiale una dec
 >
 >###### ogni schema di $\rho$ è in 3NF
 >abbiamo tre diversi casi che si possono presentare:
->1) 
+>1) se $S\in \rho$ - ogni attributo in $S$ fa parte della chiave (gli attributi in $S$ sono quelli non coinvolti nelle dipendenze, quindi dovranno necessariamente essere nella chiave) e $S$ è in 3NF 
+>2) $R$ viene da $R-A\to A$ - $R-A$ è *superchiave* per $R$ (determina $R-A$ per riflessività e $A$) - a noi interessano le chiavi e non le superchiavi, ma:
+>	- non ci può essere un sottoinsieme di $R-A$ che determini tutto lo schema, perché partiamo da una copertura minimale (per definizione non ci può essere $Y\subset R-A$ tale che $Y\to A$ - altrimenti avremmo ridotto $R-A$ a $Y$)
+>	- quindi, a qualunque $Y\subset A$ manca $\to A$ - $R-A$ *è chiave*
+>	- prendiamo $Y\to B$ una qualsiasi dipendenza in $F$ - abbiamo due casi:
+>		- $B=A$ --> $Y=R-A$ (è impossibile che ci siano due dipendenze con lo stesso dipendente visto che è una copertura minimale)
+>		- $B\neq A$ --> $B\in R-A$ quindi, visto che $R-A$ è chiave, $B$ è primo
+>3) ($XA\in \rho)$ non c'è un $R-A\to A$, ci sono diversi $X\to A$ - quindi, $X$ è superchiave per $\{ XA \}$, ed è anche chiave per il ragionamento di sopra.
+>	- prendiamo un qualunque $Y\to B\in F^+$:
+>		- $B=A$ --> $Y=X$ (per lo stesso ragionamento di prima)
+>		- $B\neq A$ --> $B\in X$  (è primo)
+
+>[!question] è sempre possibile avere una decomposizione con schemi in 3NF, che preservi F e abbia un join senza perdita?
+>sì! 
+>abbiamo visto un algoritmo che, in tempo polinomiale, fornisce questa decomposizione
