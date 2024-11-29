@@ -9,3 +9,8 @@
 > - [[8 - chiusura di un insieme di attributi]]
 > - [[9 - identificare le chiavi di uno schema]]
 > - [[10 - decomposizioni che preservano le dipendenze]]
+> - [[11 - decomposizioni che hanno un join senza perdita]]
+> - [[12 - copertura minimale di un insieme di dipendenze]]
+> - [[13 - algoritmo di decomposizione]]
+> - [[14 - organizzazione fisica dei dati e file heap]]
+> - [[15 - file hash]]
