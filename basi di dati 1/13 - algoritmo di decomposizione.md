@@ -72,6 +72,11 @@ L'algoritmo di decomposizione permette di calcolare in tempo polinomiale una dec
 >		- $B=A$ --> $Y=X$ (per lo stesso ragionamento di prima)
 >		- $B\neq A$ --> $B\in X$  (è primo)
 
+>[!info] (teorema) avere anche un join senza perdita
+>Per avere anche un join senza perdita, se nessun sottoschema contiene una chiave, basta aggiungere un sottoschema che ne contenga una (una qualsiasi).
+>- $\sigma=\rho\cup \{ K \}$ ha un join senza perdita
+
 >[!question] è sempre possibile avere una decomposizione con schemi in 3NF, che preservi F e abbia un join senza perdita?
 >sì! 
 >abbiamo visto un algoritmo che, in tempo polinomiale, fornisce questa decomposizione
+

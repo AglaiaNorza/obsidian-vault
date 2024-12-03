@@ -1,18 +1,19 @@
 {
-  "editor:insert-codeblock": [
-    {
-      "modifiers": [
-        "Ctrl"
-      ],
-      "key": "C"
-    }
-  ],
   "app:reload": [
     {
       "modifiers": [
         "Mod"
       ],
       "key": "R"
+    }
+  ],
+  "editor:insert-codeblock": [
+    {
+      "modifiers": [
+        "Mod",
+        "Shift"
+      ],
+      "key": "C"
     }
   ]
 }
