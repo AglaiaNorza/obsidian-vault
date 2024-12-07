@@ -193,11 +193,11 @@ Un insieme di blocchi viene *allocato alla creazione* di un file.
 - basta *una sola entry nella tabella* di allocazione dei file: blocco di partenza e lunghezza del file
 - ci sarà frammentazione esterna
 
-![[alloc-cont.png|center|350]]
+> allocazione contigua:
+> ![[alloc-cont.png|center|350]]
 
-compattazione:
- 
-![[comp-alloc-cont.png|center|350]]
+> compattazione:
+> ![[comp-alloc-cont.png|center|350]]
 
 #### allocazione concatenata
 Viene allocato **un blocco alla volta**, e ogni blocco ha un *puntatore al blocco successivo* (alla fine del blocco).
@@ -207,6 +207,7 @@ Viene allocato **un blocco alla volta**, e ogni blocco ha un *puntatore al blocc
 Funziona bene per accedere sequenzialmente, ma se serve un blocco che si trova a x blocchi da quello iniziale, serve scorrere tutta la lista.
 Per risolvere questo problema, si ricorre al **consolidamento** (analogo alla compattazione), per rendere contigui i blocchi di un file e migliorare l'accesso non sequenziale.
 
+> allocazione concatenata:
 > ![[alloc-concat.png|center|350]]
 
 > consolidamento:
