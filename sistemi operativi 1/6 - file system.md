@@ -196,6 +196,7 @@ Un insieme di blocchi viene *allocato alla creazione* di un file.
 ![[alloc-cont.png|center|350]]
 
 compattazione:
+ 
 ![[comp-alloc-cont.png|center|350]]
 
 #### allocazione concatenata
