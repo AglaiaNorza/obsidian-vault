@@ -80,12 +80,14 @@ I sistemi per la gestione di file forniscono servizi agli utenti e alle applicaz
 ## le directory
 Le directory sono dei file speciali. Esse contengono le informazioni sui file (attributi, posizione, proprietario) e forniscono il mapping tra nomi dei file e file stessi.
 
-Le **operazioni** che si effettuano su una directory sono:
-- ricerca
-- creazione file
-- cancellazione file
-- lista del contenuto
-- modifica della directory
+> [!summary] operazioni
+> Le **operazioni** che si effettuano su una directory sono:
+> - ricerca
+> - creazione file
+> - cancellazione file
+> - lista del contenuto
+> - modifica della directory
+
 ### elementi di una directory
 Gli **elementi** di una directory sono:
 1) *informazioni di base*:
@@ -146,11 +148,12 @@ Ci sono due problemi correlati:
 I file si allocano in "porzioni" o "blocchi":
 - l'unità minima è il settore del disco - ogni porzione o blocco è una *sequenza contigua di settori*
 
-Per quanto riguarda l'allocazione dei file, ci sono vari problemi da affrontare:
-- decidere tra **preallocazione** o **allocazione dinamica**
-- decidere tra porzioni di dimensione fissa (*blocchi*) o dinamica (*porzioni*)
-- decidere il **metodo di allocazione**: contiguo, concatenato o indicizzato.
-- gestire la **file allocation table**, che mantiene le informazioni su dove sono, su disco, le porzioni che compongono i file
+> [!bug] problemi da affrontare
+> Per quanto riguarda l'allocazione dei file, ci sono vari problemi da affrontare:
+> - decidere tra **preallocazione** o **allocazione dinamica**
+> - decidere tra porzioni di dimensione fissa (*blocchi*) o dinamica (*porzioni*)
+> - decidere il **metodo di allocazione**: contiguo, concatenato o indicizzato.
+> - gestire la **file allocation table**, che mantiene le informazioni su dove sono, su disco, le porzioni che compongono i file
 
 ### preallocazione vs allocazione dinamica
 Per poter attuare la **preallocazione**, occorre che la massima dimensione sia dichiarata a tempo di creazione: per alcune applicazioni, è facilmente stimabile, mentre per altre non lo è - in questi casi, utenti e applicazioni sovrastimeranno la dimensione per poter memorizzare le informazioni, risultando però in uno spreco di spazio su disco, a fronte di un modesto risparmio di computazione.
@@ -178,7 +181,6 @@ Alla fine, rimangono due possibilità valide:
 	- per lo spazio libero basta guardare una tabella di bit
 
 Con la *preallocazione* viene naturale utilizzare *porzioni grandi e di dimensione variabile*. Infatti, non sarebbe necessaria la tabella di allocazione - per ogni file basta l’inizio e la lunghezza (ogni file è un’unica porzione) e come per il partizionamento della RAM si parlerebbe di best fit, first fit, next fit (ma qui non c’è un vincitore, ci sono troppe variabili). È inefficiente per la gestione dello spazio libero: neccessita periodica compattazione (più oneroso che compattare la RAM).
-
 ### come allocare spazio per i file
 Ci sono tre modi per allocare spazio:
 1) **contiguo**
@@ -194,9 +196,11 @@ Un insieme di blocchi viene *allocato alla creazione* di un file.
 - ci sarà frammentazione esterna
 
 > allocazione contigua:
+>  
 > ![[alloc-cont.png|center|350]]
 
 > compattazione:
+>  
 > ![[comp-alloc-cont.png|center|350]]
 
 #### allocazione concatenata
@@ -208,9 +212,11 @@ Funziona bene per accedere sequenzialmente, ma se serve un blocco che si trova a
 Per risolvere questo problema, si ricorre al **consolidamento** (analogo alla compattazione), per rendere contigui i blocchi di un file e migliorare l'accesso non sequenziale.
 
 > allocazione concatenata:
+>  
 > ![[alloc-concat.png|center|350]]
 
 > consolidamento:
+>  
 > ![[alloc-conc-consolid.png|center|350]]
 
 #### allocazione indicizzata
@@ -224,7 +230,93 @@ L'allocazione può essere con:
 2) blocchi di *lunghezza variabile*: migliora la località (un eventuale consolidamento riduce la dimensione dell'indice)
 
 > allocazione indicizzata con porzioni di dimensione fissa:
+>  
 > ![[alloc-index-fixed.png|center|350]]
 
-> allocazione indicizzata con porzioni di lunghezza variabile
+> allocazione indicizzata con porzioni di lunghezza variabile:
+>  
 > ![[alloc-index-l-variabile.png|center|350]]
+
+### gestione dello spazio libero
+Per allocare i file, è necessario sapere dov'è lo spazio libero: non è realistico dover guardare la tabella di allocazione di tutti i file per determinare quali blocchi o porzioni sono liberi.
+Serve una **tabella di allocazione di disco**.
+- ogni volta che si alloca o cancella un file, lo spazio libero va aggiornato
+
+>[!tip] tip
+>È necessario che si sappia in RAM (almeno in minima parte) quanto e quale sia lo spazio libero sul disco.
+
+Ci sono vari modi per gestirla:
+- **tabelle di bit**
+- **porzioni libere concatenate**
+- **indicizzazione**
+- **lista dei blocchi liberi**
+#### tabelle di bit
+Le tabelle di bit sono **vettori con un bit per ogni blocco su disco**: (`0 = libero`, `1 = occupato`).
+- funziona con tutti gli schemi visti fino ad ora
+- minimizza lo spazio richiesto alla tabella di allocazione del disco
+
+Però, se il disco è quasi pieno, la ricerca di uno spazio libero può richiedere molto tempo:
+- il problema è risolvibile con tabelle riassuntive di porzioni della tabella di bit 
+
+#### porzioni libere concatenate
+Le porzioni libere possono essere concatenate le une alle altre con un *puntatore* e un *intero per la dimensione*.
+- quasi zero overhead di spazio
+- va bene per tutti gli schemi visti fino ad ora
+
+> [!warning] problemi
+> - se c'è frammentazione, le porzioni sono tutte da un blocco e la lista diventa lunga
+> - occorre leggere un blocco libero per sapere quale sia il prossimo (se se ne allocano molti, diventa time-consuming)
+> - è lungo cancellare file molto frammentati
+#### indicizzazione
+Tratta lo spazio libero come un file, e usa un indice come per i file.
+Per motivi di efficienza, l'indice gestisce le porzioni come se fossero di lunghezza variabile: c'è quindi una entry per ogni porzione libera nel disco.
+È un approccio che fornisce un supporto efficiente a tutti i metodi di allocazione visti fino ad ora.
+
+#### lista dei blocchi liberi
+Ad ogni blocco viene assegnato un numero sequenziale, e la lista di questi numeri viene memorizzata in una parte dedicata del disco.
+(sembra poco efficiente ma l'overhead di spazio non è grande)
+
+Per avere parti della lista in memoria principale, si può:
+- organizzare la lista come una pila (stack), e tenere soo la parte alta (`pop` per allocare spazio libero, `push` per deallocare spazio occupato)
+- quando si fanno troppi `pop` e si esaurisce lo spazio della porzione caricata, se ne prende una nuova parte dal disco.
+
+### volumi
+Un volume è essenzialmente un *"disco logico"*: è una **partizione di un disco**, che può essere trattata in maniera indipendente dal file system, oppure è formato da **più dischi messi insieme visti come un disco solo** ([[5 - gestione dell'IO#RAID|LVM]]).
+Sono quindi un insieme di settori in memoria secondaria che possono essere usati dal Sistema Operativo o dalle applicazioni, che li vedranno come formati da settori contigui anche se non lo sono.
+- un volume può essere l'unione di volumi più piccoli
+### dati e metadati
+>[!info] info
+>- dati --> **contenuto** dei file
+>- metadati --> lista di blocchi liberi, lista di blocchi all'interno dei file, data di ultima modifica ecc.
+
+I metadati, come i dati, si devono trovare su disco (perché devono essere persistenti), ma, per efficienza, vengono tenuti anche in memoria principale.
+Però, mantenere consistenti i metadati in memoria principale e su disco è inefficiente - si fa quindi di tanto in tanto, quando il disco è poco usato, e con più aggiornamenti insieme.
+
+Questa tecnica si chiama **journaling**, e consiste nel tenere traccia di cosa è stato modificato in una zona del disco dedicata (*log*), per poi scrivere tutto insieme in un secondo momento.
+- in caso di reboot dopo un crash, basta leggere il log.
+
+> [!warning] eventi imprevisti
+> Se il computer viene spento all’improvviso senza una procedura di chiusura (per esempio per mancanza di corrente), o se il disco viene rimosso senza dare un appropriato comando (`unmount`), ci potrebbero essere problemi.
+> Per risolverli, basta scrivere *un bit all’inizio del disco*, per indicare se il sistema è stato spendo correttamente. Al reboot, se il bit è `0`, occorre eseguire un programma di ripristino del disco, operazione assai complessa senza il journaling - con il journaling, invece, basta consultare il log.
+### journaling
+Per il journaling, è necessaria una zona dedicata del disco in cui scrivere le operazioni, prima di farne il commit nel file system.
+- generalmente, viene implementato come log circolare
+- evita di avere file system corrotti:
+	- se la scrittura nel journal è completa, in caso di crash è possibile recuperare l'errore
+	- se invece c'è un crash durante la scrittura nel journal, il file system rimane integro
+
+#### recupero dati 
+Se al reboot il bit di shutdown è `0`:
+1) si confronta il journal allo stato corrente del file system
+2) si correggono le inconsistenze nel file system basandosi sulle operazioni salvate nel journal
+
+Ci sono due tipi di journaling:
+- **fisico** --> copia nel journal tutti i blocchi che dovranno essere scritti nel file system, inclusi i metadati
+	- nel caso di crash, basta copiare il contenuto del journal nel file system al boot successivo
+- **logico** --> copia nel journal soltanto i metadati delle operazioni effettuate
+	- nel caso di crash, si copiano i metadati dal journal al file system, ma si rischia la corruzione di dati (per esempio un append modifica la lunghezza, ma i contenuti aggiunti sono andati persi perché non salvati nel journal)
+
+#### alternative al journaling
+- **Soft Updates File Systems** → Le scritture su file system sono riordinate in modo da non avere mai inconsistenze, o meglio, consentono solo alcuni tipi di inconsistenze che non portano a perdita di dati (*storage leaks*)
+- **Log-Structured File Systems** → L’intero file system è strutturato come un buffer circolare, detto log: dati e metadati sono scritti in modo sequenziale, sempre alla fine del log e ci possono essere diverse versioni dello stesso file, corrispondenti a diversi momenti.
+- **Copy-on-Write File Systems** → Evitano sovrascritture dei contenuti dei file; scrivono nuovi contenuti in blocchi vuoti, poi aggiornano i metadati per puntare ad i nuovi contenuti.
