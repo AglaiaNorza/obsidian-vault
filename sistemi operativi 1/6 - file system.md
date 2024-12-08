@@ -320,3 +320,176 @@ Ci sono due tipi di journaling:
 - **Soft Updates File Systems** → Le scritture su file system sono riordinate in modo da non avere mai inconsistenze, o meglio, consentono solo alcuni tipi di inconsistenze che non portano a perdita di dati (*storage leaks*)
 - **Log-Structured File Systems** → L’intero file system è strutturato come un buffer circolare, detto log: dati e metadati sono scritti in modo sequenziale, sempre alla fine del log e ci possono essere diverse versioni dello stesso file, corrispondenti a diversi momenti.
 - **Copy-on-Write File Systems** → Evitano sovrascritture dei contenuti dei file; scrivono nuovi contenuti in blocchi vuoti, poi aggiornano i metadati per puntare ad i nuovi contenuti.
+## gestione file in UNIX
+In UNIX, esistono sei tipi di file:
+- normale
+- directory
+- speciale (mappano su nomi di file i dispositivi di I/O)
+- named pipe (per far comunicare i processi)
+- hard link (collegamenti, nome di file alternativo)
+- symlink (il contenuto è il nome del file a cui si riferisce)
+### inode
+UNIX utilizza l'inode - sta per "index note" -, ispirato al metodo di [[6 - file system#allocazione indicizzata|allocazione indicizzata]] con dimensione fissa dei blocchi. L'inode è una struttura dati che contiene le informazioni essenziali per un dato file.
+
+> [!tip] tip
+> Un inode potrebbe essere associato a più nomi di file (attraverso hard link), ma un inode attivo è associato ad un solo file, e ogni file è controllato da un solo inode.
+
+Il Sistema Operativo mantiene una **tabella** per tutti gli inode corrispondenti a **file aperti** in memoria principale, mentre tutti gli altri inode solo in una zona di disco dedicata (*i-list*).
+### inode in freeBSD
+<small>(freebsd è più unix-like di linux)</small>
+All'interno di un inode, sono contenuti:
+- tipo e modo di accesso del file
+- identificatore dell'utente proprietario e del gruppo a cui appartiene
+- tempo di creazione e di ultimo accesso (lettura o scrittura)
+- flag utente e flag per il kernel
+- dimensione delle informazioni aggiuntive
+- altri attributi (controllo di accesso e altro)
+- dimensione
+- numero di blocchi, o numero di file
+- dimensione dei blocchi
+- sequenze di puntatori ai blocchi
+
+![[inode-freebsd.png|center|400]]
+
+Per file piccoli (di grandezza massima di $13\cdot \text{dimensione di un blocco}$), i dati sono puntati direttamente da `direct` (quindi puntano direttamente ai blocchi che contengono i dati). I puntatori indiretti, invece, puntano ai cosiddetti *"blocchi di indirizzamento”*, in cui sono contenuti gli indirizzi dei blocchi in cui si trovano i datii. Questi vengono utilizzati sono nel momento in cui i puntatori diretti non sono sufficienti.
+#### allocazione di file
+L'allocazione di file è dinamica e viene fatta a blocchi (anche non contigui). L'indicizzazione tiene traccia dei blocchi dei file, e parte dell'indice è memorizzata nell'inode (che ha alcuni puntatori diretti e 3 indiretti).
+#### inode e directory
+Le directory sono file che contengono una lista di coppie nome file-puntatore ad inode.
+Alcuni di questi file possono essere a loro volta directory (struttura gerarchica).
+- una directory può essere modificata solo dal sistema operativo, ma letta da ogni utente.
+#### accesso ai file
+Per ogni file, ci sono tre terne di permessi:
+- lettura, scrittura, esecuzione
+- per il proprietario, per il suo gruppo, per tutti gli altri
+
+![[permessi-file.png|center|200]]
+
+#### gestione file condivisi
+Per gestire file condivisi, fare copie è inutilmente costoso - si usano quindi i symlink e gli hardlink !
+Per i symlink, esistes un solo descrittore del file originale (es. i-node), e i sumlink contengono il cammino completo sul file system verso il file.
+- possono esistere symlink a file non più esistenti
+
+Gli hardlink sono invece puntatori diretti al descrittore del file originale (es. i-node). Il file condiviso non può essere cancellato finché esiste un link remoto ad esso.
+- l'i-node contiene un contatore dei file che lo referenziano
+###  UNIX: regioni del volume
+![[UNIX-volume.png|center|400]]
+
+(manca i-node list)
+- **boot sector** --> simile al blocco di boot per FAT (vedi [[6 - file system#FAT|sotto]]) - contiene informazioni e dati necessari per il bootstrap
+- **superblock** --> contiene informazioni sui metadati del filesystem, e ce ne sono copie ridondanti (in gruppi di blocchi sparsi del fs, tranne la prima copia, che è sempre in una parte prefissata) in caso di corruzione
+- **i-list** --> lista numerata di i-node (un i-node per ogni file salvato nel sistema). Ciascun i-node nella lista punta ai blocchi dei file nella sezione data del volume
+### kernel e i-node
+Il Kernel UNIX usa due strutture di controllo separate per gestire file aperti e descrittori i-node:
+- puntatore a descrittori dei file attualmente in uso, salvato nel PCB
+- una tabella globale di descrittori di file aperti, mantenuta in un'apposita struttura dati
+
+![[kernel-inode.png|center|300]]
+### linux
+Linux, nativamente, supporta:
+- ext2 --> dai file system Unix originari
+- ext3 --> ext2 + journaling
+- ext4 --> ext3 in grado di memorizzare singoli file >2TB e file system >16TB
+
+Ha inoltre pieno supporto per gli i-node, memorizzati nella parte iniziale del file system.
+Permette anche di leggere altri file system, come quelli di Windows.
+## gestione dei file su windows
+Su Windows esistono due tipi di file system:
+- FAT - file system vecchio (da MS-DOS) --> allocazione concatenata con blocchi (cluster) di dimensione fissa
+- NTFS - file system nuovo --> allocazione con bitmap, con blocchi (cluster) di dimensione fissa
+### FAT
+- sta per File Allocation Table
+
+È una tabella ordinata di puntatori, ed è ancora usata per le chiavette USB. Essa stessa può occupare molto spazio.
+Usa un puntatore (riga nella tabella) per ogni cluster del disco.
+- ogni cluster ha dimensione variabile (può cambiare da partizone a partizione, ma resta fissa all'interno di una partizione) ed è costituito da settori di disco contigui - la tabella cresce quindi con la grandezza della partizione.
+- i puntatori sono valori di 12, 16 o 32 bit.
+
+La parte della FAT relativa ai file aperti deve essere sempre mantenuta interamente in memoria principale. Infatti, consente di identificare i blocchi di un file e accedervi seguendo i collegamenti nella FAT (un file è una catena di indici - è una via di mezzo tra allocazione concatenata e indicizzata).
+#### regioni del volume 
+![[FAT-regioni.png|center|400]]
+
+##### boot sector
+contiene informazioni necessarie per l'accesso al volume:
+- tipo e puntatore alle altre sezioni del volume
+- bootloader del sistema operativo in BIOS/MBR
+##### regione FAT
+contiene due copie della file allocation table, sincronizzate ad ogni scrittura su disco --> ridondanza utile in caso di corruzione
+- mappa il contenuto della regione dati, indicando a quali directory/file i diversi cluster appartengono
+##### regione root directory
+E’ una *directory table* che contiene tutti i file entry per la directory root di sistema (che ha dimensione fissa e limitata in FAT12 e FAT16). Contiene quindi tutti i metadati dei file (nome, timestamp, dimensione, ecc.)
+In FAT32 è inclusa nella regione dati, insieme a file e directory normali, e non ha limitazioni sulla dimensione
+##### regione dati
+E’ la regione del volume in cui sono effettivamente contenuti i dati dei file e directory.
+Le directory, chiaramente, seguono la struttura FAT vista prima, i files sono semplicemente i dati contenuti nei vari cluster.
+#### funzionamento
+Data la tabella FAT di puntatori, il puntatore i-esimo:
+- se è `0`, indica che l'i-esimo cluster del disco è libero
+- se è tutti `1`, vuol dire che è l'ultimo blocco del file
+- else, indica il cluster dove trovare il prossimo pezzo del file (oltre che la prossima entry della FAT per questo file)
+
+![[FAT-funzionamento.png|center|450]]
+
+#### limitazioni
+- supporta file di massimo 4GB (32bit nel campo dimensione file delle directory)
+- non implementa journaling
+- non consente alcun meccanismo di controllo di accesso ai file/directory
+- ha un limite alla dimensione delle partizioni: 2TB
+
+### NTFS
+- sta per New Technology File System
+- usa UNICODE per l'encoding dei nomi dei file (max 255 caratteri).
+- i file sono definiti da un insieme di attributi (rappresentati come byte stream)
+- supporta hard e soft link
+- implementa journaling
+
+#### regioni del volume
+![[NTFS-formato.png|center|400]]
+
+##### boot sector
+Basata sull'equivalente FAT, ma con alcuni campi in posizioni diverse.
+##### MFT: Master File Table
+È la principale struttura dati del file system (ed è unica per ciascun volume, differentemente dal FAT).
+È implementata *come un file*: è composta da una sequenza lineare di record da 1 a 4KB. 
+- ogni record descrive un file, identificato da un puntatore da 48bit (i rimanenti 16 bit sono usati come numero di sequenza)
+###### record
+Ogni record contiene una lista attributo-valore (l'attributo è un intero, e il valore è una sequenza di byte).
+- anche il contenuto di un file è un attributo (`$DATA`)
+
+Il valore dell'attributo può essere incluso direttamente nel record (**attributo residente**) o essere un puntatore ad un record remoto (**attributo non residente**).
+
+> [!summary] record
+> I primi 27 record sono riservati per i metadati del file system:
+> - record 0 --> descrive l’MFT stesso (tutti i file nel volume)
+> - record 1 --> contiene una copia non residente dei primi record dell’MFT  
+> - record 2 --> contiene le informazioni di journaling (metadata-only)
+> - record 3 --> contiene le informazioni sul volume (id, label, versione FS, ecc.)
+> - record 4 --> tabella degli attributi usati nell’MFT
+> - record 5 --> directory principale del volume - contiene i puntatori ai record della MFT che rappresentano file e directory nella root del volume
+> - record 6 --> definisce la lista dei blocchi liberi usando una *bitmap*
+> 
+> Dal record 28 in poi ci sono i descrittori dei file normali.
+> 
+> ![[MFT-records.png|center|450]]
+###### files
+la struttura NTFS cerca sempre di assegnare ad un file sequenze contigue di blocchi
+- per i file piccoli, i dati sono salvati direttamente nell'MFT, mentre per i file grandi il valore dell'attributo indica la sequenza ordinata dei blocchi sul disco dove risiede il file
+###### record base
+Per ogni file, esiste un record base nell'MFT.
+- le zone non usate da un file sono settate a `0`
+- il sistema mantiene una lista dei blocchi a zero
+
+![[MFT-record-base.png|center|400]]
+
+In questo esempio, il file è memorizzato in 9 cluster su 3 diverse porzioni di memoria contigue. Si nota come un descrittore (record) singolo sia sufficiente per l’intera run (file).
+
+Questa rappresentazione consente di descrivere file di dimensione potenzialmente illimitata: dipende tutto dalla contiguità dei blocchi.
+###### record con estensioni
+File di larghe dimensioni possono necessitare di più record.
+NTFS usa una tecnica simile agli i-node:
+- il record base è un puntatore a N record secondari
+- eventuale spazio rimanente nel record base contiene le prime sequenze del file
+
+Se i record estesi non rientrano in MFT per mancanza di spazio, vengono trattati come attributo non residente e quindi salvati in un file dedicato, con un apposito record nell'MFT.
+
+![[MFT-ex.png|center|400]]
