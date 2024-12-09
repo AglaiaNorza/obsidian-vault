@@ -459,4 +459,73 @@ La situazione è questa:
 
 Il problema è:
 - assicurare che i produttori non inseriscano dati quando il buffer è pieno
-- assicurare che il
+- assicurare che il consumatore non prenda dati quando il buffer è vuoto
+- *mutua esclusione* sull'intero buffer
+	- in realtà sarebbe possibile permettere a consumatori e produttori di agire in contemporanea, ma non considereremo questo caso
+#### implementazioni
+Per ora, facciamo finta che il buffer sia infinito: il produttore non ha motivo di fermarsi.
+```C
+/* produttore */
+while (true) {
+	/* produce item v */
+	b[in] = v;
+	in++;
+}
+```
+
+(`b` è il buffer)
+
+```C
+/* consumatore */
+while (true) {
+	while (in <= out) /* do nothing */;
+	w = b[out];
+	out++;
+	/* consume item w */
+}
+```
+
+> [!tip] buffer
+> ![[prodcons-buffer.png|center|250]]
+
+##### soluzione sbagliata
+```C
+/* program producerconsumer SBAGLIATO */
+int n; // numero elementi buffer
+binary_semaphore s = 1, delay = 0;
+
+void producer() {
+	while (true) {
+		produce();
+		semWaitB(s);
+		append();
+		n++;
+		if(n == 1) semSignalB(delay);
+		semSignalB(s);
+	}
+}
+
+void consumer() {
+	semWaitB(delay);
+	while (true) {
+		semWaitB(s);
+		take();
+		n--;
+		semSignalB(s);
+		consume();
+		if(n == 0) semWaitB(delay);
+	}
+}
+
+void main() {
+	n = 0;
+	parbegin(producer, consumer);
+}
+```
+
+>[!example] esempio di errore della soluzione sopra
+> ![[prod-cons-sbagliato.png|center|350]]
+> Si creano problemi nel caso in cui venga mandato in esecuzione il produttore prima che il consumatore faccia il `consume()`.
+> In questo caso infatti, se lo scheduler mandasse in esecuzione due volte il consumer ci si ritroverebbe in una situazione in cui `delay` è `1` (si potrebbe iniziare a consumare) ma `n` è `0` e nonostante ciò è permessa un’operazione di `take()` (`n` arriva addirittura ad essere `-1`)
+> Sostanzialmente il problema è stato che il non è stata eseguita la prima `semWaitB(delay)` dopo il `consume()` in quanto è stato modificato `n`
+> (il consumer viene eseguito per abbastanza tempo da leggere 2 volte di fila il buffer, e finisce a leggerlo da vuoto)
