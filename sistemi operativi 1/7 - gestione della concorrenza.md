@@ -111,3 +111,70 @@ Per risolvere il problema della mutua esclusione, basta che chiamino una syscall
 Tuttavia, non è sempre possibile: se occorre accedere ad una risorsa che potrebbe essere condivisa con altri processi, bisogna fare una richiesta esplicita di "bloccaggio" - se avviene, si ricade nel caso di processi cooperanti.
 
 ![[mutua-escl-es.png|center|500]]
+
+##### per i processi cooperanti
+Questi processi devono essere scritti pensando già alla cooperazione, quindi scrivendo opportune syscall come `entercritical` ed `exitcritical`.
+### deadlock e starvation
+>[!example] esempio di deadlock
+>- A richiede accesso prima alla stampante e poi al monitor
+>- B prima al monitor e poi alla stampante
+>- capita che lo scheduler faccia andare B in mezzo alle due richieste di A: B prende il monitor, A deve aspettare
+>- le successive richieste (A monitor e B stampante) non possono essere soddisfatte (perché A ha la stampante, e B il monitor)
+>- A e B restano bloccati per sempre, eppure la mutua esclusione non è stata violata
+
+>[!example] esempio di starvation
+>- A chiede accesso prima alla stampante
+>- anche B
+>- il Sistema Operativo dà la stampante ad A
+>- A rilascia la stampante e lo scheduler gli permette di richiederla nuovamente (A rimane in esecuzione)
+>- il Sistema Operativo dà di nuovo la stampante ad A (e così via per sempre...)
+>- B muore di starvation (con tanti processi è probabile che succeda)
+### requisiti per la mutua esclusione
+Qualsiasi meccanismo si usi per offrire la mutua esclusione deve soddisfare i seguenti requisiti:
+- solo un processo alla volta può essere nella sezione critica per una risorsa
+- niente deadlock né starvation
+- nessuna assunzione sullo scheduling o sul numero di processi
+- se nessun processo usa la sezione critica, un processo deve entrarci subito (senza farlo attendere)
+- un processo che si trova nella sua sezione non-critica non deve subire interferenze da altri processi (in particolare non può essere bloccato)
+- un processo che si trova nella sua sezione critica ne deve prima o poi uscire
+	- ci vuole cooperazione: per esempio, se è stato pensato un protocollo (es `entercritical`) per entrare nella sezione critica, non si può non rispettarlo
+### mutua esclusione for dummies
+Ci sono n processi che eseguono la funzione `P`, e tutti possono scrivere nella variabile condivisa `bolt`.
+```C
+int bolt = 0;
+void P(int i) {
+	while (true) {
+		bolt = 1;
+		while (bolt == 1) /* do nothing */;
+		/* critical section */;
+		bolt = 0;
+		/* remainder */
+	}
+}
+
+// n processi iniziano in contemporanea P()
+parbegin(P(0), P(1), ..., P(n))
+```
+In questo esempio (<small>un processo mette `bolt` a `1` quando vuole entrare nella sezione critica, e aspetta finché non viene messo a `0` per entrarci</small>), due processi in interleaving perfetto vanno in deadlock - rimangono bloccati nel while, nessun singolo processo entrerà mai nella sezione critica (nonostante abbiamo rispettato la mutua esclusione).
+
+La **soluzione**:
+basta scambiare il momento in cui si assegna `bolt` 
+```c
+int bolt = 0;
+void P(int i) {
+	while (true) {
+		while (bolt == 1) /* do nothing */;
+		bolt = 1;
+		/* critical section */;
+		bolt = 0;
+		/* remainder */
+	}
+}
+```
+Per alcuni tipi di scheduler, viene rispettata la mutua esclusione (se un solo processo entra nella critical section e un altro viene mandato in esecuzione dopo che il primo ha settato `bolt=1`) - ma non funziona per tutti i tipi di scheduling ! per esempio, basta che lo scheduler faccia eseguire P1 e P2 in interleaving, e si viola la mutua esclusione:
+- se P2 viene mandato in esecuzione dopo che P1 è uscito dal while, ma prima di `bolt=1`, P1 e P2 entreranno entrambi nella sezione critica.
+
+>[!warning] lo scheduler interrompe a livello di istruzione macchina
+>Dobbiamo pensare il codice a livello assembler. un ciclo while (come nell’esempio sopra) non viene eseguito “tutto insieme” solo perchè è in una sola riga. Solo le singole istruzioni assembler vegnono sempre completate, e tra una istruzione assembler e la prossima il dispatcher può togliere la CPU al processo.
+><small>(quindi, per esempio, lo scheduler potrebbe togliere la CPU anche a metà di `while(bolt == 1)`, ovvero al caricare il valore di `bolt` (0 al momento) in un registro - quindi, all'arrivo di P2, `bolt==0`)</small>
+
