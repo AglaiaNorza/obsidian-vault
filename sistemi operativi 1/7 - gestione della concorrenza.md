@@ -406,4 +406,57 @@ void semSignalB(binary_semaphore a) {
 > 
 
 ### semafori deboli e forti
+In base alla politica usata per prendere un processo dalla coda dei processi, si parla di semafori deboli o semafori forti.
+- **strong semaphore**:  politica FIFO
+- **weak semaphore**: politica non specificata
+
+Con i semafori forti, se usati bene, si può evitare la starvation. Con quelli deboli no.
+
+>[!example] strong semaphore
+>![[strong-semaphore.png|center|400]]
+>
+>(s è `s.count`)
+>in (1), A è il processo in esecuzione. viene chiamata `semWait` su A, e decrementato `s.count` e visto che `s.count-1 >= 0`, A non diventa `BLOCKED`, ma va solo in `READY`
+>lo stesso accade in (2), che però manda B in `BLOCKED` in (3), viene chiamata `semSignal` (si nota come `s.count` viene incrementato), e viene mandato da `BLOCKED` a `READY`
+>
+>![[strong-semaphore2.png|center|400]]
+>in (5) viene eseguito C, e verrà chiamata `semWait`, e ciò succederà anche quando andranno in esecuzione A e B. (saltiamo quindi alcuni passaggi da (5) a (6))...
+>in (6) D è in esecuzione, e gli altri 3 processi sono `BLOCKED`. viene chiamata `semSignal` e viene mandato C da `BLOCKED` a `READY`( un weak semaphore avrebbe potuto sbloccare anche A o B)
+
+### mutua esclusione con i semafori
+```C
+/* program mutualexclusion */
+const int n = /* number of processes */;
+semaphore s = 1;
+
+void P(int i) {
+	while (true) {
+		semWait(s);
+		/* critical section */
+		semSignal(s);
+		/* remainder */
+	}
+}
+
+void main() {
+	parbegin(P(1), P(2), ..., P(n));
+}
+```
+
+Se due processi sono eseguiti concorrentemente (P1, P2), dato che `semWait` atomica, solo uno dei due la eseguirà nella sua interezza per primo (in questo caso diciamo P1).
+P1 non verrà messo in blocked, mentre P2, quando eseguirà `semWait`, sì (perché `s.count == 1`), e in questo modo non ci sarà busy-waiting.
+Quando P1 avrà finito la sua sezione critica, chiamerà `semSignal`, che riporterà P2 da `BLOCKED` a `READY`, e quando P2 verrà eseguito, finirà la sua chiamata a `semWait` ed eseguirà la sua sezione critica.
+>[!warning] è fondamenta che il semaforo sia inzializzato con count = 1
+
+<small>graficamente:</small>
  
+![[m-e-semafori.png|center|400]]
+### problema del producer/consumer
+La situazione è questa:
+- uno o più processi produttori creano dati e li mettono in un buffer
+- un consumatore prende dati dal buffer uno alla volta
+- al buffer può accedere un solo processo, che sia produttore o consumatore
+
+Il problema è:
+- assicurare che i produttori non inseriscano dati quando il buffer è pieno
+- assicurare che il
