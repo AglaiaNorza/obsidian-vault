@@ -101,3 +101,13 @@ I problemi di progetto e gestione legati alla concorrenza, per il Sistema Operat
 | Competizione | Nessuna (ogni processo pensa di essere solo)                                       | Risultato di un processo è indipendente dagli altri. Tempo di esecuzione di un processo dipende dagli altri                   | Mutua esclusione; deadlock; starvation                    |
 | Cooperazione | Memoria condivisa (i processi sanno che c’è qualche altro processo)                | Risultato di un processo dipende dall’informazione data da altri. Tempo di esecuzione di un processo dipende dagli altri      | Mutua esclusione; deadlock; starvation; coerenza dei dati |
 | Cooperazione | Primitive di comunicazione (i processi sanno anche i PID di alcuni altri processi) | Risultato di un processo è dipendente dall’informazione data da altri. Tempo di esecuzione di un processo dipende dagli altri | Deadlock; starvation                                      |
+### processi e competizione per le risorse
+I problemi principali per i processi in competizione (prima riga della tabella) sono tre:
+1) necessità di mutua esclusione (sezioni critiche)
+2) deadlock
+3) starvation
+#### mutua esclusione
+Per risolvere il problema della mutua esclusione, basta che chiamino una syscall che entri nella sezione critica, faccia l'operazione ed esca.
+Tuttavia, non è sempre possibile: se occorre accedere ad una risorsa che potrebbe essere condivisa con altri processi, bisogna fare una richiesta esplicita di "bloccaggio" - se avviene, si ricade nel caso di processi cooperanti.
+
+![[mutua-escl-es.png|center|500]]
