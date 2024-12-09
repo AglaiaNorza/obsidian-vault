@@ -159,7 +159,7 @@ In questo esempio (<small>un processo mette `bolt` a `1` quando vuole entrare ne
 
 La **soluzione**:
 basta scambiare il momento in cui si assegna `bolt` 
-```c
+```C
 int bolt = 0;
 void P(int i) {
 	while (true) {
@@ -177,4 +177,161 @@ Per alcuni tipi di scheduler, viene rispettata la mutua esclusione (se un solo p
 >[!warning] lo scheduler interrompe a livello di istruzione macchina
 >Dobbiamo pensare il codice a livello assembler. un ciclo while (come nell’esempio sopra) non viene eseguito “tutto insieme” solo perchè è in una sola riga. Solo le singole istruzioni assembler vegnono sempre completate, e tra una istruzione assembler e la prossima il dispatcher può togliere la CPU al processo.
 ><small>(quindi, per esempio, lo scheduler potrebbe togliere la CPU anche a metà di `while(bolt == 1)`, ovvero al caricare il valore di `bolt` (0 al momento) in un registro - quindi, all'arrivo di P2, `bolt==0`)</small>
+## mutua esclusione: supporto hardware
+### disabilitazione delle interruzioni
+```C
+while (true) {
+	/* prima della sezione critica */;
+	disabilita_interrupt();
+	/* sezione critica */;
+	riabilita_interrupt();
+	/* rimanente */;
+}
+```
+Così, si toglie allo scheduler la possibilità di interrompere il processo che sta per entrare nella sezione critica, garantendo la mutua esclusione.
+
+![[instr-cycle-interr.png|center|450]]
+
+Questa strategia ha però dei *problemi*:
+- se i processi abusano della disabilitazione, cala la multiprogrammazione e quindi le prestazioni del Sistema Operativo peggiorano
+- funziona solo su sistemi con un processore solo - la disabillitazione funziona sul singolo processore, e non ha effetti su un processo eseguito su un altro processore
+### istruzioni macchina speciali
+Si possono utilizzare delle istruzioni macchina speciali, come `compare_and_swap` e `exchange`, entrambe *atomiche* (l'hardware garantisce che un solo processo per volta possa eseguire una chiamata a queste istruzioni, anche se ci sono più processori)
+#### `compare_and_swap`
+```C
+int compare_and_swap(int word, int testval, int newval){
+	int oldval;
+	oldval = word; /*C "finto"*/
+	if (word == testval) word = newval;
+	return oldval;
+}
+```
+(compara il vecchio valore con un valore "test" e, se sono uguali, setta `word` al nuovo valore. ritorna il vecchio valore)
+
+> [!error] mutua esclusione
+> ```C
+> /* program mutualexclusion */
+> const int n = /* number of processes */
+> int bolt;
+> void P(int i) {
+> 	while (true) {
+> 		while (compare_and_swap(bolt, 0, 1) == 1) /* do nothing */
+> 		/* critical section */
+> 		bolt = 0;
+> 		/* remainder */
+> 	}
+> }
+> 
+> void main() {
+> 	bolt = 0;
+> 	parbegin(P(1), P(2), ..., P(n));
+> }
+> ```
+> in questo caso, `compare_and_swap` controlla se `bolt == 0` - se è così, lo assegna ad `1`, e ritorna `0` --> si esce dal while, e il processo può entrare nella sezione critica
+> - se un altro processo esegue `P`, `bolt` sarà `1`, quindi potrà uscire dal while solo quando il primo processo sarà uscito dalla sezione critica (e avrà quindi settato `bolt=0`)
+> 
+>>[!warning] attenzione
+>>potrebbe però succedere che dopo aver impostato `bolt` a `0`, il primo processo vada avanti e ritorni nella sezione critica, lasciando il secondo processo in attesa (starvation)
+
+#### `exchange`
+```C
+void exchange (int register, int memory){
+	int temp;
+	temp = memory;
+	memory = register;
+	register = temp;
+}
+```
+(swappa due valori di base)
+> [!error] mutua esclusione
+> ```C
+> /* program mutualexclusion */
+> const int n = /* number of processes */;
+> int bolt;
+> void P(int i) {
+> 	while (true) {
+> 		int keyi = 1;
+> 		do exchange(keyi, bolt)
+> 		while (keyi != 0);
+> 		/* critical section */
+> 		bolt = 0;
+> 		/* remainder */
+> 	}
+> }
+> 
+> void main() {
+> 	bolt = 0;
+> 	parbegin(P(1), P(2), ..., P(n));
+> }
+> ```
+> in questo caso, il primo processo ad entrare scambierà `keyi` con `0`, uscirà dal while e entrerà nella sezione critica - un secondo processo continuerà invece a cercare di scambiare `keyi` (variabile locale, quindi ne esiste una per ogni processo - ed inizializzata a `0`) e `bolt`, ma questi saranno entrambi 1 fino a quando il primo processo non uscirà dalla sezione critica
+> 
+>>[!warning] attenzione
+>>è importante che l'assegnazione `int keyi = 1` si trovi all'interno del while - altrimenti, se un processo facesse due iterazioni, non setterebbe `bolt` a `1` e altri processi potrebbero entrare, dando luogo ad una race condition
+
+#### vantaggi e svantaggi
+**vantaggi**:
+- applicabili a qualsiasi numero di processi, sia con uno che con più processori
+- semplici e quindi facili da verificare
+- possono essere usate per gestire sezioni critiche multiple
+
+**svantaggi**:
+- basate sul *busy-waiting* (eseguono un ciclo all'infinito fino a quando non hanno il via libera per andare avanti - stanno solo aspettando - risultando in uno spreco di computazione) 
+- è possibile la starvation (come visto sopra)
+- è possibile il deadlock se a questi meccanismi viene associata la priorità fissa (se un processo A a bassa priorità viene interrotto mentre è nella sezione critica e un processo B a priorità alta entra nel busy waiting, B non può essere interrotto a favore di A a causa della priorità, e A non può andare avanti perché solo B, finendo la sua sezione critica, può farlo uscire dal busy-waiting)
+## semafori
+I semafori sono delle particolari strutture dati (con al loro interno valori interi) usate dai processi per scambiarsi segnali, forniti di tre *operazioni atomiche*:
+- `initialize`
+- `decrement/semiWait` --> può mettere il processo in `BLOCKED` - la CPU non viene sprecata come con il busy-waiting
+- `increment/semiSignal` --> può portare un processo da `BLOCKED` a `READY`
+
+(sono syscall, quindi vengono eseguite in kernel mode e possono agire direttamente sui processi)
+
+**semafori**:
+```C
+struct semaphore {
+	int count;
+	queueType queue;
+};
+void semWait(semaphore a) {
+	s.count--;
+	if (s.count < 0) {
+		/* place this process in s.queue */;
+		/* block this process */
+	}
+}
+void semSignal(semaphore a) {
+	s.count++;
+	if (s.count <= 0) {
+		/* remove a process P from s.queue */;
+		/* place process P on ready list */;
+	}
+}
+```
+- il valore assoluto di `count`, se esso è negativo, corrisponde al numero di processi in `queue`
+
+**semafori binari**:
+```C
+struct binary_semaphore {
+	enum {zero, one} value;
+	queueType queue;
+};
+void semWait(binary_semaphore a) {
+	if (s.value == one)
+		s.value = zero;
+	else {
+		/* place this process in s.queue */;
+		/* block this process */;
+	}
+}
+void semSignalB(binary_semaphore a) {
+	if (s.queue is empty())
+		s.value = one;
+	else {
+		/* remove a process P from s.queue */;
+		/* place process P on ready list */;
+	}
+}
+```
+- la particolarità è che, se `value == 1`, non ci sono processi in queue
 
