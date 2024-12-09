@@ -282,8 +282,8 @@ void exchange (int register, int memory){
 ## semafori
 I semafori sono delle particolari strutture dati (con al loro interno valori interi) usate dai processi per scambiarsi segnali, forniti di tre *operazioni atomiche*:
 - `initialize`
-- `decrement/semiWait` --> può mettere il processo in `BLOCKED` - la CPU non viene sprecata come con il busy-waiting
-- `increment/semiSignal` --> può portare un processo da `BLOCKED` a `READY`
+- `decrement/semWait` --> può mettere il processo in `BLOCKED` - la CPU non viene sprecata come con il busy-waiting
+- `increment/semSignal` --> può portare un processo da `BLOCKED` a `READY`
 
 (sono syscall, quindi vengono eseguite in kernel mode e possono agire direttamente sui processi)
 
@@ -335,3 +335,75 @@ void semSignalB(binary_semaphore a) {
 ```
 - la particolarità è che, se `value == 1`, non ci sono processi in queue
 
+>[!important] il semaforo è uno, non uno a processo
+
+> [!note] semafori con compare_and_swap 
+> ```C
+> semWait(s){
+> 	while(compare_and_swap(s.flag, 0, 1) == 1) /* do nothing */;
+> 	s.count--;
+> 	if (s.count < 0){
+> 		/* place this process in s.queue */;
+> 		/* block this process (must also set s.flag to 0) */;
+> 	}
+> 	else s.flag = 0;
+> }
+> 
+> semSignal(s){
+> 	while(compare_and_swap(s.flag, 0, 1) == 1) /* do nothing */;
+> 	s.count++;
+> 	if (s.count <= 0){
+> 		/* remove a process P from s.queue */;
+> 		/* place process P on ready list */;
+> 	}
+> 	s.flag = 0;
+> }
+> ```
+> consideriamo 3 processi: A, B, C:
+> 1) A ha già completato la `semiWait` e sta eseguendo codice in sezione critica. `s.count == 0`
+> 2) B entra in `semiWait`, `count` va a `-1` e B diventa `BLOCKED`, `s.flag = 0`
+> 3) tocca ad A, che esegue la sezione critica e `semSignal` --> `s.count++` (diventa `0`), rimuove B dalla queue e lo mette `READY`.
+> 	- A completa `semSignal` e setta `s.flag = 0`
+> 4) C entra in `semWait`, passa il `while compare_and_swap`, e viene fermato dallo scheduler --> `s.flag = 1`
+> 5) B ripende l'esecuzione, e imposta `s.flag = 0`.
+> 	- esegue la sua sezione critica e chiama `semSignal`. Passa il while. Setta `s.flag=1`
+> 	- imposta `s.count=1`, termina `semSignal` e imposta `s.flag=0`
+> 	- (C è fermo prima di `s.count--`, `s.count` è `1`, e `s.flag` è `0`)
+> 6) arriva un nuovo processo D, che entra in `semWait`. 
+> 	- passa il `while`, ora `s.flag = 1`
+> 7) D esegue `s.count--` 
+> 	- legge `s.count` da memoria e lo porta in `eax` (registro accumulatore). `eax == 1`
+> 	- lo scheduler interrompe D ed esegue C
+> 8) C continua da dov'era: esegue `c.count--` (diventa `0`), quindi non va in block
+> 9) C preempted (interotto prima di terminare) nella sezione critica
+> 10) tocca a D, che continua il calcolo di prima: salva `eax -1` in `s.count`, che rimane `0`
+> 11) D non va in block, e continua nella sezione critica
+> 
+> **RACE CONDITION** :(
+
+> [!note]- semafori con disabilitazione di interrupt (sistema monoprocessore)
+> ```C
+> semWait(s){
+> 	inhibit interrupts;
+> 	s.count--;
+> 	if (s.count < 0){
+> 		/* place this process in s.queue */;
+> 		/* block this process and allow interrupts */;
+> 	}else
+> 		allow interrupts;
+> }
+> 
+> semSignal(s){
+> 	inhibit interrupts;
+> 	s.count++;
+> 	if (s.count <= 0){
+> 		/* remove a process P from s.queue */;
+> 		/* place process P on ready list */;
+> 	}
+> 	allow interrupts;
+> }
+> ```
+> 
+
+### semafori deboli e forti
+ 
