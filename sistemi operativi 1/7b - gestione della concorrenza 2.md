@@ -30,4 +30,40 @@ Proviamo ora a gestire la mutua esclusione senza aiuto dal parte dell’hardware
 >può avvenire *livelock*: 
 >![[livelock-es.png|200]]
 
-### algoritmo 
+### algoritmo di Dekker
+![[dekker-algo.png|center|550]]
+
+Qui fin dall’inizio dichiaro di voler entrare nella sezione critica. Se il `wants_to_enter` dell’altro processo è `false` entro nella sezione critica. Nel caso in cui invece il valore è `true`, si ha una variabile `turn` condivisa. Per il `P0` se `turn` è `0` (non tocca a me), rimetto a falso il fatto che voglio entrare e faccio un’attesa attiva finché il `turn` è `1`. Una volta finita l’attesa reimposto il fatto che voglio entrare a `true`.
+- se il dispatcher è fair, funziona
+- garantisce il **bounded-waiting** - un processo può aspettarne un altro al massimo una volta
+- non c'è deadlock, ma c'è busy-waiting
+- non richiede nessun supporto dal Sistema Operativo (bisogna disattivare le ottimizzazioni dei sistemi operativi moderni)
+- vale solo per 2 processi - l'estensione a N è possibile ma non banale
+
+### algoritmo di Peterson
+![[peterson-algo.png|center|350]]
+
+Il processo "fa passare" l’altro processo - si entra nel `while` solamente se è il turno dell’altro processo e si vuole entrare (non si hanno problemi se in esecuzione si ha un solo processo). Anche qui, facendo un interleaving perfetto, non si avrebbero problemi in quanto viene mandato in esecuzione il penultimo processo che ha impostato `turn`
+
+- ha le stesse caratteristiche dell'algoritmo di dekker
+## passaggio di messaggi
+Quando un processo interagisce con un altro, devono essere soddisfatti due requisiti fondamentali:
+- **sincronizzazione** (mutua esclusione)
+- **comunicazione**
+
+Il *message passing* è una soluzione al secondo requisito, e:
+- funziona sia con memoria condivisa che distribuita
+- può essere usata anche per la sincronizzazione
+
+Funziona con due primitive:
+- `send(destination, message)` - qui `message` è il messaggio da mandare`
+- `receive(source, message)` - qui `message` è la zona di memoria in cui vogliamo ricetvere il messaggio
+- + a volte, il test di ricezione
+
+>[!tip] send e receive sono sempre atomiche
+>
+
+- possono essere bloccanti oppure no (mentre il test di ricezione è sempre bloccante)
+
+
+
