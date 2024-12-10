@@ -485,10 +485,22 @@ while (true) {
 }
 ```
 
+(`v` e `w` sono variabili locali, mentre `out` e `in` globali)
+
 > [!tip] buffer
 > ![[prodcons-buffer.png|center|250]]
 
-##### soluzione sbagliata
+(coda vuota vuol dire che `in == out`)
+##### soluzione SBAGLIATA
+questa soluzione usa due semafori binari, `s` e `delay`.
+- il semaforo `s` è quello che garantisce la mutua esclusione - è come l'esempio sopra (mutua esclusione con semafori) - inizializzo un semaforo a 1, faccio una `semWait` subito prima e `semSignal` subito dopo 
+- `produce` e `consume` sono operazioni locali di cui non ci interessa (non c'è motivo di renderle mutualmente esclusive)
+- `take` e `append` sono gli equivalenti del prendersi qualcosa o aggiungere qualcosa alla coda e incrementare il puntatore
+- `n` serve a ricordarsi quanti elementi ci sono nel buffer
+- se il consumatore va in esecuzione per primo, come prima cosa si blocca (`semWait`, `delay` è `0`)
+- quando il produttore produce, se per caso è la prima cosa che produce (`if (n==1)`), sveglia l'altro processo (settando `delay` a `1`)
+- se il consumatore trova `n == 0`, va in attesa
+
 ```C
 /* program producerconsumer SBAGLIATO */
 int n; // numero elementi buffer
@@ -498,7 +510,7 @@ void producer() {
 	while (true) {
 		produce();
 		semWaitB(s);
-		append();
+		append(); 
 		n++;
 		if(n == 1) semSignalB(delay);
 		semSignalB(s);
@@ -523,9 +535,235 @@ void main() {
 }
 ```
 
->[!example] esempio di errore della soluzione sopra
+>[!question] perché non funziona?
 > ![[prod-cons-sbagliato.png|center|350]]
-> Si creano problemi nel caso in cui venga mandato in esecuzione il produttore prima che il consumatore faccia il `consume()`.
-> In questo caso infatti, se lo scheduler mandasse in esecuzione due volte il consumer ci si ritroverebbe in una situazione in cui `delay` è `1` (si potrebbe iniziare a consumare) ma `n` è `0` e nonostante ciò è permessa un’operazione di `take()` (`n` arriva addirittura ad essere `-1`)
-> Sostanzialmente il problema è stato che il non è stata eseguita la prima `semWaitB(delay)` dopo il `consume()` in quanto è stato modificato `n`
-> (il consumer viene eseguito per abbastanza tempo da leggere 2 volte di fila il buffer, e finisce a leggerlo da vuoto)
+> - supponiamo che vada prima in esecuzione il produttore
+> - poi il consumatore - `delay == 1`, quindi non si blocca (è ok, c'è un elemento nella coda)
+> - supponiamo che, mentre faccia la consume, il dispatcher mandi in esecuzione il produttore
+> 	- il produttore fa quello che deve fare
+> 	- `n` vale di nuovo `1` (ha appena prodotto un nuovo dato), quindi fa di nuovo la `semSignal` su `delay`
+> - ma ora il consumatore va di nuovo in esecuzione - `n` non è `0`, quindi non aspetta
+> - se il consumatore va in esecuzione per due iterazioni di seguito, alla seconda, entra nella `semWait(delay)` (perché `n == 0`), ma non si blocca, perché `delay == 1` - lo mette a `0` e va avanti
+> - a questo punto, il buffer è vuoto, ma il consumer può fare comunque un'altra operazione di `take`
+>   
+> Sostanzialmente il problema è nato perché non è stata eseguita la prima `semWaitB(delay)` dopo il `consume()`, in quanto il produttore è andato in esecuzione e ha modificato `n`.
+#### soluzione corretta
+Il problema sopra è stato il cambiamento di `n` da parte del produttore "a metà" dell'esecuzione di `consumer()` del consumer.
+In questa soluzione, quindi si salva il valore di `n` in `m`, variabile locale, così, anche se il producer cambia `n` durante la chiamata di `consume()`, il consumatore guarda il valore "vecchio" di `n` salvato nella variabile `m`.
+ 
+```C
+int n; // numero elementi buffer
+binary_semaphore s = 1, delay = 0;
+
+void producer() {
+	while (true) {
+		produce();
+		semWaitB(s);
+		append();
+		n++;
+		if(n == 1) semSignalB(delay);
+		semSignalB(s);
+	}
+}
+
+void consumer() {
+	int m; /* a local variable */
+	semWaitB(delay);
+	while (true) {
+		semWaitB(s);
+		take();
+		n--;
+		m = n;
+		semSignalB(s);
+		consume();
+		if(m == 0) semWaitB(delay);
+	}
+}
+
+void main() {
+	n = 0;
+	parbegin(producer, consumer);
+}
+```
+#### soluzione con semafori generali
+tutto quello che si può fare con i semafori binari si può fare anche con i generali e viceversa.
+```C
+semaphore n = 0, s = 1;
+void producer() {
+	while (true) {
+		produce();
+		semWait(s);
+		append();
+		semSignal(s);
+		semSignal(n);
+	}
+}
+
+void consumer() {
+	while (true) {
+		semWait(n);
+		semWait(s);
+		take();
+		semSignalB(s);
+		consume();
+	}
+}
+
+void main() {
+	parbegin(producer, consumer);
+}
+```
+
+### produttori e consumatori con buffer circolare
+Nei casi reali, il buffer non sarà infinito - si usa un **buffer circolare**.
+In questo caso, se `in == out`, non vuol dire necessariamente che il buffer sia vuoto - per gestire questa cosa, forziamo la *dimensione effettiva* del buffer a `n-1` (invece che a `n`).
+
+| Block on                           | Unblock on              |
+| ---------------------------------- | ----------------------- |
+| Producer: insert in full buffer    | Consumer: item inserted |
+| Consumer: remove from empty buffer | Producer: item removed  |
+
+![[buffer-circolare.png|center|350]]
+
+#### implementazioni
+**producer**:
+```C
+while (true) {
+	/* produce item v */
+	while ((in+1)%n == out) /* do nothing*/;
+	b[in] = v;
+	in = (in+1)%n;
+}
+```
+
+**consumer**:
+```C
+while (true) {
+	while (in == out) /* do nothing*/;
+	w = b[out];
+	out = (out+1)%n;
+	/* consume item w */
+}
+```
+
+>[!info] come funziona?
+>- per l'incremento, viene utilizzato il modulo per gestire la natura circolare del buffer
+>- se `(in+1)%n == out`, allora *il buffer è pieno* (vuol dire che il prossimo indice di scrittura - `in+1` - coincide con il prossimo indice di lettura - `out` -, e quindi che si sovrascriverebbe un elemento ancora non consumato)
+>- se `in == out`, allora *il buffer è vuoto* - quando il produttore produce, `in` avanza, e quando il consumatore consuma, `out` avanza - quindi, se si trovano nella stessa posizione, vuol dire che sono stati prodotti tanti elementi quanti sono stati consumati
+
+**semafori**:
+- basta aggiungere un terzo semaforo, inizializzato alla lunghezza del buffer
+- il producer fa una `semWait` su `e`, così, se è da solo e fa x iterazioni con x = `sizeofbuffer`, alla x+1esima si blocca (finito lo spazio)
+- (la rule of thumb per i semafori è che ad ogni `wait` corrisponda una `signal`)
+- il produttore, se riesce a fare un'intera iterazione, sveglia il consumatore
+- `append` e `take` sono quindi protette dalle `wait` per garantire la mutua esclusione, e per il resto i due si comportano in maniera "complementare"
+```C
+/* program boundedbuffer */
+const int sizeofbuffer = /* buffer size */;
+semaphore n = 0, s = 1, e = sizeofbuffer;
+
+void producer() {
+	while (true) {
+		produce();
+		semWait(e); // viene decrementato ogni volta finché non si arriva
+		semWait(s); // fino a 0 quando il buffer è pieno
+		append();
+		semSignal(s);
+		semSignal(n);
+	}
+}
+
+void consumer() {
+	while (true) {
+		semWait(n); //se è per primo si blocca subito
+		semWait(s);
+		take();
+		semSignalB(s);
+		semSignalB(e); // viene incrementato e "sveglia" il produttore
+		consume();
+	}
+}
+
+void main() {
+	parbegin(producer, consumer);
+}
+
+```
+## esempi
+### trastevere
+> [!summary] dati
+> ![[trastevere.png|center|500]]
+> - i blocchetti sono macchine, il tubo è una strada di trastevere
+> - la strada si restringe e diventa a senso unico alternato: massimo 4 auto per volta
+> - vince chi arriva primo, non c'è parità
+> - assumendo semafori strong, le macchine dovrebbero impegnare la strettoia nell'ordine di arrivo
+
+>[!warning] (diego dixit) se non c’è mutua esclusione si fa un frontale
+
+```C
+semaphore z = 1;
+semaphore strettoia = 4;
+semaphore sx = 1;
+semaphore dx = 1;
+
+int nsx = 0; // curr numero di macchine in coda a sinistra
+int ndx = 0; // curr numero di macchine in coda a destra
+
+macchina_dal_lato_sinistro () {
+	wait(z) //evita deadlock sulla wait
+	wait(sx);
+	nsx++;
+	if(nsx == 1) //se sono il primo, blocco le macchine a dx
+		wait(dx); 
+	signal(sx); 
+	signal(z);
+	
+	wait(strettoia);
+	passa_strettoia();
+	signal(strettoia);
+	
+	wait(sx);
+	nsx--;
+	if(nsx == 0) //se sono l'ultimo, tocca a quelle a dx
+		signal(dx);
+	signal(sx);
+}
+```
+
+- due funzioni: lato sinistro e lato destro 
+#### walkthrough
+la prima parte gestisce il fatto che **dentro ci devono essere massimo 4 macchine**:
+- prendo un semaforo, `strettoia`, e lo inizializzo a `4`
+	- quindi, se ho la funzione `passa_strettoia()`, basta fare una `wait` su questo semaforo prima di passare e una `signal` dopo essere passati
+	- in questo modo, 4 macchine riescono ad eseguire `passa_strettoia`, e la quinta si fermerà sulla `wait`
+
+ora bisogna gestire il **senso unico alternato** - se arrivano contemporaneamente una macchina da dx e una da sx, una sola deve passare e bisogna gestire le code (quelle che si accodano a quella che è passata, passano, e le altre aspettano)
+ 
+ La prima parte di codice decide chi passa per primo, la seconda fa sì che, dopo che l'ultimo passa, tocchi all'altro lato
+
+- ho due interi, `nsx`, `ndx` --> contano le macchine in attesa a sx e a dx
+- (incremento `nsx` - sono una macchina arrivata in coda) 
+	- `if (nsx == 1) wait(dx)` se sono il primo ad essere arrivato, devo bloccare le macchine dall'altro lato
+- decremento `nsx` dopo essere passato
+	- se ero l'ultimo (`if (nsx == 0)`) faccio passare l'altro lato
+
+per poter fare questa cosa, sono necessarie due cose:
+- `nsx` è condivisa da più processi (tutti quelli che arrivano da sx)
+- ma fare un incremento su una variabile globale nasconde una possibile *race condition* (se i processi vengono eseguiti con tempistiche particolari rispetto alle istruzioni assembly che la compongono)
+- questa cosa viene gestita con il semaforo `sx`, che garantisce una mutua esclusione sulla variabile (come abbiamo visto nella mutua esclusione con semafori)
+- (la stessa cosa vale anche per il decremento `--nsx`)
+
+come funziona la `wait(dx)`?
+- se io arrivo ad eseguire la `wait(dx)` da sinistra, vuol dire che una macchina di destra dovrà eseguire `wait(dx)` (prima riga, equivalente alla mia `wait(sx)`) - io non mi blocco perché `dx` è inizializzato a `1`, ma lo porto a zero e quindi la macchina a destra si blocca.
+
+Se non avessimo `wait(z)`, si rischierebbe il deadlock - verrebbero eseguite sia `wait(sx)` che `wait(dx)` ed entrambe si bloccherebbero vicendevolmente.
+- il semaforo `z` è quindi di mutua esclusione e fa sì che la `wait` possa essere eseguita solo da una macchina dal lato destro o una dal lato sinistro
+### il negozio del barbiere
+> [!summary] dati
+> ![[negozio-barbiere.png|center|350]]
+> - `max_cust` - dimensione massima del negozio
+> - prima ci si siede sul divano, poi da lì si accede ad una delle sedie
+> 	- si compete per entrambe le risorse: un certo numero di posti sul divano (`sofa`), e uno minore di posti sulle sedie
+> 	- tra divanari si compete per le sedie, tra persone in piedi si compete per il divano
+> 	- i barbieri (1 per sedia) possono: dormire, tagliare i capelli, prendere i soldi dopo il taglio
+
