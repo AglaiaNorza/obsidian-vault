@@ -48,7 +48,7 @@ Il processo "fa passare" l’altro processo - si entra nel `while` solamente se 
 - ha le stesse caratteristiche dell'algoritmo di dekker
 ## passaggio di messaggi
 Quando un processo interagisce con un altro, devono essere soddisfatti due requisiti fondamentali:
-- **sincronizzazione** (mutua esclusione)
+- **sincronizzazione** (mutua esclusione) --> il mittente deve inviare prima che il ricevente riceva
 - **comunicazione**
 
 Il *message passing* è una soluzione al secondo requisito, e:
@@ -64,6 +64,119 @@ Funziona con due primitive:
 >
 
 - possono essere bloccanti oppure no (mentre il test di ricezione è sempre bloccante)
+### send e receive bloccanti
+Se `send` e `receive` sono bloccanti, il processo che invia il messaggio sarà `BLOCKED` fino a che qualcuno non effettuerà un `receive`, e allo stesso modo un processo che chiama `receive` prima di avere un messaggio da ricevere sarà `BLOCKED` fino alla ricezione di un messaggio.
+- quindi che un processo si blocchi o no dipende da che funzione è stata chiamata prima
+- questo tipo di comunicazione viene tipicamente chiamato *rendevouz*
+### send non bloccante
+è una scelta più naturale per molti programmi concorrenti.
+- la chiameremo `nbsend`
 
+nel caso più comune è abbinata comunque ad una ricezione bloccante:
+- il mittente continua, mentre il destinatario è bloccato fino alla ricezione del mesaggio
 
+ma è possibile abbinarla anche alla ricezione non bloccante (`nbreceive`)
+- se il messaggio c'è, viene ricevuto, altrimenti si va avanti
+- può settare un bit dentro il messaggio per dire se la ricezione è avvenuta o no
+- (non si usa l'accoppiata ricezione non bloccante-invio bloccante di solito)
+### indirizzamento
+Il mittente deve sapere a quali processi vuole inviare il messaggio (e lo stesso vale per il destinatario, anche se non sempre).
+Si possono usare:
+- **indirizzamento diretto**
+- **indirizzamento indiretto**
+#### indirizzamento diretto
+`send` include uno specifico identificatore per il destinatario (o gruppo di destinatari)
+- per la `receive`, ci può essere oppure no
+	- `receive(sender, msg)` riceve solo se il mittente coincide con il sender
+	- `receive(null, msg)` riceve da chiunque
+	- (dentro `msg` c'è anche il mittente)
 
+>[!tip] ogni processo ha una sua coda - una volta piena, solitamente il processo si perde o viene ritrasmesso
+#### indirizzamento indiretto
+I messaggi sono inviati ad una particolare zona di memoria condivisa (**mailbox**) - il mittente li manda lì, e il destinatario se li prende.
+- se la ricezione è bloccante e ci sono più processi in attesa su una ricezione, un solo processo viene svegliato
+- ci sono evidenti analogie con producer/consumer (nello specifico, se la mailbox è piena allora `nbsend` si deve bloccare)
+
+>[!example] esempi di comunicazione indiretta
+>![[comunicazione-indiretta.png|center|450]]
+### formato dei messaggi
+
+> [!info] questo è il tipico formato dei messaggi:
+> ![[formato-messaggi.png|center|300]]
+
+### mutua esclusione con i messaggi
+```C
+const message null = /* null message */
+mailbox box;
+
+void P(int i) {
+	message msg;
+	while(true) {
+		receive(box, msg);
+		/* critical section */
+		nbsend(box, msg);
+		/* remainder */
+	}
+}
+
+void main() {
+	box = create_mailbox();
+	nbsend(box, null);
+	parbegin (P(1),P(2),...,P(n));
+}
+```
+- si usano i messaggi per comunicare la situazione della sezione critica
+- è necessario creare la mailbox con un messaggio al suo interno, altrimenti nessun processo entrerebbe mai nella sezione critica
+- è necessario usare `nbsend(box,msg)`, altrimenti il processo che è stato nella sezione critica non può andare avanti fino a quando un altro processo non ci entri
+### producer/consumer con messaggi
+(le premesse sono le stesse di prima)
+
+> [!summary]- premesse
+> La situazione è questa:
+> - uno o più processi creano dati e li mettono in un buffer - consumer prende i dati dal buffer (a cui può accedere un solo processo, che sia producer o consumer)
+> 
+> I problemi:
+> - assicurare che i producer non inseriscano quando il buffer è pieno e che il consumer non legga quando il buffer è vuoto
+> - mutua esclusione sul buffer
+
+```C
+const int capacity = /* buffering capacity */;
+mailbox mayproduce, mayconsume;
+const message null = /* null message */;
+
+void main() {
+	mayproduce = crate_mailbox();
+	mayconsume = create_mailbox();
+	for(int i=1; i<=capacity; i++) {
+		nbsend(mayproduce, null);
+	}
+	parbegin(producer, consumer);
+}
+
+void producer() {
+	message pmsg;
+	while(true) {
+		receive(mayproduce, pmsg);
+		pmsg = produce();
+		// append al buffer !
+		nbsend(mayconsume, pmsg);
+	}
+}
+
+void consumer() {
+	message cmsg;
+	while(true) {
+		receive(mayconsume, cmsg);
+		consume(cmsg);
+		nbsend(mayproduce, null);
+	}
+}
+```
+
+- riempiendo `mayproduce` con `capacity` elementi, mi assicuro che nessun producer aggiunga al buffer se esso è già pieno (se `mayproduce` non ha messaggi, il producer diventa `BLOCKED`)
+- `mayconsume` è usato per assicurarsi che il consumer non legga un buffer vuoto
+
+Questa soluzione assicura:
+- mutua esclusione
+- no deadlock
+- no starvation - solo se le code di processi bloccati su una receive sono gestite in modo "forte" (FIFO)
