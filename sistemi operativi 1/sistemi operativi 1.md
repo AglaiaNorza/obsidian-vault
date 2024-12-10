@@ -5,6 +5,7 @@
 > - [[4 - gestione della memoria]]
 > - [[5 - gestione dell'IO]]
 > - [[6 - file system]]
-> - [[7a - gestione della concorrenza 1]] (concetti basilari, mutua esclusione: supporto hardware, semafori)
+> - [[7a - gestione della concorrenza 1]] (concetti basilari, mutua esclusione: supporto hardware, semafori, esempi)
+> - [[7b - gestione della concorrenza 2]]
 
-[ spesso prendo pezzi di cose dette da melatti nelle videolezioni/cose lunghe da scrivere da [flavio](https://github.com/thegeek-sys/Vault/tree/main/Class/Sistemi%20Operativi), grz flavio ]
+[ spesso prendo pezzi di cose dette da melatti nelle videolezioni o cose lunghe da scrivere da [flavio](https://github.com/thegeek-sys/Vault/tree/main/Class/Sistemi%20Operativi) o [diego](https://github.com/diegotty/obsidian_vault/tree/main/year2semester1/os1), grz diego e flavio ]

@@ -689,7 +689,7 @@ void main() {
 }
 
 ```
-## esempi
+## semafori: esempi
 ### trastevere
 > [!summary] dati
 > ![[trastevere.png|center|500]]
@@ -767,3 +767,152 @@ Se non avessimo `wait(z)`, si rischierebbe il deadlock - verrebbero eseguite sia
 > 	- tra divanari si compete per le sedie, tra persone in piedi si compete per il divano
 > 	- i barbieri (1 per sedia) possono: dormire, tagliare i capelli, prendere i soldi dopo il taglio
 
+#### soluzione 1
+- si possono servire, nel corso di una giornata, un massimo numero di clienti (`finish`)
+- c'è una sola cassa per la quale competono i barbieri
+
+```C
+// finish=numero massimo di persone servibili nel periodo
+// max_clust=numero massimo di persone contemporaneamente nel negozio
+// coord=numero di barbieri
+semaphore
+	max_clust=20, sofa=4, chair=3, coord=3, ready=0, leave_ch=0,
+	paym=0, recpt=0, finish[50]={0};
+	mutex1=1, mutex2=1;
+
+int count = 0;
+
+void customer() {
+	int cust_nr;
+	
+	wait(max_cust); //ok se sono <= 50esimo
+	enter_shop();
+	
+	wait(mutex1);
+	cust_nr = count;
+	count++;
+	signal(mutex1);
+	wait(sofa);
+	sit_on_sofa();
+	wait(chair);
+	get_up_from_sofa();
+	signal(sofa);
+	sit_in_chair();
+	wait(mutex2);
+	enqueue1(cust_nr);
+	signal(mutex2);
+	signal(ready);
+	wait(finish[cust_nr]);
+	leave_chair;
+	signal(leave_cr);
+	pay();
+	wait(recpt);
+	exit_shop();
+	signal(max_cust);
+}
+
+void barber() {
+	int b_cust;
+	while(true) {
+		wait(ready);
+		wait(mutex2);
+		dequeue1(b_cust);
+		signal(mutex2);
+		wait(coord);
+		cut_hair();
+		signal(coord);
+		signal(finish[b_cust]);
+		wait(leave_ch);
+		signal(chair);
+	}
+}
+
+void cashier() {
+	while(true) {
+		wait(paym);
+		wait(coord);
+		accept_pay();
+		signal(coord);
+		signal(recpt);
+	}
+}
+```
+##### walkthrough
+- alcuni semafori servono, come a trastevere, per limitare il numero di processi che possono fare una cosa (es. `sofa`, `chair`, ecc.)
+**customer**:
+- ha la variabile locale `cust_nr` (il numeretto) - `count` mi dice quante persone ci sono, e lo salvo nella mia variabile locale - visto che `count` è globale, è protetta dal semaforo `mutex1`
+- aspetto il semaforo `sofa` - se mi fa passare, mi siedo
+- aspetto `chair` - se mi fa passare, mi alzo dal divano e mi siedo sulla sedia
+- a questo punto, metto il numeretto nella coda `enqueue1`, da dove il barbiere prende i clienti 
+	- (i semafori `chair` e `mutex2` sono tra cliente e barbiere)
+	- (notiamo che si usano due semafori diversi, `mutex1` e `mutex2` per due sezioni critiche diverse - usarne uno avrebbe funzionato, ma sarebbe stato meno efficiente)
+- `signal(ready)` avvisa che sono pronto 
+- `wait(finish[cust_nr])` - aspetto che un barbiere finisca - `finish[cust_nr]` è un vettore di 50 semafori, quindi devo specificare quale sto aspettando
+	- ci si "libera" quando il barbiere `signal(finish[b_cust])`
+- [ qui si passa al barbiere, che taglia ]
+- una volta che il barbiere ha finito, segnalo che me ne sto andando
+- pago e lo segnalo (il **cassiere** è inizialmente bloccato, si sblocca se qualcuno deve pagare - qui c'è l'altra parte del `coord` del barbiere - il numero di barbieri che tagliano i capelli + quelli che fanno pagare = tutti i barbieri - poi il cassiere accetta il pagamento e fa la ricevuta)
+- aspetto la ricevuta, me ne vado, e reincremento `max_cust`
+
+**barbiere**:
+- (se viene eseguito per primo, aspetta che un customer sia `ready`)
+- il barbiere vede qual è il numeretto da servire - `dequeue1(b_cust)` mette il numeretto nella variabile locale `b_cust`
+- `wait(coord)` gestisce la coordinazione dei barbieri - se ci sono troppi barbieri che cercano di tagliare i capelli, quelli in più si fermano
+- quando ha finito di tagliare i capelli, lo segnala così che il cliente si liberi
+#### soluzione 2 (migliore)
+- non c'è il limite massimo di clienti serviti al giorno
+- niente processo separato per pagare, ma paga comunque un barbiere (libero) qualsiasi
+- il semaforo `coord` non serve più (non si dividono barbieri e cassieri)
+- ci sono tanti semafori `finish` quanti barbieri
+- niente semaforo `leave_ch` - solo un cliente alla volta poteva alzarsi
+- piccola inefficienza: solo un barbiere alla volta può preparare la propria sedia
+
+```C
+void Customer(i) {
+	int my_barber;
+	wait(max_cust);
+	enter_shop();
+	wait(sofa);
+	sit_on_sopfa();
+	wait(chair);
+	get_up_from_sofa();
+	signal(sofa);
+	my_barber = next_barber;
+	sit_in_chair();
+	signal(ready);
+	wait(finish[my_barber]);
+	leave_chair();
+	pay();
+	signal(paym);
+	wait(recpt);
+	exit_shop();
+	signal(max_cust);
+}
+
+int next_barber;
+void Barber(i) {
+	while(true) {
+		wait(mutex);
+		next_barber = i;
+		signal(chair);
+		wait(ready);
+		signal(mutex);
+		cut_hair();
+		signal(finish[i]);
+		wait(paym);
+		accept_pay();
+		signal(recpt);
+	}
+}
+```
+##### walkthrough
+**customer**:
+- mentre prima la variabile locale del cliente era il suo numeretto, ora è il numero del suo barbiere `my_barber = next_barber`
+- una volta claimato un barbiere, si siede sulla sua sedia e segnala di essere pronto
+
+**barber**:
+- ora il barbiere prende un argomento, il suo numero
+- il barbiere, quando è pronto, setta la variabile `next_barber` con il suo indice - per farlo, si mette in una sezione critica `mutex` (tra barbieri) che dura fino a quando qualcuno non si siede nella sedia (`signal ready` del cliente)
+
+>[!important] variabile condivisa non protetta da semafori
+>qui, c'è una variabile condivisa (`next_barber`) non protetta in lettura dentro `customer` - l'importante è che sappiamo che `next_barber` non può essere modificato da più di un barbiere contemporaneamente (perché c'è `mutex`)
