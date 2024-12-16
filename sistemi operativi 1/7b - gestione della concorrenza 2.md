@@ -224,4 +224,143 @@ void main(){
 
 - il `writer` scrive attraverso un semaforo di mutua esclusione
 - il `reader` incrementa `readcount`: se si tratta del primo lettore, si bloccano eventuali scrittori (ma se uno scrittore si trova già nella sezione critica, il lettore viene bloccato)
-- dopo la lettura
+- dopo la lettura, viene decrementato `readcount` e, se si tratta dell'ultimo lettore, vengono sbloccati eventuali `writer`.
+
+Con questa soluzione, gli scrittori possono andare in starvation.
+
+### precedenza agli scrittori
+```C
+int readcount, writecount;
+semaphore x = 1, y = 1, z = 1, wsem = 1, rsem = 1;
+void reader(){
+	while(true){
+		semWait(z);
+			semWait(rsem);
+				semWait(x);
+					readcount++;
+					if(readcount == 1) semWait(wsem);
+				semSignal(x);
+			semSignal(rsem);
+		semSignal(z);
+		READUNIT();
+		semWait(x);
+			readcount--;
+			if(readcount == 0) semSignal(wsem);
+		semSignal(x);
+	}
+}
+
+void writer(){
+	while(true){
+		semWait(y);
+			writecount++;
+			if(writecount == 1) semWait(rsem);
+		semSignal(y);
+		semWait(wsem);
+		WRITEUNIT();
+		semSignal(wsem);
+		semWait(y);
+			writecount--;
+			if(writecount == 0) semSignal(rsem);
+		semSignal(y);
+	}
+}
+
+void main(){
+	readcount = writecount = 0;
+	parbegin(reader, writer);
+}
+```
+
+- qui, gli scrittori usano il semaforo `y` per garantire la mutua esclusione su `writecount`
+- per i `reader` è stato aggiunto il semaforo `rsem`, che permette di evitare che il lettore prevalga sullo scrittore (se per esempio arriva uno scrittore prima di altri lettori, esso blocca la coda dei lettori)
+
+### soluzione con i messaggi
+- oltre a questo, occorre un processo di inizializzazione he crea le tre mailbox e lancia un controller e i reader e writer
+ 
+```C
+// mailbox = readrequest, writerequest, finished
+// empty verifica se ci sono messaggi da ricevere
+
+void reader(int i) {
+	while(true) {
+		nbsend(readrequest, null);
+		receive(controller_pid, null);
+		READUNIT();
+		nbsend(finished, null);
+	}
+}
+
+void writer(int j) {
+	while(true) {
+		nbsend(writerequest, null);
+		receive(controller_pid, null);
+		WRITEUNIT();
+		nbsend(finished, null);
+	}
+}
+
+void controller() {
+	int count = MAX_READERS;
+	while(true) {
+		// se è positivo ci potrebbero essere dei reader
+		if (count > 0) {
+			if (!empty(finished)) {
+				receive(finished, msg); /* da reader! */
+				// se count==MAX_READERS vuol dire che tutti i reader
+				// hanno letto
+				count++;
+			}
+			else if (!empty(writerequest)) {
+				receive(writerequest, msg);
+				writer_id = msg.sender;
+				// se ci sono lettori count < 0
+				// se non ci sono lettori count = 0
+				count = count - MAX_READERS;
+			}
+			else if (!empty(readrequest)) {
+				// per sapere a chi far leggere utilizzo il campo sender
+				// del messaggio da cui ho ricevuto la richiesta
+				receive(readrequest, msg);
+				count--;
+				nbsend(msg.sender, "OK");
+			}
+		}
+		// non ci sono lettori, lascio scrivere il writer
+		if (count == 0) {
+			nbsend(writer_id, "OK");
+			receive(finished, msg); /* da writer! */
+			count = MAX_READERS;
+		}
+		// ci sono lettori, aspetto la fine di ogni lettura incrementando
+		// count fino a 0 per poi poter scirvere
+		while (count < 0) {
+			receive(finished, msg); /* da reader! */
+			count++;
+		}
+	}
+}
+```
+
+#### walkthrough
+- usa `nbsend` e `receive`
+- reader e writer mandano una richiesta alle rispettive mailbox (`readrequest`, `writerequest`) per accedere all'area (*indirizzamento indiretto*)
+- viene chiamata `receive(controller_pid, null)`, in cui writer e reader aspettano una risposta dal controller prima di accedere all'area (*indirizzamento diretto*)
+- `count` (se positivo) indica il numero corrente di lettori nell'area
+- tutte le condizioni dentro `if(count > 0)` controllano se una delle mailbox ha dei messaggi --> in caso positivo, viene usato `receive` per prenderli. 
+	- quindi, anche se `receive` è bloccante, non succederà mai che il controller si bloccherà su una di queste `receive`, perchè è sicuro che ci sia almeno un messaggio
+- se invece `writerequest` non è vuota, si forza `count <= 0` con `count = count - MAX_READERS`
+	- se `count == 0`, non c'erano lettori --> `writer` può scrivere nell'area
+	- se `count < 0`, ci sono dei lettori --> si attende che finiscano - così, quando si esce dal while, alla successiva iterazione di `while(true)`, `count` sarà a `0` e il `writer` potrà entrare a scrivere
+- si nota come il controller, per mandare un messaggio al writer che ha mandato la sua richiesta in `readrequest`, usi `msg.sender` come destinatario
+
+>[!warning] attenzione
+>Se ci sono più di `MAX_READERS-1` richieste contemporanee da lettori, la soluzione non funziona
+
+## equivalenze
+La condivisione di risorse può quindi essere implementata con 3 metodi diversi:
+- istruzioni hardware
+- sincronizzazione (semafori)
+- message passing
+
+Si può dimostrare che, se si può implementare un'applicazione con uno di questi tre modi, si può fare anche con gli altri due (ed è probabile che ce ne sia uno più conveniente).
