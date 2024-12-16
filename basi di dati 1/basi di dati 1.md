@@ -14,3 +14,5 @@
 > - [[13 - algoritmo di decomposizione]]
 > - [[14 - organizzazione fisica dei dati e file heap]]
 > - [[15 - file hash]]
+> - [[16 - file con indice]]
+> - [[17 - B-tree]]
