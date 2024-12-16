@@ -101,6 +101,7 @@ Quindi, il limite superiore dell'altezza dell'albero è $\log_{d}\left( \frac{N}
 >
 >Visto che sono pieni al minimo, divido per $2$ e prendo la parte intera per ottenere il numero di record effettivamente presenti (per blocco):
 >$$e=\left\lfloor  \frac{5}{2}  \right\rfloor =3$$
+> 
 >Calcolo il numero di blocchi per il file principale (che è anche il numero di record del file indice)
 >$$BF=\left\lceil  \frac{NR}{e}  \right\rceil =\left\lceil  \frac{170.000}{3}  \right\rceil =56667$$
 >(numero di record/record per blocco)
@@ -113,6 +114,7 @@ Quindi, il limite superiore dell'altezza dell'albero è $\log_{d}\left( \frac{N}
 >
 >Calcoliamo il numero effettivo di record memorizzabili in un blocco del file indice.
 >Il blocco è a metà capienza, quindi, invece di $1024$, useremo $512$
+> 
 >$$d=\left\lceil  \frac{CB/2-P}{K+P}  \right\rceil +1 = \left\lceil  \frac{512-4}{24} \right\rceil+1=22+1=23$$
 >
 >>[!bug] verifica
@@ -124,6 +126,7 @@ Quindi, il limite superiore dell'altezza dell'albero è $\log_{d}\left( \frac{N}
 >>$508<512$, quindi non saremmo arrivati a metà - il nostro risultato è corretto.
 >  
 >Calcoliamo il numero di blocchi per il file principale:
+> 
 >$$FP=\left\lceil  \frac{NR}{e}  \right\rceil =\left\lceil  \frac{170000}{3}  \right\rceil =2464$$
 > <br>
 >Calcoliamo il numero di blocchi per il file indice al primo livello
