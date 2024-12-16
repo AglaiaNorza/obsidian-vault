@@ -105,7 +105,7 @@ Quindi, il limite superiore dell'altezza dell'albero è $\log_{d}\left( \frac{N}
 >$$BF=\left\lceil  \frac{NR}{e}  \right\rceil =\left\lceil  \frac{170.000}{3}  \right\rceil =56667$$
 >(numero di record/record per blocco)
 >
->>[!info]+ non per forza necessario
+>>[!info] non per forza necessario
 >> 
 >>Possiamo calcolare il numero (massimo) dei blocchi in un file indice facendo:
 >>$$\left\lfloor  \frac{1024-4}{24} +1 \right\rfloor \; \text{ ovvero   }\;  \frac{CB}{\text{dim. record (chiave+puntatore)}}$$
@@ -115,19 +115,17 @@ Quindi, il limite superiore dell'altezza dell'albero è $\log_{d}\left( \frac{N}
 >Il blocco è a metà capienza, quindi, invece di $1024$, useremo $512$
 >$$d=\left\lceil  \frac{CB/2-P}{K+P}  \right\rceil +1 = \left\lceil  \frac{512-4}{24} \right\rceil+1=22+1=23$$
 >
->>[!bug]+ verifica
+>>[!bug] verifica
 >> 
 >>per questo tipo di calcoli, è sempre utile fare una verifica, facendo il calcolo al contrario (verifichiamo effettivamente di aver occupato metà dei blocchi):
 >>$$\text{risultato senza il primo puntatore}\cdot P+K \iff   22\cdot 24 + 4=532$$
 >>okay, $532$ è più della metà - ma dobbiamo anche controllare che non sia troppo: proviamo a vedere cosa sarebbe successo con un record in meno
 >>$$21\cdot 24+4=508$$
 >>$508<512$, quindi non saremmo arrivati a metà - il nostro risultato è corretto.
-> ---
 >  
 >Calcoliamo il numero di blocchi per il file principale:
 >$$FP=\left\lceil  \frac{NR}{e}  \right\rceil =\left\lceil  \frac{170000}{3}  \right\rceil =2464$$
-> ---
->  
+> <br>
 >Calcoliamo il numero di blocchi per il file indice al primo livello
 >$$B_{1}=\left\lceil  \frac{BR}{d}  \right\rceil =\left\lceil  \frac{56667}{23}  \right\rceil =2464$$
 >Calcoliamo il numero di blocchi per il file indice al secondo livello
