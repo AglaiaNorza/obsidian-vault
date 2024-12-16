@@ -34,4 +34,30 @@ Le risorse riusabili sono utilizzabili da *un solo processo alla volta*, e **l'e
 
 Lo stallo può esistere solo se un processo ha una risorsa e ne richiede un'altra.
 
+> [!example] esempio
+> ![[reusable-res.png|center|350]]
+> 
+> (la sezione critica è `perform function`)
+> - si bloccano perché `P` richiede `T` prima di rilasciare `D`, e `Q` richiede `D` prima di rilasciare `T`.
 
+>[!example] esempio 2
+>supponiamo di avere 200KB di memoria disponibili:
+>
+>![[resusable-res-2.png|center|350]]
+>- il deadlock avverrà quando uno dei due processi farà la seconda richiesta
+
+#### condizioni per il deadlock
+Il deadlock si verifica solo se ci sono queste quattro condizioni:
+1) **mutua esclusione** --> solo un processo alla volta può usare una risorsa
+2) **hold-and-wait** --> richiesta di una risorsa quando se ne ha già una
+3) **niente preemption per le risorse** --> non si può sottrarre una risorsa ad un processo prima che questo la rilasci
+4) **attesa circolare** --> esiste una catena chiusa di procesi, in cui ciascun processo detiene una risorsa richiesta dal processo che lo segue nella catena
+
+### risorse consumabili
+Le risorse consumabili vengono prodotte e distrutte consumate.
+- esempi: interrupt, segnali, messaggi, informazioni nei buffer I/O
+
+Il deadlock è possibile se si fa una richiesta bloccante di una risorsa ancora non creata.
+
+>[!example] esempio 
+>![[consumable-res-dl.png|center|350]]
