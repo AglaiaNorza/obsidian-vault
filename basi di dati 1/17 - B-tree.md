@@ -130,13 +130,21 @@ Quindi, il limite superiore dell'altezza dell'albero è $\log_{d}\left( \frac{N}
 >$$FP=\left\lceil  \frac{NR}{e}  \right\rceil =\left\lceil  \frac{170000}{3}  \right\rceil =2464$$
 > <br>
 >Calcoliamo il numero di blocchi per il file indice al primo livello
+>
 >$$B_{1}=\left\lceil  \frac{BR}{d}  \right\rceil =\left\lceil  \frac{56667}{23}  \right\rceil =2464$$
+> 
 >Calcoliamo il numero di blocchi per il file indice al secondo livello
+> 
 >$$B_{2}=\left\lceil  \frac{B_{1}}{d}  \right\rceil =\left\lceil  \frac{2464}{23}  \right\rceil =108$$
+> 
 >Calcoliamo il numero di blocchi per il file indice al terzo livello
+> 
 >$$B_{3}=\left\lceil  \frac{B_{2}}{d}  \right\rceil =\left\lceil  \frac{108}{23}  \right\rceil =5$$
+> 
 >Calcoliamo il numero di blocchi per il file indice al quarto livello
+> 
 >$$B_{4}=\left\lceil  \frac{B_{3}}{d}  \right\rceil =\left\lceil  \frac{5}{23}  \right\rceil =1$$
+> 
 >A questo punto mi fermo poiché ho trovato la radice (livello con un solo blocco)
 >
 >Complessivamente quindi si avranno
