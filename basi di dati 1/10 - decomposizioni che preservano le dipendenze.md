@@ -57,7 +57,7 @@ Si può fare con l'algoritmo che segue:
 > - output - la variabile `successo`, che indica se $F\subseteq G^+$
 > 
 > $$
-> \begin{align}
+> \begin{align*}
 > &\text{begin}\\
 > &\qquad\text{successo}:=true\\
 > &\qquad \text{for every }X\to Y\in F\\
@@ -67,7 +67,7 @@ Si può fare con l'algoritmo che segue:
 > &\qquad\qquad \text{if }Y\not\subset X^+_{G} \text{ then successo}:=false\\
 > &\qquad\text{end} \\
 > &\text{end}
-> \end{align}
+> \end{align*}
 > $$
 >
 >- se $Y\not\subset X^+_{G}$, allora $X\to Y \not\in G^A$ per il lemma, ovvero $X\to Y\not\in G^+$ per il Teorema
