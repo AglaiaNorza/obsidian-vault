@@ -180,3 +180,48 @@ Questa soluzione assicura:
 - mutua esclusione
 - no deadlock
 - no starvation - solo se le code di processi bloccati su una receive sono gestite in modo "forte" (FIFO)
+
+## problema dei lettori/scrittori
+Questo problema nasce quando si ha un'area data condivisa tra molti processi (alcuni in lettura e altri in scrittura), e le condizioni da soddisfare sono:
+- più lettori possono leggere l'area contemporaneamente
+- solo uno scrittore può scrivere nell'area
+- se uno scrittore è all'opera sull'area, nessun lettore può effettuare letture
+
+Rispetto al problema producer/consumer ([[7a - gestione della concorrenza 1#semafori|7a]]),  *l'area condivisa si accede per intero* (e non ci sono problemi di buffer pieno/vuoto).
+
+### precedenza ai lettori
+I lettori hanno la precedenza - se un lettore sta operando sull'area e arrivano uno scrittore e poi altri lettori ad aspettare, avranno la precedenza i secondi.
+
+```C
+/* precedenza ai lettori */
+int readcount;
+semaphore x = 1, wsem = 1;
+void reader(){
+	while(true){
+		semWait(x);
+		readcount++;
+		if(readcount == 1) semWait(wsem);
+		semSignal(x);
+		READUNIT();
+		semWait(x);
+		readcount--;
+		if(readcount == 0) semSignal(wsem);
+		semSignal(x);
+	}
+}
+void writer(){
+	while(true){
+		semWait(wsem);
+		WRITEUNIT();
+		semSignal(wsem);
+	}
+}
+void main(){
+	readcount = 0;
+	parbegin(reader, writer);
+}
+```
+
+- il `writer` scrive attraverso un semaforo di mutua esclusione
+- il `reader` incrementa `readcount`: se si tratta del primo lettore, si bloccano eventuali scrittori (ma se uno scrittore si trova già nella sezione critica, il lettore viene bloccato)
+- dopo la lettura
