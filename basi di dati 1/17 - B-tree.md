@@ -106,6 +106,7 @@ Quindi, il limite superiore dell'altezza dell'albero è $\log_{d}\left( \frac{N}
 >(numero di record/record per blocco)
 >
 >>[!info]+ non per forza necessario
+>> 
 >>Possiamo calcolare il numero (massimo) dei blocchi in un file indice facendo:
 >>$$\left\lfloor  \frac{1024-4}{24} +1 \right\rfloor \; \text{ ovvero   }\;  \frac{CB}{\text{dim. record (chiave+puntatore)}}$$
 >>(sottraggo 4 inizialmente perché il primo record non ha la chiave (quindi elimino lo spazio che il suo puntatore occupa), ma riaggiungo 1 al conto totale dei record perché è presente).
@@ -115,6 +116,7 @@ Quindi, il limite superiore dell'altezza dell'albero è $\log_{d}\left( \frac{N}
 >$$d=\left\lceil  \frac{CB/2-P}{K+P}  \right\rceil +1 = \left\lceil  \frac{512-4}{24} \right\rceil+1=22+1=23$$
 >
 >>[!bug]+ verifica
+>> 
 >>per questo tipo di calcoli, è sempre utile fare una verifica, facendo il calcolo al contrario (verifichiamo effettivamente di aver occupato metà dei blocchi):
 >>$$\text{risultato senza il primo puntatore}\cdot P+K \iff   22\cdot 24 + 4=532$$
 >>okay, $532$ è più della metà - ma dobbiamo anche controllare che non sia troppo: proviamo a vedere cosa sarebbe successo con un record in meno
