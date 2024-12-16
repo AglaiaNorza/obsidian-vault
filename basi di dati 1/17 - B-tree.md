@@ -120,10 +120,12 @@ Quindi, il limite superiore dell'altezza dell'albero è $\log_{d}\left( \frac{N}
 >>okay, $532$ è più della metà - ma dobbiamo anche controllare che non sia troppo: proviamo a vedere cosa sarebbe successo con un record in meno
 >>$$21\cdot 24+4=508$$
 >>$508<512$, quindi non saremmo arrivati a metà - il nostro risultato è corretto.
-> ----
+> ---
+>  
 >Calcoliamo il numero di blocchi per il file principale:
 >$$FP=\left\lceil  \frac{NR}{e}  \right\rceil =\left\lceil  \frac{170000}{3}  \right\rceil =2464$$
-> -----
+> ---
+>  
 >Calcoliamo il numero di blocchi per il file indice al primo livello
 >$$B_{1}=\left\lceil  \frac{BR}{d}  \right\rceil =\left\lceil  \frac{56667}{23}  \right\rceil =2464$$
 >Calcoliamo il numero di blocchi per il file indice al secondo livello
