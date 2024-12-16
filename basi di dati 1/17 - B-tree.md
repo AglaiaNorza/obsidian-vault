@@ -54,4 +54,11 @@ e quindi (poiché i blocchi devono essere riempiti a metà):
 - $e$ - minimo di record necessari in ogni blocco del file principale
 - $d$ - minimo di record necessari in ogni blocco del file indice
 
-L
+L'*altezza massima* ($k$) si ha quando i blocchi sono pieni al minimo, ovvero quando:
+- ogni blocco del file principale contiene esattamente $e$ record
+- ogni blocco del file indice contiene esattamente $d$ record
+
+Quindi:
+- il *file principale* ha al massimo $\frac{N}{e}$ blocchi (numero record/record x blocco)
+- a livello $i$, il file indice ha 
+	- $\frac{N}{ed^{i-1}}$ blocchi ($\frac{N}{e}$ diviso $d$ )
