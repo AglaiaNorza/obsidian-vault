@@ -229,11 +229,213 @@ boolean safe(state S) {
 }
 ```
 
+**walkthrough**:
 Mi serve per verificare se posso concedere una risorsa oppure no.
 
 >[!important] l’algoritmo del banchiere è implementato nel SO, e viene quindi eseguito in kernel mode
 >è per questo che l’algoritmo può bloccare i processi quando una richiesta non si può soddisfare
 
 - inizia con un safety check - con `(alloc[i,*]+request[*] > claim[i,*])` controllo che i processi non richiedano più risorse di quante sono disponibili (basta una elemento solo perché non vada bene)
-- se non ci sono abbastanza risorse disponibili per una richiesta, il processo viene sospeso (in attesa che un altro liberi )
+- se non ci sono abbastanza risorse disponibili per una richiesta, il processo viene sospeso (in attesa che un altro liberi le risorse)
+- se invece le risorse ci sono, si fa una simulazione di cosa succederebbe se si concedessero le richieste - si definisce un nuovo stato, e, 
+	- se è safe, si allocano le risorse. 
+	- altrimenti, si sospende il processo.
 
+La safeness si controlla con la funzione `safe`
+- si considerano tutti i processi, e si vede se almeno uno può essere eseguito fino alla fine
+- si fa varie volte, e, se si arriva a far eseguire tutti i processi, lo stato è safe
+
+>[!tip] requisiti perché funzioni
+>Perché l'algoritmo funzioni, i processi devono essere indipendenti, ovvero "liberi" di andare in esecuzione in qualsiasi ordine
+>- per esempio, non si possono mandare messaggi
+
+### rilevare
+Per rilevare il deadlock si possono usare le stesse strutture dati dell'algoritmo del banchiere, ma la $\text{claim matrix}$ è sostituita da $Q$, ovvero le richieste effettuate da tutti i processi.
+
+#### algoritmo 
+1) marca tutti i processi che non hanno allocato nulla (processi che non causano problemi)
+2) $w \leftarrow V$ (inizializzo un vettore $w$ con l'attuale vettore delle risorse disponibili)
+3) cerco un processo $i$ che non sia marcato t.c. $Q_{ik}\leq w_{k}$ (la sua riga è $<w$, quindi gli si possono concedere le risorse)
+	- in questo caso, quindi il processo può non creare deadlock
+4) se $i$ non esiste, vai al passo 6
+5) (se invece $i$ esiste), marcalo, aggiorna $w \leftarrow w+A_{i}$ (faccio finta che il processo vada fino alla fine e rilasci quello che aveva allocato) e torna al passo 3 
+6) c'è deadlock se esiste un processo non marcato (sono uscito o perché erano finiti i processi - ok, li ho marcati tutti -, o perché ne ho trovato uno che causa deadlock)
+
+>[!example] esempio 
+>![[rilevare-deadlock-es.png|center|350]]
+
+#### (deadlock trovato) e poi?
+Una volta trovato un deadlock, ci sono diverse opzioni:
+- **terminre forzatamente** tutti i processi coinvolti nel deadlock (soluzione comune)
+- **mantenere punti di ripristino** ed effettuare il ripristino al punto precedente (lo stallo può verificarsi nuovamente, ma è improbabile che succeda all'infinito)
+- **terminare forzatamente uno ad uno** i processi coinvolti, finché lo stallo non c'è più
+- **sottrarre forzatamente risorse** ai processi coinvolti nel deadlock uno ad uno, finché lo stallo non c'è più
+
+### vantaggi e svantaggi soluzioni
+ 
+> [!tip] vantaggi/svantaggi
+> ![[deadlock-sol.png|center|400]]
+
+## deadlock e linux
+Linux implementa una gestione minmale ma il più efficiente possibile.
+Se dei processi utenti sono "scritti male" e vanno in deadlock, peggio per loro (letteralmente).
+- saranno tutti bloccati `TASK_INTERRUPTIBLE`
+- sta all'utente accorgersene e killarli - sono solo processi utente, non fanno molto danno
+
+Per quanto riguarda il kernel, c'è la *prevenzione dell'attesa circolare*.
+
+## quattro filosofi a cena
+![[filosofi-cena.png|center|250]]
+
+Ad un tavolo ci sono uno stesso numero di forchette, piatti e sedie per un egual numero di filosofi.
+Il problema è che per mangiare, ogni filosofo ha bisogno di due forchette. Ogni filosofo può solamente prendere le forchette accanto al suo piatto (a destra e a sinistra).
+Una volta finito di mangiare, ripone le forchette e torna a pensare (as they do).
+
+Il problema e che due filosofi seduti vicini non possono mangiare contemporaneamente.
+
+### prima "soluzione" (genera deadlock)
+```C
+semaphore fork[5] = {1};
+
+void philosopher(int i) {
+	while(true) {
+		think();
+		wait(fork[i]);
+		wait(fork[(i+1)%5]);
+		eat();
+		signal(fork[(i+1)%5]);
+		signal(fork[i]);
+	}
+}
+
+void main() {
+	parbegin(philosopher[0], philosopher[1], philosopher[2], philosopher[3], philosopher[4])
+}
+```
+- ci sono `n` semafori (con `n` numero di filosofi), tutti inizializzati a `1`.
+- il filosofo `i`-esimo avrà bisogno della forchetta `i`-esima e di quella `i+1%n`-esima
+- i filosofi pensano - `think` operazione locale, la possono fare senza problemi
+- un filosofo prova a prendere la forchetta di sx - `wait(fork[i])` - e, se qualcuno l'ha già presa, si blocca e poi stessa cosa per quella di destra `wait(fork[(i+1)%5])`
+
+Ci può essere deadlock: può succedere che lo scheduler lasci fare a tutti i filosofi la `wait` sulla forchetta sinistra (senza problemi) - poi, tutti cercheranno di prendere quella di destra, e rimarranno bloccati (non ci sono più forchette)
+
+### seconda soluzione (cambio premesse)
+```C
+semaphore fork[5] = {1};
+semaphore room = {4}
+
+void philosopher(int i) {
+	while(true) {
+		think();
+		wait(room)
+		wait(fork[i]);
+		wait(fork[(i+1)%5]);
+		eat();
+		signal(fork[(i+1)%5]);
+		signal(fork[i]);
+		signal(room)
+	}
+}
+
+void main() {
+	parbegin(philosopher[0], philosopher[1], philosopher[2], philosopher[3], philosopher[4])
+}
+```
+- visto che prima il problema era che tutti gli `n` filosofi volevano mangiare, ora risolviamo in modo diverso <small>(bariamo un po')</small>
+- invece di avere tutti i filosofi seduti, facciamo finta che ci sia un cameriere che fa entrare a mangiare al massimo `n-1` filosofi
+- non c'è più deadlock (c'è sempre un filosofo che riesce a mangiare)
+
+### terza soluzione: semafori (senza cambiare premesse)
+Si torna al canone: non cambiamo i termini del problema.
+
+```C
+semaphore fork[N] = {1, 1, ..., 1};
+
+philosopher(int me) {
+	int left, right, first, second;
+	left = me;
+	right = (me+1)%N;
+	first = right < left ? right : left;
+	second = right < left ? left : right;
+	
+	while(true) {
+		think();
+		wait(fork[first]);
+		wait(fork[second]);
+		eat();
+		signal(fork[first]);
+		signal(fork[second]);
+	}
+}
+```
+
+Questa soluzione funziona perché:
+- mentre prima si prendeva sempre la forchetta di sinistra e poi quella di destra, qui si fa in modo che l'*ultimo processo si comporti al contrario* (prenderà prima la dx e poi la sx)
+	- l'operatore ternario funziona perché, per l'ultimo processo, `(me+1)%n` sarà `0`
+- questo basta a rompere il ciclo vizioso: se anche si presentasse la situazione di prima, l'ultimo si bloccherebbe cercando di prendere la forchetta di destra, già occupata (e quindi lascerebbe libera la sua sinistra)
+
+### quarta "soluzione": messaggi (sbagliata e corretta)
+- possiamo implementare la prima "soluzione" anche con i semafori, ma continuerà a non funzionare (i filosofi vanno tutti prima a sinistra e poi a destra)
+
+La versione corretta è invece l'analoga dii quella appena vista (terza soluzione), ma con i messaggi.
+
+```C
+mailbox fork[N];
+
+// rendo tutte le forchette prendibili
+init_forks() {
+	int i;
+	for(i=0; i<N; i++) {
+		nbsend(fork[i], "fork");
+	}
+}
+
+philosopher(int me) {
+	int left, right;
+	message fork1, fork2;
+	left = me;
+	right = (me+1)%N;
+	first = right < left ? right : left;
+	second = right < left ? left : right;
+	
+	while(true) {
+		think_for_a_while();
+		receive(fork[first], fork1);
+		receive(fork[second], fork2);
+		eat();
+		nbsend(fork[first], fork1);
+		nbsend(fork[second], fork2)
+	}
+}
+```
+
+### quinta soluzione (corretta, ma possibile livelock)
+```C
+philosopher(int me) {
+	int left, right;
+	message fork1, fork2;
+	left = me;
+	right = (me+1)%N;
+	
+	while(true) {
+		think_for_a_while();
+		// receive non bloccanti
+		if(nbreceive(fork[left], fork1)) {
+			if(nbreceive(fork[right], fork2)) {
+				eat();
+				nbsend(fork[right], fork1);
+			}
+		nbsend(fork[left], fork2)
+		}
+	}
+}
+```
+
+Mantengo la scelta di andare prima a sinistra e poi a destra, ma uso i messaggi per usare un "trucco" che non posso mettere in atto con i semafori:
+- uso la `receive` non bloccante - provo a vedere se posso prendere una forchetta, e se non ci riesco, smetto di provarci
+- se posso ricevere la prima, vado avanti e cerco di ricevere anche la seconda - altrimenti, smetto di provare a mangiare
+
+>[!warning] attenzione: livelock
+>Questa soluzione può però causare **livelock**: infatti, se tutti i processi prendono la forchetta sinistra, ma vengono bloccati e non possono prendere quella di destra, entrano in un circolo vizioso in cui prendono e rilasciano la forchetta sinistra senza mai prendere quella di destra.
+> 
+>Tuttavia, accettiamo questa soluzione perché i filosofi pensano per un tempo casuale, non correlato a quello degli altri (ed è quindi improbabile che questa soluzione si presenti davvero).
