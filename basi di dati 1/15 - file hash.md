@@ -56,8 +56,18 @@ Appare evidente che quanti più sono i bucket, tanto più è basso il costo di u
 >
 >> supponiamo di non avere un direttorio di record all'inizio del blocco (e quindi che tutto lo spazio sia occupato dai dati). serve però un puntatore per ogni blocco per linkare i blocchi dello stesso bucket.
 >
->   [ da finire :) ]
->    
+>In un blocco dobbiamo quindi memorizzare il maggior numero possibile di record + un puntatore per un eventuale prossimo blocco nel bucket.
+>Abbiamo due modi per calcolare il *massimo numero di record per blocco*:
+>1) Sappiamo che $M\cdot R+P\leq CB$ , ovvero il massimo numero di record x la dimensione di un record con aggiunto il puntatore deve essere minore o uguale della dimensione di un blocco (sono tutte le informazioni che inseriamo in un blocco)
+>   Quindi, $M\leq \frac{1020}{300}=3,4$. Sappiamo che $M$ deve essere intero (i record non possono stare a cavallo), quindi possiamo assumere $M=3$
+>2) possiamo anche sottrarre la taglia del puntatore dallo spazio utilizzabile in un blocco e prendere la parte intera inferiore della divisione dello spazio rimanente per la taglia dei record - $M=\left\lfloor  \frac{CB-P}{R}  \right\rfloor=\left\lfloor  \frac{1020}{300}  \right\rfloor=3$
+> 
+>>[!note] se il blocco ha un puntatore al blocco precedente
+>>in questo caso devo sottrarre lo spazio di un altro puntatore da quello disponibile (o moltiplicare per due $P$ nella diseguaglianza)
+> 
+> Se la distribuzione dei record nei bucket è uniforme, avremo $RB=\left\lceil  \frac{NR}{B}  \right\rceil$ ovvero numero di record in un bucket = $\frac{\text{numero di record}}{\text{numero di bucket}}$
+>
+>
 >![[todo-1.png]]
 >![[todo-2.png]]
 >![[todo-3.png]]
