@@ -26,13 +26,49 @@ Per esempio, si possono ordinare gli item e imporre alle transazioni di richiede
 ## livelock
 Un livelock si verifica quando una transazione aspetta indefinitamente che gli venga garantito un lock su un certo item.
 
-### soluzioni
 Il problema dell'attesa indefinita può essere risolto:
 - con una strategia **first come-first served**
 - eseguendo le transazioni in base alla loro **priorità** e aumentando la priorità di una transazione all'aumentare del tempo in cui rimane in attesa
+### abort di una transazione
+Avviene quando:
+- la transazione esegue un'operazione non corretta (es. divisione per 0)
+- lo scheduler rileva un deadlock
+- lo scheduler fa abortire la transazione per garantire la serializzabilità
+- si verifica un malfunzionamento hardware o software
 
-#### abort di una transazione
+### punto di commit
+Il punto di commit di una transazione è il punto in cui essa ha ottenuto **tutti i lock** di cui aveva bisogno, e ha **effettuato tutti i calcoli** (quindi sta per fare gli unlock).
+In questo caso, non può essere abortita a causa dei punti 1-3.
 
+>[!info] dati sporchi
+>I dati sporchi sono quindi i dati scritti da una transazione sulla base di dati prima di raggiungere un punto di commit
+
+### rollback a cascata
+Quando una transazione $T$ viene abortita, devono essere annullati gli effetti sulla base di dati prodotti sia da $T$ che da qualsiasi transazione abbia letto dati sporchi.
+
+Abbiamo visto che:
+- il [[19 - il meccanismo di lock, lock binario|lock binario]] permette di risolvere il problema del lost update, ma non quello della lettura di un dato sporco o dell'aggregato non corretto.
+- il [[19 - il meccanismo di lock, lock binario#locking a due fasi|locking a due fasi]] permette di risolvere il problema dell'aggregato non corretto, ma non quello della lettura del dato sporco
+
+Per risolvere questo problema, quindi, serve che le transazioni obbediscano a regole più restrittive.
+
+## locking a due fasi stretto
+Una transazione soddisfa il protocollo di locking a due fasi stretto se:
+1) non scrive sulla base di dati fino a quando non ha raggiunto il suo punto di commit 
+	- questo assicura che, se una transazione viene abortita, non ha modificato nessun item nella base di dati
+2) non rilascia un lock finché non ha finito di scrivere sulla base di dati
+	- in questo modo, se una transazione legge un item scritto da un'altra transazione, quest'ultima sarà sicuramente una transazione che non può essere abortita
+
+> [!example] esempio
+> ![[locking-stretto.png|center|200]]
+
+## classificazione dei protocolli
+### protocolli conservativi
+I protocolli conservativi cercano di **evitare** le situazioni di stallo.
+Ogni transazione richiede *tutti i lock all'inizio* - se ne manca anche una sola, la transazione viene messa in attesa.
+
+Così si evita il deadlock, ma non il livelock - la transazione rischia di non poter mai partire.
+Per evitare anche il livelock, una transazione richiede tutti i lock che servono all'inizio e li ottiene se e solo se
 
 
 
