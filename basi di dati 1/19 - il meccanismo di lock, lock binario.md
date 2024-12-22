@@ -21,6 +21,11 @@ Le transazioni fanno uso di due operazioni:
 - `lock(X)` per richiedere accesso all'item`X`
 - `unlock(X)` per rilasciare l'item `X`
 
+>[!info]- lock a tre valori
+>Esiste anche un altro modello di lock: quello a tre valori.
+>- Se una transazione vuole semplicemente leggere un item può effettuare una `rlock(X)` - eventuali transazioni che vogliono modificare `X` verranno bloccate, ma non quelle che vogliono leggerlo.
+>- Se una transizione vuole modificare un item, può invece effettuare una `wlock(X)` - nessuna altra transazione può leggere o modificare `X`
+>- entrambi i lock sono rilasciati da `unlock(X)`
 ### vantaggi
 Attraverso il lock binario risolviamo il primo dei problemi visti: la *perdita di aggiornamento* (ghost/lost update).
 
@@ -92,5 +97,29 @@ Esiste un algoritmo per testarla:
 > [!info] teorema: correttezza dell'algoritmo
 > Uno schedule $S$ è serializzabile se e solo se il suo grafo di serializzazione è aciclico.
 
+>[!example]- esempio
+per esempio, tracciamo archi tra le transizioni di questo codice:
+>
+>![[codice-grafo.png|center|300]]
+>![[grafo-codice.png|center|300]]
+>
+>il grafo presenta i cicli $T_{1}-T_{2}-T_{3}-T_{4}$ e $T_{1}-T_{5}-T_{3}-T_{4}-T_{1}$
 
+## locking a due fasi
+Una transazione obbedisce al protocollo di locking a due fasi se:
+- prima effettua *tutte* le operazioni di `lock` - **fase di locking**
+- poi *tutte* le operazioni di `unlock` - **fase di unlocking**
 
+### serializzabilità
+>[!info] teorema
+>Sia $T$ un insieme di transazioni.
+>Se ogni transazione in $T$ è a due fasi, allora ogni schedule di $T$ è serializzabile
+
+>[!note] dimostrazione
+>Per assurdo, ogni transazione in $S$ è a due fasi, ma nel grafo di serializzazione c'è un ciclo.
+>
+>![[dim-due-fasi.png|center|200]]
+>
+>Entriamo subito in una contraddizione: infatti, il ciclo si chiude solo nel caso una transizione $T_{k}$ abbia fatto un unlock e, subito dopo, $T_{1}$ un lock. Ma questo non è possibile se ogni transazione è a due fasi --> abbiamo dimostrato che due fasi $\implies$ ogni schedule serializzabile
+### vantaggi
+Il lock a due fasi risolve il problema dell'aggregato non corretto (una transazione $T_{2}$ non ha accesso ai dati `locked` di $T_{1}$ fino a quando essa non li rilascia, e $T_{1}$ legge prima tutti i dati di cui ha bisogno, e poi li usa)
