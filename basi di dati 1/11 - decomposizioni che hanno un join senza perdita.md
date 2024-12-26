@@ -51,7 +51,7 @@ quando finisce l'algoritmo, o:
 
 >[!summary]- spieghiamo meglio
 >- costruiamo una tabella $r$ in modo da evere un numero di colonne pari al numero di attributi in $R$ e un numero di righe pari al numero di sottoschemi nella decomposizione $\rho$
->- nelle celle ad indice $i$ per le righe e $j$ per le colonne, inseriamo $a_{ij}$ se l'attributo della colonna $j$ appartiene al sottoschema della riga $i$ - altrimenti inseriamo $b_{ij}$
+>- nelle celle ad indice $i$ per le righe e $j$ per le colonne, inseriamo $a_{j}$ se l'attributo della colonna $j$ appartiene al sottoschema della riga $i$ - altrimenti inseriamo $b_{ij}$
 >- adesso, per ogni dipendenza $X\to Y \in F$, controlliamo se nella tabelle i sono tuple che non rispettano la dipendenza (ovvero $t_{1}[X]=t_{2}[X]$ e $t_{1}[Y]\neq t_{2}[Y]$) - le "facciamo diventare legali": se in una tupla è presente una $a$ nell'attributo $Y$, la propaghiamo a tutte le altre, altrimenti scegliamo un $b$ a piacere e lo propaghiamo su tutte le altre (due attributi sono uguali se hanno entrambi $a$ o una $b$ con lo stesso pedice)
 
 #### esempio
