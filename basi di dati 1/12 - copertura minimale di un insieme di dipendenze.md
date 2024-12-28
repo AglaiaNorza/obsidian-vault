@@ -51,6 +51,7 @@ Per ogni insieme di dipendenze funzionali $F$ esiste una copertura minimale equi
 >dobbiamo verificare se ci sono ridondanze nelle parti sinistre.
 >- cominciamo da $AB\to C$, e verifichiamo se $A\to C\in F^+$, ovvero se $C\in A^+_{F}$
 >	- non ci sono dipendenze che hanno a sinistra solo $A$, quindi $A^+_{F}=\{ A \}$.
+>	- stesso discorso per $B$, $B^+_{F}=\{ B \}$
 >- la stessa cosa vale per $AB\to D$ e $AB\to E$.
 >- proviamo a ridurre $ABC\to D$.
 >	- nell'insieme di dipendenze esiste $AB\to D$, quindi possiamo eliminare $C$ ma anche tutta la dipendenza risultante, che sarebbe uguale a $AB\to D$.

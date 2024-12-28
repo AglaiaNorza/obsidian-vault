@@ -79,7 +79,7 @@ Altra definizione - se si vuole usare un insieme (Y) invece del singleton A:
 >- $B\to CD$? dobbiamo controllare $B\to C$ e $B\to D$ - entrambe **violano la 3NF** perché B non è superchiave e né C né D sono primi - quindi *lo schema R non è in 3NF*
 
 >[!example]- esempio 2
->$$R=ABCD\;\;\;\;\{F=AB\to CD,\, BC\to A, \,D\to AC\}$$
+>$$R=ABCD\;\;\;\;F=\{AB\to CD,\, BC\to A, \,D\to AC\}$$
 > 
 >le chiavi sono:
 >- $AB$ ($\to CD$) 
