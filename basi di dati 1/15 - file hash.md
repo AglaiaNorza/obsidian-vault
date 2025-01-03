@@ -80,4 +80,9 @@ Appare evidente che quanti più sono i bucket, tanto più è basso il costo di u
 >Dobbiamo riscrivere l'espressione di $MA$ in modo che compaia esplicitamente il numero di bucket $B$ (tralasciando gli arrotondamenti).
 >Avremo quindi $\large MA=\left\lceil  \frac{NB}{2}  \right\rceil=\left\lceil \frac{\left( \frac{RB}{M} \right)}{2} \right\rceil=\left\lceil  \frac{\frac{\left( \frac{NR}{B} \right)}{M}}{2}  \right\rceil=\left\lceil  \frac{NR}{2(B\times M)}  \right\rceil$.
 >Dobbiamo calcolare $B$ in modo tale che $\left\lceil  \frac{NR}{2(B\times M)}  \right\rceil\leq 10$, ovvero $B\geq \frac{NR}{20M}$.
->Nel nostro caso, avremmo $B\geq \frac{250000}{(20\times_{3})}$
+>Nel nostro caso, avremmo $B\geq \frac{250000}{(20\times {3})}=4167$.
+>
+>Si può anche ragionare in un altro modo:
+>sappiamo che $MA=\left\lceil  \frac{NB}{2}  \right\rceil$, quindi, per avere $MA\leq 10$, dobbiamo avere $NB\geq 20$ (con $NB$ numero di blocchi in un bucket).
+>Quindi, dobbiamo avere $RB=M\times NB\leq M\times 20$, quindi $RB\leq 60$.
+>Perché sia possibile, serve $\frac{NR}{B}\leq 60$ e quindi $B\geq \frac{250000}{60}$
