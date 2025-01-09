@@ -152,6 +152,3 @@ Quindi, il limite superiore dell'altezza dell'albero è $\log_{d}\left( \frac{N}
 >blocchi.
 > 
 >Il costo della ricerca sarà $5$ (un blocco per ognuno dei $4$ livelli di indice $+1$ blocco per il file principale)
-
-
-$\over_{5}$
