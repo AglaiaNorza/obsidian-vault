@@ -125,24 +125,24 @@ In quel caso
 #### interruzioni annidate e sequenziali
 Le interruzioni possono essere di due tipi:
 - **interruzioni annidate**: se, mentre eseguo un'interruzione, mi arriva una seconda interruzione, metto momentaneamente in pausa la prima per eseguire la seconda
-- **interruzioni sequenziali**: se, mentre eseguo un'interruzione, mi arriva una seconda interruzione , finisco di eseguire la prima per poi passare alla seconda
+- **interruzioni sequenziali**: se, mentre eseguo un'interruzione, mi arriva una seconda interruzione, finisco di eseguire la prima per poi passare alla seconda
 
 ### gestione I/O
 
-[ questo argomento viene approfondito [[5 - gestione dell'IO|qui]]]
+[ questo argomento viene approfondito [[5 - gestione dell'IO|qui]] ]
 
 **INPUT/OUTPUT PROGRAMMATO**
 
-![[io-programmato.png|200]]
+![[io-programmato.png|center|200]]
 
-In passato, il modo di gestire l'I/O era l'**input/output programmato**: 
+In passato, l'I/O veniva gestito tramite l'**input/output programmato**: 
 - l'azione (di lettura/scrittura) viene effettuata, invece che dal processore, dal modulo di I/O, che setta i bit appropriati sul registro di stato dell'I/O
 - il processore controlla lo status finché l'operazione non è completa (busy waiting) e rimane quindi bloccato
 - non ci sono interruzioni
 
 **INPUT/OUTPUT DA INTERRUZIONI**
 
-![[io-interruzioni.png|200]]
+![[io-interruzioni.png|center|200]]
 
 Una gestione più moderna è quella dell'**input/output da interruzioni**:
 - il processore viene interrotto quando il modulo I/O è pronto a scambiare dati (la CPU non deve aspettare e controllare costantemente, ma può fare altre cose)
@@ -158,7 +158,7 @@ Una gestione più moderna è quella dell'**input/output da interruzioni**:
 
 **ACCESSO DIRETTO IN MEMORIA**
  
-![[DMA.png|300]]
+![[DMA.png|center|300]]
 Il processo utilizzato dai computer più attuali è invece quello dell'**accesso diretto in memoria**:
 - le istruzioni di I/O tipicamente richiedono di trasferire informazioni tra dispositivo di I/O e memoria: la *DMA* trasferisce un blocco di dati direttamente da/alla memoria
 - un'interruzione viene mandata quando il trasferimento è completato
@@ -228,7 +228,7 @@ il kernel ("nucleo") è la parte di sistema operativo che si trova sempre **nell
 - contiene le funzioni più usate
 
 ### caratteristiche hardware
-- protezione della memoria - non permette che la zona di memoria contenente il monitor venga modificate
+- protezione della memoria - non permette che la zona di memoria contenente il monitor venga modificata
 	- i programmi utente vengono eseguiti in *modalità utente*, mentre il monitor viene eseguito in *modalità sistema* o kernel - (le istruzioni privilegiate possono essere eseguite e si può accedere alle aree protette della memoria)
 - timer - impedisce che un job monopolizzi l'intero sistema
 - istruzioni privilegiate - possono essere eseguite solo dal monitor (es. interruzioni)
