@@ -22,7 +22,6 @@
 > 	- [[#processi e thread in Linux#stati dei processi in linux|stati dei processi in linux]]
 > 	- [[#processi e thread in Linux#segnali ed interrupt in linux|segnali ed interrupt in linux]]
 
-
 Il compito fondamentale di un sistema operativo è la **gestione dei processi** - computazioni di tipi diversi.
 Deve quindi: 
 - permettere l'esecuzione alternata di processi multipli (interleaving)
@@ -117,17 +116,12 @@ visto che il processore è più veloce dell'I/O, potrebbe succedere che tutti i 
 | richiesta del padre          | il padre lo vuole sospendere per motivi di efficienza computazionale       |
 
 ### processi e risorse
-Il Sistema Operativo è l'entità che gestisce l'uso delle risorse di sistema da parte dei processori, e deve dunquem conoscere lo stato di ogni processo e di ogni risorsa.
+Il Sistema Operativo è l'entità che gestisce l'uso delle risorse di sistema da parte dei processori, e deve dunque conoscere lo stato di ogni processo e di ogni risorsa.
 Per ogni processo/risorsa, il SO costruisce tabelle.
 
 ![[tabelle-so.png|400]]
 
 (soprattutto i processi, si trovano nella parte di RAM riservata al kernel)
-Nel **process control block** ci sono solo le informazioni essenziali i cosiddetti "attributi" - nella Primary Process Table.
-Tutta la memoria necessaria al processo è nella Process Image (programma sorgente, dati, stack, PCB).
-- eseguire un'istruzione cambia l'immagine del processo
-
-(le tabelle saranno trattate in maniera più approfondita).
 
 >[!info] attributi di un processo
 ![[attributi-processo.png|300]]
@@ -136,21 +130,9 @@ Le informazioni relative a un processo possono essere divise in tre categorie:
 > - stato
 > - controllo
 
-### come si identifica un processo
-Ad ogni processo è assegnato un numero identificativo unico: il **PID** (Process Identifier).
-Questo numero viene utilizzato da molte tabelle del sistema operativo per realizzare collegamenti con la tabella dei processi (es. tabella I/O mantiene una lista dei PID dei processi che stanno usando I/O).
+Nel **Process Control Block** ci sono solo le informazioni essenziali: i cosiddetti "attributi" (nella Primary Process Table).
 
-> [!info] se un processo viene terminato il suo PID può essere riassegnato
-
->[!tip] stato del processore
-(diverso dallo stato del processo) o Hardware Context.
-Dato dai contenuti dei registri del processore in un dato momento:
-> - visibili all'utente
-> - di controllo e stato
-> - puntatori allo stack
-> - PSW (Program Status Word)
-
->[!Info] control block del processo
+>[!Info]- PCB
 >Contiene informazioni di cui il sistema operativo ha bisogno per controllare e coordinare i vari processi attivi.
 >(ovvero)
 >- *PID*
@@ -168,10 +150,26 @@ Dato dai contenuti dei registri del processore in un dato momento:
 >   - è la struttura più importante del sistema operativo, perché definisce il suo stato
 >   - richiede protezione
 
+Tutta la memoria necessaria al processo è invece nella **Process Image** (programma sorgente, dati, stack, PCB).
+- eseguire un'istruzione cambia l'immagine del processo
+### come si identifica un processo
+Ad ogni processo è assegnato un numero identificativo unico: il **PID** (Process IDentifier).
+Questo numero viene utilizzato da molte tabelle del sistema operativo per realizzare collegamenti con la tabella dei processi (es. tabella I/O mantiene una lista dei PID dei processi che stanno usando I/O).
+
+> [!info] se un processo viene terminato il suo PID può essere riassegnato
+
+>[!tip] stato del processore
+(diverso dallo stato del processo) o Hardware Context.
+Dato dai *contenuti dei registri del processore in un dato momento*:
+> - visibili all'utente
+> - di controllo e stato
+> - puntatori allo stack
+> - PSW (Program Status Word)
+
 ### modalità di esecuzione
 la maggior parte dei processori supporta almeno due modalità di esecuzione:
-- modalità sistema: pieno controllo, si può accedere a qualsiasi locazione per la RAM - serve al kernel
-- modalità utente: molte operazioni sono vietate - serve ai programmi utente
+- **modalità sistema** (kernel mode): pieno controllo, si può accedere a qualsiasi locazione per la RAM - serve al kernel
+- **modalità utente**: molte operazioni sono vietate - serve ai programmi utente
 
 >[!warning] kernel mode
 >esempi di operazioni kernel mode:
@@ -216,9 +214,8 @@ per creare un processo, il sistema operativo deve:
 - creare o espandere altre strutture dati (es. per l'accounting)
 - (<font color="#953734">solo unix</font>) far ritornare alla syscall fork il PID del figlio al padre, e 0 al figlio.
 
-[da [appunti exyss](https://raw.githubusercontent.com/Exyss/university-notes/main/Secondo%20Anno/Sistemi%20Operativi%20I.pdf):]
 
-> [!info]
+> [!info] info
 > Per poter creare i processi figli vengono utilizzate le seguenti syscall:
 > - `fork()` (solo su UNIX), dove il *figlio creato è una copia esatta del padre*, condividendo con esso le stesse risorse ed ognuno avente il proprio PCB
 > - `spawn()` (solo su Windows), dove *il figlio creato è un processo legato ad un programma diverso* da quello del padre e avente uno spazio d’indirizzamento diverso, dunque con istruzioni, dati e PCB diversi dal padre.
@@ -230,6 +227,8 @@ per creare un processo, il sistema operativo deve:
 il decision tree del processo fork si sviluppa quindi così
 
 ![[dt-fork.png]]
+[preso da [appunti exyss](https://raw.githubusercontent.com/Exyss/university-notes/main/Bachelor/Secondo%20Anno/Sistemi%20Operativi%20I.pdf):]
+
 [back to lezioni]
 (quindi, se il pid è zero, sono il figlio e faccio la parte di computazione del figlio, e altrimenti sono il padre e devo aspettare il figlio)
  
