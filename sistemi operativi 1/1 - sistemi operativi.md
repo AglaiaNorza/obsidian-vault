@@ -254,6 +254,7 @@ il kernel ("nucleo") è la parte di sistema operativo che si trova sempre **nell
 ### dal job al processo
 il **processo** riunisce in un unico concetto il job non-interattivo e quello interattivo.
 - incorpora anche il job "transazionale real-time" (degli anni 70, es. prenotazione biglietti aerei)
+ 
 è un'unità di attività caratterizzata da:
 - un singolo *thread* di esecuzione
 - uno *stato* corrente e un insieme di risorse di sistema ad esso associate
