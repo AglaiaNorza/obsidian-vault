@@ -94,17 +94,21 @@ avrebbe una struttura del genere:
 > 
 >![[stati-processo-5-dati.png|400]]
 
-##### processi sospesi
-il processore è più veloce dell'I/O, quindi potrebbe succedere che tutti i processi in memoria siano in attesa di I/O - questi vengono swappati su disco, così da liberare memoria e non lasciare il processore inoperoso.
+##### processi sospesi - modello a 7 stati
+visto che il processore è più veloce dell'I/O, potrebbe succedere che tutti i processi in memoria siano in attesa di I/O - in questo caso questi vengono swappati su disco, così da liberare memoria e non lasciare il processore inoperoso.
 - lo stato *blocked* diventa *suspended* quando il processo è swappato su disco.
-- ci sono quindi due nuovi stati:
+- ci sono quindi due nuovi stati (un nuovo stato con due casi diversi):
 	- *blocked/suspend* - swappato mentre era bloccato
 	- *ready/suspend* - swappato mentre non era bloccato
 
 ![[stati-processo-tutti.png|450]]
 
+>[!tip]- un solo stato suspend
+>esiste anche un modello a sei stati, con un solo stato "suspend"
+>
+>![[sei-stati.png|center|350]]
 
-| motivo                       | commento                                                                   |
+| motivo per sospendere        | commento                                                                   |
 | ---------------------------- | -------------------------------------------------------------------------- |
 | swapping                     | la memoria serve per un processo ready                                     |
 | interno al SO                | il SO sospetta che il processo stia causando problemi                      |
