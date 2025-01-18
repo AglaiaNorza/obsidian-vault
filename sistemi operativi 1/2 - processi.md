@@ -308,7 +308,7 @@ i vari registri nel PCB, che vengono copiati al momento di un process switch (PC
 - **kernel stack**: stack delle chiamate, usato per le funzioni da eseguire in modalità sistema
 
 ## thread
-Per alcune applicazioni è importante essere organizzate in maniera parallela (al loro interno) - un'applicazione viene suddivisa in diverse esecuzioni (i thread).
+è importante che alcune operazioni siano organizzate in maniera parallela (al loro interno) --> vengono suddivise in diverse esecuzioni (i thread).
 
 Diversi thread di uno stesso processo *condividono tutte le risorse* del processo tranne:
 - lo stack delle chiamate (e variabili locali) - ogni thread può chiamare funzioni diverse
@@ -362,20 +362,21 @@ Quindi, ogni processo viene creato con un thread ed è poi possibile fare le seg
 >- rende il kernel più complesso
 >- è un sistema lento perché si fanno spesso chiamate al kernel
 
-![[ULT-KLT.png]]
+![[ULT-KLT.png|center|450]]
 
 ### processi e thread in Linux
 In Linux, l'unità di base sono i thread (quindi, essenzialmente una fork crea thread), che Linux chiama **Lightweight process**.
 
->[!info] def exyss LWP
->Un lightweight process (LWP) è un processore virtuale attivo nello user space contenente un singolo kernel thread, mentre multipli user thread vengono posti su uno o più LWP, i quali assumono un ruolo di "tramite" tra le due tipologie di thread.
+>[!info] def wikipedia LWP
+>In the traditional meaning of the term, as used in Unix System, a LWP runs in user space on top of a *single kernel thread* and shares its address space and system resources with other LWPs within the same process. 
+>Multiple user-level threads, managed by a thread library, can be placed on top of one or many LWPs - allowing multitasking to be done at the user level, which can have some performance benefits
 
 - sono possibili sia i KLT che gli ULT
 
 l'utente e il sistema usano due terminologie diverse per "identificazione":
 per l'*utente*: 
-- il PID è unico per tutti i thread di un processo
-- il tid (task identifier) identifica un singolo thread
+- il **PID** è unico per tutti i thread di un processo
+- il **tid** (task identifier) identifica un singolo thread
 	- il tid non va da 1 al numero di thread del processo - anzi, c'è sempre un tid che coincide con il PID
  
 (perché,) per il *sistema*:
