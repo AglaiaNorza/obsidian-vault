@@ -56,11 +56,16 @@ un singolo modulo è fatto da una parte di programma e una parte di dati condivi
 
 ##### rilocazione
 
-Vecchissima soluzione (CTSS) - gli indirizzi assoluti vengono determinati nel momento in cui il programma viene caricato in memoria:
+Vecchissima soluzione (CTSS (quindi tipo 1961)) - gli indirizzi assoluti vengono determinati nel momento in cui il programma viene caricato in memoria:
 - non si può fare senza hardware dedicato
 
 Soluzione più recente - gli indirizzi assoluti vengono determinati nel momento in cui si fa *riferimento alla memoria*
 - anche qui serve hardware dedicato
+
+>[!info] rilocazione a runtime senza hardware speciale
+>- ogni volta che un processo viene riportato in memoria, potrebbe essere in un posto diverso (e altri processi potrebbero aver preso il suo posto)
+>	- bisognerebbe quindi sostituire mano a mano tutti i riferimenti agli indirizzi ad ogni caricamento in RAM
+>	- troppo overhead: serve hardware dedicato
 
 >[!tip] rilocazione a runtime con hardware speciale
 >- l'hardware della macchina sa che il valore deve essere sommato a un certo registro per ottenere l'indirizzo fisico
