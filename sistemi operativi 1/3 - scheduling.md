@@ -43,13 +43,13 @@ Ci sono diversi tipi di scheduling (a seconda di quanto spesso vengono eseguiti)
 ### stati dei processi e scheduling
 molte delle transizioni del [[2 - processi#stato di un processo|modello a sette stati]] sono dovute a uno scheduler.
  
-![[transizioni-scheduler.png|500]]
+![[transizioni-scheduler.png|center|500]]
 
-![[code-scheduling.png]] 
+![[code-scheduling.png|center|500]] 
 
 #### long-term scheduling
 spesso è **FIFO**. 
-Altrettanto spesso, è FIFO con delle condizioni: pirorità, requisiti I/O, o tempo di esecuzione atteso.
+Altrettanto spesso, è FIFO con delle condizioni: priorità, requisiti I/O, o tempo di esecuzione atteso.
 - controlla il grado di multiprogrammazione (e decide se mettere un processo in RAM o su disco)
 - può essere chiamato in causa anche quando non ci sono nuovi processi (es. quando termina un processo o quando processi sono idle da troppo tempo)
 
@@ -248,7 +248,7 @@ Noi ci concentreremo sulle architetture multicore.
 
 Ci sono due possibilità: assegnamento statico o dinamico.
 - **assegnamento statico**
-	- quando unprocesso viene creato, gli viene assegnato *un processore*, che manterrà *per tutta la sua esecuzione* 
+	- quando un processo viene creato, gli viene assegnato *un processore*, che manterrà *per tutta la sua esecuzione* 
 	- si può usare uno *scheduler per ogni processore*
 	- vantaggi: semplice da realizzare, poco overhead
 	- svantaggi: un processore potrebbe rimanere idle (mentre altri hanno molti processi)

@@ -6,7 +6,7 @@ Per i Sistemi Operativi moderni, è essenziale supportare più processi in esecu
 
 Un grosso problema da affrontare è quello della **concorrenza**: come questi processi interagiscono.
 ### multiprogrammazione
-Se c'è im solo processore, i processi si alternano nel suo uso (*interleaving*)
+Se c'è un solo processore, i processi si alternano nel suo uso (*interleaving*)
 
 ![[interleaving.png|center|400]]
 
