@@ -380,7 +380,7 @@ per l'*utente*:
 	- il tid non va da 1 al numero di thread del processo - anzi, c'è sempre un tid che coincide con il PID
  
 (perché,) per il *sistema*:
--  c'è una entry del PCB che dà il PID comune a tutti i thread di un processo: il `tgid` (thread group leader identifier), che coincide con il PID del primo thread del processo
+-  nel PCB, il PID è comune a tutti i thread di un processo: il `tgid` (thread group leader identifier), che coincide con il PID del primo thread del processo
  
 (se si crea un nuovo processo con un thread, il PID del thread coincide con il PID del processo, e, quando si crea un nuovo thread - quel thread ha un nuovo PID, e il tgid del nuovo thread coincide con il PID di prima)
 
