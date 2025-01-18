@@ -124,7 +124,7 @@ Per ogni processo/risorsa, il SO costruisce tabelle.
 (soprattutto i processi, si trovano nella parte di RAM riservata al kernel)
 
 >[!info] attributi di un processo
-![[attributi-processo.png|300]]
+![[attributi-processo.png|center|300]]
 Le informazioni relative a un processo possono essere divise in tre categorie:
 > - identificazione
 > - stato
@@ -152,11 +152,6 @@ Nel **Process Control Block** ci sono solo le informazioni essenziali: i cosidde
 
 Tutta la memoria necessaria al processo è invece nella **Process Image** (programma sorgente, dati, stack, PCB).
 - eseguire un'istruzione cambia l'immagine del processo
-### come si identifica un processo
-Ad ogni processo è assegnato un numero identificativo unico: il **PID** (Process IDentifier).
-Questo numero viene utilizzato da molte tabelle del sistema operativo per realizzare collegamenti con la tabella dei processi (es. tabella I/O mantiene una lista dei PID dei processi che stanno usando I/O).
-
-> [!info] se un processo viene terminato il suo PID può essere riassegnato
 
 >[!tip] stato del processore
 (diverso dallo stato del processo) o Hardware Context.
@@ -165,6 +160,11 @@ Dato dai *contenuti dei registri del processore in un dato momento*:
 > - di controllo e stato
 > - puntatori allo stack
 > - PSW (Program Status Word)
+### come si identifica un processo
+Ad ogni processo è assegnato un numero identificativo unico: il **PID** (Process IDentifier).
+Questo numero viene utilizzato da molte tabelle del sistema operativo per realizzare collegamenti con la tabella dei processi (es. tabella I/O mantiene una lista dei PID dei processi che stanno usando I/O).
+
+> [!info] se un processo viene terminato il suo PID può essere riassegnato
 
 ### modalità di esecuzione
 la maggior parte dei processori supporta almeno due modalità di esecuzione:
@@ -212,17 +212,15 @@ per creare un processo, il sistema operativo deve:
 - inizializzare il process control block (con, come minimo, il nuovo PID)
 - inserire il processo nella giusta coda (es. ready o ready/suspended)
 - creare o espandere altre strutture dati (es. per l'accounting)
-- (<font color="#953734">solo unix</font>) far ritornare alla syscall fork il PID del figlio al padre, e 0 al figlio.
-
+- (<font color="#953734">solo unix</font>) far ritornare alla syscall `fork` il PID del figlio al padre, e 0 al figlio.
 
 > [!info] info
 > Per poter creare i processi figli vengono utilizzate le seguenti syscall:
-> - `fork()` (solo su UNIX), dove il *figlio creato è una copia esatta del padre*, condividendo con esso le stesse risorse ed ognuno avente il proprio PCB
-> - `spawn()` (solo su Windows), dove *il figlio creato è un processo legato ad un programma diverso* da quello del padre e avente uno spazio d’indirizzamento diverso, dunque con istruzioni, dati e PCB diversi dal padre.
+> - `fork()` (solo su UNIX), dove il *figlio creato è una copia esatta del padre* - condivide con esso le stesse risorse, ma ognuno ha il proprio PCB
+> - `spawn()` (solo su Windows), dove *il figlio creato è un processo legato ad un programma diverso* da quello del padre - ha uno spazio d’indirizzamento diverso con istruzioni, dati e PCB diversi dal padre.
 >  
-> Nei sistemi UNIX-like, viene utilizzata la syscall `exec()` a seguito della chiamata `fork()` per poter ottenere lo stesso effetto della chiamata `spawn()` di Windows. 
-> In particolare, la syscall `exec()` rimpiazza completamente il processo precedente, evitando di riprendere l’esecuzione del precedente una volta completato il processo avviato dalla syscall.
-> 
+> (Nei sistemi UNIX-like, viene utilizzata la syscall `exec()` a seguito della chiamata `fork()` per poter ottenere lo stesso effetto della chiamata `spawn()` di Windows. 
+> In particolare, la syscall `exec()` rimpiazza completamente il processo precedente, evitando di riprendere l’esecuzione del precedente una volta completato il processo avviato dalla syscall.)
 
 il decision tree del processo fork si sviluppa quindi così
 
@@ -274,7 +272,7 @@ dipende da sistema operativo a sistema operativo:
 	- lo stack delle chiamate (user stack) è comunque separato, mentre dati e codice macchina sono condivisi con i processi
 	- il process switch avviene solo, eventualmente, alla fine, se lo scheduler decide che tocca ad un altro processo
 3) **SO basato su processi** (tutto è un processo)
-	- il SO è implementato come un insieme di processi di sistema, con privilegi più alti
+	- il SO è implementato come un insieme di processi di sistema (che partecipano alla "competizione" per il processore), con privilegi più alti
 	- l'unica cosa che non è un processo è lo switch tra processi
 
 >[!info] caso concreto: linux
@@ -288,7 +286,7 @@ dipende da sistema operativo a sistema operativo:
 >diagramma degli stati di LINUX (molto simile ai sette stati)
 > ![[unix-dgstati.png|450]]
 > - si passa per forza per Kernel Running prima di arrivare a User Running perché vuol dire che si fa uno swap
-> - quando un processo finisce, passa allo stato *Zombie* - perché ci si aspetta che il padre sopravviva al figlio e, finché il figlio non comunica al padre il suo exit status, resta nello stato di Zombie - l'immagine sparisce
+> - quando un processo finisce, passa allo stato *Zombie* - perché ci si aspetta che il padre sopravviva al figlio e, finché il figlio non comunica al padre il suo exit status, resta nello stato di Zombie - l'immagine sparisce (lo stato zombie rappresenta un processo terminato ma che resta nelle tabelle dei processi perché il padre possa prendersi il suo valore di ritorno)
 > - lo schema non è interrompibile quando è in Kernel-Mode (ora per Linux non è così)
 
 ### processo Unix
