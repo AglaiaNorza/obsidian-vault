@@ -107,6 +107,8 @@ visto che il processore è più veloce dell'I/O, potrebbe succedere che tutti i 
 >
 >![[sei-stati.png|center|350]]
 
+[ più giù: modello stati in linux ]
+
 | motivo per sospendere        | commento                                                                   |
 | ---------------------------- | -------------------------------------------------------------------------- |
 | swapping                     | la memoria serve per un processo ready                                     |
@@ -247,7 +249,8 @@ quando effettuare uno switch?
 | eccezione                               | associata all'esecuzione dell'istruzione corrente | gestione di un controllo sincrono (es. pagina sbagliata della memoria virtuale)                                                                   |
 | chiamata al sistema operativo (syscall) | richiesta esplicita                               | chiamata a funzione di sistema                                                                                                                    |
 passaggi (in kernel mode):
-- *salvare il contesto* del programma (registri CPU) nel process control block 
+(per il vecchio processo)
+- *salvare il contesto* del programma (registri e CPU)
 - aggiornare il process control block (che è running)
 - spostare il PCB nella *coda* appropriata: ready, blocked, ready/suspend
 - scegliere il *nuovo processo* (può avvenire anche prima) - fatto dal dispatcher
@@ -380,7 +383,7 @@ per l'*utente*:
 	- il tid non va da 1 al numero di thread del processo - anzi, c'è sempre un tid che coincide con il PID
  
 (perché,) per il *sistema*:
--  nel PCB, il PID è comune a tutti i thread di un processo: il `tgid` (thread group leader identifier), che coincide con il PID del primo thread del processo
+-  l'entry del PCB che dà il PID comune a tutti i thread di un processo è il `tgid` (thread group leader identifier), che coincide con il PID del primo thread del processo
  
 (se si crea un nuovo processo con un thread, il PID del thread coincide con il PID del processo, e, quando si crea un nuovo thread - quel thread ha un nuovo PID, e il tgid del nuovo thread coincide con il PID di prima)
 
