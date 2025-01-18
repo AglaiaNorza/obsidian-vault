@@ -59,19 +59,19 @@ un singolo modulo è fatto da una parte di programma e una parte di dati condivi
 Vecchissima soluzione (CTSS (quindi tipo 1961)) - gli indirizzi assoluti vengono determinati nel momento in cui il programma viene caricato in memoria:
 - non si può fare senza hardware dedicato
 
-Soluzione più recente - gli indirizzi assoluti vengono determinati nel momento in cui si fa *riferimento alla memoria*
-- anche qui serve hardware dedicato
-
 >[!info] rilocazione a runtime senza hardware speciale
 >- ogni volta che un processo viene riportato in memoria, potrebbe essere in un posto diverso (e altri processi potrebbero aver preso il suo posto)
 >	- bisognerebbe quindi sostituire mano a mano tutti i riferimenti agli indirizzi ad ogni caricamento in RAM
 >	- troppo overhead: serve hardware dedicato
 
+Soluzione più recente - gli indirizzi assoluti vengono determinati nel momento in cui si fa *riferimento alla memoria*
+- anche qui serve hardware dedicato
+
 >[!tip] rilocazione a runtime con hardware speciale
 >- l'hardware della macchina sa che il valore deve essere sommato a un certo registro per ottenere l'indirizzo fisico
 >- il valore giusto da sommare è inserito dal sistema operativo nel Base Register
 >
->![[rilocazione-1.png|450]]
+>![[rilocazione-1.png|center|450]]
 >
 >Servono quindi i registri:
 >- Base register
@@ -82,12 +82,12 @@ Soluzione più recente - gli indirizzi assoluti vengono determinati nel momento 
 >è un esempio di collaborazione tra sistema operativo e hardware: l'hardware fa sempre Base Register + Relative Address, e il Sistema Operativo deve ogni volta mettere l'inizio del processo nel Base Register.
 ##### protezione
 - i processi **non devono poter accedere a locazioni di memoria di un altro processo** a meno che non siano autorizzati
-- non si può fare a tempo di compilazione a causa della compilazione, quindi serve aiuto hardware
+- non si può fare a tempo di compilazione a causa della rilocazione, quindi serve aiuto hardware
 ##### condivisione
 - deve essere possibile permettere a più processi di **accedere alla stessa zona di memoria**
 - può succedere sia per opera del programmatore, che per opera del Sistema Operativo: se più processi vengono creati eseguendo più volte lo stesso codice sorgente, è efficiente che lo condividano.
 ##### organizzazione logica
-a livello hardware, la memoria è organizzata in modo lineare (si parte da 0 e si va avanti), ma, a livello software non vi si può accedere così.
+a livello hardware, la memoria è organizzata in modo lineare (si parte da 0 e si va avanti), ma, a livello software non vi si può accedere così (i programmi sono scritti in moduli, scritti )
 - il Sistema Operativo deve quindi fare da **ponte tra il software e l'organizzazione della memoria**
 
 ##### organizzazione fisica
@@ -103,8 +103,6 @@ uno dei primi metodi per la gestione della memoria è quello del **partizionamen
 >Con la memoria virtuale, i metodi invece saranno:
 >- paginazione con memoria virtuale
 > - segmentazione con memoria virtuale
-
-
 #### partizionamento fisso uniforme
 la memoria è suddivisa in **partizioni di ugual lunghezza**.
 - se un processo ha una dimensione <= di una partizione, può essere caricato in una partizione libera
@@ -145,7 +143,8 @@ rimangono dei problemi irrisolti:
 > [!warning] problemi
 > Se ci troviamo nella situazione della foto e arriva un processo > 6M, la memoria libera non potrà essere "sommata" e utilizzata perché non contigua, quindi questo dovrà prendere il posto di un altro processo - *frammentazione esterna*: la memoria che non è usata per nessun processo viene frammentata:
 > -  si può risolvere con la *compattazione*: il Sistema Operativo sposta i processi in modo che siano contigui, ma ha un elevato overhead
->  
+
+> [!tip] dove collocare un processo?
 > Il Sistema Operativo deve decidere a quale blocco assegnare un processo:
 > - algoritmo **best-fit**:
 > 	- si sceglie il blocco più piccolo tra quelli adatti
@@ -154,10 +153,11 @@ rimangono dei problemi irrisolti:
 > 	- comincia dall'inizio della memoria e sceglie il primo blocco con abbastanza memoria (funziona perché il partizionamento è dinamico - la memoria rimasta libera può essere assegnata)
 > 	- molto veloce, ma tende a riempire solo la prima parte della memoria
 > - algoritmo **next-fit**:
-> 	- come il first-fit, ma parte dall'ultima posizione di mnemoria assegnata ad un processo
+> 	- come il first-fit, ma parte dall'ultima posizione di memoria assegnata ad un processo
 > 	- assegna più spesso il blocco a fine memoria
 > 
 > ![[es-allocazione.png|center|400]]
+> 
 
 #### buddy-system
 - compromesso tra partizionamento fisso e dinamico
@@ -188,7 +188,7 @@ Quando un processo finisce, dovrei farlo *combaciare con un altro (buddy) per cr
 - ogni pagina, per essere usata, *deve essere collocata in un frame* (visto che pagine e frame hanno la stessa dimensione, avviene in maniera semplice)
 	- pagine contigue di uno stesso processo possono essere collocate in frame distanti (perché una pagina può essere messa in qualunque frame)
 
-I Sistemi Operativi che adottano la paginazione devono mantenere una **tabella delle pagine** per ogni processo - (gli indirizzi devono essere reali, la tabella dice in quale frame effettivo si trova)
+I Sistemi Operativi che adottano la paginazione devono mantenere una **tabella delle pagine per ogni processo** - (gli indirizzi devono essere reali, la tabella dice in quale frame effettivo si trova)
 
 - quando c'è un process switch, la tabella delle pagine del nuovo processo deve essere ricaricata
 
@@ -211,9 +211,9 @@ I Sistemi Operativi che adottano la paginazione devono mantenere una **tabella d
 > ![[es-pag-4.png|center|350]]
 #### segmentazione
 - un programma può essere diviso in segmenti di lunghezza variabile con un limite massimo
-- un indirizzo di memoria è un numero di segmento e uno spiazzamento al suo interno
+- un indirizzo di memoria è rappresentato da un *numero di segmento e uno spiazzamento al suo interno*
 - come per la tabella delle pagine, ci deve essere una tabella dei segmenti, che comunichi da dove parte il segmento in RAM e la sua lunghezza
-- simile al partizionamento dinamico, ma è il programmatore a decidere come deve essere segmentato un processo (a mettere i segmenti i RAM e risolvere gli indirizzi ci pensa il Sistema Operativo)
+- simile al partizionamento dinamico, ma è il programmatore a decidere come deve essere segmentato un processo (a mettere i segmenti in RAM e risolvere gli indirizzi ci pensa il Sistema Operativo)
 
 #### paginazione e segmentazione: indirizzi
 Bisogna gestire gli indirizzi:
