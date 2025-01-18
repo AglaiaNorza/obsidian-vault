@@ -264,7 +264,7 @@ passaggi (in kernel mode):
 - semplicemente, ogni tanto, il SO "lascia" il processore ad altri programmi
 
 dipende da sistema operativo a sistema operativo:
-![[strutture-OS-kernel.png|400]]
+![[strutture-OS-kernel.png|center|400]]
 1) **kernel eseguito al di fuori dei processi** 
 	- il concetto di processo si applica solo ai programmi utente
 	- il SO è eseguito come un'entità separata, con privilegi più elevati e una sua zona di memoria dedicata (sia per i dati che per il codice sorgente)
