@@ -285,8 +285,8 @@ dipende da sistema operativo a sistema operativo:
 >	- creati in fase di inizializzazione del SO
 >	- es: creare spazio usabile nella RAM liberando zone non usate, eseguire operazioni di rete
 
-### stati in LINUX
->diagramma degli stati di LINUX (molto simile ai sette stati)
+### stati in UNIX
+>diagramma degli stati di Unix (molto simile ai sette stati)
 > ![[unix-dgstati.png|450]]
 > - si passa per forza per Kernel Running prima di arrivare a User Running perché vuol dire che si fa uno swap
 > - quando un processo finisce, passa allo stato *Zombie* - perché ci si aspetta che il padre sopravviva al figlio e, finché il figlio non comunica al padre il suo exit status, resta nello stato di Zombie - l'immagine sparisce (lo stato zombie rappresenta un processo terminato ma che resta nelle tabelle dei processi perché il padre possa prendersi il suo valore di ritorno)
