@@ -159,7 +159,7 @@ quindi, quando si sceglie il round robin, è necessario studiare i tempi di risp
 >anche il round-robin *favorisce i processi CPU-bound*: il quanto di tempo di un processo viene usato del tutto (o quasi) - mentre i processi I/O-bound ne usano solo la porzione fino alla richiesta di I/O
 >
 >- soluzione: **round-robin virtuale**
->se un processo fa una richiesta bloccante (es. I/O), quando la richiesta viene esaudita, il processo non va in una coda di ready - ma esiste un'altra coda, la *conda ausiliare*, usata per i processi per i quali una richiesta bloccante è appena stata esaurita. Il dispatcher sceglie quindi prima dalla auxiliary queue (mandando in esecuzione solo per il tempo che rimaneva al quanto di quei processi), e, solo se questa è vuota, passa alla ready queue.
+>se un processo fa una richiesta bloccante (es. I/O), quando la richiesta viene esaudita, il processo non va in una coda di ready - ma esiste un'altra coda, la *coda ausiliare*, usata per i processi per i quali una richiesta bloccante è appena stata esaurita. Il dispatcher sceglie quindi prima dalla auxiliary queue (mandando in esecuzione solo per il tempo che rimaneva al quanto di quei processi), e, solo se questa è vuota, passa alla ready queue.
 
 ##### shortest process next (SPN)
 - richiede che i processi forniscano la propria *durata*, o che questa venga stimata

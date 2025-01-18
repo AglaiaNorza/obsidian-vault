@@ -8,7 +8,6 @@ Quindi, il Sistema Operativo gestisce la memoria, illudendo i processi di lascia
 il sistema operativo, per la gestione della memoria, deve garantire:
 - **rilocazione** e **protezione**
 	- importante che ci sia aiuto hardware
-- **protezione**
 - **condivisione**
 - **organizzazione logica**
 - **organizzazione fisica**
@@ -24,7 +23,7 @@ I riferimenti alla memoria non sono quindi "veri", ma devono essere tradotti nel
 
 Un processo ha quindi:
 
-![[anatomia-indirizzi.png|400]]
+![[anatomia-indirizzi.png|center|400]]
 
 - una zona che contiene le informazioni sul processo (PCB)
 - una zona con il programma in linguaggio macchina (Program)
@@ -33,21 +32,21 @@ Un processo ha quindi:
  
 Gli indirizzi che si possono avere sono o indirizzi di *salto* (jump) o *riferimento a dati* (lw, sw...) - tutti questi devono essere ricalcolati per trovare i veri indirizzi.
 
-> [!summary] compilazione di un programma
+> [!summary]- compilazione di un programma
 > Un programma eseguibile viene prima scritto in una serie di moduli (che fanno cose diverse), tra cui uno per le librerie statiche utilizzate.
 > Ognuno dei moduli viene compilato separatamente e si crea un file oggetto per ciascuno - il tutto viene collegato dal **linker** per creare un programma eseguibile - il **load module**, che può essere preso e caricato nella RAM dal *loader*. 
 > Nel farlo, potrebbe aver bisogno di *librerie dinamiche*.
 > 
-> ![[loading-programma.png|400]]
+> ![[loading-programma.png|center|400]]
 > 
 
 un singolo modulo è fatto da una parte di programma e una parte di dati condivisi:
 - su un modulo ancora scritto su disco ci possono essere indirizzi simbolici
 - invece, quando viene trasformato in qualcosa di eseguibile, ci sono due possibilità:
-	1) *indirizzo assoluto* - funziona solo se si sa da dove si parta
-	2) *indirizzo relativo* - suppongo di partire da 0 e uso l'indirizzo relativo rispetto al mio inizio -> l'esecuzione non va alla zona di memoria x, ma x + (indirizzo dell'inizio di dove mi trovavo)
+	1) *indirizzo assoluto* - funziona solo se si sa da dove si parte
+	2) *indirizzo relativo* - suppongo di partire da 0 e uso l'indirizzo relativo rispetto al mio inizio --> l'esecuzione non va alla zona di memoria x, ma x + (indirizzo dell'inizio di dove mi trovavo)
 
-![[indirizzi-programmi.png|400]]
+![[indirizzi-programmi.png|center|400]]
 
 >[!info] tipi di indirizzi
 >i tipi di indirizzi sono quindi:
@@ -162,10 +161,6 @@ Abbiamo a disposizione una dimensione per lo spazio utente di $2^U$.
 Supponiamo che arrivi un processo che richiede $s$ bytes di RAM.
 Il buddy-system comincia a dividere per due fino a che non si arriva a una dimensione che è un logaritmo intero di quello che voglio (un $X$ tale che $2^X-1<s\leq 2^X$) 
 - con $L\leq X\leq U$  ($L$ lower bound: non si possono creare partizioni troppo piccole).
-<<<<<<< HEAD
- 
-Ho quindi creato due partizioni, e una si userà per il processo.
-=======
 
 Ho quindi creato due partizioni, e una si userà per il processo.
  
