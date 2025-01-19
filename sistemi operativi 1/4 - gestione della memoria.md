@@ -259,7 +259,7 @@ Per i **segmenti**:
 	- quando verrà eseguito, dovrà eseguire nuovamente la stessa istruzione che aveva causato il fault
 
 Quindi, ci sono molti benefit:
-- possono esserci **molti più procssi in memoria virtuale**
+- possono esserci **molti più processi in memoria virtuale**
 - è molto più probabile che ci sia sempre un processo ready - il processore viene sfruttato al meglio senza che diventi idle
 - un processo **può richiedere più dell'intera RAM** disponibile
 
@@ -297,6 +297,7 @@ Anche la memoria virtuale ha bisogno di supporto hardware per la paginazione e s
 >[!error] traduzione degli indirizzi
 >![[trad-indirizzi.png|center|500]]
 >
+>La traduzione è fatta dall'hardware.
 >- come detto prima, il virtual address è formato da numero di pagina e offset, con il numero di bit dell'offset = x con $2^x$ dimensione della pagina.
 >- i bit del numero di pagina vanno sommati al punto di partenza della page table, ma in realtà $Page\#$ deve anche essere moltiplicato per il numero di byte che occupa una page table entry.
 >- il frame, come prima, sostituisce il numero di pagina, lasciando inalterato l'offset.
@@ -325,7 +326,7 @@ Anche la memoria virtuale ha bisogno di supporto hardware per la paginazione e s
 >- la prima tabella delle pagine è indicizzata dalla primissima parte dell'indirizzo - "**directory**" (bit che si sommano al punto di partenza della "root page table")
 >- quello che si trova, sommato con la parte "di mezzo" dell'indirizzo virtuale, permette di accedere ad un'altra tabella delle pagine, che porta al numero di frame che, come prima, va solo affiancato all'offset
 > 
->![[ram-due-pagine.png|center]]
+>![[trad-due-livelli.png|center|450]]
 
 >[!question] perché conviene?
 >Supponiamo nuovamente di avere 8GB di spazio virtuale e 33bit di indirizzo; dividiamoli in 15bit per il primo livello, 8bit per il secondo, e i rimanenti 10 per l’offset
@@ -371,7 +372,7 @@ Mentre la tabella delle pagine contiene tutte le pagine di un processo, il TLB (
 
 ![[TLB-mapping.png|center|500]]
 
-c'è un altro problema: bisogna fare in modo che il *TLB contenga solo pagine che sono in RAM* (una volta ottenuto il real address, non possono esserci page fault perché potrebbe essere difficile accorgersene) - quindi, ogni volta che il Sistema Operativo swappa una pagina dalla tabella delle pagine (quindi mettere il bit di presenza a 0), deve anche eliminarla dal TLB.
+c'è un altro problema: bisogna fare in modo che il *TLB contenga solo pagine che sono in RAM* (una volta ottenuto il real address, non possono esserci page fault perché potrebbe essere difficile accorgersene) - quindi, ogni volta che il Sistema Operativo swappa una pagina dalla tabella delle pagine (quindi mette il bit di presenza a 0), deve anche eliminarla dal TLB.
 
 >[!example] schema generale più o meno completo
 >![[tlb-cache.png|center|500]]
@@ -383,7 +384,7 @@ c'è un altro problema: bisogna fare in modo che il *TLB contenga solo pagine ch
 - ma anche *maggiore il numero di pagine per processo* 
 - (e più grande è la tabella delle pagine)
 - quindi la maggior parte delle tabelle delle pagine finisce in memoria secondaria
-- ma maggiore è il numero di pagine che si trovano in memoria principale, e quindi i *page fault saranno pochi* (visto che i riferimenti saranno vicini)
+- ma maggiore è il numero di pagine che si trovano in memoria principale, *minori saranno i page fault* (visto che i riferimenti saranno vicini)
 
 Bisogna quindi trovare un giusto compromesso:
 
@@ -399,7 +400,7 @@ permette al programmatore di vedere la memoria come un insieme di segmenti di in
 - permette di condividere e proteggere dati in maniera semplice (metto i dati condivisi in un segmento e quelli protetti in un altro)
 
 #### organizzazione
-- ogni processo ha una sua tabella dei segmenti (puntata dal control block)
+- ogni processo ha una sua **tabella dei segmenti** (puntata dal control block)
 - ogni entry della tabella contiene:
 	- indirizzo di partenza in memoria principale del segmento
 	- lunghezza del segmento
@@ -419,7 +420,7 @@ tipicamente, *paginazione e segmentazione sono combinate* - i segmenti possono e
 
 ![[segmentazione-E-paginazione.png|center|500]]
 
-### elementi centrali per il progetto di un sistema operativo
+## elementi centrali per il progetto di un sistema operativo
 - fetch policy
 - placement policy
 - replacement policy
@@ -561,12 +562,12 @@ Per fare ciò, si usano delle politiche di monitoraggio, invocate ogni tot page 
 > - processo con il working set (numero di frame allocati in memoria principale) più piccolo
 > - processo con immagine più grande (più grande numero di pagine)
 > - processo con più alto tempo rimanente di esecuzione
-### gestione della memoria in linux
+## gestione della memoria in linux
 in Linux, c'è una netta **distinzione tra richieste di memoria da parte del kernel e di processi utente**.
 - il *kernel si fida di se stesso*, quindi ci sono pochi controlli (se non nessuno) per richieste da parte di se stesso
 - invece, per i processi utente ci sono *controlli di protezione e di rispetto dei limiti assegnati* 
 
-#### cenni di gestione di memoria del kernel
+### cenni di gestione di memoria del kernel
 il kernel potrebbe dover aver bisogno di RAM.
 Può fare sia richieste di RAM molto piccole o anche molto grandi, tutte contemporaneamente. 
 I due tipi di richieste sono gestite in maniera diversa:
@@ -575,7 +576,7 @@ I due tipi di richieste sono gestite in maniera diversa:
 	- importante per il DMA (che permette a un dispositivo di I/O di scrivere direttamente in RAM), che ignora la paginazione e va direttamente in RAM
 	- usa essenzialmente il buddy system
 
-#### gestione della memoria utente
+### gestione della memoria utente
 - fetch policy - paging on demand
 - placement policy - primo frame libero
 - replacement policy - [citato sotto]
@@ -585,7 +586,7 @@ I due tipi di richieste sono gestite in maniera diversa:
 	- o quando ci sono pagine troppo "sporche" (modificate solo in RAM ma non su disco) o una pagina sporca da troppo tempo
 - controllo del carico: assente
 
-#### replacement policy
+### replacement policy
 (in realtà, kernel più recenti usano un LRU corretto, che ha meno overhead)
 
 è un algoritmo dell'orologio "corretto":
