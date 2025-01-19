@@ -333,8 +333,8 @@ Anche la memoria virtuale ha bisogno di supporto hardware per la paginazione e s
 >- (spesso i processori impongono che una page table di secondo livello entri in una pagina)
 >  
 >Così, l'overhead di ogni processo:
->- dovrebbe essere 32MB per ogni livello (come prima), più $2^{15+2}=128\text{kB}$ per l'occupazione del primo livello (la moltiplicazione per 2 dell'esponente è perché continuo a supporre che 1 entry occupi 4byte), MA:
->- a questo punto diventa facile paginare la tabella delle pagine: ci basta che in RAM ci sia il primo livello (128kB), più solo *una* tabella del secondo livello (che entra in una pagina)
+>- dovrebbe essere 32MB per ogni livello (come prima), più $2^{15+2}=128\text{kB}$ per l'occupazione del primo livello, MA:
+>- a questo punto diventa facile paginare la tabella delle pagine: ci basta che in RAM ci sia il primo livello (128kB), più solo *una* tabella del secondo livello (che entra in una pagina) 
 >- ora, con una RAM da 1GB, ci vorrebbero 1000 processi
 
 ### translation lookaside buffer
