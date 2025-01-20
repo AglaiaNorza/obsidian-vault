@@ -479,6 +479,7 @@ Evita il bottleneck del disco di parità (prima, ogni scrittura aveva effetto su
 Come RAID5, ma con due dischi di parità indipendenti.
 - permette d recuperare anche due fallimenti di disco, ma con una penalità del 30% in più rispetto a RAID5 sulla scrittura (si equivalgono invece per la lettura)
 
+![[RAID6.png|center|400]]
 ### riassunto
 ![[RAID-riassunto.png|center|600]]
 
