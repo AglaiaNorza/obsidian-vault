@@ -224,7 +224,7 @@ Per selezionare un settore, bisogna aspettare che il disco ruoti (ruota a veloci
 Se i dati sono tanti, potrebbero trovarsi su più settori o addirittura più tracce. (un settore misura in media 512 bytes).
 
 ### prestazioni del disco
-La linea generale di un'operazione su disco può essere riassunta come segue:
+La linea temporale di un'operazione su disco può essere riassunta come segue:
 
 ![[timeline-disco.png|center|500]]
 
@@ -239,7 +239,7 @@ A parte rispetto a questi:
 - *wait for channel*: attesa che il sottodispositivo sia assegnato alla richiesta (se ci sono più dischi che condividono un solo canale di comunicazione)
 
 ### politiche di scheduling per il disco
-Come per la RAM, anche nel caso di un disco con testine mobili ci sono diverse vie per poter rendere efficienti possibile le operazioni di read/write.
+Come per la RAM, anche nel caso di un disco con testine mobili ci sono diverse vie per poter rendere più efficienti possibile le operazioni di read/write.
 
 >[!example] termine di confronto
 >le politiche saranno confrontate su un esempio comune:
@@ -250,7 +250,7 @@ Come per la RAM, anche nel caso di un disco con testine mobili ci sono diverse v
 >
 >viene considerato solo il seek time, confrontato con il random (scheduling peggiore)
 
-#### FIFO
+### FIFO
 Le richieste sono servite in modo sequenziale
 - è equo nei confronti dei processi 
 - se ci sono molti process in esecuzione, si comporta in modo simile al random
@@ -355,7 +355,7 @@ Gli SSD sono preferiti rispetto agli HDD, in quanto sono estremamente veloci
 Esistono anche algoritmi di accesso e file system progettati per massimizzare le performance degli SSD.
 
 ## cache del disco
-La cache del disco è un buffer in memoria principale usato esclusivamente per i settori del disco, che contiene una loro copia.
+La cache del disco è un buffer in memoria principale usato esclusivamente per i *settori del disco*, che contiene una loro copia.
 - quando si fa una richiesta di I/O, si vede prima se il settore che si cerca si trova nella cache.
 - se non c'è, viene copiato al suo interno
 
@@ -378,6 +378,7 @@ Utilizza uno stack di puntatori come l'LRU:
 - quando un blocco viene referenziato, lo si sposta all'inizio dello stack
 
 Ma lo *stack è diviso in due*: una parte nuova e una vecchia:
+- un nuovo settore viene portato nella parte nuova
 - ogni volta che si fa riferimento ad un settore nella cache, l'incremento avviene solo se si trova nella parte vecchia
 - si passa dalla parte nuova a quella vecchia per *scorrimento*: quando un blocco vecchio viene riferito e "diventa nuovo", spinge l'ultimo dei nuovi a diventare il primo dei vecchi
 - per la sostituzione, si sceglie il blocco con contatore minimo *nella parte vecchia* (in caso di parità, quello più recente)
