@@ -66,8 +66,7 @@ i dispositivi I/O possono differire sotto molti aspetti:
 >I/O con *Direct Access Memory*
 > - (le istruzioni richiedono di trasferire informazioni tra dispositivo e memoria) - la DMA trasferisce un blocco di dati dalla memoria, e un'interruzione viene mandata quando il trasferimento è completo
 
-Ci sono sostanzialmente quattro modi di gestire l'I/O:
-
+Ci sono sostanzialmente tre modi di gestire l'I/O:
 
 |                         | senza interruzioni | con interruzioni               |
 | ----------------------- | ------------------ | ------------------------------ |
