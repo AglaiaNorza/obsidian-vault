@@ -85,7 +85,7 @@ in ordine cronologico, l'I/O si è evoluto così:
 2) aggiunta di un *modulo (controllore) di I/O* direttamente sul dispositivo, che permette I/O programmato senza interrupt (il processore non si deve occupare di alcuni dettagli del dispositivo stesso)
 3) modulo o controllore di I/O *con interrupt* - migliora l'efficienza del processore, che non deve aspettare il completamento dell'operazione I/O
 4) *DMA* - i blocchi di dati viaggiano tra dispositivo e memoria, senza usare il processore (che fa qualcosa solo a inizio e fine operazione)
-5) il modulo di I/O diventa un *processore separato general purpose* (I/O channel) -il processore principale comanda a quprogettoello I/O di eseguire un certo programma di I/O in memoria principale
+5) il modulo di I/O diventa un *processore separato general purpose* (I/O channel) -il processore principale comanda a quello I/O di eseguire un certo programma di I/O in memoria principale
 6) *processore per l'I/O con memoria* dedicata (come una cache), usato per comunicazioni con terminali interattivi
 
 Nelle architetture moderne, il chipset (un chip a parte che implementa le varie connessioni dati) implementa le funzioni di interfaccia I/O.
@@ -114,7 +114,7 @@ per l'I/O, ci sono 3 macrotipi di gerarchie maggiormente usate:
 riguarda i dispositivi attaccati esternamente al computer (es. stampante, monitor, tastiera...)
 
 i livelli sono:
-1) **logical I/O** - (che il Sistema Operativo offre ai processi utente) il dispositivo viene visto come una risorsa lgica con operazioni standard (es. `open`, `read`, etc)
+1) **logical I/O** - (che il Sistema Operativo offre ai processi utente) il dispositivo viene visto come una risorsa logica con operazioni standard (es. `open`, `read`, etc)
 2) **device I/O** - trasforma le richieste logiche (del livello superiore) in sequenze di comandi di I/O
 3) **scheduling and control** - esegue e controlla le sequenze di comandi, eventualmente gestendo l'accodamento per massimizzare l'efficienza
 
@@ -146,7 +146,7 @@ Senza buffer, il Sistema Operativo accede al dispositivo nel momento in cui ne h
 ![[no-buffer-io.png|center|400]]
 
 ### buffer singolo
-Il Sistema Operativo crea un buffer in memoria principale (nel kernel space, spesso statica, a volte dinamica). Quando arriva una richiesta di I/O, viene letta e scritta prima3 nel sistema operativo e, in un secondo momento, passata al processo utente
+Il Sistema Operativo crea un buffer in memoria principale (nel kernel space, spesso statica, a volte dinamica). Quando arriva una richiesta di I/O, viene letta e scritta prima nel sistema operativo e, in un secondo momento, passata al processo utente
 
 ![[single-buffer-IO.jpg|center|500]]
 
@@ -180,8 +180,9 @@ Un processo può trasferire dati da o a uno dei buffer, mentre il Sistema Operat
 
 ### buffer circolare
 Vengono utilizzati più di due buffer.
-Ciascun buffer viene utilizzato quando l'operazione di I/O dev tenere il passo del processo.
+(metodo utilizzato quando l'operazione di I/O deve tenere il passo del processo)
 - questo è proprio il caso producer/consumer
+ 
 ![[buffer-circ-IO.png|center|450]]
 
 ### buffer: pro e contro 
