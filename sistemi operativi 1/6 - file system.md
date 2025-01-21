@@ -54,7 +54,7 @@ Si introduce della terminologia utile:
 I sistemi per la gestione di file forniscono servizi agli utenti e alle applicazioni per l'uso di file, e definiscono il modo in cui i file sono usati.
 #### obiettivi
 - rispondere alla *necessità* degli utenti riguardo la gestione dei dati
-- garantire he i dati nei file siano *validi*
+- garantire che i dati nei file siano *validi*
 - ottimizzare le *prestazioni* (sia dal punto di vista del Sistema Operativo - throughput - che dell'utente - tempo di risposta -)
 - fornire supporto per diversi tipi di memoria secondaria
 - *minimizzare la perdita* di dati
@@ -77,8 +77,10 @@ I sistemi per la gestione di file forniscono servizi agli utenti e alle applicaz
 - **File System** - struttura logica ed operazioni fisiche
 - **Organizzazione Fisica** - da identificatori di file a indirizzi fisici su disco (allocazione/deallocazione)
 - **Scheduling & Control** - qui ci sono i vari SCAN ecc.
+
+![[organizzazione-codice.png|center|200]]
 ## le directory
-Le directory sono dei file speciali. Esse contengono le informazioni sui file (attributi, posizione, proprietario) e forniscono il mapping tra nomi dei file e file stessi.
+Le directory sono dei file speciali. Esse contengono le informazioni sui file (attributi, posizione, proprietario) e forniscono il *mapping tra nomi dei file e file* stessi.
 
 > [!summary] operazioni
 > Le **operazioni** che si effettuano su una directory sono:
@@ -180,7 +182,9 @@ Alla fine, rimangono due possibilità valide:
 	- spazio molto meno contiguo dell'opzione precedente
 	- per lo spazio libero basta guardare una tabella di bit
 
-Con la *preallocazione* viene naturale utilizzare *porzioni grandi e di dimensione variabile*. Infatti, non sarebbe necessaria la tabella di allocazione - per ogni file basta l’inizio e la lunghezza (ogni file è un’unica porzione) e come per il partizionamento della RAM si parlerebbe di best fit, first fit, next fit (ma qui non c’è un vincitore, ci sono troppe variabili). È inefficiente per la gestione dello spazio libero: neccessita periodica compattazione (più oneroso che compattare la RAM).
+Con la *preallocazione* viene naturale utilizzare *porzioni grandi e di dimensione variabile*. Infatti, non sarebbe necessaria la tabella di allocazione - per ogni file basta l’inizio e la lunghezza (ogni file è un’unica porzione).
+- come per il partizionamento della RAM si parlerebbe di best fit, first fit, next fit (ma qui non c’è un vincitore, ci sono troppe variabili). 
+- è però inefficiente per la gestione dello spazio libero: neccessita periodica compattazione (più oneroso che compattare la RAM).
 ### come allocare spazio per i file
 Ci sono tre modi per allocare spazio:
 1) **contiguo**
