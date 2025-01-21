@@ -371,7 +371,7 @@ Per ogni file, ci sono tre terne di permessi:
 
 #### gestione file condivisi
 Per gestire file condivisi, fare copie è inutilmente costoso - si usano quindi i symlink e gli hardlink !
-Per i symlink, esistes un solo descrittore del file originale (es. i-node), e i sumlink contengono il cammino completo sul file system verso il file.
+Per i symlink, esiste un solo descrittore del file originale (es. i-node), e i symlink contengono il cammino completo sul file system verso il file.
 - possono esistere symlink a file non più esistenti
 
 Gli hardlink sono invece puntatori diretti al descrittore del file originale (es. i-node). Il file condiviso non può essere cancellato finché esiste un link remoto ad esso.

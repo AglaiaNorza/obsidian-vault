@@ -19,14 +19,14 @@ Se c'è più di un processore, i processi si alternano nell'uso di un processore
 La concorrenza si manifesta nelle seguenti occasioni:
 - applicazioni multiple --> condividono il tempo di calcolo
 - applicazioni strutturate per essere parallele --> perché generano altri processi o perché sono organizzate in thread
-- struttura del sistema operativo --> gli stessi Sistema Operativo sono costituiti da svariati processi o thread in esecuzione parallela
+- struttura del sistema operativo --> gli stessi Sistemi Operativi sono costituiti da svariati processi o thread in esecuzione parallela
 ### terminologia
 - **operazione atomica** --> una sequenza *indivisibile* di comandi -  <small>il dispatcher non può interrompere queste operazioni fino alla loro terminazione (nessun altro processo può vedere uno stato intermedio o interrompere la sequenza)</small>
 - **sezione critica** --> parte del codice di un processo in cui c'è un *accesso esclusivo ad una risorsa condivisa* - nessun altro processo che voglia accedere in modo esclusivo alla stessa risorsa può farlo
 - **mutua esclusione** --> requisito che impone che *un solo processo sia in una data sezione critica* (avviene quando due processi cercano di accedere ad una risorsa condivisa fatta per un processo solo alla volta)
 - **corsa critica** (*race condition*) --> violazione della mutua esclusione 
 - **stallo** (*deadlock*) --> due o più processi non possono procedere con la prossima istruzione perché si attendono a vicenda
-- **stallo attivo** (*livelock*) --> due o più processi cambian continuamente il proprio stato, l'uno in risposta all'altro, senza fare nulla di utile
+- **stallo attivo** (*livelock*) --> due o più processi cambiano continuamente il proprio stato, l'uno in risposta all'altro, senza fare nulla di utile
 - **starvation** --> un processo, pur essendo ready, non viene scelto dallo scheduler
 ### difficoltà
 La difficoltà principale, quando si parla di concorrenza, è che non is può fare **nessuna assunzione sul comportamento dei processi**, e neanche su come funzionerà lo scheduler.
