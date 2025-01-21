@@ -192,7 +192,7 @@ quindi, quando si sceglie il round robin, è necessario studiare i tempi di risp
 	- un processo può essere interrotto solo quando *ne arriva uno nuovo*, appena creato
 - stima il tempo rimanente richiesto per l'esecuzione, e prende quello più breve
 
-##### Highest Response Ratio First (HRRN)
+##### Highest Response Ratio Next (HRRN)
 - risolve anche il problema della starvation
 - non preemptive
 - massimizza il rapporto:
