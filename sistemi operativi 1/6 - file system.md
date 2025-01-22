@@ -359,7 +359,7 @@ Per file piccoli (di grandezza massima di $13\cdot \text{dimensione di un blocco
 #### allocazione di file
 L'allocazione di file è dinamica e viene fatta a blocchi (anche non contigui). L'indicizzazione tiene traccia dei blocchi dei file, e parte dell'indice è memorizzata nell'inode (che ha alcuni puntatori diretti e 3 indiretti).
 #### inode e directory
-Le directory sono file che contengono una lista di coppie nome file-puntatore ad inode.
+Le directory sono file che contengono una lista di coppie `(nome file, puntatore ad inode)`.
 Alcuni di questi file possono essere a loro volta directory (struttura gerarchica).
 - una directory può essere modificata solo dal sistema operativo, ma letta da ogni utente.
 #### accesso ai file
