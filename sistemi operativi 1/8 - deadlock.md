@@ -128,7 +128,7 @@ Ci sono due possibilità:
 >[!warning] è valido solo per le risorse riutilizzabili, e non per quelle consumabili
 
 Il sistema ha uno **stato** (attuale allocazione delle risorse dei processi) :
-- uno stato è *safe* se da esso parte almeno un cammino che non parte al deadlock
+- uno stato è *safe* se da esso parte almeno un cammino che non porta al deadlock
 - uno stato è *unsafe* altrimenti
 ##### strutture dati
 ![[algo-banchiere.png|center|400]]
