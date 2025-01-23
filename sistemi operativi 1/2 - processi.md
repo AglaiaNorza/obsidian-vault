@@ -89,7 +89,7 @@ avrebbe una struttura del genere:
 >[!info] modello di processi a 5 stati
 >![[stati-processo-5.png|450]]
 >
->(in realtà si può passare anche da ready a blocked o exit se un processo viene killato da un altro processo)
+>(in realtà si può passare anche da ready o blocked a exit se un processo viene killato da un altro processo)
 > 
 >![[stati-processo-5-dati.png|400]]
 
