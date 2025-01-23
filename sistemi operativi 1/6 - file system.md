@@ -206,6 +206,7 @@ Un insieme di blocchi viene *allocato alla creazione* di un file.
 > compattazione:
 >  
 > ![[comp-alloc-cont.png|center|350]]
+> (la compattazione permette di memorizzare file che altrimenti non potrebbero esserlo (pur essendo la loro dimensione minore di quella dello spazio libero))
 
 #### allocazione concatenata
 Viene allocato **un blocco alla volta**, e ogni blocco ha un *puntatore al blocco successivo* (alla fine del blocco).
