@@ -114,7 +114,7 @@ Come prevenire le condizioni?
 	- può essere difficile per software complessi
 	- si tengono risorse bloccate per troppo tempo
 - *mancanza di preemption* --> il Sistema Operativo può richiedere ad un processo di rilasciare le sue risorse (il processo poi le dovrà richiedere in seguito)
-- *attesa circolare*
+- *attesa circolare* --> ordinamento crescente delle risorse: una risorsa viene assegnata solo se segue quella che il processo detiene
 
 ### evitare
 Il Sistema Operativo fa sì che il deadlock possa accadere, ma che il sistema si muova in modo che non capiti (decidendo volta per volta cosa fare per le risorse)
@@ -266,15 +266,15 @@ Per rilevare il deadlock si possono usare le stesse strutture dati dell'algoritm
 
 #### (deadlock trovato) e poi?
 Una volta trovato un deadlock, ci sono diverse opzioni:
-- **terminre forzatamente** tutti i processi coinvolti nel deadlock (soluzione comune)
+- **terminare forzatamente tutti i processi** coinvolti nel deadlock (soluzione comune)
 - **mantenere punti di ripristino** ed effettuare il ripristino al punto precedente (lo stallo può verificarsi nuovamente, ma è improbabile che succeda all'infinito)
-- **terminare forzatamente uno ad uno** i processi coinvolti, finché lo stallo non c'è più
+- **terminare forzatamente uno ad uno i processi** coinvolti, finché lo stallo non c'è più
 - **sottrarre forzatamente risorse** ai processi coinvolti nel deadlock uno ad uno, finché lo stallo non c'è più
 
 ### vantaggi e svantaggi soluzioni
  
 > [!tip] vantaggi/svantaggi
-> ![[deadlock-sol.png|center|400]]
+> ![[deadlock-sol.png|center|500]]
 
 ## deadlock e linux
 Linux implementa una gestione minmale ma il più efficiente possibile.
