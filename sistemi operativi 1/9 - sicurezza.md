@@ -20,7 +20,8 @@ Le principali minacce informatiche sono:
 - **usurpation** (usurpazione)
 
 ### accesso non autorizzato
-Avviene quando un'entità ottiene accesso a **dati per i quali non ha l'autorizzazione**. Minaccia la **confidenzialità**.
+Avviene quando un'entità ottiene accesso a **dati per i quali non ha l'autorizzazione**. 
+Minaccia la **confidenzialità**.
 
 Gli attacchi che riescono ad ottenere un accesso non autorizzato sono:
 - esposizione
@@ -31,3 +32,17 @@ Gli attacchi che riescono ad ottenere un accesso non autorizzato sono:
 ### imbroglio
 Avviene quando un'entità autorizzata riceve **dati falsi** e pensa siano veri.
 Minaccia l'**integrità**.
+
+Gli attacchi sono:
+- mascheramento (si ottengono le credenziale di un utente autorizzato; trojan)
+- falsificazione
+- ripudio
+
+### interruzione
+È un impedimento al corretto funzionamento dei servizi.
+Minaccia l'**integrità** o la **disponibilità**.
+
+Gli attacchi sono:
+- incapacitazione
+- ostruzione (DoS)
+- corruzione
