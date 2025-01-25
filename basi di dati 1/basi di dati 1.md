@@ -19,4 +19,4 @@
 > - [[18 - Il controllo della concorrenza]]
 > - [[19 - il meccanismo di lock, lock binario]]
 > - [[20 - deadlock e livelock]]
-> - [[21 - timestamp]]
+> - [[21 - timestamp]] (da finire)
