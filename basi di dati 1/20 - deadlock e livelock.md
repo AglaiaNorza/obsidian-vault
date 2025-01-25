@@ -68,8 +68,26 @@ I protocolli conservativi cercano di **evitare** le situazioni di stallo.
 Ogni transazione richiede *tutti i lock all'inizio* - se ne manca anche una sola, la transazione viene messa in attesa.
 
 Così si evita il deadlock, ma non il livelock - la transazione rischia di non poter mai partire.
-Per evitare anche il livelock, una transazione richiede tutti i lock che servono all'inizio e li ottiene se e solo se
+Per *evitare anche il livelock*, una transazione richiede tutti i lock che servono all'inizio e li ottiene se e solo se:
+- tutti i lock sono disponibili
+- nessuna transazione che precede T nella coda è in attesa di un lock richiesto da T
 
+>[!summary] vantaggi e svantaggi
+>**vantaggi**:
+>- si evita il verificarsi sia del deadlock che del livelock
+>
+>**svantaggi**:
+>- l'esecuzione di una transizione può essere *ritardata*.
+>- una transizione è costretta a richiedere un lock *su ogni item che potrebbe servirle*, anche se poi non lo utilizza.
 
+### protocolli aggressivi
+I protocolli aggressivi cercano di processare le transazioni **il più rapidamente possibile** anche se ciò può portare a situazioni di stallo.
 
+Una transazione deve richiedere un lock su un item *immediatamente prima* di leggerlo o scriverlo.
+- può verificarsi deadlock
 
+### a confronto
+La scelta tra protocolli conservativi e aggressivi si basa principalmente sulla **probabilità che due transazioni richiedano un lock su uno stesso item**.
+Se essa è
+- **alta** --> conviene un protocollo *conservativo*, che evita il sovraccarico dovuto alla gestione del deadlock (rilevarlo, risolvere lo stallo, eseguire parzialmente transazioni che poi verranno abortite, rilascio dei lock)
+- **bassa** --> conviene un protocollo *aggressivo*, che evita il sovraccarico dovuto alla gestione dei lock (decidere se garantire un lock, gestire la tavola dei lock, mettere e togliere transazioni da una coda)

@@ -16,3 +16,7 @@
 > - [[15 - file hash]]
 > - [[16 - file con indice]]
 > - [[17 - B-tree]]
+> - [[18 - Il controllo della concorrenza]]
+> - [[19 - il meccanismo di lock, lock binario]]
+> - [[20 - deadlock e livelock]]
+> - [[21 - timestamp]]
