@@ -35,7 +35,7 @@ sarà sempre vero per ogni istanza legale - quindi, sarà soddisfatta anche `Mat
 >si denota con:
 >$$F^+$$
 >
->e si ha che:  $F \subseteq F$
+>e si ha che:  $F \subseteq F^+$
 
 ### chiave
 >[!info] definizione
@@ -60,10 +60,10 @@ Sono dipendenze che non vale la pena specificare.
 Sono date da:
 $$ \text{Sottoinsiemi non vuoti X, Y di R tali che } Y \subseteq sub=X$$
 
-perciò, ogni istanza di r soddisfa necessariamente la dipendenza funzionale `X->Y`
+perciò, ogni istanza di r soddisfa necessariamente la dipendenza funzionale $X\to Y$
 (es. Nome, Cognome -> Nome)
 
-Pertanto, se `Y ⊆X`, `X->Y ∈ F+` - **dipendenza banale**.
+Pertanto, se $Y\subseteq X,\,X\to Y\in F^+$ è detta **dipendenza banale**.
 
 Dati uno schema di relazione R e un insieme di dipendenze funzionali F, si ha:
-$$X\rightarrow Y \in F^+ \iff \forall A \in Y (X\rightarrow A \in F^+)$$
+$$X\rightarrow Y \in F^+ \iff \forall A \in Y\; (X\rightarrow A \in F^+)$$

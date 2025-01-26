@@ -134,8 +134,6 @@ $$X \to Y \in F^A \iff Y \subseteq X^+$$
 >
 >Poiché $X\rightarrow Y \in F^A$, per la regola della decomposizione si ha che, per ogni $i$, $i=1, \dots, n$, $X \rightarrow A_{i} \in F^A$, cioè $A_{i} \in X^+$ per ogni $i, i=1,\, \dots,\, n$, e, quindi, $Y \subseteq X^+$
 >$\begin{flalign}&& \square\end{flalign}$
-
-
 ### teorema: $F^+=F^A$
 
 Siano $R$ uno schema di relazione ed $F$ un insieme di dipendenze funzionali su $R$.
@@ -146,7 +144,7 @@ Si ha: $$F^+=F^A$$
 Sia $X \to Y \in F^A$. Dimostriamo che $X \to Y \in F^+$ per induzione su $i$ applicazioni di uno degli assiomi di Armstrong.
 
 **caso base**: ($i=0$): $X\to Y\in F\implies X\to Y\in F^+,,,, F\subseteq F^+$
- - (non abbiamo applicato nessun assioma di Armstrong: $X\to Y$ è in $F$ quindi banalmente è in $F^+$)
+ - (se $X\to Y\in F^A$ senza che abbiamo applicato nessun assioma di Armstrong, allora $X\to Y$ è in $F$ e quindi banalmente è in $F^+$)
 
 **ipotesi induttiva** ($i>0$): $X\to Y\in F^A\implies X\to Y\in F^+\implies X\to Y$ è soddisfatto da ogni istanza legale
 - (ogni dipendenza in $F^A$ ottenuta applicando fino a $i-1$ assiomi di Armstrong è in $F^+$)
@@ -193,4 +191,23 @@ Consideriamo la seguente istanza $r$ di $R$:
 
 Ha due tuple uguali su tutti gli attributi di $X^+$ e diverse su tutti gli altri.
 
-Dimostreremo che è un'istanza legale
+Mostriamo che è un'*istanza legale* di $R$:
+Sia $V\to W$ una dipendenza funzionale in $F$.
+- se le tuple sono *diverse* su $V$ (e quindi $V\cap R-X^+ \neq \emptyset$), allora la dipendenza è soddisfatta ($t_{1}[V]\neq t_{2}[V]$)
+
+Se invece due tuple di $r$ hanno gli *stessi valori* per $V$, allora sappiamo necessariamente che $V\subseteq X^+$ e quindi (Lemma 1) $X\to V\in F^A$.
+- sappiamo che $V\to W\in F$, quindi $V\to W\in F^A$, quindi 
+	- per l'assioma della transitività ($X\to V,\,V\to W$) otteniamo che $X\to W\in F^A$ 
+- quindi, di nuovo per il Lemma 1, $W\subseteq X^+$, ovvero le due tuple sono uguali anche su $W$.
+	- quindi $V\to W$ è soddisfatta.
+
+visto che $r$ soddisfa $V\to W$ in entrambi i casi, e $V\to W$ è una dipendenza qualsiasi di $F$, allora le rispetta tutte (ed è quindi un'*istanza legale*).
+
+Visto che $r$ è un'istanza legale, essa deve soddisfare ogni $X\to Y\in F^+$.
+Dobbiamo mostrare $X\to Y\in F^+\implies X\to Y\in F^A$.
+
+Sappiamo che $X\subseteq X^+$, e quindi sappiamo che le tuple di $r$ corrispondono su $X$.
+Poiché $r$ soddisfa $X\to Y$, quindi, devono anche corrispondere su $Y$.
+Abbiamo quindi $Y\subseteq X^+$, e, per il Lemma 1 $X\to Y\in F^A$.
+
+Abbiamo quindi mostrato che $X\to Y\in F^+\implies X\to Y\in F^A$. 
