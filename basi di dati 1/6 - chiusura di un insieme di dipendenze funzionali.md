@@ -148,7 +148,7 @@ Sia $X \to Y \in F^A$. Dimostriamo che $X \to Y \in F^+$ per induzione su $i$ ap
 **caso base**: ($i=0$): $X\to Y\in F\implies X\to Y\in F^+,,,, F\subseteq F^+$
  - (non abbiamo applicato nessun assioma di Armstrong: $X\to Y$ è in $F$ quindi banalmente è in $F^+$)
 
-**ipotesi induttiva**: ($i>0$): $X\to Y\in F^A\implies X\to Y\in F^+\implies X\to Y$ è soddisfatto da ogni istanza legale
+**ipotesi induttiva** ($i>0$): $X\to Y\in F^A\implies X\to Y\in F^+\implies X\to Y$ è soddisfatto da ogni istanza legale
 - (ogni dipendenza in $F^A$ ottenuta applicando fino a $i-1$ assiomi di Armstrong è in $F^+$)
 
 **passo induttivo**: consideriamo $i$: $X\to Y\in F^A$ ottenuto in $i$ passi. 
@@ -166,4 +166,28 @@ In questo caso, $\forall r\text{ legale}, \;t_{1}[x]=t_{2}[x]\land Y\subseteq X\
 
 ###### 2: aumento
 Ho ottenuto $X\to Y$ per aumento su $V\to W \in F^A$.
-Quindi $V\to W \in F^+$ è stata ottenuta in $i-1$ passi e appartiene a $F^+$ per ipotesi induttiva.
+Quindi $V\to W \in F^+$ è stata ottenuta in massimo $i-1$ passi e appartiene a $F^+$ per ipotesi induttiva.
+
+Ci troviamo quindi nel caso in cui $X=VZ$ e $Y=WZ$ per qualche $Z\subseteq R$.
+
+Sia $r$ un'istanza legale e siano $t_{1},\,t_{2}$ due tuple di $r$ tali che $t_{1}[X]=t_{2}[X]$.
+- visto che $X=VZ$ e $Y=WZ$, si ha che $t_{1}[V]=t_{2}[V]$ e $t_{1}[Z]=t_{2}[Z]$
+
+Per ipotesi induttiva ($V\to W \in F^+$):
+- da $t_{1}[V]=t_{2}[V]$ segue $t_{1}[W]=t_{2}[W]$
+- da $t_{1}[W]=t_{2}[W]\land t_{1}[Z]=t_{2}[Z]$ segue $t_{1}[Y]=t_{2}[Y]$ (perché $Y=WZ$)
+
+###### 3: transitività
+Ho ottenuto $X\to Y$ per transitività da $X\to Z$ e $Z\to Y$ in $F^A$.
+- le due dipendenze sono state ottenute in massimo $i-1$ e appartengono a $F^+$ per ipotesi induttiva
+
+Sia $r$ un'istanza legale di $R$ e siano $t_{1},\,t_{2}$ tali che $t_{1}[X]=t_{2}[X]$.
+Per ipotesi induttiva, da $t_{1}[X]=t_{2}[X]$ segue $t_{1}[Z]=t_{2}[Z]$, da cui, sempre per ipotesi induttiva, segue $t_{1}[Y]=t_{2}[Y]$.
+
+##### $F^+\subseteq F^A$
+Supponiamo per assurdo che esita una dipendenza funzionale $X\to Y\in F^+$ tale che $X\to Y\notin F^A$.
+
+Consideriamo la seguente istanza legale:
+
+![[dimFAF+istanza.png|center|500]]
+
