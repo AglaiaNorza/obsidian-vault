@@ -99,4 +99,4 @@ Notiamo che lo schedule delle transazioni superstiti è equivalente allo schedul
 >![[timestamp-domanda.png|center|400]]
 >
 >Prendiamo come esempio questo caso, con i timestamp $T1<T2<T3$.
->Se il write timestamp e il read timestamp fossero quelli dell'ultima transazione anziché della più giovane, $T2$ scriverebbe il valore di un item già letto da $T3$, quando $T3$ avrebbe dovuto leggere il valore di $T2$.
+>Se il write timestamp e il read timestamp fossero quelli dell'ultima transazione anziché della più giovane, $T2$ scriverebbe il valore di un item ($X$) già letto da $T3$, quando $T3$ avrebbe dovuto leggere il valore di $T2$.
