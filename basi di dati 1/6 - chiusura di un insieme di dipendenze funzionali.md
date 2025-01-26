@@ -187,7 +187,10 @@ Per ipotesi induttiva, da $t_{1}[X]=t_{2}[X]$ segue $t_{1}[Z]=t_{2}[Z]$, da cui,
 ##### $F^+\subseteq F^A$
 Supponiamo per assurdo che esita una dipendenza funzionale $X\to Y\in F^+$ tale che $X\to Y\notin F^A$.
 
-Consideriamo la seguente istanza legale:
+Consideriamo la seguente istanza $r$ di $R$:
 
 ![[dimFAF+istanza.png|center|500]]
 
+Ha due tuple uguali su tutti gli attributi di $X^+$ e diverse su tutti gli altri.
+
+Dimostreremo che è un'istanza legale
