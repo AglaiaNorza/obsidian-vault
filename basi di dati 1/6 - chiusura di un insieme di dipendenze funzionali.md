@@ -141,20 +141,47 @@ $$X \to Y \in F^A \iff Y \subseteq X^+$$
 Siano $R$ uno schema di relazione ed $F$ un insieme di dipendenze funzionali su $R$.
 Si ha: $$F^+=F^A$$
 
->[!note] dimostrazione
->
+>[!note]- dimostrazione
 >Per dimostrare l’uguaglianza tra due insiemi ci basta dimostrare la doppia inclusione:
 >$$F^A \subseteq F^+\land F^+ \subseteq F^A$$
 >
 >##### Dimostriamo che  $F^A\subseteq F^+$
 >Sia $X \to Y \in F^A$. Dimostriamo che $X \to Y \in F^+$ per induzione su $i$ applicazioni di uno degli assiomi di Armstrong.
->- caso base: ($i=0$): $X\to Y\in F\implies X\to Y\in F^+\,\,\,\, F\subseteq F^+$
->- ipotesi induttiva: ($i>0$): $X\to Y\in F^A\implies X\to Y\in F^+\implies X\to Y$ è soddisfatto da ogni istanza legale
+>- **caso base**: ($i=0$): $X\to Y\in F\implies X\to Y\in F^+\,\,\,\, F\subseteq F^+$ 
+>	- (non abbiamo applicato nessun assioma di Armstrong: è in $F$ quindi banalmente è in $F^+$)
+>- **ipotesi induttiva**: ($i>0$): $X\to Y\in F^A\implies X\to Y\in F^+\implies X\to Y$ è soddisfatto da ogni istanza legale 
+>	- (ogni dipendenza in $F^A$ ottenuta applicando fino a $i-1$ assiomi di Armstrong è in $F^+$)
 >
-> Passo induttivo: $i$: $X\to Y\in F^A$ ottenuto in $i$ passi.
+> **Passo induttivo**: consideriamo $i$: $X\to Y\in F^A$ ottenuto in $i$ passi. Dobbiamo dimostrare che appartiene anch'esso a $F^+$
 > 
-> Ci sono tre casi:
-> 1) **riflessività** $X\to Y$ ottenuto perchè $Y\subseteq X$:
-> 	- in questo caso,  $\forall r\text{ legale}\,\, t_{1}[x]=t_{2}[x] \,\land Y\subseteq X\implies t_{1}[y]=t_{2}[y]$.
+> Ci sono tre casi (tre assiomi di Armstrong che potremmo aver applicato all'$i+1$-esimo passo per ottenere $X\to Y$):
+> ###### 1: riflessività
+> Ho ottenuto $X\to Y$ perchè $Y\subseteq X$.
+> In questo caso,  $\forall r\text{ legale}\,\, t_{1}[x]=t_{2}[x] \,\land Y\subseteq X\implies t_{1}[y]=t_{2}[y]$.
 >  $$  $$
 > 2) **aumento** ($X \to Y$ ottenuto per aumento): significa che $V\to W \in F^+$ è stata ottenuta in $i-1$ passi (perché se $V\to W \in F^A$, per ipotesi induttiva, allora $V\to W\in F^A$)
+
+#### dimostrazione
+##### $F^A\subseteq F^+$
+
+Sia $X \to Y \in F^A$. Dimostriamo che $X \to Y \in F^+$ per induzione su $i$ applicazioni di uno degli assiomi di Armstrong.
+
+**caso base**: ($i=0$): $X\to Y\in F\implies X\to Y\in F^+,,,, F\subseteq F^+$
+ - (non abbiamo applicato nessun assioma di Armstrong: $X\to Y$ è in $F$ quindi banalmente è in $F^+$)
+
+**ipotesi induttiva**: ($i>0$): $X\to Y\in F^A\implies X\to Y\in F^+\implies X\to Y$ è soddisfatto da ogni istanza legale
+- (ogni dipendenza in $F^A$ ottenuta applicando fino a $i-1$ assiomi di Armstrong è in $F^+$)
+
+**passo induttivo**: consideriamo $i$: $X\to Y\in F^A$ ottenuto in $i$ passi. 
+Dobbiamo dimostrare che appartiene anch'esso a $F^+$
+
+Ci sono *tre casi* (tre assiomi di Armstrong che potremmo aver applicato all'$i+1$-esimo passo per ottenere $X\to Y$):
+
+###### 1: riflessività
+
+Ho ottenuto $X\to Y$ perché $Y\subseteq X$. 
+In questo caso, $\forall r\text{ legale},, t_{1}[x]=t_{2}[x] ,\land Y\subseteq X\implies t_{1}[y]=t_{2}[y]$.
+
+
+###### aumento
+($X \to Y$ ottenuto per aumento): significa che $V\to W \in F^+$ è stata ottenuta in $i-1$ passi (perché se $V\to W \in F^A$, per ipotesi induttiva, allora $V\to W\in F^A$)
