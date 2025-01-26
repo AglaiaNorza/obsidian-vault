@@ -2,7 +2,7 @@
  
 (due insiemi che hanno la stessa chiusura avranno le stesse istanze legali - perché la chiusura è l'insieme di dipendenze che viene soddisfatto da ogni istanza legale)
 
-$$ F \subseteq F+ = G+ \supseteq G $$
+$$ F \subseteq F^+= G^+ \supseteq G $$
 non vuol dire che F=G, ma che i due hanno le stesse istanze legali (posso scambiarli).
 
 ### assiomi di Armstrong
