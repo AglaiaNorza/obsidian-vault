@@ -102,8 +102,10 @@ L'algoritmo "calcolo di $X^+$" calcola correttamente la chiusura di un insieme d
 >> $r$ è quindi un'istanza legale (rispetta una qualsiasi dipendenza di $F$)
 >
 >###### dimostriamo l'implicazione
->Visto che $r$ è un'istanza legale, deve soddisfare $X\to A\in F^+$.
->Sappiamo che $X=Z^0\subseteq Z^j$, quindi le due tuple sono uguali su $X$ e lo saranno quindi anche su $A$, quindi $A\in Z^j$.
+>Sappiamo che $X=Z^0\subseteq Z^j$, quindi le due tuple sono uguali su $X$.
+>Visto che $r$ è un'istanza legale, deve soddisfare $X\to A\in F^+$, quindi lo saranno anche su $A$, il che implica $A\in Z^j$.
+>
+>> abbiamo quindi dimostrato anche $A\in F^+\implies A\in Z^j$
 
 ### proprietà dell'insieme vuoto
 - l'insieme vuoto $\emptyset$ è un **sottoinsieme di ogni insieme** A: $\forall A:A$
