@@ -33,10 +33,11 @@ $$
 
 - per prima cosa, si definisce $Z$ come $X$ stessa (infatti, per riflessività, come minimo $X\to X$) 
 - poi si definisce $S$, un accumulatore per i nuovi attributi, come 
-  $$S:={A \mid Y\to V \in F \, \land \, Y \subseteq Z}$$
-  quindi, partendo da $X$, devo trovare $Y\to V$ tale che $Y \subseteq Z$ (con $Z$ inizialmente uguale a $X$). Dire che $Y\subseteq X$ vuol dire che $X\to Y$ (per riflessività), perciò $X\to Y$ e $Y\to V$ mi danno per transitività $X\to V$.
-  Essenzialmente, $S$ *prende le dipendenze con un determinante contenuto in $X$* e le mette nella sua chiusura.
-<br>
+  $$S:=\{A \;\text{ t.c. }\; Y\to V \in F \, \land \, A\in V \land\, Y \subseteq Z\}$$
+  quindi, partendo da $Z=X$, cerco una dipendenza $Y\to V$ con $Y\subseteq Z$ (quindi che abbia come determinante un pezzo di $X$) e metto nell'accumulatore ogni $A$ elemento del dipendente. Dire $Y\subseteq X$ vuol dire $X\to Y$ (riflessività), perciò, per transitività, $X\to Y,\,Y\to V \implies X\to V$
+ 
+
+> [!tip] Essenzialmente, $S$ *prende le dipendenze con un determinante contenuto in $X$* e le mette nella sua chiusura.
 - dopodiché, controlla se ha aggiunto cose nuove a $S$ (ovvero se $S\not\subset Z$) :
 	- se ha aggiunto nuove dipendenze, ridefinisce $Z$ come $Z\cup S$ (aggiunge l'accumulatore a $Z$) e riapplica l'algoritmo (perché le nuove aggiunte possono essere usate per trovare altre dipendenze)
 	- altrimenti,vuol dire che ha finito di trovare altre dipendenze e $Z$ è completo
@@ -47,18 +48,14 @@ $$
 
 
 >[!example] esempio 
->$$F=\{AB\to C,\: B\to D,\: AD\to E,\: CE\to H\}$$
-> $$R=ABCDEHL$$
-
+>$$R=ABCDEH$$
+>$$F=\{AB\to CD,\;EH\to D,\;D\to H\}$$
+>$AB^+=ABCDH$
+ 
 #### teorema: l'algoritmo è corretto
 L'algoritmo "calcolo di $X^+$" calcola correttamente la chiusura di un insieme di attributi $X$ rispetto ad un insieme $F$ di dipendenze funzionali.
 
->[!info] dimostrazione
->
->![[algo-dim-1.jpg]]
->![[algo-dim-2.jpg]]
->DA FINIRE IL LATEX: v
->
+>[!note] dimostrazione
 >Indichiamo con $Z^0$ il valore iniziale di $Z$ ($Z^0=X$) e con $Z^i$ ed $S^i$, con $i\geq1$, i valori di $Z$ e $S$ dopo l'i-esima esecuzione del corpo del ciclo.
 >È facile vedere che $Z^i \subseteq Z^{i+1}$
 >
@@ -70,8 +67,43 @@ L'algoritmo "calcolo di $X^+$" calcola correttamente la chiusura di un insieme d
 >Si dimostra per induzione.
 >
 >- **caso base**: $Z^0=X$, per riflessività $X\subseteq X^+$, quindi $X\subseteq X^+ \implies Z^0\subseteq X^+$
->- **ipotesi induttiva**: $Z^{i-1}\subseteq X^+_{f}\implies X\to Z^{i-1}\in F^A$ (per il *lemma 1*: $X\to Y\in F^A\iff Y\subseteq X^+$)
->- **passo induttivo**: 
+>- **ipotesi induttiva**: poniamo per ipotesi induttiva che $Z^{i-1}\subseteq X^+$ 
+>	- (ricordiamo che per il *lemma 1* abbiamo quindi: $X\to Z^{i-1}\in F^A$)
+>
+>###### passo induttivo
+>Prendiamo $A\in Z^i-Z^{i-1}$, ovvero aggiunto all'ultimo passo.
+>Vuol dire che $A$ è stato aggiunto perché $\exists \,Y\to W:Y\subseteq Z^{i-1}\land A\in W$ <small>(a è determinato da qualcosa che si trovava in $Z^{i-1}$).</small>
+>
+>Per ipotesi induttiva, ho $Z^{i-1}\subseteq X^+$, quindi, per decomposizione ($Y\subseteq Z^{i-1}$) per il *lemma 2*, $X\to Y\in F^A$.
+>Per transitività, da $X\to Y,\;Y\to W$ <small>(che è in $F$ e quindi in $F^A$)</small> ottengo $X\to W\in F^A$. Per il *lemma 2*, ho quindi $A\in X^+$.
+>
+>>quindi, visto che $A\in Z^i-Z^{i-1}\in X^+$ e per ipotesi induttiva $Z^{i-1}\in X^+$, ho dimostrato $Z^i\in X^+$
+>
+>##### parte $A\in X^+\implies A\in Z^j$
+>Sia $A\in X^+$. Sappiamo, per il *lemma due*, che $X\to A\in F^A=F^+$ (per il teorema $F^A=F^+$).
+>
+>Consideriamo la seguente istanza $r$ di $R$:
+>
+>![[dim-x+.png|center|400]]
+>
+>che ha due tuple uguali sugli attributi di $Z^j$ ($Z$ finale) e diverse su $R-Z^j$.
+>
+>###### mostriamo che $r$ è un'istanza legale
+>
+>Prendiamo una qualunque dipendenza funzionale $V\to W\in F$.
+>- se $V\not\subseteq Z^j$ (quindi $V\cap(R-Z^j)\neq \emptyset$) le tuple sono diverse su almeno un attributo di $V$, quindi la dipendenza è rispettata
+>
+>Se $V\subseteq Z^j$ le due tuple avranno valori uguali su $W$.
+>Infatti, se per assurdo avessimo $t_{1}[V]=t_{2}[V]$ ma $t_{1}[W]\neq t_{2}[W]$, ci sarebbe almeno un elemento di $W$ in $R-Z^j$. Questo è impossibile per come è definito l'algoritmo:
+>$$S:=\{ A: V\to W\in F\land V\subseteq Z^{i-1}\land A\in W \}$$
+>Vorrebbe dire che, applicando l'algoritmo, potrei ancora inserire nuovi elementi in $Z$ - ma questo è impossibile perché, per costruzione, $Z$ è finale. 
+>Quindi vuol dire che $W\cap R-Z^j$ è impossibile, e quindi la dipendenza è soddisfatta.
+>
+>> $r$ è quindi un'istanza legale (rispetta una qualsiasi dipendenza di $F$)
+>
+>###### dimostriamo l'implicazione
+>Visto che $r$ è un'istanza legale, deve soddisfare $X\to A\in F^+$.
+>Sappiamo che $X=Z^0\subseteq Z^j$, quindi le due tuple sono uguali su $X$ e lo saranno quindi anche su $A$, quindi $A\in Z^j$.
 
 ### proprietà dell'insieme vuoto
 - l'insieme vuoto $\emptyset$ è un **sottoinsieme di ogni insieme** A: $\forall A:A$

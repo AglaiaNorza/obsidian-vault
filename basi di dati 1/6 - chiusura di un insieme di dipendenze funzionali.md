@@ -191,7 +191,7 @@ Consideriamo la seguente istanza $r$ di $R$:
 
 Ha due tuple uguali su tutti gli attributi di $X^+$ e diverse su tutti gli altri.
 
-Mostriamo che è un'*istanza legale* di $R$:
+###### mostriamo che $r$ è un'istanza legale
 Sia $V\to W$ una dipendenza funzionale in $F$.
 - se le tuple sono *diverse* su $V$ (e quindi $V\cap R-X^+ \neq \emptyset$), allora la dipendenza è soddisfatta ($t_{1}[V]\neq t_{2}[V]$)
 
@@ -202,6 +202,8 @@ Se invece due tuple di $r$ hanno gli *stessi valori* per $V$, allora sappiamo ne
 	- quindi $V\to W$ è soddisfatta.
 
 visto che $r$ soddisfa $V\to W$ in entrambi i casi, e $V\to W$ è una dipendenza qualsiasi di $F$, allora le rispetta tutte (ed è quindi un'*istanza legale*).
+
+###### usiamo $r$ per dimostrare l'inclusione
 
 Visto che $r$ è un'istanza legale, essa deve soddisfare ogni $X\to Y\in F^+$.
 Dobbiamo mostrare $X\to Y\in F^+\implies X\to Y\in F^A$.
