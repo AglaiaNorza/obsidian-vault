@@ -199,7 +199,7 @@ anche all'interno dell'inboard memory stessa ci sono importanti differenze di ve
 - è gestita completamente dall'hardware: assembler, compilatore, SO ecc. non la vedono
 
 >[!info] altre info cache
->(architettura degli elaboratori de base)
+>(architettura degli elaboratori di base)
 > - cache anche piccole hanno un grande impatto sulla performance 
 > - bisogna trovare un "sweet spot" per la dimensione di una cache: l'accesso a una cache più piccola è più veloce, ma una cache più grande può contenere più dati
 > - la cache utilizza una funzione di mappatura per determinare dove mettere il blocco proveniente dalla RAM, e un algoritmo di rimpiazzamento per scegliere quale blocco eliminare (comunemente LRU)

@@ -71,7 +71,7 @@ I sistemi per la gestione di file forniscono servizi agli utenti e alle applicaz
 7) ogni utente deve poter accedere ai propri file tramite nomi simbolici
 
 #### organizzazione del codice
-[[4 - gestione della memoria#elementi centrali per il progetto di un sistema operativo]]
+[[4 - gestione della memoria (principale)#elementi centrali per il progetto di un sistema operativo]]
 
 - **Directory Management** - tutte le operazioni utente che hanno a che fare con i file
 - **File System** - struttura logica ed operazioni fisiche
@@ -247,8 +247,7 @@ Per allocare i file, è necessario sapere dov'è lo spazio libero: non è realis
 Serve una **tabella di allocazione di disco**.
 - ogni volta che si alloca o cancella un file, lo spazio libero va aggiornato
 
->[!tip] tip
->È necessario che si sappia in RAM (almeno in minima parte) quanto e quale sia lo spazio libero sul disco.
+>[!tip] È necessario che si sappia in RAM (almeno in minima parte) quanto e quale sia lo spazio libero sul disco.
 
 Ci sono vari modi per gestirla:
 - **tabelle di bit**

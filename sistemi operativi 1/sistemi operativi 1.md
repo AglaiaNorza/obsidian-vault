@@ -2,7 +2,7 @@
 > - [[1 - sistemi operativi]]
 > - [[2 - processi]]
 > - [[3 - scheduling]]
-> - [[4 - gestione della memoria]]
+> - [[4 - gestione della memoria (principale)]]
 > - [[5 - gestione dell'IO]]
 > - [[6 - file system]]
 > - [[7a - gestione della concorrenza 1]] (concetti basilari, mutua esclusione: supporto hardware, semafori, esempi)

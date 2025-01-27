@@ -500,4 +500,4 @@ Quando scrive su disco?
 - quando l'età delle pagine "sporche" supera una certa soglia
 
 Non c'è una replacement policy separata: è la stessa per il rimpiazzo delle pagine
-- la page cache è paginata, le pagine sono rimpiazzate con l'[[4 - gestione della memoria#gestione della memoria in linux|algoritmo]] visto per la gestione della memoria
+- la page cache è paginata, le pagine sono rimpiazzate con l'[[4 - gestione della memoria (principale)#gestione della memoria in linux|algoritmo]] visto per la gestione della memoria
