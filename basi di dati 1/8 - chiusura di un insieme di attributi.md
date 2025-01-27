@@ -75,7 +75,7 @@ L'algoritmo "calcolo di $X^+$" calcola correttamente la chiusura di un insieme d
 >Vuol dire che $A$ è stato aggiunto perché $\exists \,Y\to W:Y\subseteq Z^{i-1}\land A\in W$ <small>(a è determinato da qualcosa che si trovava in $Z^{i-1}$).</small>
 >
 >Per ipotesi induttiva, ho $Z^{i-1}\subseteq X^+$, quindi, per decomposizione ($Y\subseteq Z^{i-1}$) per il *lemma 2*, $X\to Y\in F^A$.
->Per transitività, da $X\to Y,\;Y\to W$ <small>(che è in $F$ e quindi in $F^A$)</small> ottengo $X\to W\in F^A$. Per il *lemma 2*, ho quindi $A\in X^+$.
+>Per transitività, da $X\to Y,\;Y\to W$ <small>(che è in $F$ e quindi in $F^A$)</small> ottengo $X\to W\in F^A$. Per il *lemma 2*, ho $W\in X^+$ e quindi $A\in X^+$.
 >
 >>quindi, visto che $A\in Z^i-Z^{i-1}\in X^+$ e per ipotesi induttiva $Z^{i-1}\in X^+$, ho dimostrato $Z^i\in X^+$
 >

@@ -127,5 +127,7 @@ $$
 <small>(anche qui il latex dell'algoritmo rubato a [flavio](https://github.com/thegeek-sys/Vault/blob/main/Class/Basi%20di%20dati/Decomposizioni%20che%20preservano%20le%20dipendenze.md), che si diverte a fare queste cose)</small>
 
 >[!note] dimostrazione
->dimostrare che l'algoritmo funziona significa mostrare che, alla fine dell'algoritmo, Z conterrà tutta e sola la chiusura di X rispetto a G.
->Quindi, che $X^+_{G}\subseteq Z\land$
+>dimostrare che l'algoritmo funziona significa mostrare che, alla fine dell'algoritmo, Z conterrà tutta e sola la chiusura di $X$ rispetto a $G$.
+>Quindi, che $Z^f\subseteq X^+_{G}\land Z^f\supseteq X^+_{G}$.
+>
+>Dimostriamo solo $Z^f\subseteq X^+_{G}$
