@@ -127,7 +127,32 @@ $$
 <small>(anche qui il latex dell'algoritmo rubato a [flavio](https://github.com/thegeek-sys/Vault/blob/main/Class/Basi%20di%20dati/Decomposizioni%20che%20preservano%20le%20dipendenze.md), che si diverte a fare queste cose)</small>
 
 >[!note] dimostrazione
->dimostrare che l'algoritmo funziona significa mostrare che, alla fine dell'algoritmo, Z conterrà tutta e sola la chiusura di $X$ rispetto a $G$.
+>dimostrare che l'algoritmo funziona significa mostrare che, alla fine dell'algoritmo, $Z$ conterrà tutta e sola la chiusura di $X$ rispetto a $G$.
 >Quindi, che $Z^f\subseteq X^+_{G}\land Z^f\supseteq X^+_{G}$.
 >
->Dimostriamo solo $Z^f\subseteq X^+_{G}$
+>Dimostriamo solo $Z^f\subseteq X^+_{G}$.
+>>ricordiamo:
+>>- $G=\cup_{i=1}^k\pi_{R_{i}}(F)$, con $\pi_{R_{i}(F)}=\{ X\to Y\mid X\to Y\in F^+\land XY\subseteq R_{i} \}$ 
+>>- $S:=S\cup(Z\cap R_{i})^+_{F}\cap R_{i}$ (passo fondamentale dell'algoritmo)
+>
+>Si dimostra per induzione sui $i$ ($\forall i,\,Z^i\subseteq X^+_{G}$)
+>
+>- **caso base** ($i=0$): $Z^0=X$, e $X\subseteq X^+$, quindi $Z^0\subseteq X^+_{G}$
+>- **ipotesi induttiva**: $Z^{i-1}\subseteq X^+_{G}$
+>
+>**passo induttivo**:
+>Sia $A\in Z^i-Z^{i-1}$ (aggiunto all'ultimo passo).
+>Se $A$ è stato aggiunto, vuol dire che deve esistere un sottoschema $R_{j}$ della decomposizione tale che: $A\in(Z^{i-1}\cap R_{j})^+_{F}\cap R_{j}$, ovvero $A\in(Z^{i-1}\cap R_{j})^+_{F}\land A\in R_{j}$.
+>
+>Abbiamo quindi: 
+>- $(Z^{i-1}\cap R_{j})\to A\in F^A=F^+$ (per il *lemma 1* e teorema $F^+=F^A$).
+>
+>Sappiamo che $A\in R_{j}$, ma anche $(Z^{i-1}\cap R_{j})\subseteq R_{j}$.
+>Notiamo quindi che la dipendenza $(Z^{i-1}\cap R_{j})\to A$ ha sia determinante che dipendente in un sottoschema $R_{j}$, e quindi, per definizione di $\pi_{R_{i}(F)}=\{ X\to Y\in F^+ :XY\subseteq R_{i}\}$, appartiene a $\pi_{R_{j}}(F)$ e, per costruzione di $G=\bigcup_{i=0}^n\pi_{R_{i}}(F)$, appartiene a $G$.
+>- quindi $(Z^{i-1}\cap R_{j})\to A\subseteq G\subseteq G^+=G^A$
+>
+>In più, $(Z^{i-1}\cap R_{j})\subseteq Z^{i-1}$, e, per ipotesi induttiva $Z^{i-1}\subseteq X^+_{G}$.
+>Quindi si ha $(Z^{i-1}\cap R_{j})\subseteq X^+_{G}$ e, per il *lemma 1*, $X\to(Z^{i-1}\cap R_{j})\in G^A=G^+$.
+>Visto che $A\in (Z^{i-1}\cap R_{j})$, si ha $X\to A\in G^+$, cioè (*l.1*) $A\in X^+_{G}$.
+>
+>> abbiamo quindi dimostrato che $A\in Z^i\implies A\in X^+_{G}$, ovvero $Z^i\subseteq X^+_{G}\;\; \forall i$
