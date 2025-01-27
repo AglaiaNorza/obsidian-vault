@@ -152,7 +152,7 @@ $$
 >- quindi $(Z^{i-1}\cap R_{j})\to A\subseteq G\subseteq G^+=G^A$
 >
 >In più, $(Z^{i-1}\cap R_{j})\subseteq Z^{i-1}$, e, per ipotesi induttiva $Z^{i-1}\subseteq X^+_{G}$.
->Quindi si ha $(Z^{i-1}\cap R_{j})\subseteq X^+_{G}$ e, per il *lemma 1*, $X\to(Z^{i-1}\cap R_{j})\in G^A$.
+>Quindi si ha $(Z^{i-1}\cap R_{j})\subseteq X^+_{G}$ (decomposizione) e, per il *lemma 1*, $X\to(Z^{i-1}\cap R_{j})\in G^A$.
 >Per transitività, da $X\to(Z^{i-1}\cap R_{j}),\; (Z^{i-1}\cap R_{j})\to A\in G^A$, si ha $X\to A\in G^A$, cioè (*l.1*) $A\in X^+_{G}$.
 >
 >> abbiamo quindi dimostrato che $A\in Z^i\implies A\in X^+_{G}$, ovvero $Z^i\subseteq X^+_{G}\;\; \forall i$
