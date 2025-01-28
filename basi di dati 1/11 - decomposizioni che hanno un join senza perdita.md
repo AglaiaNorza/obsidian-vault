@@ -121,9 +121,11 @@ L'algoritmo di verifica decide correttamente se $\rho$ ha un join senza perdita.
 >Supponiamo per assurdo che $\rho$ abbia un join senza perdita $(m_{\rho}(r)=r)$ e che al termine dell'algoritmo la tabella $r$ non abbia una tupla con tutte 'a'.
 >La tabella $r$ (finale) può essere interpretata come un'istanza legale di $R$, in quanto al termine dell'algoritmo non ci sono violazioni di dipendenze in $F$. 
 >
->La tabella $r$ iniziale contiene 'a' in ogni riga per gli attributi che appartengono al sottoschema a cui fa riferimento quella riga:
+>La tabella $r$ iniziale contiene 'a' in ogni riga per gli attributi che appartengono al sottoschema a cui fa riferimento quella riga.
 >
->![[lossless-dim1.png|center|400]]
+>> esempio:
+>>  
+>>![[lossless-dim1.png|center|400]]
 >
 >Quindi ogni proiezione $\pi_{R_{i}}(r)$ della tabella su un sottoschema avrà una tupla di tutte 'a' (la riga che corrisponde a $R_{i}$.)
 >>per esempio, proiezione su $ABDE$:
@@ -132,7 +134,11 @@ L'algoritmo di verifica decide correttamente se $\rho$ ha un join senza perdita.
 >
 >Quando si fa il join naturale tra due proiezioni $\pi_{R_{i}}(r)$ ed $\pi_{R_{j}}(r)$ (con le loro tuple con tutte 'a' che chiamiamo $t_{i}$ e $t_{j}$), ci sono due casi:
 >- o $R_{i}$ e $R_{j}$ condividono (almeno) un attributo --> sappiamo che $t_{i}$ e $t_{j}$ avranno lo stesso valore su quell'attributo ('a'), e quindi saranno unite, formando un'unica tupla con tutte 'a'
->- o le due proiezioni non hanno attributi in comune --> in questo caso il join naturale degenererà in prodotto cartesiano, e tutte le tuple di $R_{i}$ ed $R_{j}$ saranno unite (quindi anche $t_{i}$ e $t_{j}$)
+>- o le due proiezioni non hanno attributi in comune --> in questo caso il join naturale degenererà in prodotto cartesiano, e tutte le tuple di $\pi_{R_{i}}(r)$ e $\pi_{R_{j}}(r)$  saranno unite (quindi anche $t_{i}$ e $t_{j}$)
 >
->Poiché nessuna 'a' della tabella verrà mai modificata nell'algoritmo, quelle 'a' saranno mantenute e saranno presenti in $r$ finale.
->Pertanto, $m_{\rho}(r)$ contiene sicuramente una tupla con tutte 'a' e quindi anche $m_{\rho}(r)$ la dovrà contenere (altrimenti avremmo $m_{\rho}(r)\neq r$: contraddizione)
+>In entrambi casi, il join naturale ci porterà ad unire $t_{i}$ e $t_{j}$ e ad avere una tupla con tutte 'a'.
+>
+>Visto che $m_{\rho}(r)$ è il join naturale di tutte le proiezioni, esso contiene quindi sicuramente una tupla con tutte 'a'.
+>L'ipotesi di partenza, per cui abbiamo un join senza perdita ci impone che $m_{\rho}(r)=r$, contraddicendo quindi la supposizione per cui $r$ non ha tuple con tutte 'a'.
+>
+>>Abbiamo quindi dimostrato che "join senza perdita $\implies$ tupla con tutte 'a'".
