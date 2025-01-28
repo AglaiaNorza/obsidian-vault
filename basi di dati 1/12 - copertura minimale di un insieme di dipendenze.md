@@ -32,6 +32,7 @@ riformulato in modo più informale:
 Per ogni insieme di dipendenze funzionali $F$ esiste una copertura minimale equivalente ad $F$ che si può ottenere in *tempo polinomiale* in tre passi:
 1) usando la decomposizione, le parti destre delle dipendenze vengono ridotte a singleton
 2) si rendono le parti sinistre non ridondanti:
+	- voglio verificare se $F\equiv F-\{ X\to A \}\cup \{ X'\to A \}$ con $X'\subset X$
 	![[copertura-min-ragionamento.png|center]]
 	ora, $G$ diventa il nuovo $F$ per le verifiche successive
 3) $\forall X\to A$, devo verificare che $F\equiv F-\{ X\to A \}$ 
