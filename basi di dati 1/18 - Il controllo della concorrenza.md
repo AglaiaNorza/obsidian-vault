@@ -77,14 +77,17 @@ Due schedule sono equivalenti se:
 	- ovvero se ho lo stesso ordine di accesso agli stessi item di almeno uno schedule seriale
 
 >[!question]- perché non basta che siano uguali?
+> 
 >![[non-equivalenza-es.png|center|300]]
 >
 >questi due schedule producono lo stesso valore solo se il valore iniziale di $X$ è 10 - esiste quindi un caso in cui producono lo stesso valore, ma non sono equivalenti
+ 
 
 >[!tip] schedule seriali ed equivalenza
 >Gli schedule seriali possono non essere equivalenti tra loro, ma sono comunque tutti corretti.
 >
 >>[!example] esempio
+>> 
 >>![[schedule-seriali-es.png|center|300]]
 
 ## testare la serializzabilità
