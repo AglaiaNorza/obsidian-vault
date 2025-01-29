@@ -32,12 +32,32 @@ riformulato in modo più informale:
 Per ogni insieme di dipendenze funzionali $F$ esiste una copertura minimale equivalente ad $F$ che si può ottenere in *tempo polinomiale* in tre passi:
 1) usando la decomposizione, le parti destre delle dipendenze vengono ridotte a singleton
 2) si rendono le parti sinistre non ridondanti:
-	- voglio verificare se $F\equiv F-\{ X\to A \}\cup \{ X'\to A \}$ con $X'\subset X$
-	![[copertura-min-ragionamento.png|center]]
-	ora, $G$ diventa il nuovo $F$ per le verifiche successive
+	- se si trova $X'\to A$ tale che $F\equiv F-\{ X\to A \}\cup \{ X'\to A \}$, $X\to A$ viene sostituita con $X'\to A$ o, se $X'\to A$ appartiene già a $F$, viene direttamente eliminata
+	- durante questo passo, è inutile ricalcolare le chiusure per gli attributi per cui sono già state calcolate
+
+>[!tip] passo 2: osservazione
+>Chiamiamo $F$ l'insieme originale, e $G=F-\{ X\to A \}$ con $X'\subset X$.
+>Voglio verificare se $F\equiv G$, ovvero $F^+=G^+$.
+>
+> I due insiemi differiscono per una sola dipendenza, quindi basta verificare $X'\to A\in F^+$ e $X\to A\in G^+$.
+> 
+> Non ci serve tuttavia mostrare $X\to A\in G^+$, perchè:
+> - $X'\subset X\implies X\to X'\in G^+$ (*riflessività*)
+> - per *transitività* con $X'\to A\in G$, otteniamo $X\to A\in G^+$
+> 
+> Per verificare se $X'\to A\in F^+$, dobbiamo verificare $A\in X'^+_{F}$ (*lemma 1*) - lo facciamo con l'[[8 - chiusura di un insieme di attributi#come calcolare $X +$|algoritmo]] per il calcolo della chiusura di un attributo.
+
 3) $\forall X\to A$, devo verificare che $F\equiv F-\{ X\to A \}$ 
-	- sappiamo che i due differiscono per una sola dipendenza, $X\to A$, dunque basta verificare che $X\to A\in G^+$, ovvero (per il lemma 1), se $A\in X^+_{G}$
-		- **nota**: se $X\to A\in F$, ma non esiste $Y\to A\in F$ con $X\neq Y$, è *inutile provare ad eliminare* $X\to A$ (non potremmo più determinare funzionalmente $A$)
+	- al contrario del passo 2, in questo caso le chiusure degli attributi vanno ricalcolate
+	- se $X\to A\in F$, ma non esiste un'altra dipendenza $Y\to A\in F$ con $Y\neq X$, è inutile provare a eliminare $X\to A$, in quanto non saremmo più in grado di determinare $A$.
+
+>[!tip] passo 3: osservazione
+> Chiamiamo $F$ l'insieme che contiene $X\to A$ e $G=F-\{ X\to A \}$.
+> Anche in questo caso i due insiemi differiscono per una sola dipendenza. Abbiamo anzi addirittura $G\subseteq F$, e quindi $G^+\subseteq F^+$.
+> 
+> Resta da verificare $F^+\subseteq G^+$, ovvero (*lemma 2*) $F\subseteq G^+$.
+> In particolare, basta verificare $X\to A\in G^+$ (l'unica non comune ai due insiemi), ovvero (*lemma 1*) $A\in X^+_{G}$
+>
 
 ### esempi
 >[!example]- esempio 1

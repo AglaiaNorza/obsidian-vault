@@ -74,13 +74,13 @@ L'algoritmo "calcolo di $X^+$" calcola correttamente la chiusura di un insieme d
 >Prendiamo $A\in Z^i-Z^{i-1}$, ovvero aggiunto all'ultimo passo.
 >Vuol dire che $A$ è stato aggiunto perché $\exists \,Y\to W:Y\subseteq Z^{i-1}\land A\in W$ <small>(a è determinato da qualcosa che si trovava in $Z^{i-1}$).</small>
 >
->Per ipotesi induttiva, ho $Z^{i-1}\subseteq X^+$, quindi, per decomposizione ($Y\subseteq Z^{i-1}$) per il *lemma 2*, $X\to Y\in F^A$.
->Per transitività, da $X\to Y,\;Y\to W$ <small>(che è in $F$ e quindi in $F^A$)</small> ottengo $X\to W\in F^A$. Per il *lemma 2*, ho $W\in X^+$ e quindi $A\in X^+$.
+>Per ipotesi induttiva, ho $Z^{i-1}\subseteq X^+$, quindi, per decomposizione ($Y\subseteq Z^{i-1}$) per il *lemma 1*, $X\to Y\in F^A$.
+>Per transitività, da $X\to Y,\;Y\to W$ <small>(che è in $F$ e quindi in $F^A$)</small> ottengo $X\to W\in F^A$. Per il *lemma 1*, ho $W\in X^+$ e quindi $A\in X^+$.
 >
 >>quindi, visto che $A\in Z^i-Z^{i-1}\in X^+$ e per ipotesi induttiva $Z^{i-1}\in X^+$, ho dimostrato $Z^i\in X^+$
 >
 >##### parte $A\in X^+\implies A\in Z^j$
->Sia $A\in X^+$. Sappiamo, per il *lemma due*, che $X\to A\in F^A=F^+$ (per il teorema $F^A=F^+$).
+>Sia $A\in X^+$. Sappiamo, per il *lemma 1*, che $X\to A\in F^A=F^+$ (per il teorema $F^A=F^+$).
 >
 >Consideriamo la seguente istanza $r$ di $R$:
 >
