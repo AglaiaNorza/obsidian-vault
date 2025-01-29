@@ -78,7 +78,6 @@ $$ \rho_{CC\#<-C\#}(Ordine) $$
 >![[es-cart-2.png|500]]
 >
 
-AGGIUNGI ALTRI PEZZI SLIDE
 ### join naturale
 Consente automaticamente di selezionare le tuple del prodotto cartesiano dei due operandi che soddisfano la condizione
 $$ R_{1}.A_{1}=R_{2}.A_{1} \space\land\space ... \space\land R_{1}.A_{k}=R_{2}.A_{k} $$
@@ -102,8 +101,8 @@ se ci sono duplicati e si fa una proiezione su un attributo con duplicati, quest
 > query: nomi e città dei clienti che hanno ordinato più di 100 pezzi per almeno un articolo con prezzo superiore a 2.
 > - join naturale tra cliente e ordine: rimangono Nome, C#, Città, O#, A#, N-pezzi
 > - join naturale con articolo: rimangono Nome, C#, Città, O#, A#, N-pezzi, Denom., Prezzo
-> - 
-> ![[es-query.png]]
+> 
+> ![[es-query.png|center|450]]
 > $$ \pi_{Nome, Città}(\sigma_{N-pezzi>100 \land Prezzo>2})((Cliente\bowtie Ordine)\bowtie Articolo) $$
 > 
 Se noi sappiamo che una selezione riguarda solo un attributo, possiamo anticipare una condizione:
@@ -113,7 +112,7 @@ ecc., fino ad arrivare a
 $$ Cliente \bowtie \sigma$$
 
 ### θ join
-![[es-thetajoin.png]]
+![[es-thetajoin.png|center|450]]
 perché l'unione tra queste tabelle abbia senso, bisogna stare attenti ai due C#: in artista, rappresenta il codice dell'artista ("Artista" in Quadro) mentre in Quadro rappresenta il codice del quadro.
 Quindi, o bisognerebbe rinominare gli attributi così che Artista.C# == Quadro.Artista, o si può effettuare un **theta join**
 
@@ -149,4 +148,6 @@ Serve quando si vogliono effettuare query che chiedono di confrontare campi di t
 >- infatti, in qualunque posizione appaiano, la valutazione delle condizioni avviene in sequenza
 
 Quando si cerca qualcosa che succede **sempre** o **mai**, non si può semplicemente eliminare con una selezione i casi necessari - per esempio, se cerco gli equipaggi che non hanno mai volato nel 2018, se escludo gli equipaggi con voli nel 2018, non posso sapere che gli stessi equipaggi non ricompariranno con un altro volo.
+
+- è quindi necessario usare la *sottrazione* (per l'esempio sopra: tutti gli equipaggi - quelli che hanno volato nel 2018)
 

@@ -68,7 +68,6 @@ Una **dipendenza funzionale** stabilisce un particolare legame semantico tra due
 >[!info] uso delle lettere
 >Le prime lettere dell'alfabeto (A,B,C) si riferiscono a singoli attributi 
 >Le ultime lettere dell'alfabeto (X,Y,Z) si riferiscono a insiemi di attributi.
->... degli insiemi si applicano sempre ai singoli attributi, ma non è detto il contrario.
 
 >[!example] esempio
 >supponiamo di avere uno schema di relazione:
@@ -93,4 +92,10 @@ Una **dipendenza funzionale** stabilisce un particolare legame semantico tra due
 >2) le ennuple r che concordano su X, concordano anche su Y (se le tuple sono uguali su X, devono essere uguali anche su Y)
 >   `t1[X] = t2[Y]` --> `t1[Y] = t2[X]` (--> implica)
 > 
-> es. un'istanza con una sola tupla soddisfa `X->Y`, e la premessa della seconda condizine è verificata, quindi soddisfa la dipendenza funzionale, ma senza implicazioni su Y
+> es. un'istanza con una sola tupla soddisfa `X->Y`, e la premessa della seconda condizione è verificata, quindi soddisfa la dipendenza funzionale, ma senza implicazioni su Y
+
+## domande esame
+>[!question] possibili domande esame 
+>- cos'è una relazione/attributo/schema/istanza?
+>- cos'è una chiave? (risposta da integrare con [[5 - dipendenze funzionali#chiave]])
+>- cos'è una dipendenza funzionale e quando si dice soddisfatta? (integrare con [[5 - dipendenze funzionali]])

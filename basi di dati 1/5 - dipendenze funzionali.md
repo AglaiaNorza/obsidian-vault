@@ -18,7 +18,7 @@ un'istanza si dice **legale** se rispetta *tutte le dipendenze* in F
 
 ---
  
-![[ist-legali1.png|450]]
+![[ist-legali1.png|center|450]]
 dato uno schema di relazione R e un insieme F di dipendenze funzionali su R, ci sono delle dipendenze funzionali che non sono in F, ma sono soddisfatte da ogni istanza legale di R.
 
 per esempio:
@@ -67,3 +67,11 @@ Pertanto, se $Y\subseteq X,\,X\to Y\in F^+$ è detta **dipendenza banale**.
 
 Dati uno schema di relazione R e un insieme di dipendenze funzionali F, si ha:
 $$X\rightarrow Y \in F^+ \iff \forall A \in Y\; (X\rightarrow A \in F^+)$$
+
+## domande orale
+>[!question] possibili domande orale
+>- cos'è una dipendenza funzionale? quando è soddisfatta?
+>- cos'è una chiave?
+>- cos'è un'istanza legale?
+>- cos'è la chiusura di un insieme di dipendenze F?
+>- cos'è una dipendenza banale?

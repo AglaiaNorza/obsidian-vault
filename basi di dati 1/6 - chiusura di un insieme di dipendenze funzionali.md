@@ -3,7 +3,7 @@
 (due insiemi che hanno la stessa chiusura avranno le stesse istanze legali - perché la chiusura è l'insieme di dipendenze che viene soddisfatto da ogni istanza legale)
 
 $$ F \subseteq F^+= G^+ \supseteq G $$
-non vuol dire che F=G, ma che i due hanno le stesse istanze legali (posso scambiarli).
+non vuol dire che $F=G$, ma che i due hanno le stesse istanze legali (posso scambiarli).
 
 ### assiomi di Armstrong
 Denotiamo come $F^A$ l'insieme di dipendenze funzionali definito nel modo seguente:
@@ -83,7 +83,10 @@ $$\text{se }X \rightarrow Y \in F^A\text{ e }WY \rightarrow Z \in F^A\text{ allo
 #### osservazione
 Osserviamo che:
 - per la regola dell’**unione**, se $X\to A_{i}\in F^A$, $i=1,\, \dots,\,n$ allora $X\to A_{1},\,\dots,\,A_{i}\,\dots\,A_{n}\in F^A$
-- per la regola della  
+- per la regola della **decomposizione**, se $X\to A_{1},\,\dots,\,A_{n}$ allora $X\to A_{i}\in F^A\;\;\forall i=1,\dots ,n$
+- quindi $X\to A_{1},\dots,\,A_{n}\in F^A\iff X\to A_{i}\in F^A\;\;\forall i=1,\dots ,n$
+
+ovvero possiamo limitarci in generale a considerare le dipendenze con un dipendente *singleton*.
 ### chiusura di un insieme di attributi
 Sia R uno schema di relazione, F un insieme di dipendenze funzionali su R, e X un sottoinsieme di R.
 La **chiusura di X rispetto a F**, denotata con $X_{F}^+$ (o $X^+$), è definita come:
@@ -213,3 +216,12 @@ Poiché $r$ soddisfa $X\to Y$, quindi, devono anche corrispondere su $Y$.
 Abbiamo quindi $Y\subseteq X^+$, e, per il Lemma 1 $X\to Y\in F^A$.
 
 Abbiamo quindi mostrato che $X\to Y\in F^+\implies X\to Y\in F^A$. 
+
+## domande orale
+>[!question] possibili domande
+>- elencare gli assiomi di Armstrong
+>- elencare (e dimostrare) gli assiomi "conseguenze"
+>- cos'è $F^+$? si può calcolare?
+>- cosa c'è dentro $F^+$ se $F$ è vuoto? (le dipendenze banali)
+>- lemma 1 (e dimostrazione)
+>- dimostrare $F^+=F^A$
