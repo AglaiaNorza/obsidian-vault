@@ -26,7 +26,7 @@ bisogna affrontare il problema di come ottenere una decomposizone che soddisfi l
 riformulato in modo più informale:
 - i dipendenti devono essere singleton
 - $AB\to C$ può trovarsi nella copertura minimale solo se nella chiusura di $A$ e di $B$ non si trova $C$ (in caso contrario viene sostituito da $A\to C$ o $B\to C$
-- posso eliminare una dipendenza se è possibile ricostruirla in $F^+$ tramite altre dipendenze
+- posso eliminare una dipendenza se è possibile ricostruirla in $F^+$ tramite altre dipendenze 
 
 ### come si calcola
 Per ogni insieme di dipendenze funzionali $F$ esiste una copertura minimale equivalente ad $F$ che si può ottenere in *tempo polinomiale* in tre passi:
@@ -110,7 +110,7 @@ Per ogni insieme di dipendenze funzionali $F$ esiste una copertura minimale equi
 > 	- abbiamo già calcolato le chiusure di $B$ e $C$, e in nessuna delle due è presente $L$, quindi non possiamo eliminare elementi a sinistra
 > 
 > **passo 3**
-> - non possiamo toccare la dipendenza $BC\to E$ perché $E$ è determinato unicamente da quella dipendenza
+> - non possiamo toccare la dipendenza $BC\to E$, perché $E$ è determinato unicamente da quella dipendenza
 > - proviamo con $C\to D$ -> la chiusura di $C$ è $\{ C \}$, quindi deve rimanere
 > - proviamo con $B\to D$ -> $B^+_{G}=\{ B,\,A \}$, quindi deve rimanere
 > - proviamo con $E\to L$ -> $E^+_{G}=\{ E \}$, quindi deve rimanere
