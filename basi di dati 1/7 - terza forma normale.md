@@ -96,7 +96,7 @@ Altra definizione - se si vuole usare un insieme (Y) invece del singleton A:
 Siano R uno schema di relazione e F un insieme di dipendenze funzionali su R.
 >[!info] dipendenza parziale
 >$$X\to A \in F^+ \mid A\not\in X$$
->è una **dipendenza parziale** su R se A non è primo ed X è contenuto propriamente in una chiave di R.
+>è una **dipendenza parziale** su $R$ se $A$ non è primo ed $X$ è contenuto propriamente in una chiave di $R$.
 >(quindi, invece di $X$ superchiave ho $X$ primo - è contenuto invece di contenere - non è rispettata la 3NF)
 >>[!example]- esempio
 >>Per esempio, nella relazione $$\text{Curriculum(Matr, CF, Cogn, Nome, DataN, Com, Prov, C\#, Tit, Doc, DataE, Voto)}$$ 
@@ -106,8 +106,8 @@ Siano R uno schema di relazione e F un insieme di dipendenze funzionali su R.
 
 >[!info] dipendenza transitiva
 >$$X\to A\in F^+\mid A \not\in X$$
->è una **dipendenza transitiva** su R se A non è primo e per ogni chiave K di R si ha che X non è contenuto propriamente in K (e $K-X\neq \emptyset$)
->(quindi, X non è superchiave - magari una parte di X lo è, ma non tutto X - non è rispettata la 3NF)
+>è una **dipendenza transitiva** su $R$ se $A$ non è primo e per ogni chiave $K$ di $R$ si ha che $X$ non è contenuto propriamente in $K$ (e $K-X\neq \emptyset$)
+>(quindi, $X$ non è superchiave - magari una parte di $X$ lo è, ma non tutto $X$ - non è rispettata la 3NF)
 >>[!example]- esempio
 >>$$\text{Studente (Matr, CF, Cogn, Nome, Data, Com, Prov)}$$
 >>con $Matr$ chiave
@@ -132,7 +132,7 @@ Per quanto riguarda $\forall X\to A \in F^+,\, A \not\in X$, abbiamo due casi:
 
 da qui:
 1) se *$A$ primo*, viene a mancare la prima condizione per avere una dipendenza parziale o transitiva (entrambe vogliono $A$ non primo)
-2) se *$A$ non primo*, allora X è superchiave (contiene una chiave). (se faccio K-X ottengo il vuoto, perché tutti gli elementi di X K sono contenuti in X) Visto che è superchiave, può contenere una chiave ma non essere contenuto propriamente SLIDE
+2) se *$A$ non primo*, allora $X$ è *superchiave* (contiene una chiave) - non può quindi essere contenuto *propriamente* in una chiave, e non è neanche possibile che $K-X\neq \emptyset$ (in quanto contiene tutta la chiave)
 
 ora passiamo alla
 
@@ -216,3 +216,13 @@ In conclusione, quando si decompone uno schema per ottenerne uno 3NF, occorre te
 > Ogni relazione in Boyce-Codd è anche in 3NF, ma non vale il contrario
 
 - **può non essere possibile** decomporre uno schema non BCNF ottenendo sottoschemi BNCF e preservando allo stesso tempo tutte le dipendenze - invece, è **sempre possibile** per la 3NF
+
+## domande orale
+>[!question] possibili domande orale:
+>- definizione 3NF
+>- definizione dipendenze parziali e transitive
+>- 3NF $\iff$ no dipendenze parziali e transitive
+>- perché nella 3NF prendiamo $F^+$ e non $F$?
+>- perché $A\not\in X$?
+>- cosa si fa quando si ha uno schema non in 3NF?
+>- (non credo abbia mai chiesto cosa sia la forma Boyce Codd)

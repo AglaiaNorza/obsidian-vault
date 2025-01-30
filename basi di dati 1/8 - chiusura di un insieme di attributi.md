@@ -7,6 +7,9 @@ Le dipendenze funzionali che si vogliono preservare sono tutte quelle che sono *
 
 Vogliamo quindi calcolare $F^+$, ma questo richiede tempo - è sufficiente avere un metodo per decidere se una dipendenza funzionale $X\to Y\in F^+$. Questo può essere fatto **calcolando $X^+$** e **verificando se $Y\subseteq X^+$**.
 Infatti, ricordiamo il [[6 - chiusura di un insieme di dipendenze funzionali|lemma 1]] $X\to Y\in F^A\iff Y\subseteq X^+$ e il  [[6 - chiusura di un insieme di dipendenze funzionali|teorema]] che dimostra che $F^A=F^+$.
+
+>[!summary] calcolare $F^+=F^A$ richiede tempo esponenziale
+>Basta considerare gli assiomi di riflessività o aumento o decomposizione: ogni sottoinsieme di $R$ porta a una o più dipendenze e i possibili sottoinsiemi di $R$ sono $2^{\#R}$
 ### come calcolare $X^+$
 per il calcolo di $X^+$ possiamo usare il seguente algoritmo:
 
