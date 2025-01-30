@@ -117,3 +117,8 @@ L'algoritmo "calcolo di $X^+$" calcola correttamente la chiusura di un insieme d
 - il **prodotto cartesiano** di un qualunque insieme $A$ con l'insieme vuoto è l'insieme vuoto: $\forall A:A\times \emptyset=\emptyset$
 - l'unico **sottoinsieme** dell'insieme vuoto è l'insieme vuoto stesso
 - la **cardinalità** dell'insieme vuoto è zero: l'insieme vuoto *è finito*
+
+## domande orale
+>[!question]
+>- perché calcolare $F^+$ richiede tempo esponenziale?
+>- dimostrazione della correttezza dell'algoritmo per il calcolo di $X^+$

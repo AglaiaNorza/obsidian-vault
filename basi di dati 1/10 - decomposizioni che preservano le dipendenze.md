@@ -5,7 +5,7 @@ bisogna formalizzare il concetto di *decomposizione che preserva un insieme di d
 >$$\large\bigcup_{i=1}^kR_{i}=R$$
 >- essenzialmente, decomporre $R$ significa definire dei sottoschemi che contengono ognuno un sottoinsieme degli attributi di $R$.
 
-La proiezione di $F$ su un certo elemento $R_i$ contiene:
+La **proiezione** di $F$ su un certo elemento $R_i$ contiene:
 - le dipendenze funzionali di $F^+$la cui unione di determinante e determinato fa parte di $R_{i}$ (quindi le dipendenze con elementi in $R_{i}$)
 
 Visto che due insiemi di dipendenze si possono scambiare quando hanno la stessa chiusura, una decomposizione preserva $F$ se la chiusura di $F$ è uguale alla chiusura dell'insieme $G = \{\text{unione delle proiezioni di F sui vari } R_{i}\}$.
@@ -18,11 +18,13 @@ Visto che due insiemi di dipendenze si possono scambiare quando hanno la stessa 
 ### lemma 2
 Siano $F$ e $G$ due insiemi di dipendenze funzionali. $F\subseteq G^+ \iff F^+\subseteq G^+$.
 
->[!note] dimostrazione $F\subseteq G^+\implies F^+\subseteq G^+$
+>[!note] dimostrazione $F\subseteq G^+ \implies F^+\subseteq G^+$
 >Sia $f\in F^+-F$ (una dipendenza di $F^+$ che non compare in $F$).
 >- noi sappiamo che ogni dipendenza funzionale in $F$ è derivabile da $G$ mediante gli assiomi di Armstrong (perché $F\subseteq G^+$, e $G^+=G^A$, quindi le dipendenze di $F$ sono dipendenze di $G^A$)
->- anche $F^+(=F^A)$ è derivabile da $F$ tramite gli assiomi di Armstrong.
->- continuando ad applicare gli assiomi di Armstrong in $G^+$ (per ricavare $F^+$), non "esco"  da $G^+$, le cui dipendenze sono state trovate con gli assiomi di Armstrong
+>- anche $F^+(=F^A)$ (e quindi $f\in F^+$) è derivabile da $F$ tramite gli assiomi di Armstrong.
+>- quindi, si ha $G\overset{A} \to F \overset{A} \to F^A=F^+$
+>	- (ottengo $F$ da $G$ mediante Armstrong e poi, sempre mediante Armstrong, anche $F^A=F^+$.)
+>	- Il punto cruciale è che, applicando solo gli assiomi di Armstrong su un sottoinsieme di $G$, non "esco" mai da $G^+=G^A$
 >- quindi, $f\in F^+ -F$  è derivabile da $G$ con gli assiomi di Armstrong, e $F^+\subseteq G^+$
 
 ### preservare le dipendenze
