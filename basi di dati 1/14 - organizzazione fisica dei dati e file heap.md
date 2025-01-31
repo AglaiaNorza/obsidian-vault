@@ -121,7 +121,7 @@ $\text{N: numero di record}$
 $\text{R: numero di record che possono essere memorizzati in un blocco}$
 $n=\frac{N}{R}=\text{numero di blocchi}$
 
-$$\large\frac{R\times1+R\times 2+\dots+R\times n}{N}=\frac{R}{N}\times \frac{n(n+1)}{2}=\frac{1}{n} \frac{n(n+1)}{2}\approx \frac{n}{2}$$
+$$\large\frac{R\times1+R\times 2+\dots+R\times n}{N}=\frac{R\times(1+2+\dots+n)}{N}=\frac{R}{N}\times \frac{n(n+1)}{2}=\frac{1}{n} \frac{n(n+1)}{2}\approx \frac{n}{2}$$
 ## inserimento 
 Servono:
 - (*ricerca di un possibile duplicato* - vale il tempo approssimato di $\frac{n}{2}$ accessi: appena trovo un duplicato, ho finito)
@@ -135,6 +135,13 @@ Servono:
 ## cancellazione
 Servono:
 - **costo della ricerca**
-- **1 accesso in lettura** --> per leggere l'ultimo blocco
+- **1 accesso in lettura** --> per leggere l'ultimo blocco, da cui prendiamo un record per sostituire quello cancellato
 	- più complicato se i record sono di lunghezza variabile: in quel caso dobbiamo spostare verso l'alto tutti i record successivi, modificando eventuali puntatori
 - **2 accessi in scrittura** --> riscrivere in memoria secondaria il blocco modificato e l'ultimo blocco
+
+## domande orale
+>[!question] possibili domande orale 
+>- com'è organizzato un disco? (non so se l'abbia mai chiesto)
+>- da cosa è formato un record?
+>- costo operazioni heap
+>- dimostrazione del costo della ricerca

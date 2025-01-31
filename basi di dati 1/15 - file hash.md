@@ -20,7 +20,7 @@ Poiché l'inserimento di un record viene effettuato sull'ultimo blocco del bucke
 
 >[!summary] costo operazioni
 >Se la funzione hash distribuisce uniformemente i record nei bucket, ogni bucket è costituito da $\frac{n}{B}$ blocchi, e quindi
->- il costo richiesto di un'operazione è approssimativamente 1/B-esimo del costo dell'operazione se il file fosse organizzato come una heap
+>- il costo richiesto di un'operazione è approssimativamente *1/B-esimo* del costo dell'operazione se il file fosse organizzato come una heap
 
 ### funzione hash
 Una buona funzione hash deve **ripartire uniformemente i record nei bucket**, cioè, al variare della chiave, deve assumere con la stessa probabilità uno dei valori compresi tra 0 e B-1.
@@ -86,3 +86,9 @@ Appare evidente che quanti più sono i bucket, tanto più è basso il costo di u
 >sappiamo che $MA=\left\lceil  \frac{NB}{2}  \right\rceil$, quindi, per avere $MA\leq 10$, dobbiamo avere $NB\geq 20$ (con $NB$ numero di blocchi in un bucket).
 >Quindi, dobbiamo avere $RB=M\times NB\leq M\times 20$, quindi $RB\leq 60$.
 >Perché sia possibile, serve $\frac{NR}{B}\leq 60$ e quindi $B\geq \frac{250000}{60}$
+
+## domande orale
+>[!question] possibili domande orale
+>- struttura file hash
+>- cosa deve fare una "buona" funzione hash?
+>- costo delle operazioni su un file hash

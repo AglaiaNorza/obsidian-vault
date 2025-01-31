@@ -99,6 +99,7 @@ Siano R uno schema di relazione e F un insieme di dipendenze funzionali su R.
 >è una **dipendenza parziale** su $R$ se $A$ non è primo ed $X$ è contenuto propriamente in una chiave di $R$.
 >(quindi, invece di $X$ superchiave ho $X$ primo - è contenuto invece di contenere - non è rispettata la 3NF)
 >>[!example]- esempio
+>> 
 >>Per esempio, nella relazione $$\text{Curriculum(Matr, CF, Cogn, Nome, DataN, Com, Prov, C\#, Tit, Doc, DataE, Voto)}$$ 
 >>(con $Matr, C\#$ chiave), abbiamo $Matr\to Cogn$. 
 >> 
@@ -109,6 +110,7 @@ Siano R uno schema di relazione e F un insieme di dipendenze funzionali su R.
 >è una **dipendenza transitiva** su $R$ se $A$ non è primo e per ogni chiave $K$ di $R$ si ha che $X$ non è contenuto propriamente in $K$ (e $K-X\neq \emptyset$)
 >(quindi, $X$ non è superchiave - magari una parte di $X$ lo è, ma non tutto $X$ - non è rispettata la 3NF)
 >>[!example]- esempio
+>> 
 >>$$\text{Studente (Matr, CF, Cogn, Nome, Data, Com, Prov)}$$
 >>con $Matr$ chiave
 >>
