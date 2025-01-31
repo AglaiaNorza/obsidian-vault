@@ -158,3 +158,9 @@ $$
 >Per transitività, da $X\to(Z^{i-1}\cap R_{j}),\; (Z^{i-1}\cap R_{j})\to A\in G^A$, si ha $X\to A\in G^A$, cioè (*l.1*) $A\in X^+_{G}$.
 >
 >> abbiamo quindi dimostrato che $A\in Z^i\implies A\in X^+_{G}$, ovvero $Z^i\subseteq X^+_{G}\;\; \forall i$
+
+## domande orale
+>[!question] possibili domande
+>- cosa vuol dire che una decomposizione preserva un insieme di dipendenze?
+>- (forse) quali dipendenze bisogna controllare e quali no per l'algoritmo?
+>- dimostrazione calcolo di $X^+_{G}$ a partire da $F$
