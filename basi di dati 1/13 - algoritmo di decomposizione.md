@@ -52,24 +52,26 @@ L'algoritmo di decomposizione permette di calcolare in tempo polinomiale una dec
 - $\rho$ preserva $F$
 
 >[!note] dimostrazione
->###### $\rho$ preserva $F$
+>###### $\rho$ preserva $F$ (ovvero $F^+=G^+$)
 >Sia $G=\bigcup_{i=1}^k\pi_{Ri}(F)$.
 > 
->Poiché per ogni dipendenza funzionale $X\to A\in F$ si ha $XA\in \rho$, si ha che questa dipendenza di $F$ sarà sicuramente in $G$. 
->Quindi, $G\subseteq F$ e quindi $G^+\subseteq F^+$ (l'inclusione $G^+\subseteq F^+$ è banale, in quanto, per definizione, $G\subseteq F^+$)
+>Poiché per ogni dipendenza funzionale $X\to A\in F$ si ha $XA\in \rho$, si ha che tutte le dipendenze di $F$ saranno sicuramente in $G$. 
+>Quindi, $F\subseteq G$ e quindi $F^+\subseteq G^+$.
+>- (l'inclusione $G^+\subseteq F^+$ è banale, in quanto, per definizione, $G\subseteq F^+$)
 >
 >###### ogni schema di $\rho$ è in 3NF
 >abbiamo tre diversi casi che si possono presentare:
->1) se $S\in \rho$ - ogni attributo in $S$ fa parte della chiave (gli attributi in $S$ sono quelli non coinvolti nelle dipendenze, quindi dovranno necessariamente essere nella chiave) e $S$ è in 3NF 
->2) $R$ viene da $R-A\to A$ - $R-A$ è *superchiave* per $R$ (determina $R-A$ per riflessività e $A$) - a noi interessano le chiavi e non le superchiavi, ma:
->	- non ci può essere un sottoinsieme di $R-A$ che determini tutto lo schema, perché partiamo da una copertura minimale (per definizione non ci può essere $Y\subset R-A$ tale che $Y\to A$ - altrimenti avremmo ridotto $R-A$ a $Y$)
->	- quindi, a qualunque $Y\subset A$ manca $\to A$ - $R-A$ *è chiave*
->	- prendiamo $Y\to B$ una qualsiasi dipendenza in $F$ - abbiamo due casi:
+>1) $S\in \rho$ --> ogni attributo in $S$ fa parte della chiave (gli attributi in $S$ sono quelli non coinvolti nelle dipendenze, quindi dovranno necessariamente essere nella chiave) e $S$ è in 3NF 
+>2) $R\in \rho$ (ovvero esiste una dipendenza funzionale in $F$ che coinvolge tutti gli attributi in $R$) --> visto che $F$ è una copertura minimale, la dipendenza avrà forma $(R-A)\to A$.
+>	Abbiamo quindi che $R-A$ è *superchiave* per $R$ (determina $A$ e $R-A$ per riflessività) - a noi interessano le chiavi e non le superchiavi, ma:
+>	- non ci può essere un sottoinsieme di $R-A$ che determini tutto lo schema, perché partiamo da una copertura minimale (per definizione non ci può essere $Y\subset R-A$ tale che $Y\to A$, altrimenti avremmo ridotto $R-A$ a $Y$)
+>	- quindi, a qualunque $Y\subset A$ manca determinare $A$, il che implica che $R-A$ *è chiave*
+>	- infatti, prendiamo $Y\to B$ una qualsiasi dipendenza in $F$ - abbiamo due casi:
 >		- $B=A$ --> $Y=R-A$ (è impossibile che ci siano due dipendenze con lo stesso dipendente visto che è una copertura minimale)
 >		- $B\neq A$ --> $B\in R-A$ quindi, visto che $R-A$ è chiave, $B$ è primo
->3) ($XA\in \rho)$ non c'è un $R-A\to A$, ci sono diversi $X\to A$ - quindi, $X$ è superchiave per $\{ XA \}$, ed è anche chiave per il ragionamento di sopra.
->	- prendiamo un qualunque $Y\to B\in F^+$:
->		- $B=A$ --> $Y=X$ (per lo stesso ragionamento di prima)
+>4) $XA\in \rho$ --> non c'è un $R-A\to A$, ci sono diversi $X\to A$ - quindi, $X$ è superchiave per $\{ XA \}$, ed è anche *chiave* per il ragionamento di sopra (copertura minimale $\implies$ non esiste un $X'\subset X$ che determina $A$).
+>	- prendiamo un qualunque $Y\to B\in F$ tale che $YB\subseteq XA$:
+>		- $B=A$ --> $Y=X$ (per lo stesso ragionamento di prima - copertura minimale)
 >		- $B\neq A$ --> $B\in X$  (è primo)
 
 >[!info] (teorema) avere anche un join senza perdita
@@ -80,3 +82,6 @@ L'algoritmo di decomposizione permette di calcolare in tempo polinomiale una dec
 >sì! 
 >abbiamo visto un algoritmo che, in tempo polinomiale, fornisce questa decomposizione
 
+## domande orale
+>[!question] possibili domande orale
+>- dimostrazione $\rho$ preserva $F$ e ogni schema di $\rho$ è in 3NF
