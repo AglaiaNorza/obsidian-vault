@@ -100,7 +100,10 @@ Siano R uno schema di relazione e F un insieme di dipendenze funzionali su R.
 >(quindi, invece di $X$ superchiave ho $X$ primo - è contenuto invece di contenere - non è rispettata la 3NF)
 >>[!example]- esempio
 >> 
->>Per esempio, nella relazione $$\text{Curriculum(Matr, CF, Cogn, Nome, DataN, Com, Prov, C\#, Tit, Doc, DataE, Voto)}$$ 
+>>Per esempio, nella relazione 
+>> 
+>>$$\text{Curriculum(Matr, CF, Cogn, Nome, DataN, Com, Prov, C\#, Tit, Doc, DataE, Voto)}$$ 
+>> 
 >>(con $Matr, C\#$ chiave), abbiamo $Matr\to Cogn$. 
 >> 
 >>Quindi, ad una coppia numero di matricola-codice corso, corrisponde un solo cognome: $(Matr, C\#)\to Cogn$ - l'attributo $Cogn$ *dipende parzialmente* dalla chiave $Matr, C\#$, perché è la conseguenza di $Matr\to Cogn$ (e $Matr$ è contenuto propriamente in una chiave)
@@ -112,6 +115,7 @@ Siano R uno schema di relazione e F un insieme di dipendenze funzionali su R.
 >>[!example]- esempio
 >> 
 >>$$\text{Studente (Matr, CF, Cogn, Nome, Data, Com, Prov)}$$
+>> 
 >>con $Matr$ chiave
 >>
 >>Abbiamo $Matr\to Com$ e $Com\to Prov$.
@@ -168,11 +172,11 @@ entrambi sono in 3NF, ma il secondo *non è soddisfacente*.
 > [!question] perché?
  > Consideriamo due istanze legali degli schemi ottenuti:
  > 
-> ![[3nf-non-basta.png]]
+> ![[3nf-non-basta.png|center|350]]
 > 
 > - l'istanza dello schema originario R che posso ricostruire (con il join naturale) è:
 > 
-> ![[3nf-non-basta2.png|300]]
+> ![[3nf-non-basta2.png|center|300]]
 > 
 > - questa non è però un'istanza legale di R, perché non soddisfa la dipendenza funzionale $B\to C$
 
@@ -181,8 +185,11 @@ entrambi sono in 3NF, ma il secondo *non è soddisfacente*.
 
 >[!example]- esempio 
 >consideriamo lo schema
+> 
 >$$\text{R = (Matricola, Comune, Provincia)}$$
+> 
 >$$F=\{Matricola\to Comune,\, Comune\to Provincia\}$$
+> 
 >(con chiave $Matricola$)
 >non è in 3NF a causa della dipendenza transitiva $Comune\to Provincia$.
 >

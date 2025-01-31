@@ -26,7 +26,7 @@ ACID
 ### schedule seriale
 
 > [!info] schedule seriale
-> Uno schedule seriale corrisponde ad una **esecuzione sequenziale** (non interfogliata) delle transizioni (ogni transazione entra ed esce solo una volta finita).
+> Uno schedule seriale corrisponde ad una **esecuzione sequenziale** (non interfogliata) delle transazioni (ogni transazione entra ed esce solo una volta finita).
 > (è quindi una permutazione delle transazioni in $T$)
 
 - tutti gli schedule seriali sono corretti
@@ -34,11 +34,17 @@ ACID
 Visto che quando un item viene letto, esso viene portato nella memoria centrale in uno *spazio privato* della singola transazione, possono nascere una serie di problemi.
 - se un'altra transazione leggerà lo stesso dato, lo porterà nella sua propria zona di memoria - avremmo quindi due copie dello stesso dato che verranno modificate, e potremmo avere dati sbagliati (una sovrascriverà l'altra)
 
+I possibili problemi sono:
+- **ghost update**
+- **dato sporco**
+- **aggregato non corretto**
+
 ### ghost/lost update
 Avviene quando si perde un aggiornamento di un dato.
 
 >[!example] esempio
 >Abbiamo due transazioni, $T_{1},\,T_{2}$
+> 
 >![[transazioni-es.png|center|350]]
 >
 >Consideriamo il seguente schedule:
@@ -55,7 +61,7 @@ Avviene quando un valore è il risultato di una transazione fallita (che va quin
 > [!example] esempio
 > ![[dato-sporco.png|center|200]]
 >  
-> A causa dell'atomicità delle transazioni, se $T_{1}$ fallisce, il valore di $X$ deve essere riportato a quello iniziale (quindi il `write` di $T_{2}$ dovrebbe dare risultato $X_{0}+M$ - ma, visto che $T_{2}$ ha usato il dato sporco prima del fallimento di $T_{1}$, il risultato sarà $X_{0}-N+M$
+> A causa dell'atomicità delle transazioni, se $T_{1}$ fallisce, il valore di $X$ deve essere riportato a quello iniziale (quindi il `write` di $T_{2}$ dovrebbe dare risultato $X_{0}+M$ - ma, visto che $T_{2}$ ha usato il dato sporco prima del fallimento di $T_{1}$, il risultato sarà $X_{0}-N+M$)
 
 ### aggregato non corretto
 Avviene quando l'ordine delle operazioni fa sì che alcuni dati vengano processati dopo le operazioni che li richiedono.
@@ -74,7 +80,6 @@ Uno schedule non seriale è corretto se è **serializzabile**, ovvero se è *equ
 Due schedule sono equivalenti se:
 - (per ogni dato modificato) *producono valori uguali*
 - e due valori sono uguali solo se sono prodotti dalla *stessa sequenza di operazioni*
-	- ovvero se ho lo stesso ordine di accesso agli stessi item di almeno uno schedule seriale
 
 >[!question]- perché non basta che siano uguali?
 > 
