@@ -25,7 +25,7 @@ bisogna affrontare il problema di come ottenere una decomposizone che soddisfi l
 
 riformulato in modo più informale:
 - i dipendenti devono essere singleton
-- $AB\to C$ può trovarsi nella copertura minimale solo se nella chiusura di $A$ e di $B$ non si trova $C$ (in caso contrario viene sostituito da $A\to C$ o $B\to C$
+- $AB\to C$ può trovarsi nella copertura minimale solo se nella chiusura di $A$ e di $B$ non si trova $C$ (in caso contrario viene sostituito da $A\to C$ o $B\to C$)
 - posso eliminare una dipendenza se è possibile ricostruirla in $F^+$ tramite altre dipendenze 
 
 ### come si calcola
