@@ -18,7 +18,7 @@ Per risolvere il sussistere di una situazione di stallo, una transazione nel cic
 ### approcci preventivi
 In genere, si cerca di evitare il verificarsi di situazioni di stallo adottando opportuni protocolli.
 
-Per esempio, si possono ordinare gli item e imporre alle transazioni di richiedere i lock necessari seguendo tale ordine.
+Per esempio, si possono *ordinare gli item* e imporre alle transazioni di richiedere i lock necessari seguendo tale ordine.
 - così non ci possono essere cicli nel grafo di attesa
 
 ![[prevenire-deadlock.png|center|350]]

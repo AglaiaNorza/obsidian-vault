@@ -52,7 +52,7 @@ Una transazione viene quindi interpretata come sequenza di `lock` e `unlock`:
 
 >[!info] equivalenza
 >Due schedule si definiscono quindi equivalenti se le formule che danno i valori finali per ciascun item sono le stesse.
->- devono essere uguali, per ogni item, a quelle di almeno uno schedule seriale
+
 
 >[!summary] serializzabilità
 >Uno schedule è **serializzabile** se è equivalente ad uno schedule seriale (come già visto)
@@ -122,4 +122,4 @@ Una transazione obbedisce al protocollo di locking a due fasi se:
 >
 >Entriamo subito in una contraddizione: infatti, il ciclo si chiude solo nel caso una transizione $T_{k}$ abbia fatto un unlock e, subito dopo, $T_{1}$ un lock. Ma questo non è possibile se ogni transazione è a due fasi --> abbiamo dimostrato che due fasi $\implies$ ogni schedule serializzabile
 ### vantaggi
-Il lock a due fasi risolve il problema dell'aggregato non corretto (una transazione $T_{2}$ non ha accesso ai dati `locked` di $T_{1}$ fino a quando essa non li rilascia, e $T_{1}$ legge prima tutti i dati di cui ha bisogno, e poi li usa)
+Il lock a due fasi **risolve il problema dell'aggregato non corretto** (una transazione $T_{2}$ non ha accesso ai dati `locked` di $T_{1}$ fino a quando essa non li rilascia, e $T_{1}$ legge prima tutti i dati di cui ha bisogno, e poi li usa)
