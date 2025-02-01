@@ -2,8 +2,8 @@ Il B-tree nasce dalla *generalizzazione della struttura di file con indice*.
 
 Si accede ad un file attraverso una **gerarchia di indici** - l'indice a livello più alto (*radice*) è costituito da un unico blocco e *risiede in memoria principale*.
 Ogni blocco di un file indice è costituito da record contenenti una coppia (v,b)
-- v -->  valore della chiave del primo record della porzione del file principale a cui fa riferimento la coppia
-- b --> puntatore (ad un blocco del file indice a livello più basso, o ad un blocco del file principale)
+- `v` -->  valore della chiave del primo record della porzione del file principale a cui fa riferimento la coppia
+- `b` --> puntatore (ad un blocco del file indice a livello più basso, o ad un blocco del file principale)
 
 >[!tip] il primo record indice di ogni blocco contiene **solo un puntatore** (niente chiave) <small>ad un blocco che ha chiavi minori di quelle puntate dal secondo record</small>
 
@@ -73,7 +73,8 @@ L'*altezza massima* ($k$) si ha quando i blocchi sono pieni al minimo, ovvero qu
 Quindi:
 - il *file principale* ha al massimo $\frac{N}{e}$ blocchi (numero record/record x blocco)
 - a livello $i$, il *file indice* ha 
-	- $\frac{N}{ed^{i-1}}$ blocchi ($\frac{N}{e}$, che viene diviso per $d$ ad ogni livello)
+	- $\frac{N}{ed^{i-1}}$ record, memorizzati in:
+	- $\frac{N}{ed^{i}}$ blocchi ($\frac{N}{e}$, che viene diviso per $d$ ad ogni livello)
 		- (livello 1: $\frac{N}{ed}$ ...)
 
 A livello $k$, l'indice avrà esattamente un blocco, quindi dobbiamo fermarci quando:

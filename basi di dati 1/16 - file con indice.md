@@ -74,7 +74,7 @@ Il costo sarà quindi **costo della ricerca + 1 accesso** in scrittura.
 >- non conviene mettere un solo record nel nuovo blocco, ma metterne qualcuno e lasciare dello spazio libero sia nel vecchio che nel nuovo blocco (per facilitare futuri inserimenti)
 
 >[!example]- esempio nuovo blocco
->![[fi-inserimento1.jpg|center|400]]
+>![[fi-inserimento1.png|center|400]]
 >![[fi-inserimento2.jpg|center|400]]
 
 ### cancellazione
@@ -84,7 +84,7 @@ Il costo è quindi **costo della ricerca + 1 accesso** per scrivere il blocco mo
 - se invece il record cancellato è l'unico blocco del record, il blocco viene restituito al sistema e viene modificato l'indice
 ### modifica
 Per modificare un blocco dobbiamo trovarlo e poi modificarlo.
-(Se la modifica non coinvolge la chiave), il costo è quindi **costo della ricerca + 1 accesso**.
+(Se la modifica non coinvolge la chiave), il costo è quindi **costo della ricerca + 1 accesso** (per scrivere il blocco modificato)
 
 >[!warning] modifica della chiave
 >Nel caso in cui dobbiamo modificare la chiave di un record, serviranno *una cancellazione e un inserimento* (dobbiamo cancellare e reinserire il record - non si può modificare una chiave)
@@ -101,7 +101,7 @@ Ogni record del file indice punta al *primo blocco* di un bucket, e *il file ind
 ![[record-puntati.jpeg|center|450]]
 ### operazioni
 - la **ricerca** richiede la ricerca sul file indice di una chiave che ricopra il valore che si cerca, e la scansione del bucket corrispondente
-- la **cancellazione** richiede la ricerca del record e la *modifica dei bit di cancellazione* nell'intestazione del blocco (non si possono cancellare completamente blocchi perché contengono puntatori ad altri blocchi utili?)
+- la **cancellazione** richiede la ricerca del record e la *modifica dei bit di cancellazione* nell'intestazione del blocco
 - la **modifica** richiede la ricerca del record, la modifica, e la riscrittura del blocco (se non coinvolge la chiave).
 	- se la modifica coinvolge la *chiave*, equivale alla cancellazione seguita da un inserimento
 	- in questo caso, non è sufficiente modificare il bit di cancellazione del record cancellato, ma è necessario *inserire in esso un puntatore al nuovo record inserito* in modo che sia raggiungibile da qualsiasi record che contenga un puntatore al record cancellato
