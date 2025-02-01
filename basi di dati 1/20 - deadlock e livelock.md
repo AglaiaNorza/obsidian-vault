@@ -31,14 +31,14 @@ Il problema dell'attesa indefinita può essere risolto:
 - eseguendo le transazioni in base alla loro **priorità** e aumentando la priorità di una transazione all'aumentare del tempo in cui rimane in attesa
 ### abort di una transazione
 Avviene quando:
-- la transazione esegue un'operazione non corretta (es. divisione per 0)
-- lo scheduler rileva un deadlock
-- lo scheduler fa abortire la transazione per garantire la serializzabilità
-- si verifica un malfunzionamento hardware o software
+1) la transazione esegue un'operazione non corretta (es. divisione per 0)
+2) lo scheduler rileva un deadlock
+3) lo scheduler fa abortire la transazione per garantire la serializzabilità
+4) si verifica un malfunzionamento hardware o software
 
 ### punto di commit
 Il punto di commit di una transazione è il punto in cui essa ha ottenuto **tutti i lock** di cui aveva bisogno, e ha **effettuato tutti i calcoli** (quindi sta per fare gli unlock).
-In questo caso, non può essere abortita a causa dei punti 1-3.
+In questo caso, non può essere abortita se non per il punto 4).
 
 >[!info] dati sporchi
 >I dati sporchi sono quindi i dati scritti da una transazione sulla base di dati prima di raggiungere un punto di commit
