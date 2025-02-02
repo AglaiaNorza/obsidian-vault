@@ -65,7 +65,7 @@ Una transazione soddisfa il protocollo di locking a due fasi stretto se:
 ## classificazione dei protocolli
 ### protocolli conservativi
 I protocolli conservativi cercano di **evitare** le situazioni di stallo.
-Ogni transazione richiede *tutti i lock all'inizio* - se ne manca anche una sola, la transazione viene messa in attesa.
+Ogni transazione richiede *tutti i lock all'inizio* - se ne manca anche uno solo, la transazione viene messa in attesa.
 
 Così si evita il deadlock, ma non il livelock - la transazione rischia di non poter mai partire.
 Per *evitare anche il livelock*, una transazione richiede tutti i lock che servono all'inizio e li ottiene se e solo se:
