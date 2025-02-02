@@ -136,7 +136,6 @@ $$X \to Y \in F^A \iff Y \subseteq X^+$$
 >- (dimostro $X \to Y \in F^A \implies Y \subseteq X^+$)
 >
 >Poiché $X\rightarrow Y \in F^A$, per la regola della decomposizione si ha che, per ogni $i$, $i=1, \dots, n$, $X \rightarrow A_{i} \in F^A$, cioè $A_{i} \in X^+$ per ogni $i, i=1,\, \dots,\, n$, e, quindi, $Y \subseteq X^+$
->$\begin{flalign}&& \square\end{flalign}$
 ### teorema: $F^+=F^A$
 
 Siano $R$ uno schema di relazione ed $F$ un insieme di dipendenze funzionali su $R$.
