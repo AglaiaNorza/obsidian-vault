@@ -118,9 +118,11 @@ Ha senso valutare il *costo medio* della ricerca, ma solo nel caso in cui si cer
 Cominciamo dalla ricerca quando la chiave ha un valore che non ammette duplicati.
 
 $\text{N: numero di record}$
-$\text{R: numero di record che possono essere memorizzati in un blocco}$
-$n=\frac{N}{R}=\text{numero di blocchi}$
 
+$\text{R: numero di record che possono essere memorizzati in un blocco}$
+ 
+$n=\frac{N}{R}=\text{numero di blocchi}$
+ 
 $$\large\frac{R\times1+R\times 2+\dots+R\times n}{N}=\frac{R\times(1+2+\dots+n)}{N}=\frac{R}{N}\times \frac{n(n+1)}{2}=\frac{1}{n} \frac{n(n+1)}{2}\approx \frac{n}{2}$$
 ## inserimento 
 Servono:
