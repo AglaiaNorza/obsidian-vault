@@ -94,8 +94,8 @@ Una **dipendenza funzionale** stabilisce un particolare legame semantico tra due
 > 
 > es. un'istanza con una sola tupla soddisfa `X->Y`, e la premessa della seconda condizione è verificata, quindi soddisfa la dipendenza funzionale, ma senza implicazioni su Y
 
-## domande esame
+## domande orale
 >[!question] possibili domande esame 
 >- cos'è una relazione/attributo/schema/istanza?
 >- cos'è una chiave? (risposta da integrare con [[5 - dipendenze funzionali#chiave]])
->- cos'è una dipendenza funzionale e quando si dice soddisfatta? (integrare con [[5 - dipendenze funzionali]])
+>- cos'è una dipendenza funzionale e quando si dice soddisfatta? (integrare con [[5 - dipendenze funzionali]]
