@@ -162,5 +162,6 @@ $$
 ## domande orale
 >[!question] possibili domande
 >- cosa vuol dire che una decomposizione preserva un insieme di dipendenze?
+>- dimostrazione Lemma 2
 >- (forse) quali dipendenze bisogna controllare e quali no per l'algoritmo?
 >- dimostrazione calcolo di $X^+_{G}$ a partire da $F$
