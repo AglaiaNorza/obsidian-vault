@@ -110,7 +110,7 @@ Siano R uno schema di relazione e F un insieme di dipendenze funzionali su R.
 
 >[!info] dipendenza transitiva
 >$$X\to A\in F^+\mid A \not\in X$$
->è una **dipendenza transitiva** su $R$ se $A$ non è primo e per ogni chiave $K$ di $R$ si ha che $X$ non è contenuto propriamente in $K$ (e $K-X\neq \emptyset$)
+>è una **dipendenza transitiva** su $R$ se $A$ non è primo e per ogni chiave $K$ di $R$ si ha che $X$ non è contenuto propriamente in $K$ e $K-X\neq \emptyset$
 >(quindi, $X$ non è superchiave - magari una parte di $X$ lo è, ma non tutto $X$ - non è rispettata la 3NF)
 >>[!example]- esempio
 >> 
@@ -234,4 +234,5 @@ In conclusione, quando si decompone uno schema per ottenerne uno 3NF, occorre te
 >- perché nella 3NF prendiamo $F^+$ e non $F$?
 >- perché $A\not\in X$?
 >- cosa si fa quando si ha uno schema non in 3NF?
->- (non credo abbia mai chiesto cosa sia la forma Boyce Codd)
+>- forma Boyce-Codd
+>- perché nel caso della forma Boyce-Codd non è assolutamente possibile che si violino dipendenze? (perché i determinanti sono superchiavi e non ci possono essere due chiavi con lo stesso valore, quindi vengono meno le premesse per violare dipendenze)

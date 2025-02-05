@@ -64,7 +64,7 @@ Una transazione soddisfa il protocollo di locking a due fasi stretto se:
 > [!example] esempio
 > ![[locking-stretto.png|center|200]]
 
-## classificazione dei protocolli
+## protocolli: classificazione 
 ### protocolli conservativi
 I protocolli conservativi cercano di **evitare** le situazioni di stallo.
 Ogni transazione richiede *tutti i lock all'inizio* - se ne manca anche uno solo, la transazione viene messa in attesa.

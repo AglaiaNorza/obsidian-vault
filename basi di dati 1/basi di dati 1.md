@@ -21,4 +21,4 @@
 > - [[20 - deadlock e livelock, lock a due fasi stretto]]
 > - [[21 - timestamp]]
 >
->([[99 - domande orale, raccolte]])
+>([[domande orale, raccolte]])
