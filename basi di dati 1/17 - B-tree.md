@@ -73,12 +73,12 @@ L'*altezza massima* ($k$) si ha quando i blocchi sono pieni al minimo, ovvero qu
 Quindi:
 - il *file principale* ha al massimo $\frac{N}{e}$ blocchi (numero record/record x blocco)
 - a livello $i$, il *file indice* ha 
-	- $\frac{N}{ed^{i-1}}$ record, memorizzati in:
+	- $\frac{N}{ed^{i-1}}$ record (ogni , memorizzati in:
 	- $\frac{N}{ed^{i}}$ blocchi ($\frac{N}{e}$, che viene diviso per $d$ ad ogni livello)
 		- (livello 1: $\frac{N}{ed}$ ...)
 
 A livello $k$, l'indice avrà esattamente un blocco, quindi dobbiamo fermarci quando:
-$$\frac{N}{ed^k}=1 \iff \log_{d}\left( \frac{N}{e} \right)=k$$
+$$\frac{N}{ed^k}=1 \iff \frac{N}{e}=d^k  \iff\log_{d}\left( \frac{N}{e} \right)=k$$
 (in realtà sarebbe $\left\lceil  \frac{N}{ed^k}  \right\rceil$, ma approssimiamo)
 
 Quindi, il limite superiore dell'altezza dell'albero è $\log_{d}\left( \frac{N}{e} \right)$

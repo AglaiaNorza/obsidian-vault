@@ -38,7 +38,7 @@ Visto che il file indice è ordinato in base al valore della chiave, la ricerca 
 >[!tip] ricerca binaria più intelligente
 >(visto che il costo di accesso è "iniziale", e scorrere un intero blocco non costa di più di controllare solo la prima chiave,) una soluzione più efficiente può essere quella di eseguire la normale ricerca binaria, ma:
 >- invece di controllare solo la prima chiave di ogni blocco, controllarle *tutte*
->- se nessuna delle `ki` è ricopre SICURAMENTE `x` allora si continua con la ricerca binaria dividendo di nuovo ecc.
+>- se nessuna delle `ki` ricopre SICURAMENTE `x` allora si continua con la ricerca binaria dividendo di nuovo ecc.
 >	- sicuramente perché? perché, se per esempio l'ultima chiave del blocco è `< x`, non so se `x` sarà coperta da una chiave successiva - devo dividere di nuovo e procedere con la ricerca binaria
 >
 >>[!warning] ultima chiave del blocco
@@ -48,7 +48,7 @@ Visto che il file indice è ordinato in base al valore della chiave, la ricerca 
 
 ### ricerca per interpolazione
 La ricerca per interpolazione è basata sulla *conoscenza della distribuzione dei valori della chiave*:
-- deve essere disponibile una **funzione** $f$ che, dati tre valori `k1`,  `k2, k3` della chiave, fornisce la *frazione dell'intervallo di valori compresi* tra `k2` e `k3` e in cui deve quindi trovarsi `k1` (che stiamo cercando)
+- deve essere disponibile una **funzione** $f$ che, dati tre valori `k1`,  `k2, k3` della chiave, fornisce la *frazione dell'intervallo di valori compresi* tra `k2` e `k3` e in cui deve quindi trovarsi `k1` (che stiamo cercando) (quindi una specie di stima normalizzata della posizione relativa di `k1` rispetto a `k2` e `k3`)
 	- nella ricerca binaria, questa frazione è sempre $\frac{1}{2}$
 
 Come funziona?
@@ -64,7 +64,7 @@ La ricerca per interpolazione richiede circa $1+\log_{2}\log_{2}m$ accessi - è 
 - inoltre, la distribuzione dei dati potrebbe cambiare nel tempo (funziona solo per le basi di dati statiche)
 ### inserimento
 Per inserire un nuovo record, dobbiamo: capire dove, e scriverlo.
-Il costo sarà quindi **costo della ricerca + 1 accesso** in scrittura.
+Il costo sarà quindi **costo della ricerca + 1 accesso in scrittura**.
 
 >[!bug] spazio non disponibile
 >Se nel blocco che dovrebbe contenerlo non c'è spazio per un record, si controlla se c'è spazio *nel blocco precedente o in quello successivo*, e, in caso, si fanno scorrere i record per mantenere l'ordinamento 
@@ -80,8 +80,14 @@ Il costo sarà quindi **costo della ricerca + 1 accesso** in scrittura.
 ### cancellazione
 Per cancellare un blocco, dobbiamo trovarlo e cancellarlo.
 Il costo è quindi **costo della ricerca + 1 accesso** per scrivere il blocco modificato.
-- anche se cancello la prima chiave del record, non devo cambiare l'indice - un valore $\leq$ non deve essere per forza la chiave minima [ a lezione ha detto così, sulle slide c'è scritto che la chiave è invece la minima - in quel caso va cambiato l'indice ]
-- se invece il record cancellato è l'unico blocco del record, il blocco viene restituito al sistema e viene modificato l'indice
+
+- se il record cancellato è l'unico record del blocco, il blocco viene restituito al sistema e viene modificato l'indice
+
+>[!question] se cancello il primo record?
+>Dipende da come è organizzato il file ISAM: 
+>- se come chiave nel file indice tengo sempre la più piccola chiave del blocco corrispondente, devo cambiare l'indice
+>- (sennò - detto a lezione - posso anche organizzare l'indice con solo chiavi $\leq$ che non sono necessariamente la minima: in quel caso non devo cambiarla)
+
 ### modifica
 Per modificare un blocco dobbiamo trovarlo e poi modificarlo.
 (Se la modifica non coinvolge la chiave), il costo è quindi **costo della ricerca + 1 accesso** (per scrivere il blocco modificato)
@@ -105,6 +111,7 @@ Ogni record del file indice punta al *primo blocco* di un bucket, e *il file ind
 - la **modifica** richiede la ricerca del record, la modifica, e la riscrittura del blocco (se non coinvolge la chiave).
 	- se la modifica coinvolge la *chiave*, equivale alla cancellazione seguita da un inserimento
 	- in questo caso, non è sufficiente modificare il bit di cancellazione del record cancellato, ma è necessario *inserire in esso un puntatore al nuovo record inserito* in modo che sia raggiungibile da qualsiasi record che contenga un puntatore al record cancellato
+- per l'**inserimento**, se un record va inserito in un blocco che è già pieno, bisogna allocare un nuovo blocco che, anzichè essere puntato dall'indice, sarà linkato al blocco originario. (abbiamo cioè una lista di blocchi di overflow che partono da quello originario, dove ognuno punta al successivo).
 
 Visto che non si può mantenere il file principale ordinato, se si vuole seguire l'ordinamento quando si esamina il file, occorre *inserire in ogni record un puntatore al record successivo nell'ordinamento*.
 
