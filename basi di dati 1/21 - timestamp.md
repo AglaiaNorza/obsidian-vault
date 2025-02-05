@@ -106,4 +106,6 @@ Notiamo che lo schedule delle transazioni superstiti è equivalente allo schedul
 ## domande orale
 >[!question] possibili domande orale 
 >- come funziona il timestamp?
->- quando una transazione c
+>- quando una transazione è serializzabile nel caso dei timestamp?
+>- algoritmo di controllo della serializzabilità
+>- perché si può ignorare l'atomicità nel caso del `write`?
