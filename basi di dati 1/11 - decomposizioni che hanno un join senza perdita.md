@@ -142,3 +142,10 @@ L'algoritmo di verifica decide correttamente se $\rho$ ha un join senza perdita.
 >L'ipotesi di partenza, per cui abbiamo un join senza perdita ci impone che $m_{\rho}(r)=r$, contraddicendo quindi la supposizione per cui $r$ non ha tuple con tutte 'a'.
 >
 >>Abbiamo quindi dimostrato che "join senza perdita $\implies$ tupla con tutte 'a'".
+
+## domande orale
+>[!question] possibili domande orale 
+>- come definiamo $m_{\rho}(r)$?
+>- quando una decomposizione ha join senza perdita?
+>- teorema su $m_{\rho}(r),\,r,\,\pi_{R_{i}}$
+>- dimostrazione join senza perdita $\implies$ riga con tutte a

@@ -119,3 +119,8 @@ Per ogni insieme di dipendenze funzionali $F$ esiste una copertura minimale equi
 >
 >la *copertura minimale* di $F$ è quindi:
 >$$G=\{ BC\to E,\,C\to D,\,B\to D,\,E\to L,\,D\to A \}$$
+
+## domande orale
+>[!question] possibili domande orale 
+> - come si calcola una copertura minimale?
+> - la copertura minimale è unica?
