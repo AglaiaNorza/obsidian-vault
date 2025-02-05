@@ -210,7 +210,7 @@ Dobbiamo mostrare $X\to Y\in F^+\implies X\to Y\in F^A$.
 
 Sappiamo che $X\subseteq X^+$, e quindi sappiamo che le tuple di $r$ corrispondono su $X$.
 Poiché $r$ soddisfa $X\to Y$, quindi, devono anche corrispondere su $Y$.
-Abbiamo quindi $Y\subseteq X^+$, e, per il Lemma 1 $X\to Y\in F^A$.
+Abbiamo quindi $Y\subseteq X^+$, e, per il *Lemma 1*, $X\to Y\in F^A$.
 
 Abbiamo quindi mostrato che $X\to Y\in F^+\implies X\to Y\in F^A$. 
 
@@ -218,6 +218,7 @@ Abbiamo quindi mostrato che $X\to Y\in F^+\implies X\to Y\in F^A$.
 >[!question] possibili domande
 >- elencare gli assiomi di Armstrong
 >- elencare (e dimostrare) gli assiomi "conseguenze"
+>- cos'è la chiusura di un attributo rispetto a un insieme di dipendenze?
 >- cos'è $F^+$? si può calcolare?
 >- cosa c'è dentro $F^+$ se $F$ è vuoto? (le dipendenze banali)
 >- lemma 1 (e dimostrazione)
