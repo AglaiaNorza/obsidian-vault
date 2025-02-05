@@ -35,7 +35,7 @@ Visto che quando un item viene letto, esso viene portato nella memoria centrale 
 - se un'altra transazione leggerà lo stesso dato, lo porterà nella sua propria zona di memoria - avremmo quindi due copie dello stesso dato che verranno modificate, e potremmo avere dati sbagliati (una sovrascriverà l'altra)
 
 I possibili problemi sono:
-- **ghost update**
+- **lost/ghost update**
 - **dato sporco**
 - **aggregato non corretto**
 
@@ -55,6 +55,7 @@ Avviene quando si perde un aggiornamento di un dato.
 >Invece, con questo schedule, otteniamo $X_{0}-N+M$.
 >- l'aggiornamento di $X$ prodotto da $T_{1}$ viene quindi perso
 
+(risolto dal [[19 - il meccanismo di lock, lock binario|lock binario]])
 ### dato sporco (rollback a cascata)
 Avviene quando un valore è il risultato di una transazione fallita (che va quindi "annullata")
 
@@ -63,6 +64,7 @@ Avviene quando un valore è il risultato di una transazione fallita (che va quin
 >  
 > A causa dell'atomicità delle transazioni, se $T_{1}$ fallisce, il valore di $X$ deve essere riportato a quello iniziale (quindi il `write` di $T_{2}$ dovrebbe dare risultato $X_{0}+M$ - ma, visto che $T_{2}$ ha usato il dato sporco prima del fallimento di $T_{1}$, il risultato sarà $X_{0}-N+M$)
 
+(risolto dal [[20 - deadlock e livelock, lock a due fasi stretto#locking a due fasi stretto|locking a due fasi stretto]])
 ### aggregato non corretto
 Avviene quando l'ordine delle operazioni fa sì che alcuni dati vengano processati dopo le operazioni che li richiedono.
 
@@ -71,6 +73,7 @@ Avviene quando l'ordine delle operazioni fa sì che alcuni dati vengano processa
 >
 > La somma $Y:= Y+N$ viene eseguita dopo $somma := somma + Y$, quindi in $somma$ mancherà $N$.
 
+risolto dal [[19 - il meccanismo di lock, lock binario|locking a due fasi]]
 ## serializzabilità
 - *tutti gli schedule seriali sono corretti*
 
@@ -112,3 +115,12 @@ Gli "oggetti" della base di dati si chiamano **item** - possono essere tabelle, 
 Le dimensioni degli item utilizzate da un sistema sono dette la sua **granularità**.
 - una granularità grande permette una gestione efficiente della concorrenza
 - una granularità piccola può sovraccaricare il sistema, ma aumenta il livello di concorrenza (consente l'esecuzione concorrente di molte transizioni)
+
+## domande orale
+>[!question] possibili domande orale 
+>- cos'è una transazione?
+>- per cosa sta ACID/quali sono le proprietà delle transazioni?
+>- cos'è uno schedule? cos'è uno schedule serializzabile?
+>- che problemi possono sorgere nel controllo della concorrenza?
+>- cosa vuol dire schedule serializzabile?
+>- cos'è un item?

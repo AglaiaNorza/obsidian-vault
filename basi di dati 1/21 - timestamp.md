@@ -56,13 +56,15 @@ Ogni volta che una transazione $T$ cerca di eseguire un `read(X)` o un `write(X)
 T cerca di eseguire una `write(X)`.
 1. se $read\_TS(X)>TS(T)$ (ovvero se una transazione più giovane l'ha già letta) $X$ viene rolled back
 2. se $write\_TS(X)>TS(T)$, invece di fare un rollback, semplicemente non si effettua l'operazione di scrittura <small>(ignorando l'atomicità)</small>
+	- (vuol dire che una transazione più giovane ha già scritto)
 3. se nessuna delle condizioni precedenti è soddisfatta, allora:
 	- si esegue `write(X)` e si sovrascrive il write timestamp di $X$: $write\_TS(X):= TS(T)$
 
 ###### lettura:
 T cerca di eseguire una `read(X)`.
-1. se $write\_TS(X)>TS(T)$, $T$ viene rolled back
-2. se $write\_TS(X)\leq TS(T)$, allora:
+
+1) se $write\_TS(X)>TS(T)$, $T$ viene rolled back
+2) se $write\_TS(X)\leq TS(T)$, allora
 	- si esegue `read(X)` e, se $read\_TS(X)<TS(T)$, si sovrascrive: $read\_TS(X):= TS(T)$
 
 >[!example] esempio 1
@@ -91,12 +93,17 @@ Notiamo che lo schedule delle transazioni superstiti è equivalente allo schedul
 >[!bug] ignorare l'atomicità
 >Perché possiamo **ignorare l'[[18 - Il controllo della concorrenza#transazioni|atomicità]]** saltando l'operazione di scrittura di una transazione $T$? 
 >L'atomicità serve a garantire la *coerenza* in una base di dati. 
->Le transazioni che potrebbero trovare una situazione incoerente (a causa della non-scrittura) sono quelle che avrebbero dovuto leggere i dati scritti da $T$ (e si sarebbero ritrovate invece i dati di una transazionie più giovane $T'$) 
+>Le transazioni che potrebbero trovare una situazione incoerente (a causa della non-scrittura) sono quelle che avrebbero dovuto leggere i dati scritti da $T$ (e si sarebbero ritrovate invece i dati di una transazione più giovane $T'$) 
 > - ma non esiste una transazione $T''$ arrivata dopo $T$ ma prima di $T'$ (con $TS(T')>TS(T'')>TS(T)$) che ha letto il dato: altrimenti, $T$ sarebbe stata rolled-back <small>(avrebbe cercato di scrivere quando una transazione più giovane aveva già letto)</small>.
-> - se poi dovesse arrivare una transazione $T''$ che vuole leggere il valore di $X$, questa sarebbe rolled back per il primo passo dell'algoritmo di controllo della lettura (troverebbe $write\_TS(X)$ maggiore del proprio)
+> - se poi dovesse arrivare $T''$ che vuole leggere il valore di $X$, questa sarebbe rolled back per il primo passo dell'algoritmo di controllo della lettura (troverebbe $write\_TS(X)$ maggiore del proprio perché scritto da $T'$)
 
 >[!question]- perché non il timestamp dell'ultima transazione?
 >![[timestamp-domanda.png|center|400]]
 >
 >Prendiamo come esempio questo caso, con i timestamp $T1<T2<T3$.
 >Se il write timestamp e il read timestamp fossero quelli dell'ultima transazione anziché della più giovane, $T2$ scriverebbe il valore di un item ($X$) già letto da $T3$, quando $T3$ avrebbe dovuto leggere il valore di $T2$.
+
+## domande orale
+>[!question] possibili domande orale 
+>- come funziona il timestamp?
+>- quando una transazione c

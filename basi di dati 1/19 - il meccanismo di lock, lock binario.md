@@ -37,7 +37,7 @@ Attraverso il lock binario risolviamo il primo dei problemi visti: la *perdita d
 
 ### equivalenza, serializzabilità
 La proprietà di equivalenza degli schedule dipende dal protocollo di locking adottato - vediamo il caso del locking binario.
-- serve adottare un modello di transazioni che *sia astragga dalle specifiche operazioni* e si basi su quelle rilevanti, per valutare le *sequenze degli accessi* (lock e unlock)
+- serve adottare un modello di transazioni che *si astragga dalle specifiche operazioni* e si basi su quelle rilevanti, per valutare le *sequenze degli accessi* (lock e unlock)
 
 Una transazione viene quindi interpretata come sequenza di `lock` e `unlock`:
 - ogni `lock(X)` implica la lettura di `X`
@@ -98,7 +98,7 @@ Esiste un algoritmo per testarla:
 > Uno schedule $S$ è serializzabile se e solo se il suo grafo di serializzazione è aciclico.
 
 >[!example]- esempio
-per esempio, tracciamo archi tra le transizioni di questo codice:
+> per esempio, tracciamo archi tra le transizioni di questo codice:
 >
 >![[codice-grafo.png|center|300]]
 >![[grafo-codice.png|center|300]]
@@ -120,6 +120,18 @@ Una transazione obbedisce al protocollo di locking a due fasi se:
 >
 >![[dim-due-fasi.png|center|200]]
 >
->Entriamo subito in una contraddizione: infatti, il ciclo si chiude solo nel caso una transizione $T_{k}$ abbia fatto un unlock e, subito dopo, $T_{1}$ un lock. Ma questo non è possibile se ogni transazione è a due fasi --> abbiamo dimostrato che due fasi $\implies$ ogni schedule serializzabile
+>Entriamo subito in una contraddizione: infatti, il ciclo si chiude solo nel caso una transizione $T_{k}$ abbia fatto un unlock e, subito dopo, $T_{1}$ un lock. Ma questo non è possibile se ogni transazione è a due fasi ($T_{1}$ ha già chiesto i suoi lock).
+> Ovvero, due fasi $\implies$ ogni schedule serializzabile
 ### vantaggi
 Il lock a due fasi **risolve il problema dell'aggregato non corretto** (una transazione $T_{2}$ non ha accesso ai dati `locked` di $T_{1}$ fino a quando essa non li rilascia, e $T_{1}$ legge prima tutti i dati di cui ha bisogno, e poi li usa)
+## domande orale
+>[!question] possibili domande orale 
+> - cos'è un lock?
+> - quando uno schedule si dice legale?
+> - come funziona il lock binario?
+> - quando uno schedule che usa lock binario è serializzabile?
+> - come si testa la serializzabilità? (nel caso di lock binario)
+> - cosa risolve il lock binario?
+> - cos'è il locking a due fasi?
+> - dimostrazione due fasi $\implies$ serializzabile
+> - cosa risolve il locking a due fasi?

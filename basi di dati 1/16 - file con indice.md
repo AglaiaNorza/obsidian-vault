@@ -126,3 +126,12 @@ Per alcune operazioni può essere utile definire altri indici oltre alla chiave 
 Invece di un modello a **indice sparso** (come quello visto sopra, con un record per ogni blocco del file principale), si può usare un **indice denso** --> un record indice per ogni *record* del file principale - così, si può mantenere un ordinamento per entrambi (non avrei potuto ordinare blocchi sia per la chiave primaria che per una secondaria).
 
 ![[indice-denso.jpeg|center|400]]
+
+## domande orale
+>[!question] possibili domande orale 
+>- struttura ISAM
+>- ricerca binaria e interpolazione
+>- nella ricerca binaria, devo o non devo considerare il blocco corrente quando rifaccio la divisione?
+>- costo operazioni
+>- ISAM con record puntati - come funziona? costo operazioni? (non so se l'abbia mai chiesto)
+>- indice sparso e indice denso

@@ -3,10 +3,12 @@ Un **deadlock** si verifica quando:
 - ogni transazione in un insieme $T$ è in attesa di ottenere un lock su un item sul quale qualche altra transazione dell'insieme detiene un lock, 
 - quindi ogni transazione rimane bloccata, non rilascia i propri lock, e può bloccare anche transazioni che non sono in $T$
 
+> [!info] grafo d'attesa
+> Per verificare il sussistere di una situazione di stallo, si mantiene il **grafo d'attesa**, che ha come
+> - **nodi**: le transazioni
+> - **archi**: c'è un arco $T_{1}\to T_{2}$ quando la transazione $T_{1}$ è in attesa di ottenere un lock su un item su cui $T_{2}$ mantiene un lock
+
 ### soluzioni risolutive
-Per verificare il sussistere di una situazione di stallo, si mantiene il **grafo d'attesa**, che ha come
-- **nodi**: le transazioni
-- **archi**: c'è un arco $T_{1}\to T_{2}$ quando la transazione $T_{1}$ è in attesa di ottenere un lock su un item su cui $T_{2}$ mantiene un lock
 
 #### roll-back
 Per risolvere il sussistere di una situazione di stallo, una transazione nel ciclo viene *rolled-back* e successivamente fatta ripartire.
@@ -54,9 +56,9 @@ Per risolvere questo problema, quindi, serve che le transazioni obbediscano a re
 
 ## locking a due fasi stretto
 Una transazione soddisfa il protocollo di locking a due fasi stretto se:
-1) non scrive sulla base di dati fino a quando non ha raggiunto il suo punto di commit 
+1) **non scrive** sulla base di dati fino a quando non ha **raggiunto il suo punto di commit** 
 	- questo assicura che, se una transazione viene abortita, non ha modificato nessun item nella base di dati
-2) non rilascia un lock finché non ha finito di scrivere sulla base di dati
+2) **non rilascia** un lock finché non ha **finito di scrivere** sulla base di dati
 	- in questo modo, se una transazione legge un item scritto da un'altra transazione, quest'ultima sarà sicuramente una transazione che non può essere abortita
 
 > [!example] esempio
@@ -91,3 +93,13 @@ La scelta tra protocolli conservativi e aggressivi si basa principalmente sulla 
 Se essa è
 - **alta** --> conviene un protocollo *conservativo*, che evita il sovraccarico dovuto alla gestione del deadlock (rilevarlo, risolvere lo stallo, eseguire parzialmente transazioni che poi verranno abortite, rilascio dei lock)
 - **bassa** --> conviene un protocollo *aggressivo*, che evita il sovraccarico dovuto alla gestione dei lock (decidere se garantire un lock, gestire la tavola dei lock, mettere e togliere transazioni da una coda)
+## domande orale
+>[!question] possibili domande orale 
+>- quando si verifica un deadlock? e un livelock?
+>- come si verifica il sussistere di una situazione di stallo?
+>- quali sono le soluzioni risolutive e gli approcci preventivi per il deadlock?
+>- come si risolve il livelock?
+>- quando avviene l'abort di una transazione?
+>- come funziona il locking a due fasi stretto?
+>- cosa risolve il locking a due fasi stretto?
+>- protocolli conservativi e aggressivi

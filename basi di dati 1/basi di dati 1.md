@@ -18,5 +18,7 @@
 > - [[17 - B-tree]]
 > - [[18 - Il controllo della concorrenza]]
 > - [[19 - il meccanismo di lock, lock binario]]
-> - [[20 - deadlock e livelock]]
+> - [[20 - deadlock e livelock, lock a due fasi stretto]]
 > - [[21 - timestamp]]
+>
+>([[99 - domande orale, raccolte]])

@@ -153,3 +153,8 @@ Quindi, il limite superiore dell'altezza dell'albero è $\log_{d}\left( \frac{N}
 >blocchi.
 > 
 >Il costo della ricerca sarà $5$ (un blocco per ognuno dei $4$ livelli di indice $+1$ blocco per il file principale)
+## domande orale
+>[!question] possibili domande orale 
+>- struttura B-tree
+>- costo operazioni
+>- quando ha altezza massima? quant'è l'altezza massima?
