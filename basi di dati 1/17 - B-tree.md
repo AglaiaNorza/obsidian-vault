@@ -33,7 +33,7 @@ Il costo della ricerca - che è fisso, perché "so dove andare" - è di **h+1 ac
 ### inserimento
 L'inserimento ha costo **h+1 (ricerca) + 1 (riscrivere il blocco)** se c'è spazio sufficiente.
 Se non c'è spazio sufficiente, ha costo: **h+1 (ricerca) + s (s<=2h+1)**
-- nel caso peggiore, dobbiamo sdoppiare un blocco per ogni livello, effettuando due accessi in più + uno per la radice
+- nel caso peggiore, dobbiamo sdoppiare un blocco per ogni livello, effettuando due accessi in più + uno per la nuova radice
 
 > [!example]- esempio
 > caso limite: voglio inserire un record, ma non ho spazio:

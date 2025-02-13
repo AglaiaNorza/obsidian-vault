@@ -55,7 +55,7 @@ Avviene quando si perde un aggiornamento di un dato.
 >Invece, con questo schedule, otteniamo $X_{0}-N+M$.
 >- l'aggiornamento di $X$ prodotto da $T_{1}$ viene quindi perso
 
-(risolto dal [[19 - il meccanismo di lock, lock binario|lock binario]])
+(risolto dal [[19 - il meccanismo di lock, lock binario#lock binario|lock binario]])
 ### dato sporco (rollback a cascata)
 Avviene quando un valore è il risultato di una transazione fallita (che va quindi "annullata")
 
@@ -73,7 +73,7 @@ Avviene quando l'ordine delle operazioni fa sì che alcuni dati vengano processa
 >
 > La somma $Y:= Y+N$ viene eseguita dopo $somma := somma + Y$, quindi in $somma$ mancherà $N$.
 
-risolto dal [[19 - il meccanismo di lock, lock binario|locking a due fasi]]
+risolto dal [[19 - il meccanismo di lock, lock binario#locking a due fasi|locking a due fasi]]
 ## serializzabilità
 - *tutti gli schedule seriali sono corretti*
 
