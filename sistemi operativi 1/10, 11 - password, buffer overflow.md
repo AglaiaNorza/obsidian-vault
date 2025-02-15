@@ -1,3 +1,4 @@
+# password
 ## password in Linux
 Linux utilizza due file per gestire gli utenti e le relative password: `/etc/passwd` e `/etc/shadow`.
 > Originariamente, esisteva solo il file `passwd`, che conteneva la password dell'utente in plaintext.
@@ -40,10 +41,80 @@ Ciascuna riga contiene informazioni sulla password del rispettivo utente:
 $$\text{\$ID\$salt\$hash}$$
 
 - **ID**: algoritmo di hashing usato per la password (MD5, blowfish...)
-- **salt**: salt usato nel processo di hashing
+- **salt**: salt usato nel processo di hashing (vedi [[10, 11 - password, buffer overflow#salt (salvati dal sale)|salt (salvati dal sale)]])
 - **hash**: hash della password, calcolato con l'algoritmo e il salt
 
 ### funzione hash
 Una funzione hash trasforma un input di lunghezza variabile in output di lunghezza fissa in *maniera deterministica*.
 
->[!info] funzione hash 
+>[!info] funzione hash crittografica
+>Una funziona hash è detta **crittografica** se:
+>- È computazionalmente difficile calcolare l’*inverso* della funzione hash
+>- È computazionalmente difficile, dato un input $x$ ed il suo hash $d$, trovare *un altro input* $y$ che abbia lo *stesso hash* $d$
+>- È computazionalmente difficile trovere *due input* diversi di lunghezza arbitraria $x$ e $y$ che abbiano lo *stesso hash* $d$
+
+>[!question]- perché non cifrare direttamente la password?
+> - se si usa cifratura ed un attaccante ottiene la chiave, potrebbe decifrare ed ottenere tutte le password in plaintext
+> - le funzioni hash sono one-way
+> - se un attaccante ottiene l’hash, sarà più difficile scoprire la password che l’ha generato
+> - è comunque semplice verificare se una password corrisponde a quella salvata in formato hash: basta fare l’hash della password e verificarne l’equivalenza (hashing  ́e deterministico)
+
+## attacchi a password
+Gli hashing delle password restano comunque attaccabili.
+Gli attacchi più comuni sono di due tipi:
+- **attacco dizionario**
+- **rainbow table**
+
+### attacco dizionario
+Sfrutta la pigrizia degli utenti nello scegliere password *brevi* e *semplici*, e nel *riutilizzare* molte volte la stessa password per servizi diversi.
+
+Si compila una lista di password comunemente utilizzate e si effettua un attacco bruteforce:
+- per ogni password nella lista, si calcola l'hash finché esso non corrisponde
+
+>[!summary] pros and cons
+>**vantaggi**:
+>- molto semplice da effettuare (richiede solo una lista di password)
+>- versatile: fuziona per qualsiasi funzione hash
+>- ci sono molti tool che aiutano ad automatizzare il tutto
+>
+>**svantaggi**:
+>- può essere molto lento (richiede la computazione in real time dell'hash)
+>- la password può non essere presente nel dizionario
+
+### attacco rainbow table
+Sfrutta il fatto che le funzioni hash sono deterministiche.
+
+Si pre-computano tutti gli hash e si crea un dizionario (rainbow table) di coppie hash-plaintext password.
+- il dizionario viene creato offline e riutilizzato per diversi attacchi
+
+> in realtà, utilizza un sistema più complesso di funzioni di riduzione per mantenere trattabili le dimensioni della tabella, noi semplifichiamo
+
+>[!summary] pros and cons
+>**vantaggi**:
+>- molto semplice da effettuare (la rainbow table è precompilata)
+>- molto più veloce del dizionario
+>
+>**svantaggi**:
+>- rigidità: funziona solo per la funzione hash per la quale è stata creata la rainbow table (bisogna creare più rainbow table per più funzioni)
+>- fermato dal salt !
+
+### salt (salvati dal sale)
+Il **salt** è un valore randomico, generato quando un utente sceglie la password, che viene aggiunto alla computazione dell'hash.
+Il salt viene poi salvato in chiaro insieme all'hash calcolato.
+
+Il salt rende impossibile l'uso delle rainbow tables: se per ogni utente c'è un salt randomico diverso, non posso precomputare gli hash.
+In più, fa sì che due utenti diversi con la stessa password abbiano due hash diversi (molto probabilmente i loro salt saranno diversi).
+
+# buffer overflow
+L'area di memoria di un processo caricato in memoria è divisa in:
+
+![[mem-proc-so.png|center|200]]
+
+Lo stack è costituito da *stack frames*. 
+Ciascuno stack frame contiene: parametri passati alla funzione, variabili locali, indirizzo di ritorno e instruction pointer.
+
+in particolare, una chiamata di funzione prosegue in questo modo:
+- se ci sono parametri passati alla funzione, sono aggiunti allo stack
+- l’indirizzo di ritorno (return address) è aggiunto allo stack
+- il puntatore allo stack frame viene salvato sullo stack
+- viene allocato spazio ulteriore sullo stack per le variabili locali della funzione chiamata
