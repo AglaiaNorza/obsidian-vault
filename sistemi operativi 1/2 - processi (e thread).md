@@ -1,27 +1,3 @@
-
-> [!info]- index
-> - [[#elementi di un processo|elementi di un processo]]
-> 	- [[#elementi di un processo#process control block|process control block]]
-> 	- [[#elementi di un processo#traccia ed esecuzione di un processo|traccia ed esecuzione di un processo]]
-> 	- [[#elementi di un processo#stato di un processo|stato di un processo]]
-> 		- [[#stato di un processo#processi sospesi|processi sospesi]]
-> - [[#processi e risorse|processi e risorse]]
-> - [[#come si identifica un processo|come si identifica un processo]]
-> - [[#modalità di esecuzione|modalità di esecuzione]]
-> 	- [[#modalità di esecuzione#passaggio da user mode a kernel mode e ritorno|passaggio da user mode a kernel mode e ritorno]]
-> - [[#creazione di un processo|creazione di un processo]]
-> - [[#switching tra processi|switching tra processi]]
-> - [[#il sistema operativo è un processo?|il sistema operativo è un processo?]]
-> - [[#processo Unix|processo Unix]]
-> 		- [[#passaggio da user mode a kernel mode e ritorno#livello utente|livello utente]]
-> 		- [[#passaggio da user mode a kernel mode e ritorno#livello registro|livello registro]]
-> 		- [[#passaggio da user mode a kernel mode e ritorno#livello sistema|livello sistema]]
-> - [[#thread|thread]]
-> 	- [[#processo Unix#ULT vs KLT|ULT vs KLT]]
-> - [[#thread#processi e thread in Linux|processi e thread in Linux]]
-> 	- [[#processi e thread in Linux#stati dei processi in linux|stati dei processi in linux]]
-> 	- [[#processi e thread in Linux#segnali ed interrupt in linux|segnali ed interrupt in linux]]
-
 Il compito fondamentale di un sistema operativo è la **gestione dei processi** - computazioni di tipi diversi.
 Deve quindi: 
 - permettere l'esecuzione alternata di processi multipli (interleaving)
@@ -65,33 +41,48 @@ La traccia di un processo (**trace**) è la *sequenza di istruzioni che vengono 
 - il *dispatcher* è un piccolo programma che sospende un processo per farne andare in esecuzione un altro.
 
 >[!example] esecuzione di un processo
->![[es-processo.png|100]]
->![[es-processo2.png|400]]
+>![[es-processo.png|center|100]]
+>![[es-processo2.png|center|400]]
 
+#### creazione e terminazione di un processo
+In un certo istante, in un sistema operativo ci sono $n\geq 1$ processi. Se l'utente dà un comando, quasi sempre si crea un nuovo processo.
+
+>[!tip] process spawning
+>Il **process spawning** è la creazione di un processo da parte di un altro processo.
+>- il processo *padre* crea il nuovo processo
+>- il processo *figlio* è il nuovo processo
+>- (tipicamente) il numero di processi aumenta, perché il padre rimane in esecuzione
+
+Per creare un processo, il SO deve:
+- assegnargli un *PID unico*
+- allocargli *spazio* in memoria principale
+- inizializzare il *process control block*
+- inserire il processo nella giusta *coda*
+- creare o espandere altre *strutture dati*
+
+>[!error] terminazione di un processo
+>avviene per:
+>- *normale completamento*: viene generato un HALT che genera un'interruzione per il sistema
+>- *uccisioni*: dal SO per errori (es. memoria non disponibile, operazioni fallite, errore fatale), dall'utente, da un altro processo
+>
+>e si passa da $n\geq2$ processi a $n-1$
 #### stato di un processo
 >[!info] modello dei processi a due stati
 >- in esecuzione
 >- non in esecuzione (ma comunque "attivo")
 > 
-avrebbe una struttura del genere:
->![[stati-processo.png|450]]
-
-- in ogni istante, in un sistema operativo, ci sono n>=1 processi (come minimo una CLI o una GUI)
-- ad ogni comando dell'utente, quasi sempre si crea un nuovo processo - attraverso il processo di **process spawning**
-
->[!error] terminazione di un processo
->avviene per:
->- normale completamento: viene generato un HALT che genera un'interruzione per il sistema
->- uccisioni: dal SO per errori (es. memoria non disponibile, operazioni fallite, errore fatale), dall'utente, da un altro processo
->
->e si passa da n>=2 processi a n-1
+> avrebbe una struttura del genere:
+> 
+>![[stati-processo.png|center|450]]
 
 >[!info] modello di processi a 5 stati
->![[stati-processo-5.png|450]]
+>![[stati-processo-5.png|center|450]]
 >
 >(in realtà si può passare anche da ready o blocked a exit se un processo viene killato da un altro processo)
+>
+>I processi vengono posti in due o più code:
 > 
->![[stati-processo-5-dati.png|400]]
+>![[stati-processo-5-dati.png|center|400]]
 
 ##### processi sospesi - modello a 7 stati
 visto che il processore è più veloce dell'I/O, potrebbe succedere che tutti i processi in memoria siano in attesa di I/O - in questo caso questi vengono swappati su disco, così da liberare memoria e non lasciare il processore inoperoso.
@@ -100,14 +91,16 @@ visto che il processore è più veloce dell'I/O, potrebbe succedere che tutti i 
 	- *blocked/suspend* - swappato mentre era bloccato
 	- *ready/suspend* - swappato mentre non era bloccato
 
-![[stati-processo-tutti.png|450]]
+![[stati-processo-tutti.png|center|450]]
 
 >[!tip]- un solo stato suspend
 >esiste anche un modello a sei stati, con un solo stato "suspend"
 >
 >![[sei-stati.png|center|350]]
 
-[ più giù: modello stati in linux ]
+>[!info]- stati in UNIX (presente sotto)
+> 
+> ![[2 - processi (e thread)#stati in UNIX]]
 
 | motivo per sospendere        | commento                                                                   |
 | ---------------------------- | -------------------------------------------------------------------------- |
@@ -121,13 +114,24 @@ visto che il processore è più veloce dell'I/O, potrebbe succedere che tutti i 
 Il Sistema Operativo è l'entità che gestisce l'uso delle risorse di sistema da parte dei processori, e deve dunque conoscere lo stato di ogni processo e di ogni risorsa.
 Per ogni processo/risorsa, il SO costruisce tabelle.
 
-![[tabelle-so.png|400]]
+![[tabelle-so.png|center|400]]
 
-(soprattutto i processi, si trovano nella parte di RAM riservata al kernel)
+(soprattutto per i processi, si trovano nella parte di RAM riservata al kernel)
+
+Alcuni esempi di queste tabelle sono:
+- **tabelle di memoria** - per gestire memoria principale e secondaria.
+	- contengono informazioni sull'allocazione della memoria, e sugli attributi di protezione per l'accesso a zone di memoria condivisa
+- **tabelle per l'I/O** - per gestire dispositivi e canali di I/O.
+	- il Sistema Operativo deve sapere se i dispositivi sono disponibili, gli stati delle operazioni, la locazione in memoria per i trasferimenti I/O.
+- **tabelle per i file**
+	- contengono informazioni su esistenza, locazione, stato dei files
+
+#### tabelle dei processi:
 
 >[!info] attributi di un processo
-![[attributi-processo.png|center|300]]
-Le informazioni relative a un processo possono essere divise in tre categorie:
+> 
+> ![[attributi-processo.png|center|300]]
+> Le informazioni relative a un processo possono essere divise in tre categorie:
 > - identificazione
 > - stato
 > - controllo
@@ -148,7 +152,7 @@ Nel **Process Control Block** ci sono solo le informazioni essenziali: i cosidde
 > - gestione della memoria (puntatori)
 > - uso delle risorse (file aperti, quante volte ho usato un processo ecc.)
 >  
->   ![[control-block.png|400]]
+>   ![[control-block.png|center|400]]
 >   - è la struttura più importante del sistema operativo, perché definisce il suo stato
 >   - richiede protezione
 
@@ -197,45 +201,6 @@ alcuni casi in cui può capitare:
 >1) prepara gli argomenti della chiamata in opportuni registri - tra questi, il primo è un numero che identifica una system call - *system call number*
 >2) esegue l'istruzione `int 0x80`, che solleva un'eccezione (dal Pentium 2 in poi, `sysenter`, che omette alcuni controlli
 
-### creazione di un processo
-
->[!tip] process spawning
->la creazione di un processo da parte di un altro processo.
->- il processo *padre* crea il nuovo processo
->- il processo *figlio* è il nuovo processo
->- (tipicamente) il numero di processi aumenta, perché il padre rimane in esecuzione
-
-
-per creare un processo, il sistema operativo deve:
-- allocargli spazio in memoria principale (nella tabella dei processi)
-- assegnargli un PID unico
-- (<font color="#953734">solo unix</font>) copiare l'immagine del padre (escludendo dalla copia alcune cose)
-- (<font color="#953734">solo unix</font>) incrementare i contatori di ogni file aperto dal padre (ora sono anche del figlio)
-- inizializzare il process control block (con, come minimo, il nuovo PID)
-- inserire il processo nella giusta coda (es. ready o ready/suspended)
-- creare o espandere altre strutture dati (es. per l'accounting)
-- (<font color="#953734">solo unix</font>) far ritornare alla syscall `fork` il PID del figlio al padre, e 0 al figlio.
-
-> [!info] info
-> Per poter creare i processi figli vengono utilizzate le seguenti syscall:
-> - `fork()` (solo su UNIX), dove il *figlio creato è una copia esatta del padre* - condivide con esso le stesse risorse, ma ognuno ha il proprio PCB
-> - `spawn()` (solo su Windows), dove *il figlio creato è un processo legato ad un programma diverso* da quello del padre - ha uno spazio d’indirizzamento diverso con istruzioni, dati e PCB diversi dal padre.
->  
-> (Nei sistemi UNIX-like, viene utilizzata la syscall `exec()` a seguito della chiamata `fork()` per poter ottenere lo stesso effetto della chiamata `spawn()` di Windows. 
-> In particolare, la syscall `exec()` rimpiazza completamente il processo precedente, evitando di riprendere l’esecuzione del precedente una volta completato il processo avviato dalla syscall.)
-
-il decision tree del processo fork si sviluppa quindi così
-
-![[dt-fork.png]]
-[preso da [appunti exyss](https://raw.githubusercontent.com/Exyss/university-notes/main/Bachelor/Secondo%20Anno/Sistemi%20Operativi%20I.pdf):]
-
-[back to lezioni]
-(quindi, se il pid è zero, sono il figlio e faccio la parte di computazione del figlio, e altrimenti sono il padre e devo aspettare il figlio)
- 
-Dopodiché il Kernel può scegliere se:
-- continuare ad eseguire il padre
-- switchare al figlio
-- switchare a un altro processo
 ### switching tra processi
 lo switching tra processi pone svariati problemi:
 - quali eventi determinano uno switch? perché il sistema operativo decide di rimpiazzare un processo?
@@ -326,7 +291,7 @@ Il codice sorgente, variabili globali, memoria, I/O ecc. sono condivisi.
 
 Quindi, in un sistema operativo che utilizza i thread, non ci sarà più un PCB, un'immagine e una stack, ma un PCB e un'immagine comuni, e, per ogni thread, la sua gestione:
  
-![[thread-model.png|450]]
+![[thread-model.png|center|450]]
 
 >[!question] perché introdurre i thread?
 >- sono più semplici: la creazione, la terminazione, lo switch, la comunicazione
@@ -337,7 +302,8 @@ Quindi, ogni processo viene creato con un thread ed è poi possibile fare le seg
 - `finish`
 
 #### ULT vs KLT
-(integrato [appunti exyss](<[appunti exyss](https://raw.githubusercontent.com/Exyss/university-notes/main/Secondo%20Anno/Sistemi%20Operativi%20I.pdf>))
+
+(preso qualche pezzettino di pros/cons dagli [appunti exyss](https://raw.githubusercontent.com/Exyss/university-notes/main/Bachelor/Secondo%20Anno/Sistemi%20Operativi%20I.pdf))
 
 >[!info] User-Level-Thread
 >Se si usano gli ULT, significa che il sistema operativo non prevede l'utilizzo di thread, e che questi sono quindi gestiti da librerie a livello utente.
@@ -351,7 +317,7 @@ Quindi, ogni processo viene creato con un thread ed è poi possibile fare le seg
 >- il kernel non è a conoscenza degli user thread attivi
 >- se un thread si blocca, si bloccano tutti i thread di quel processo (a meno che non sia un blocco causato da una `block`)
 >- tutti i thread del processo possono utilizzare comunque un solo core
->- le decisioni prese dallo scheduler sono spesso inefficienti
+>- se il Sistema Operativo non ha KLT, non si possono usare i thread per le funzioni del sistema operativo stesso
 
 >[!tip] Kernel-Level-Thread
 >Il sistema operativo è responsabile per il supporto e la gestione di tutti i kernel thread attivi, e fornisce delle syscall per poterli creare e gestire dall’user space. Ogni kernel thread è dotato di un Thread Control Block (TCB).

@@ -1,29 +1,6 @@
 ---
 sticker: lucide//git-compare
 ---
-
-> [!info]- index
-> - [[#sistema operativo (e i suoi componenti)|sistema operativo (e i suoi componenti)]]
-> 	- [[#sistema operativo (e i suoi componenti)#registri visibili all'utente|registri visibili all'utente]]
-> 	- [[#sistema operativo (e i suoi componenti)#registri interni|registri interni]]
-> 	- [[#sistema operativo (e i suoi componenti)#registri di controllo e stato|registri di controllo e stato]]
-> - [[#esecuzione di istruzioni|esecuzione di istruzioni]]
-> 	- [[#esecuzione di istruzioni#caratteristiche di una macchina ipotetica|caratteristiche di una macchina ipotetica]]
-> 	- [[#esecuzione di istruzioni#interruzioni|interruzioni]]
-> - [[#fase di interruzione|fase di interruzione]]
-> 	- [[#fase di interruzione#interruzioni annidate e sequenziali|interruzioni annidate e sequenziali]]
-> - [[#gestione I/O|gestione I/O]]
-> - [[#multiprogrammazione|multiprogrammazione]]
-> - [[#gerarchia della memoria|gerarchia della memoria]]
-> 	- [[#multiprogrammazione#memoria secondaria|memoria secondaria]]
-> 	- [[#multiprogrammazione#cache|cache]]
-> - [[#gerarchia della memoria#kernel|kernel]]
-> - [[#gerarchia della memoria#caratteristiche hardware|caratteristiche hardware]]
-> - [[#gerarchia della memoria#sistemi a time sharing|sistemi a time sharing]]
-> - [[#gerarchia della memoria#dal job al processo|dal job al processo]]
-> 	- [[#dal job al processo#gestione della memoria|gestione della memoria]]
-> 
-
 ### sistema operativo (e i suoi componenti)
 gestisce le risorse hardware di un sistema computerizzato (processori, RAM, i/o) e fornisce un insieme di servizi agli utenti. 
 

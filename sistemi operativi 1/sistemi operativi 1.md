@@ -1,6 +1,6 @@
 > [!info] index
 > - [[1 - sistemi operativi]]
-> - [[2 - processi]]
+> - [[2 - processi (e thread)]]
 > - [[3 - scheduling]]
 > - [[4 - gestione della memoria (principale)]]
 > - [[5 - gestione dell'IO]]

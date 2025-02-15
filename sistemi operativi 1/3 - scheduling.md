@@ -1,25 +1,3 @@
-> [!info]- index
-> - [[#tipi di scheduling|tipi di scheduling]]
-> - [[#stati dei processi e scheduling|stati dei processi e scheduling]]
-> 	- [[#stati dei processi e scheduling#long-term scheduling|long-term scheduling]]
-> 	- [[#stati dei processi e scheduling#medium-term scheduling|medium-term scheduling]]
-> 	- [[#stati dei processi e scheduling#short-term scheduler|short-term scheduler]]
-> 		- [[#short-term scheduler#criteri utente:|criteri utente:]]
-> 		- [[#short-term scheduler#criteri di sistema:|criteri di sistema:]]
-> - [[#politiche di scheduling|politiche di scheduling]]
-> 	- [[#politiche di scheduling#funzione di selezione|funzione di selezione]]
-> 	- [[#politiche di scheduling#modalità di decisione|modalità di decisione]]
-> 	- [[#politiche di scheduling#esempi classici su un esempio comune|esempi classici su un esempio comune]]
-> 		- [[#esempi classici su un esempio comune#first come first served|first come first served]]
-> 		- [[#esempi classici su un esempio comune#round-robin|round-robin]]
-> 		- [[#esempi classici su un esempio comune#shortest process next (SPN)|shortest process next (SPN)]]
-> 		- [[#esempi classici su un esempio comune#shortest remaining time (SRT)|shortest remaining time (SRT)]]
-> 		- [[#esempi classici su un esempio comune#Highest Response Ratio First (HRRN)|Highest Response Ratio First (HRRN)]]
-> - [[#scheduling tradizionale di unix|scheduling tradizionale di unix]]
-> - [[#architetture multiprocessore|architetture multiprocessore]]
-> - [[#scheduling in linux|scheduling in linux]]
-> 	- [[#scheduling in linux#classi di scheduling|classi di scheduling]]
-
 Un sistema operativo deve allocare risorse tra diversi processi che ne fanno richiesta contemporaneamente: tra le risorse, c'è il processore (e quindi il tempo di esecuzione). Questa risorsa viene allocata tramite lo **scheduling**.
 
 >[!question] qual è lo scopo dello scheduling?
@@ -41,7 +19,7 @@ Ci sono diversi tipi di scheduling (a seconda di quanto spesso vengono eseguiti)
 - **I/O** - decide a quale processo assegnare un dispositivo I/O, tra quelli che lo stanno richiedendo
 
 ### stati dei processi e scheduling
-molte delle transizioni del [[2 - processi#stato di un processo|modello a sette stati]] sono dovute a uno scheduler.
+molte delle transizioni del [[2 - processi (e thread)#stato di un processo|modello a sette stati]] sono dovute a uno scheduler.
  
 ![[transizioni-scheduler.png|center|500]]
 
