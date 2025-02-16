@@ -12,7 +12,7 @@ Ogni blocco di un file indice è costituito da record contenenti una coppia (v,b
 
 >[!warning] ogni blocco di un B-tree (sia indice che principale, tranne la radice) deve essere **pieno almeno per metà**
 
-(per la radice, logicamente, il minimo è due record: se ce ne fosse uno solo, sarebbe inutile e la "vera" radice sarebbe quindi il blocco a cui il record punta)
+(per la radice, logicamente, il minimo è invece **due record**: se ce ne fosse uno solo, sarebbe inutile e la "vera" radice sarebbe quindi il blocco a cui il record punta)
 
 ![[B-tree.png|center|500]]
 
@@ -158,3 +158,4 @@ Quindi, il limite superiore dell'altezza dell'albero è $\log_{d}\left( \frac{N}
 >- struttura B-tree
 >- costo operazioni
 >- quando ha altezza massima? quant'è l'altezza massima?
+>- qual è l'unico blocco che non deve necessariamente essere pieno a metà?
