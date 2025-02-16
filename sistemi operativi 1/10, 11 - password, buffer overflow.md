@@ -118,3 +118,92 @@ in particolare, una chiamata di funzione prosegue in questo modo:
 - l’indirizzo di ritorno (return address) è aggiunto allo stack
 - il puntatore allo stack frame viene salvato sullo stack
 - viene allocato spazio ulteriore sullo stack per le variabili locali della funzione chiamata
+
+>[!example]- esempio stack di funzioni
+>Per esempio, se G è chiamata da F, lo stack sarà:
+>
+>![[stack-funz.png|center|400]]
+
+## il problema: stack smashing
+
+```C
+void foo(char *s) {
+	char buf[10];
+	strcpy(buf, s);
+	printf("buf is %s\n", s);
+}
+
+foo("stringatroppolungaperbuf");
+```
+
+In questo esempio, stiamo inserendo troppi dati rispetto alla dimensione del buffer, ma il computer (che non sa effettivamente quando il buffer finisca), continua a sovrascrivere tutti gli indirizzi di memoria che trova fino al completamento dell'operazione.
+
+Quindi, dopo questa operazione, lo stack si troverebbe circa in questa situazione:
+
+![[stack-dopo.png|center|350]]
+
+Questo tipo di overflow porta generalmente alla terminazione di un programma per segmentation fault. Ma, se i dati inseriti nell'overflow sono preparati in modo accurato, è possibile per esempio *modificare l'indirizzo di ritorno arbitrariamente*, ed **eseguire codice arbitrario**.
+
+Ci sono quattro modi principali per farlo:
+1) **shellcode**
+2) **return-to-libc**
+3) stack frame replacement (solo nominato)
+4) return-oriented programming (solo nominato)
+
+### shellcode
+Lo shellcode è un piccolo (deve rientrare nelle dimensioni del buffer) pezzo di codice che viene eseguito quando si sfrutta una vulnerabilità per attaccare un sistema. Tipicamente, avvia una **command shell** da cui l'attaccante può prendere il controllo della macchina.
+- l'idea alla base è quindi inserire *codice eseguibile* nel buffer, e cambiare il *return address* con l'indirizzo del buffer.
+
+
+> [!example] esempio
+> Se per esempio `buf` ha indirizzo `0x00005555555551da`, un attacco potrebbe essere:
+>  
+> ```C
+> void foo(char *s) {
+> 	char buf[10];
+> 	strcpy(buf, s);
+> 	printf("buf is %s\n", s);
+> }
+> 
+> foo("<\shellcode>\xda\x51\x55\x55\x55\x55\x00\x00");
+> ```
+> Una volta completata la chiamata a `foo()`, il processore salterà all'indirizzo `0x00005555555551da` ed eseguirà lo shellcode
+> 
+> ![[shellcode.png|center|350]]
+
+### return-to-libc
+Non è sempre possibile inserire shellcode arbitrario nel buffer, ma esiste codice utile ad attacchi sempre presente in RAM e raggiungibile dai processi: le librerie dinamiche e di sistema.
+- invece di usare shellcode, si può inserire come indirizzo di ritorno una **funzione di sistema** utile per l'attacco
+
+> [!example] esempio
+> Per esempio, assumendo di conoscere l'indirizzo di `system()`, un attacco potrebbe essere:
+> 
+> ```C
+> void foo(char *s) {
+> 	char buf[10];
+> 	strcpy(buf, s);
+> 	printf("buf is %s\n", s);
+> }
+> 
+> foo("AAAAAAAAAAAAAAAA<\indirizzo di system>AAAA'bin/sh'");
+> ```
+> 
+> Dopo la chiamata a `foo`, il processore salterà quindi a `system()` e ne seguirà i codice usando come parametro `bin/sh` 
+
+## contromisure
+Le contromisure che si possono prendere si dividono in quelle attuabili a *tempo di compilazione*, e quelle attuabili a *tempo di esecuzione*.
+
+### a tempo di compilazione
+1) utilizzo di linguaggi di programmazione e di funzioni *sicuri* (l'overflow è possibile solo perché C utilizza funzioni che spostano dati senza limiti di dimensione).
+2) **stack smashing protection**:
+	- il compilatore inserisce del codice per generare un valore casuale (chiamato *canary*) a runtime, che viene inserito tra il frame pointer e l'indirizzo di ritorno.
+	- se il canary viene modificato prima che la funzione ritorni, vuol dire che è stato sovrascritto da un possibile attacco e l'esecuzione viene interrotta.
+
+### a tempo di esecuzione
+1) **executable space protection**
+	- il Sistema Operativo marca pagine/segmenti dello stack e heap come non eseguibili
+	- se un attaccante cerca di eseguire codice nello stack, il sistema termina il processo con un errore
+	- (return-to-libc funziona comunque)
+2) **address space layout randomization**
+	- ad ogni esecuzione si randomizzano gli indirizzi dove sono caricati i diversi segmenti di un programma (stack, heap ecc)
+	- è molto più difficile indovinare l'indirizzo del buffer contenente lo shellcode e anche quello delle librerie se non si sa dove inizia lo stack
