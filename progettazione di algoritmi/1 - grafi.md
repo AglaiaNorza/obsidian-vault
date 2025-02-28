@@ -72,4 +72,4 @@ Uno dei problemi principali di questa matrice è lo *spreco di spazio*: se per e
 Se il grafo è non diretto, la matrice sarà simmetrica con diagonale nulla.
 
 ### rappresentazione tramite lista di adiacenza
-Si utilizza una lista di liste $G$, con tanti elementi quanti sono i nodi del grafo $G$. Ogni $G[x]$ è una lista che contiene i nodi adiacenti al nodo $x$ (quelli raggiunti da archi che partono da $x$).
+Si utilizza una **lista di liste** $G$, con tanti elementi quanti sono i nodi del grafo $G$. Ogni $G[x]$ è una lista che contiene i nodi adiacenti al nodo $x$ (quelli raggiunti da archi che partono da $x$).
