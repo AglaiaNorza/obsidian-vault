@@ -31,3 +31,4 @@ Esempi di grafi *densi*:
 
 Un albero ha sempre $m=n-1$ archi.
 
+Il **grado** di un nodo è il numero di archi in cui è coinvolto il nodo (= numero di figli)
