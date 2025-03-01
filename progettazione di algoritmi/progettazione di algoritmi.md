@@ -1,3 +1,2 @@
 >[!info] index
->[[0 - introduzione]] 
->[[1 - grafi]]
+>- [[0 - introduzione]] 
