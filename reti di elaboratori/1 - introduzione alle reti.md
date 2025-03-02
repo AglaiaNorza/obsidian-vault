@@ -99,7 +99,7 @@ Anche se ci sono più percorsi, solo uno di questi verrà usato per l'intera com
 > 
 >![[es-comm-circ.png|center|400]]
 >
->In questo esempio, la linea può gestire contemporeaneamente quattro canali voce: quindi, se tutte le otto persone comunicano, la capacità della linea viene sfruttata completamente. Ma, se avviene una sola comunicazione tra due dispositivi, viene utilizzato solo 1/4 della capacità della rete (inefficiente).
+>In questo esempio, la linea può gestire contemporeaneamente quattro canali voce: quindi, se tutte le otto persone comunicano, la capacità della linea viene sfruttata completamente. Ma, se avviene una comunicazione tra solo due dispositivi, viene utilizzato solo 1/4 della capacità della rete (inefficiente).
 
 #### suddivisione della rete
 Con la commutazione di circuito le risorse della rete vengono quindi suddivise in pezzi, che saranno poi allocati ai vari collegamenti.
@@ -128,24 +128,48 @@ I pacchetti non sono tutti dello stesso nodo di origine (si mischiano, **viaggia
 
 - non viene riservata *nessuna risorsa* per la comunicazione.
 
+È più flessibile: la banda viene sempre utilizzata al massimo (anche se non tutti gli host stanno comunicando).
 
+- se più dispositivi cominicano tra loro e la linea di comunicazione non ha la capacità necessaria per inviarli tutti, i pacchetti vanno memorizzati in una coda e possono incorrere in ritardi
 
-(slide 37)Se solo un nodo sta spedendo, può spedire fino a raggiungere il massimo della velocità del canale - se sono in due, possono dividersi il canale
-- molto più flessibile rispetto alla commutazione di circuito
+## Internet
+Una internet (con la 'i' minuscola) è costituita da due o più reti interconnesse. L'internet più famosa è "Internet" (con la 'I' maiuscola), composta da migliaia di reti interconnesse.
+- Internet è a commutazione di pacchetto
 
-internet (i minuscola) è a commutazione di pacchetto.
-
-rappresentazione concettuale di internet
-
+>[!summary] rappresentazione concettuale di Internet
+> 
+>![[Internet.png|center|400]]
 ### accesso a internet
+Qualsiasi utente può connettersi a Internet, tramite un ISP a cui deve essere fisicamente collegato. Il collegamento che connette l'utente al primo router di Internet è detto **rete di accesso**.
 
-via rete telefonica [slide]
-- con un modem non si possono inviare dati e parlare contemporaneamente
-ehternet: 
-- rate maggiore rispetto al wireless
-wifi
-- access point a cui ci colleghiamo, collegato in maniera cablata al router
-- raggio di azione piccolo
+Si può accedere a internet in tre modi diversi:
+- via *rete telefonica*
+- tramite *reti wireless*
+- con *collegamento diretto*
 
-rete cellulare 
-- ci si collega ad una base station della compagnia telefonica
+#### via rete telefonica
+È possibile collegarsi a internet modificando la linea telefonica tra la sede del dispositivo e la centrale telefonica con una WAN punto-punto.
+##### servizio dial-up
+Si inserisce sulla lina telefonica un modem (modulatore-demodulatore) che converte i dati digitali in analogici (per la linea telefonica) e viceversa.
+
+![[dial-up.png|center|450]]
+
+- è un metodo lento, che impedisce di parlare e navigare contemporaneamente
+
+##### Digital Subscriber Line (DSL)
+Supporta la comunicazione digitale ad alta velocità sulla linea telefonica.
+Si divide il collegamento tra l'abitazione e l'ISP in tre bande di frequenza non sovrapposte.
+
+![[DSL.png|center|450]]
+
+- è veloce e permette di usare contemporaneamente voce e dati
+
+#### tramite ethernet
+Lo switch (Ethernet) della LAN è generalmente collegato ad un router istituzionale connesso ai router della dorsale
+
+#### wireless
+Può essere:
+- **WiFi** --> tramite un Access Point locale connesso alla Ethernet cablata
+	- ha un raggio di azione limitato a qualche decina di metri
+- **Cellulare** --> utilizza la rete cellulare, tramite gli Access Point della compagnia telefonica
+	- ha un raggio di decine di chilometri
