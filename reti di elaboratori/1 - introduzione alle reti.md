@@ -77,36 +77,58 @@ Si divide in:
 >
 >(i router instradano i pacchetti da una LAN all'altra)
 
-## switching
-router e switch uniscono i colegamenti
-Ci sono due tipi di reti basate su switch:
-commutazione di circuito/di pacchetto
+## switching (commutazione)
+I sistemi terminali comunicano tra loro attraverso dispositivi come switch e router, che si trovano nella rotta tra i sistemi sorgente e destinazione.
 
-**circito** tra mittente e destinatario viene stabilito un collegamento dedicato - **circuito** - usato per l’intera comunicazione. Viene poi rilasciato il circuito e ne verrà stabilito uno nuovo per future comunicazioni.
+Ci sono due tipi di reti basate su switch: reti a commutazione di circuito e a commutazione di pacchetto.
 
-Abbiamo bisogno di risorse fisiche (bande: capacità di trasmissione, altro …?)
-Le informazioni riguardanti il circuito vengono mantenute dalla rete. 
+### rete a commutazione di circuito
+Tra mittente e destinatario viene stabilito un collegamento dedicato - **circuito** - usato per l'intera comunicazione. Dopo la comunicazione, il circuito viene rilasciato (per ogni comunicazione viene stabilito un nuovo circuito).
+
+Le risorse necessarie al circuito (banda ecc) sono riservate per tutta la comunicazione, e le informazioni sul circuito vengono mantenute dalla rete.
+
+![[comm-circuito.png|center|450]]
+
+Anche se ci sono più percorsi, solo uno di questi verrà usato per l'intera comunicazione.
+
+>[!tip] La commutazione ci garantisce che, una volta stabilito un circuito, la sua capacità sia garantita (e usata completamente).
+
+>[!bug] Funziona bene quando il numero di dispositivi è ragionevole, ma non è flessibile 
+
+>[!example] esempio
+> 
+>![[es-comm-circ.png|center|400]]
+>
+>In questo esempio, la linea può gestire contemporeaneamente quattro canali voce: quindi, se tutte le otto persone comunicano, la capacità della linea viene sfruttata completamente. Ma, se avviene una sola comunicazione tra due dispositivi, viene utilizzato solo 1/4 della capacità della rete (inefficiente).
+
+#### suddivisione della rete
+Con la commutazione di circuito le risorse della rete vengono quindi suddivise in pezzi, che saranno poi allocati ai vari collegamenti.
+Se non utilizzate, le risorse rimangono inattive.
+
+Ci sono due modi per dividere la banda della rete: 
+
+>[!info] Frequency Division Multiplexing (FDM)
+>
+>![[FDM.png|center|500]]
+
+>[!info] Time Division Multiplexing (TDM)
+>
+>![[TDM.png|center|500]]
+
+### rete a commutazione di pacchetto
+Anche detta "*store and forward*".
+In questo caso si suddividono invece i dati in **pacchetti**, che vengono trasmessi sulla rete. La comunicazione non è quindi continua.
+
+![[comm-pacchetto.png|center|500]]
+
+Il mittente spedisce i suoi pacchetti, il router riceve i pacchetti da tutti i mittenti, li mette in coda (*store*), e li spedisce in maniera seriale al prossimo router (*forward*).
+I pacchetti non sono tutti dello stesso nodo di origine (si mischiano, **viaggiano indipendentemente**). Per questo, blocchi di dati (anche dello stesso file) possono prendere percorsi diversi e arrivare in momenti diversi.
+
+![[comm-pacch-2.png|center|400]]
+
+- non viene riservata *nessuna risorsa* per la comunicazione.
 
 
-Stabilita una rotta, riservate le risorse lungo la rotta - ogni dato spedito seguirà la rotta prefissata finché la comunicazione non finisce.
-
-La commutazione ci garantisce che, una volta stabilito un circuito, una certa capacità sia garantita per un circuito.
-1/4 garantito per tutta la comunicazione
-Funziona bene quando il numero di dispositivi è ragionevole, ma non è flessibile.
-
-esempi condivisione della risorsa
-divisione frequenza: lo spettro delle frequenze viene diviso in sottointervalli (trasmissione consecutiva con capacità di banda limitata)
-divisione tempo: tutto il canale per un piccolo lasso di tempo 
-
-Secondo tipo di commutazione (oggi): commutazione di pacchetto, store and forward.
-La rete è di tutti, si suddividono i dati in pacchetti (parti) che vengono trasmessi.
-Il mittente spedisce i suoi pacchetti, il router riceve i pacchetti da tutti i mittenti, li mette in coda, e li spedisce in maniera seriale al prossimo router.
-I pacchetti non sono tutti dello stesso nodo di origine (si mischiano, viaggiano indipendentemente).                 
-Non viene riservata nessuna risorsa della comunicazione.
-Store and forward: il router memorizza (store) e inoltra (forward) i pacchetti.
-(il router ha code in ingresso e code in uscita)
-
-Se mando una cartolina a mia nonna che abita nel palazzo di mia madre, potrebbe arrivare più tardi.
 
 (slide 37)Se solo un nodo sta spedendo, può spedire fino a raggiungere il massimo della velocità del canale - se sono in due, possono dividersi il canale
 - molto più flessibile rispetto alla commutazione di circuito
