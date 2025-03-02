@@ -161,10 +161,10 @@ Osserviamo un esempio di un pozzo universale in questa rappresentazione:
 $$\begin{bmatrix} 0 & 0 & \textcolor{red}{1} & 0 & 0 & 0 \\ 0 & 0 & \textcolor{red}{1} & 0 & 0 & 0 \\ \textcolor{red}{0} & \textcolor{red}{0} & \textcolor{red}{0} & \textcolor{red}{0} & \textcolor{red}{0} & \textcolor{red}{0} \\ 0 & 0 & \textcolor{red}{1} & 0 & 0 & 0 \\ 0 & 0 & \textcolor{red}{1} & 0 & 0 & 0 \\ 0 & 0 & \textcolor{red}{1} & 0 & 0 & 0 \end{bmatrix}$$
 
 C'è un semplice test che ci permette di eliminare uno dei due nodi rappresentati da ogni posizione della matrice:
-$$\begin{flalign}
+$$
 M[i][j] = \begin{cases} 1 & i \ \text{ non è pozzo } \\ 0 & j \ \text{ non è pozzo universale} \end{cases}
 
-\end{flalign}$$
+$$
 
 - se $M[i][j]==1$, sicuramente so che $i$ (la riga, ovvero il nodo da cui l'arco parte) non è un pozzo --> infatti, c'è un arco che parte da esso
 - se $M[i][j]==0$, so che $j$ non è pozzo universale --> non c'è un arco entrante in $j$ (ma potremmo trovarci nella situazione $(2,2)$ dell'esempio, quindi non escludiamo $j$)
