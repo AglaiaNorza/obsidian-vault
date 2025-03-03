@@ -167,7 +167,7 @@ M[i][j] = \begin{cases} 1 & i \ \text{ non è pozzo } \\ 0 & j \ \text{ non è p
 $$
 
 - se $M[i][j]==1$, sicuramente so che $i$ (la riga, ovvero il nodo da cui l'arco parte) non è un pozzo --> infatti, c'è un arco che parte da esso
-- se $M[i][j]==0$, so che $j$ non è pozzo universale --> non c'è un arco entrante in $j$ (ma potremmo trovarci nella situazione $(2,2)$ dell'esempio, quindi non escludiamo $j$)
+- se $M[i][j]==0$, so che $j$ non è pozzo universale --> non c'è un arco entrante in $j$ (ma potremmo trovarci nella situazione $(2,2)$ dell'esempio, quindi non escludiamo $i$)
 
 Quindi, una soluzione sarebbe:
 ```python
@@ -182,7 +182,7 @@ while len(L)>1:
 	if M[a][b]: # se è 1
 		L.append(b) # a non è pozzo, quindi teniamo b
 	else:
-		L.append(a)
+		L.append(a) # b non è pozzo universale, quindi teniamo a
 
 L.pop()
 for j in range(n): # controllo la riga 
