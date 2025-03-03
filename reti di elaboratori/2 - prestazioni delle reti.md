@@ -1,47 +1,48 @@
-Il primo router che incontriamo si chiama anche *edge router* (è il router a cui si collega la rete di accesso) (fa da ponte tra il backbone e la rete di accesso).
-Una rete di accesso è composta da tutti i dispositivi (compresi i collegamenti) che ci danno la possibilità di raggiungere il primo router del backbone.
+Internet è una rete di reti, composta da reti di accesso e dal backbone internet.
 
-Il **backbone** è la rete composta esclusivamente da router e collegamenti tra router.
+## rete di accesso
+Un **access network** è formato da tutti i dispositivi e collegamenti fisici che connettono un sistema al primo *edge router*, ovvero al primo router che si incontra, che fa da ponte tra il backbone e la rete di accesso.
 
-Queste reti funzionano con una commutazione a pacchetto.
+Il **backbone** è la rete composta esclusivamente da router e collegamenti tra router. Può essere a commutazione di circuito, o a commutazione di pacchetto.
 
-Le reti di primo livello sono quelle che danno una copertura più estesa, e comunicano tra loro allo stesso livello.
-Le reti di primo livello sono collegate tra di loro mediante cavi - se un oceano divide reti, vengono posati cavi sottomarini.
+## struttura di Internet
+Internet ha una struttura fondamentalmente gerarchica. Si divide in reti di livelli diversi:
+- ISP di **primo livello**: danno una copertura più estesa (nazionale/internazionale), e comunicano tra loro "come pari".
+	- un esempio sono le dorsali sottomarine, che collegano anche continenti diversi
+- ISP di **secondo livello**: hanno copertura nazionale o distrettuale, e si possono connettere a ISP di livello 1, o ad altri ISP di livello 2
+- ISP di **terzo livello** e ISP locali: "last hop network", sono le più vicine ai sistemi terminali
 
-Gli ISP di livello due (nazionali) usufruiscono del servizio fornito dagli ISP di livello 1.
-Gli ISP di livello 3 (locali) usufruiscono del servizio degli ISP di livello 2.
+Un pacchetto passerà attraverso diverse reti di diversi livelli.
+Uno dei problemi principali delle reti è quello del **routing**, ovvero trovare il percorso che un pacchetto deve seguire dalla sorgente alla destinazione.
 
-(*gerarchia*)
-
-Un pacchetto (quindi un blocco di dati) passerà attraverso diverse reti di diversi livelli.
-Uno dei problemi principali delle reti è quello di trovare il percorso che un pacchetto deve seguire dalla sorgente alla destinazione - **routing**.
-
-## capacità e prestazioni
+![[routing.png|center|400]]
+## capacità e prestazioni delle reti
 La velocità di una rete misura *quanto velocemente riesce a trasmettere e ricevere i dati*.
 
 Nel caso di una rete a commutazione di pacchetto, si parla di:
-- ampiezza di banda
-- 
-
-
-### bandwidth
+- ampiezza di banda e bit rate
+- throughput
+- latenza
+- perdita di pacchetti
+### bandwidth e bitrate
 L'**ampiezza di banda** è una caratteristica del mezzo trasmissivo, che indica *quanto il canale è in grado di trasmettere*. Si misura in hertz, e rappresenta la larghezza dell'intevallo di frequenze utilizzato dal sistema trasmissivo. Maggiore è l'ampiezza di banda, maggiore è la quantità di informazione che può essere trasmessa.
 
 Il **bit rate** è la velocità di trasmissione, ovvero la (massima) quantità di bit al secondo che un link può trasmettere.
 
-Il bit rate è *proporzionale* alla banda in hertz.
+Il bit rate è *proporzionale* alla banda in hertz (maggiore è la banda, maggiore sarà il bit rate).
 
-Per *banda* di un tipo di rete si intende quindi il bit rate garantito dai suoi link
-(es: il rate di un link Fast Ethernet è 100Mbps, ovvero può inviare al massimo 100Mbps)
+> [!info] banda
+> Quando si parla di **banda** di un tipo di rete si intende quindi il bit rate garantito dai suoi link.
+>  
+> (es: il rate di un link Fast Ethernet è 100Mbps, ovvero può inviare al massimo 100Mbps)
 
 Il bit rate fornisce un'indicazione della **capacità** di una rete di trasferire dati.
 
 ### throughput
 Il throughput indica quanto velocemente una rete possa *effettivamente* (mentre il rate nominalmente) trasmettere dati.
 
-è misurato, come il rate, in numero di bit al secondo, ma è quasi sempre diverso dal rate.
-
-Tipicamente, il thoughput è $\leq$ al bit rate (che è misura della *potenziale* velocità di un link, metre il thoughput è factual).
+È il numero di bit al secondo che *passano attraverso un punto* della rete.
+- è quindi misurato, come il rate, in numero di bit al secondo, ma è quasi $\leq$ del bit rate (che èuna misura della *potenziale* velocità di un link)
 
 >[!example] esempio 
 >Una strada è progettata per far transitare 1000 auto al minuto. Se c'è traffico, questo numero scende a 100.
