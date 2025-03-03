@@ -86,6 +86,7 @@ Dato un grafo di $n$ nodi, si costruisce una matrice binaria $n\times n$ con:
 > ![[graph-1.png|center|200]]
 > 
 > Si rappresenta così:
+>  
 > $$ \begin{bmatrix}  0 & 0 & 1 & 0 & 0 & 1  \\ 0 & 0 & 0 & 0 & 0 & 1  \\ 1 & 0 & 0 & 0 & 1 & 1  \\ 0 & 0 & 0 & 0 & 1 & 0  \\ 0 & 0 & 1 & 1 & 0 & 1 \\ 1 & 1 & 1 & 0 & 1 & 0  \end{bmatrix} $$
 > 
 > (si nota che, poiché è un grafo indiretto <small>(quindi ogni arco entrante è anche uscente)</small>, la rappresentazione è **simmetrica rispetto alla diagonale** della matrice)
@@ -97,12 +98,7 @@ Dato un grafo di $n$ nodi, si costruisce una matrice binaria $n\times n$ con:
 > 
 > Si rappresenta così:
 >  
-> $$ \begin{bmatrix}  0 & 0 & 1 & 0 & 0 & 1  \\
-> 0 & 0 & 0 & 0 & 0 & 0  \\
-> 0 & 0 & 0 & 0 & 0 & 0  \\
-> 0 & 0 & 0 & 0 & 1 & 0  \\
-> 0 & 0 & 1 & 1 & 0 & 1 \\
-> 0 & 1 & 1 & 0 & 0 & 0  \end{bmatrix} $$
+> $$ \begin{bmatrix}  0 & 0 & 1 & 0 & 0 & 1  \\ 0 & 0 & 0 & 0 & 0 & 0  \\ 0 & 0 & 0 & 0 & 0 & 0  \\ 0 & 0 & 0 & 0 & 1 & 0  \\ 0 & 0 & 1 & 1 & 0 & 1 \\ 0 & 1 & 1 & 0 & 0 & 0  \end{bmatrix} $$
 
 - Uno dei **problemi** principali di questa matrice è lo *spreco di spazio*: se per esempio il grafo è sparso, si occuperanno solo fino a $n$ delle $n^2$ posizioni.
 - Uno dei **vantaggi** principali è invece la velocità con cui si può controllare la presenza di un arco: basta accedere all'elemento in posizione $(u,v)$ - costa $O(1)$.
