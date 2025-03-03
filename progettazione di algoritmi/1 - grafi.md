@@ -86,12 +86,7 @@ Dato un grafo di $n$ nodi, si costruisce una matrice binaria $n\times n$ con:
 > ![[graph-1.png|center|200]]
 > 
 > Si rappresenta così:
-> $$ \begin{bmatrix}  0 & 0 & 1 & 0 & 0 & 1  \\
-> 0 & 0 & 0 & 0 & 0 & 1  \\
-> 1 & 0 & 0 & 0 & 1 & 1  \\
-> 0 & 0 & 0 & 0 & 1 & 0  \\
-> 0 & 0 & 1 & 1 & 0 & 1 \\
-> 1 & 1 & 1 & 0 & 1 & 0  \end{bmatrix} $$
+> $$ \begin{bmatrix}  0 & 0 & 1 & 0 & 0 & 1  \\ 0 & 0 & 0 & 0 & 0 & 1  \\ 1 & 0 & 0 & 0 & 1 & 1  \\ 0 & 0 & 0 & 0 & 1 & 0  \\ 0 & 0 & 1 & 1 & 0 & 1 \\ 1 & 1 & 1 & 0 & 1 & 0  \end{bmatrix} $$
 > 
 > (si nota che, poiché è un grafo indiretto <small>(quindi ogni arco entrante è anche uscente)</small>, la rappresentazione è **simmetrica rispetto alla diagonale** della matrice)
 
