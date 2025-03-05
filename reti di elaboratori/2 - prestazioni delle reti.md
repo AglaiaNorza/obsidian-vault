@@ -48,22 +48,31 @@ Il throughput indica quanto velocemente una rete possa *effettivamente* (mentre 
 >Una strada è progettata per far transitare 1000 auto al minuto. Se c'è traffico, questo numero scende a 100.
 >Il rate è 1000 auto al minuto, il throughput è 100 auto al minuto.
 
-Se vogliamo misurare il throughput end-to-end (dalla partenza alla destinazione).
+In un percorso da una sorgente a una destinazione, un pacchetto passerà attraverso diversi link con throughput diversi: come si misura il throughput medio "end-to-end"?
+ 
+> [!tip] throughput medio
+> In generale, in un percorso con $n$ link in serie, si ha: $$\text{Throughput}=min(T_{1},\,T_{2},\,\dots,\,T_{n})$$
+> 
+> - un collegamento che vincola un throughput end-to-end (il collegamento con minore throuhgput nel percorso) si chiama **collo di bottiglia**
 
-Il collegamento con il rate minore è quello che determina il valore massimo del throughput.
+>[!example]- esempio 
+> 
+>![[throughput.png|center|400]]
+>
+>qui, il throughput medio sarà quindi 100kbps
 
-In generale, in un percorso con $n$ link in serie, si ha: $\text{Throughput}=min(T_{1},\,T_{2},\,\dots,\,T_{n})$.
-
-[slide 23?]
+>[!bug] throughput nei link condivisi
+>Il link tra due router raccoglie spesso il flusso da varie sorgenti e/o lo distribuisce a varie destinazioni. Il rate del link tra due router è quindi *condiviso* tra i flussi di dati.
+>
+>>[!example] esempio
+>>![[through-cond.png|center|350]]
+>>
+>>In questo caso, quindi, il throughput end-to-end sarà 200kbps.
 ## delay e loss
-Il throughput può variare per numero di utenti connessi, oppure per delle latenze, o addirittura perdita di pacchetti.
+Il throughput può variare per una serie di motivi: numero di utenti connessi, latenze, o addirittura perdita di pacchetti.
 
-Ci sono diversi fattori che determinano la latenza (tempo che un pacchetto impiega dal momento di partenza al momento di arrivo) di un pacchetto.
-
-Nella commutazion di pacchetto, i pacchetti si accodano nei buffer dei router.
-Se arrivano più pacchetti di quanti possano uscire, questi dovranno attendere.
-
-Intanto, un pacchetto deve essere processato all'interno del nodo. Poi, ci può essere un tempo di accodamento, e poi il tempo che il router impiega a trasmettere un pacch
+Le operazioni che contribuiscono al tempo 
+Nella commutazione di pacchetto, i pacchetti si accodano nei buffer dei router. Se arrivano più pacchetti di quanti possano uscire, questi dovranno attendere. Intanto, un pacchetto deve essere processato all'interno del nodo. In più, ci può essere un tempo di accodamento, e poi il tempo che il router impiega a trasmettere un pacchetto.
 
 Ci sono qiundi 4 ritardi che concorrono al ritardo toale che il pacchetto subisce:
 ### ritardo di elaborazione
