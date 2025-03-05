@@ -101,7 +101,7 @@ Dato un grafo di $n$ nodi, si costruisce una matrice binaria $n\times n$ con:
 > $$ \begin{bmatrix}  0 & 0 & 1 & 0 & 0 & 1  \\ 0 & 0 & 0 & 0 & 0 & 0  \\ 0 & 0 & 0 & 0 & 0 & 0  \\ 0 & 0 & 0 & 0 & 1 & 0  \\ 0 & 0 & 1 & 1 & 0 & 1 \\ 0 & 1 & 1 & 0 & 0 & 0  \end{bmatrix} $$
 
 - Uno dei **problemi** principali di questa matrice è lo *spreco di spazio*: se per esempio il grafo è sparso, si occuperanno solo fino a $n$ delle $n^2$ posizioni.
-- Uno dei **vantaggi** principali è invece la velocità con cui si può controllare la presenza di un arco: basta accedere all'elemento in posizione $(u,v)$ - costa $O(1)$.
+- Uno dei **vantaggi** principali è invece la *velocità* con cui si può controllare la presenza di un arco: basta accedere all'elemento in posizione $(u,v)$ - costa $O(1)$.
 ### rappresentazione tramite lista di adiacenza
 Si utilizza una **lista di liste** $G$, con tanti elementi quanti sono i nodi del grafo $G$. 
 - ogni elemento $G[x]$ è una lista che contiene i *nodi adiacenti* al nodo $x$.
