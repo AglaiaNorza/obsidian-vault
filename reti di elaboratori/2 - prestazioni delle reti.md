@@ -71,46 +71,45 @@ In un percorso da una sorgente a una destinazione, un pacchetto passerà attrave
 ## delay e loss
 Il throughput può variare per una serie di motivi: numero di utenti connessi, latenze, o addirittura perdita di pacchetti.
 
-Le operazioni che contribuiscono al tempo 
-Nella commutazione di pacchetto, i pacchetti si accodano nei buffer dei router. Se arrivano più pacchetti di quanti possano uscire, questi dovranno attendere. Intanto, un pacchetto deve essere processato all'interno del nodo. In più, ci può essere un tempo di accodamento, e poi il tempo che il router impiega a trasmettere un pacchetto.
+Tra i fattori che incidono sul tempo di trasmissione ci sono l'accodamento dei pacchetti nei buffer dei router (necessario quando il traffico in ingresso supera la capacità di uscita), il tempo di elaborazione del pacchetto all'interno del nodo e il tempo di trasmissione effettivo del pacchetto da parte del router.
 
-Ci sono qiundi 4 ritardi che concorrono al ritardo toale che il pacchetto subisce:
+Ci sono qiundi 4 ritardi che concorrono al ritardo totale che il pacchetto subisce:
+- ritardo di **elaborazione**
+- di **accodamento**
+- di **trasmissione**
+- di **propagazione**
 ### ritardo di elaborazione
+L'elaborazione prevede:
 1) controllo sugli errori: il pacchetto è integro? se no, viene tipicamente scartato
 2) determinazione del canale di uscita
 3) tempo dalla ricezione dalla porta di input alla consegna alla porta di output (ci sono buffer sia nelle porte di ingresso che nelle porte di uscita)
-
 ### ritardo di accodamento
-Il pacchetto viene messo in coda sul buffer di uscita, dove ci sono altri pacchetti
-- attesa di trasmissione (possibile sia nella coda di input che nella coda di output): dipende dalla congestione del router
+Il pacchetto viene messo in coda sul buffer di uscita, dove ci sono altri pacchetti. 
+- si genera un'attesa di trasmissione (possibile sia nella coda di input che nella coda di output): dipende dalla congestione del router
 	- può variare da pacchetto a pacchetto (diverse code possono essere più o meno piene)
-
 ### ritardo di trasmissione
-Dipende dal canale. 
-è il tempo richiesto per trasmettere tutti i bit del pacchetto sul collegamento.
-$t_{2}-t_{1}$
+È il tempo richiesto per trasmettere tutti i bit del pacchetto sul collegamento (dipende quindi dal canale).
+Se il primo bit viene trasmesso al tempo $t_{1}$ e l'ultimo al tempo $t_{2}$, il ritardo di trasmissione è $t_{2}-t_{1}$.
 
-Questo ritardo si può stimare con una formula (perché dipende dal rate del collegamento e dalla lunghezza del pacchetto): $\text{ritardo di trasmissione}=\frac{L}{R} =\frac{\text{lunghezza del pacchetto in bit}}{\text{bit rate del collegamento}}$
+Questo ritardo dipende quindi unicamente dal rate del collegamento e dalla lunghezza del pacchetto, quindi si può stimare con una formula.
+
+$$\text{ritardo di trasmissione}=\frac{L}{R} =\frac{\text{lunghezza del pacchetto in bit}}{\text{bit rate del collegamento}}$$
 
 ### ritardo di propagazione
-Quanto impiega un pacchetto immesso a propagarsi sul canale ("tempo di viaggio" lungo il canale).
-Dipende dalla lunghezza del collegamento, e dalla velocità di propagazione del collegamento
+È dato dal tempo che un bit impiega a propagarsi sul canale ("tempo di viaggio" lungo il canale).
+Dipende dalla lunghezza del collegamento, e dalla velocità di propagazione del collegamento.
 
-velocità di propagazione != rate
-vale per il singolo bit 
-tipicamente corrisponde alla velocità della luce
+$$\text{Ritardo di propagazione}=\frac{d}{s}=\frac{\text{lunghezza collegamento}}{\text{velocita' di propagazione}}$$
 
-$\text{Ritardo di propagazione}=\frac{d}{s}=\frac{\text{lunghezza collegamento}}{\text{velocita' di propagazione}}$
+>[!example] analogia del casello autostradale
+>- Le automobili viaggiano a 100km/h. 
+>- Il casello serve un'auto ogni 12 secondi (ovvero ha un rate di 5 auto/min).
+>
+>Quanto tempo occorre perché 10 auto passino il secondo casello?
+>
+>- tempo richiesto al casello per trasmettere l'intera colonna sull'autostrada: $\frac{10\text{ auto}}{5\text{ auto/min}}=2\text{ min}$
+>- tempo richiesto a un'auto per viaggiare dall'uscita di un casello fino al casello successivo: $\frac{100\text{km}}{100\text{km/h}}=1\text{h}$
+>
+>Il tempo che intercorre da quando l'intera colonna di vetture si trova di fronte al primo casello di partenza a quando tutte le auto hanno passato il secondo casello è dato dalla somma del ritardo di trasmissione e del ritardo di propagazione, ovvero $62\text{ min}$ (la prima auto arriverà prima di 62 minuti, ma l'ultima passerà esattamente al 62-esimo).
 
-(la prima auto arriverà prima di 62 mins, ma l'ultima 62 quindi 62 totali)
-
-la prima auto arriva prima che le altre vengano trasmesse.
-
-[slide 32, 33]
-
-Se le code sono piene, i pacchetti in arrivo vengono persi.
-
-Esiste uno strumento che permette di misurare il ritardo ....
-
-Il round trip time include i 4 ritardi.
-Può succedere, se c'è congestione, che 
+## ritardo di nodo
