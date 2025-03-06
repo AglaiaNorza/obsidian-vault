@@ -90,11 +90,7 @@ I nodi visitati e gli archi attraversati formano un albero detto **albero DFS**.
 >
 >per esempio, questo albero sarà rappresentato dal seguente vettore dei padri:
 >
->$$ P = \begin{array}{|c|c|c|c|c|c|c|c|c|c|}
-\hline
-5 & 0 & 5 & 2 & 7 & 5 & 1 & 2 & 5 & 1 \\
-\hline
-\end{array}$$
+>$P = \begin{array}{|c|c|c|c|c|c|c|c|c|c|} \hline 5 & 0 & 5 & 2 & 7 & 5 & 1 & 2 & 5 & 1 \\ \hline \end{array}$
 
 L'obiettivo è modificare la visita DFS in modo da memorizzare anche il vettore dei padri.
 
