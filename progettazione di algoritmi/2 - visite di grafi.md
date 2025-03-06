@@ -20,7 +20,7 @@ def DFS(u, M)
 		if M[u][i] and not visitati[i]:
 			DFS(i, M, visitati) # O(n) (entro massimo n volte)
 			
-# quindi questa funzione ha costo O(n)xΘ(n)
+# ^ quindi questa funzione ha costo O(n)xΘ(n)
 
 n = len(M)
 visitati = [0]*n # Θ(n)
@@ -32,22 +32,26 @@ return [x for x in range(n) if visitati[x]] # Θ(n)
 
 - al termine dell'esecuzione della funzione ricorsiva, si ha $\text{visitati[i]=1}$ se e solo se $i$ è raggiungibile da $u$.
 - questo algoritmo ha costo $O(n)\times \Theta(n)=O(n^2)$
-
 ##### visita DFS su grafo rappresentato tramite liste di adiacenza:
 ```python
 def DFS(u, G, visitati):
 	visitati[u] = 1
-	for v in G[u]: # O(n) (Θ(|vicini di u|))
+	for v in G[u]:
 		if not visitati[v]:
 			DFS(v, G, visitati)
+
+# ^ questa funzione ha costo O(n+m)
 
 n = len(G)
 visitati = [0]*n
 DFS(u, G, visitati)
-return [x for x in range(n) if visitati(x)]
+return [x for x in range(n) if visitati(x)] # Θ(n)
 ```
 
-Sappiamo che ogni lista di adiacenza 
+Per ogni nodo $u$, l'algoritmo scorrerà la lista dei suoi adiacenti. Il ciclo for avrà quindi complessità $|\text{adj } 0|+|\text{adj } 1+\dots+ |\text{adj } n-1|$ (somma degli elementi nelle liste di tutti i nodi visitati), che, visto che non si visiterà mai un nodo due volte, corrisponde a $m$ <small>(numero di archi)</small> nel caso in cui il grafo è diretto, o $2m$ nel caso di un grafo indiretto.
+- in entrambi i casi, la somma di tutte le iterazioni del ciclo for sarà quindi in $O(n)$
+
+Il costo totale sarà quindi $O(n+m)$.
 
 Con una visita DFS, gli archi del grafo si dividono in attraversati (se portavano a nodi nuovi) e non attraversati.
 I nodi visitati e gli archi attraversati formano un albero detto **albero DFS**.
