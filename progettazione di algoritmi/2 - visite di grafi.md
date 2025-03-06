@@ -92,10 +92,7 @@ I nodi visitati e gli archi attraversati formano un albero detto **albero DFS**.
 >
 >$P = \begin{array}{|c|c|c|c|c|c|c|c|c|c|} \hline 5 & 0 & 5 & 2 & 7 & 5 & 1 & 2 & 5 & 1 \\ \hline \end{array}$
 
-L'obiettivo è modificare la visita DFS in modo da memorizzare anche il vettore dei padri.
-
-
-- si sfrutta il vettore dei padri per controllare se un nodo sia stato visitato o meno
+La visita DFS può essere modificata in modo da memorizzare il vettore dei padri anziché quello dei visitati.
 
 ```python
 def Padri(u, G):
