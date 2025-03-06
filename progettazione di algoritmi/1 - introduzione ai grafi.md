@@ -102,6 +102,11 @@ Dato un grafo di $n$ nodi, si costruisce una matrice binaria $n\times n$ con:
 
 - Uno dei **problemi** principali di questa matrice è lo *spreco di spazio*: se per esempio il grafo è sparso, si occuperanno solo fino a $n$ delle $n^2$ posizioni.
 - Uno dei **vantaggi** principali è invece la *velocità* con cui si può controllare la presenza di un arco: basta accedere all'elemento in posizione $(u,v)$ - costa $O(1)$.
+
+>[!summary]- costi
+>I costi sono quindi:
+>- presenza di un **arco**: $O(1)$
+>- ricerca dei **nodi adiacenti**: $\Theta(n)$ (bisogna scorrere tutta la lista $M[i]$)
 ### rappresentazione tramite lista di adiacenza
 Si utilizza una **lista di liste** $G$, con tanti elementi quanti sono i nodi del grafo $G$. 
 - ogni elemento $G[x]$ è una lista che contiene i *nodi adiacenti* al nodo $x$.
@@ -143,6 +148,10 @@ Si utilizza una **lista di liste** $G$, con tanti elementi quanti sono i nodi de
 - Rispetto alla rappresentazione tramite matrice, il *risparmio di spazio* è notevole.
 - Però, vedere se due archi sono connessi o meno può arrivare a costare $O(n)$ (bisogna scorrere la lista dei nodi adiacenti al nodo $u$ per verificare se $v$ sia presente).
 
+>[!summary]- costi
+>I costi sono quindi:
+>- presenza di un **arco**: worst case: $O(n)$
+>- ricerca dei **nodi adiacenti**: worst case: $O(n)$ 
 ## esercizi
 
 ### verificare se un grafo diretto ha un pozzo universale
@@ -186,4 +195,3 @@ for i in range(n):
 
 return True
 ```
-

@@ -1,5 +1,4 @@
 Internet è una rete di reti, composta da reti di accesso e dal backbone internet.
-
 ## rete di accesso
 Un **access network** è formato da tutti i dispositivi e collegamenti fisici che connettono un sistema al primo *edge router*, ovvero al primo router che si incontra, che fa da ponte tra il backbone e la rete di accesso.
 
