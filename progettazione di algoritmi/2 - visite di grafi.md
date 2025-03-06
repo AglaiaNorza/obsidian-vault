@@ -108,6 +108,7 @@ DFSr(u, G, P)
 return P
 ```
 
+- al termine dell'algoritmo, $P[v] == -1$ se non è stato visitato. altrimenti, contieneil padre di $v$ 
 ### colorazione di grafi
 Dato un grafo connesso $G$, si vuole trovare il minimo numero $k$ di colori necessari per colorare i nodi dell'albero in modo che **nodi adiacenti** abbiano sempre **colori distinti**.
 
