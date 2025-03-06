@@ -52,14 +52,49 @@ Per ogni nodo $u$, l'algoritmo scorrerà la lista dei suoi adiacenti. Il ciclo f
 - in entrambi i casi, la somma di tutte le iterazioni del ciclo for sarà quindi in $O(n)$
 
 Il costo totale sarà quindi $O(n+m)$.
+- se il grafo è sparso, $m\in O(n)$, quindi la complessità temporale totale sarà $O(n)$
+###### versione iterativa
+```python
+def DFS_i(u, G):
+	visitati = [0]*len(G)
+	stack = [u]
+	while stack:
+		u = stack.pop()
+		if not visitati[u]:
+			visitati[u] = 1
+			
+			for v in G[u]:
+				if not visitati[v]:
+					stack.append(v)
+					
+	return [x for x in range(len(G)) if visitati[x]]
+```
 
-Con una visita DFS, gli archi del grafo si dividono in attraversati (se portavano a nodi nuovi) e non attraversati.
+- anche qui, la complessità temporale è $O(n+m)$
+### albero DFS
+Visto che la ricerca visita solo nodi non precedentemente visitati, con una visita DFS, gli archi del grafo si dividono in attraversati e non attraversati.
 I nodi visitati e gli archi attraversati formano un albero detto **albero DFS**.
 
 > [!info] vettore dei padri
-> L'albero DFS si può memorizzare tramite il **vettore dei padri** --> un vettore che contiene, per ogni entrata $i$, il suo nodo padre
-> - (un nodo senza padre avrà se stesso)
+> L'albero DFS si può memorizzare tramite il **vettore dei padri** --> un vettore che contiene, per ogni entrata $i$, l'indice del suo nodo padre.
+> - (per convenzione, il padre della radice è essa stessa - $P[r]==r$)
+> - se $i$ non è un nodo dell'albero (in questo caso, se non è stato visitato), $P[i]==-1$
 
+![[albero-DFS.png|center|500]]
+
+(a sinistra un grafo, a destra i tre alberi DFS che si ottengono partendo dai nodi 9, 4 e 3 rispettivamente)
+
+>[!example] esempio
+>
+>![[vettore-padre.png|center|200]]
+>
+>per esempio, questo albero sarà rappresentato dal seguente vettore dei padri:
+>
+>$$ P = \begin{array}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+5 & 0 & 5 & 2 & 7 & 5 & 1 & 2 & 5 & 1 \\
+\hline
+\end{array}$$
 
 L'obiettivo è modificare la visita DFS in modo da memorizzare anche il vettore dei padri.
 
