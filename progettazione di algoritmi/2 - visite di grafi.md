@@ -7,11 +7,10 @@
 >Il problema della connettività si occupa di determinare se, comunque prendo due nodi $u$ e $v$, tra essi c'è un cammino.
 
 ## Depth-First Search (DFS)
-La strategia della visita in profondità consiste nel visitare il grafo sempre più "in profondità" <small>(unexpected)</small>, quando possibile. Partendo da un nodo, si prosegue lungo un sentiero finché non si arriva a un punto che non ha più collegamenti da seguire, quindi si torna indietro per esplorare eventuali altri collegamenti dai nodi già visitati. Durante tutta la ricerca, **non si visitano mai** (all'"andata") **nodi già visitati**, per non cadere in cicli.
+La strategia della visita depth-first consiste nel visitare il grafo sempre più "in profondità" <small>(unexpected)</small>, quando possibile. Partendo da un nodo, si prosegue lungo un sentiero finché non si arriva a un nodo che non ha più archi da seguire, quindi si torna indietro per esplorare eventuali altri archi dai nodi già visitati. Durante tutta la ricerca, **non si visitano mai** (all'"andata") **nodi già visitati**, per non cadere in cicli.
 
 ##### visita DFS su grafo rappresentato tramite matrice di adiacenza:
 - usiamo un **vettore dei visitati** per tenere conto dei nodi già visitati: quando si trova un nodo $u$, lo si visita solo se $\text{visitati[u]==0}$ 
-	- questo ci permette di non incorrere in cicli
  
 ```python
 def DFS(u, M)
@@ -108,8 +107,40 @@ DFSr(u, G, P)
 return P
 ```
 
-- al termine dell'algoritmo, $P[v] == -1$ se non è stato visitato. altrimenti, contieneil padre di $v$ 
-### colorazione di grafi
+- al termine dell'algoritmo, $P[v] == -1$ se non è stato visitato. altrimenti, contiene il padre di $v$ 
+
+### trovare un cammino
+Molto spesso non basta sapere se un nodo $v$ sia raggiungibile da un nodo $u$, ma si vuole anche determinare un **cammino** che permetta di arrivare da $u$ a $v$.
+- il vettore dei padri rende questa operazione molto semplice: basta controllare che il nodo $v$ sia nell'albero DFS, ed effettuare un reverse dei nodi incontrati
+
+**versione iterativa**:
+```python
+def Cammino(u, P):
+	if P[u] ==  -1: return [] # se non è nell'albero (non visitato)
+	path = []
+	while P[u] != u: # se P[u] = u, siamo arrivati al nodo che cerchiamo
+		path.append(u)
+		u = P[u] # seguiamo i padri
+	path.append(u)
+	path.reverse()
+	return path
+```
+
+**versione ricorsiva**:
+```python
+def CamminoR(u, P):
+	if P[u] == -1: return []
+	if P[u] == u: return [u]
+	return CamminoR(P[u], P) + [u]
+```
+
+- in entrambi i casi, disponendo del vettore dei padri, la complessità è $O(n)$
+
+>[!warning] attenzione
+>se esistono più cammini da $u$ a $v$, la procedura non garantisce la restituzione del *cammino minimo*
+
+## colorazione di grafi
+
 Dato un grafo connesso $G$, si vuole trovare il minimo numero $k$ di colori necessari per colorare i nodi dell'albero in modo che **nodi adiacenti** abbiano sempre **colori distinti**.
 
 - un grafo può richiedere anche $\Theta(n)$ colori.
@@ -119,9 +150,20 @@ Dato un grafo connesso $G$, si vuole trovare il minimo numero $k$ di colori nece
 
 >[!bug] non è noto nessun algoritmo polinomiale che determini la 3-colorabilità
 
+### 2-colorabilità
 È invece facile determinare se un grafo è 2-colorabile:
 
 >[!tip] un grafo è 2-colorabile se e solo se non contiene **cicli di lunghezza dispari**
+
+L'algoritmo di bi-colorazione che prova che un grafo senza cicli dispari può sempre essere 2-colorato funziona così:
+- colora il nodo 0 con il colore 0
+- effettua una visita in profondità del grafo a partire dal nodo 0 - nel corso della visita, assegna ad ogni nodo il colore (tra 0 e 1) opposto a quello assegnato al suo nodo padre
+
+>[!note] prova di correttezza
+>Siano $x$ e $y$ due nodi adiacenti in $G$. Consideriamo i due casi e verifichiamo che, in ogni caso, i due nodi avranno colori opposti.
+>1) L'arco $(x,y)$ viene attraversato durante la visita --> banalmente i due nodi hanno colori diversi
+>2) L'arco $(x,y)$ non viene attraversato durante la visita:
+>	- sia $x$ il nodo visitato prima. Esiste un cammino che da $x$ porta a $y$ - questo cammino si chiuderà a formare un ciclo con l'arco $(y,x)$. Per ipotesi, il ciclo è di lunghezza pari, quindi il cammino è di lunghezza dispari. Poiché sul cammino i colori si alternano, il primo nodo ($x$) e il secondo ($y$) avranno colori diversi. 
 
 ### componente connessa
 Una **componente connessa** di un grafo indiretto è un sottografo composto da un insieme *massimale* di nodi connessi da cammini.
