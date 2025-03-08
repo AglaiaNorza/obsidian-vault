@@ -169,6 +169,26 @@ L'algoritmo di bi-colorazione che prova che un grafo senza cicli dispari può se
 Una **componente connessa** di un grafo indiretto è un sottografo composto da un insieme *massimale* di nodi connessi da cammini.
 
 ### componente fortemente connessa
-Una **componente fortemente connessa** di un grafo
+Una **componente fortemente connessa** di un grafo diretto è un sottografo composto da un insieme massimale di nodi connessi da cammini bidirezionali.
+
+>[!tip] grafo fortemente connesso
+>Un grafo si dice fortemente ocnnesso se ha **una sola componente**.
 
 - LEGGI TARJAN / KOSARAJU dai
+
+
+
+
+Un algoritmo che, dato un grafo diretto $G$ ed un suo nodo $u$, calcola i nodi della componente fortemente connessa che contiene $u$ potrebbe funzionare così:
+1) calcola l'insieme $A$ dei nodi raggiungibili da $u$ (semplice visita DFS) - $O(n+m)$
+2) calcola l'insieme $B$ dei nodi che portano a $u$
+3) restituisci l'*intersezione* dei due insiemi $A$ e $B$ - $\Theta(n)$
+	- ho due vettori dei visitati (con la stessa cardinalità) - scorro gli indici e controllo per quali nodi entrambi hanno valore $1$ 
+
+Per il punto 2 si costruisce un **grafo trasposto**: ha gli stessi nodi del grafo di partenza, ma gli archi con direzione opposta ($O(n+m)$).
+
+il grafo ha n componenti fortemente conesse. L'algoritmo calcola le componenti fortemente connesse per ogni nodo
+
+
+Visite: n visite di cui ognuna costa $O(n+m)$.
+Ma gli archi sono $n\left( \frac{n-1}{2} \right)=O(n^2)$ - quindi $O(n)\times O(n^2)=O(n^3)$.
