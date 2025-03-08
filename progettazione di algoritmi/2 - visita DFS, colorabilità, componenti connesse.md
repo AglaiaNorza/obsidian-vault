@@ -137,7 +137,7 @@ def CamminoR(u, P):
 - in entrambi i casi, disponendo del vettore dei padri, la complessità è $O(n)$
 
 >[!warning] attenzione
->se esistono più cammini da $u$ a $v$, la procedura non garantisce la restituzione del *cammino minimo*
+>se esistono più cammini da $u$ a $v$, la procedura *non garantisce la restituzione del cammino minimo*
 
 ## colorazione di grafi
 
@@ -165,19 +165,62 @@ L'algoritmo di bi-colorazione che prova che un grafo senza cicli dispari può se
 >2) L'arco $(x,y)$ non viene attraversato durante la visita:
 >	- sia $x$ il nodo visitato prima. Esiste un cammino che da $x$ porta a $y$ - questo cammino si chiuderà a formare un ciclo con l'arco $(y,x)$. Per ipotesi, il ciclo è di lunghezza pari, quindi il cammino è di lunghezza dispari. Poiché sul cammino i colori si alternano, il primo nodo ($x$) e il secondo ($y$) avranno colori diversi. 
 
-### componente connessa
-Una **componente connessa** di un grafo indiretto è un sottografo composto da un insieme *massimale* di nodi connessi da cammini.
+**algoritmo di bi-colorazione** (sapendo che $G$ non ha cicli dispari):
+- se $G$ contiene cicli dispari, produce una colorazione sbagliata
+ 
+```python
+def Colora(x, G, Colore, c):
+	Colore[x] = c
+	for y in G[x]:
+		if Colore[y] == -1: # se non colorato
+			Colora(y, G, Colore, 1-c)
+			# 1-c alterna i colori (1-0 = 1, 1-1 = 0)
 
-### componente fortemente connessa
-Una **componente fortemente connessa** di un grafo diretto è un sottografo composto da un insieme massimale di nodi connessi da cammini bidirezionali.
+Colore = [-1]*len(G)
+Colora(0, G, Colore, 0)
+return Colore
+```
 
->[!tip] grafo fortemente connesso
->Un grafo si dice fortemente ocnnesso se ha **una sola componente**.
+**algoritmo che produce una bi-colorazione se $G$ è bicolorabile, altrimenti ritorna una lista vuota**:
+```python
+def Colora(x, G, Colore, c):
+	Colore[x] = c
+	for y in G[x]:
+		if Colore[y]==-1:
+			if not Colora(y, G, Colore, 1-c): 
+				return False
+		elif Colore[y] == Colore[x]:
+			return False
+	return True
 
-- LEGGI TARJAN / KOSARAJU dai
+def main()
+	Colore = [-1]*len(G)
+	if Colora(0, G, Colore, 0):
+		return Colore
+	return []
+```
 
+- la complessità è quella di una semplice visita di un grafo connesso: $O(n+m)=O(m)$ <small>(in un grafo connesso, $m\geq n-1$)</small>
+## componente connessa
+Una **componente connessa** (o semplicemente "componente") di un grafo <u>indiretto</u> è un sottografo composto da un *insieme massimale di nodi connessi da cammini*.
 
+>[!tip] grafo connesso
+>Un grafo indiretto si dice connesso se ha **una sola componente**.
 
+esempio di grafo con 5 componenti: 
+ 
+![[componenti-grafo.png|center|400]]
+
+Si può calcolare il **vettore delle componenti connesse** di un grafo $G$.
+Il vettore ($C$) ha tanti elementi quanti sono i nodi del grafo, e $C[u]=C[v]\iff$$u$ e $v$ sono nella stessa componente connessa.
+
+Per l'esempio sopra, il vettore sarebbe: 
+ 
+$P = \begin{array}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|} \hline 2 & 1 & 2 & 3 & 4 & 5 & 2 & 1 & 1 & 1 & 2 & 3 & 5 & 1 & 5 & 1 & 2 & 5  & 3 \\ \hline \end{array}$
+## componente fortemente connessa
+Una **componente fortemente connessa** di un grafo <u>diretto</u> è un sottografo composto da un insieme massimale di nodi connessi da cammini.
+
+- come per i grafi indiretti, un grafo diretto si dice **fortemente connesso** se ha una sola componente.
 
 Un algoritmo che, dato un grafo diretto $G$ ed un suo nodo $u$, calcola i nodi della componente fortemente connessa che contiene $u$ potrebbe funzionare così:
 1) calcola l'insieme $A$ dei nodi raggiungibili da $u$ (semplice visita DFS) - $O(n+m)$
