@@ -43,4 +43,4 @@
 > - [[strutture dati]]
 > - [[tipi generici]]
 > - [[tipi primitivi]]
-> - [[UML]]
+> - [[metodologie di programmazione/UML]]
