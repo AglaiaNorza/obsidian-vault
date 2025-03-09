@@ -11,7 +11,41 @@ Un DAG ha infatti sempre un **nodo sorgente**, ovvero un nodo in cui non entrano
 - cancello dal DAG quel nodo sorgente e gli archi che partono da esso - otterrò un nuovo DAG
 - ripeto fino ad aver sistemato in ordine lineare tutti i nodi
 
-> <small>fatto anche [[19 - il meccanismo di lock, lock binario#lock binario|qui]] (basi di dati 1, serializzabilità)<small>
+> <small>fatto anche [[19 - il meccanismo di lock, lock binario#lock binario|qui]] (basi di dati 1, serializzabilità)</small>
+
+**algoritmo per il sort topologico**
+- restituisce un sort topologico di $G$ se esiste - altrimenti, una lista vuota
+ 
+```python
+def sortTop(G):
+	n = len(G)
+	gradoEnt = [0]*n
+	for i in range(n):
+		for j in G[i]:
+			gradoEnt(j) += 1 
+			# se j compare in una qualsiasi lista di adiacenza, 
+			# vuol dire che ha archi entranti
+
+	sorgenti = [ i for i in range(len(G)) if gradoEnt[i]==0 ]
+	ST = []
+
+	while sorgenti:
+		u = sorgenti.pop()
+		ST.append(u)
+		for v in G[u]:
+			gradoEnt[v] -= 1
+			if gradoEnt[v] == 0:
+				sorgenti.append(v)
+
+	if len(ST) == len(G): return ST
+	return []
+```
+
+- creare il vettore dei gradi entranti costa $O(n+m)$
+- inizializzare l'insieme delle sorgenti costa $O(n)$
+- il while viene eseguito $O(n)$ volte e il costo totale del for al termine del while è $O(m)$
+
+il costo totale è quindi $O(n+m)$.
 
 
 
