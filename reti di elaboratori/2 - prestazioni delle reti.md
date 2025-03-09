@@ -148,3 +148,36 @@ Cosa significano effettivamente packet delay e loss per Internet?
 
 Esiste un programma diagnostico, `traceroute`, che fornisce una misura del ritardo dalla sorgente a tutti i router lungo il percorso Internet punto-punto verso la destinazione.
 
+Il mittente invia dei pacchetti e ogni router risponderà al mittente, che calcolerà l’intervallo di tempo tra invio e risposta.
+
+L’output del comando è composto da 6 colonne:
+
+1. Numero del router nel percorso
+2. Nome del router
+3. Indirizzo del router
+4. Tempo andata e ritorno 1° pacchetto
+5. Tempo andata e ritorno 2° pacchetto
+6. Tempo andata e ritorno 3° pacchetto
+
+- il tempo di andata e ritorno (Round Trip Time) include i 4 ritardi visti precedentemente.
+- se non riceviamo risposte o se il router nasconde le sue informazioni, vengono mostrati degli * . 
+- inoltre, dato che il ritardo di accodamento varia in base alla congestione della rete, può accadere che per un router abbiamo un ritardo $T$ e per il router successivo un ritardo $T_{1}>T$.
+
+>[!example] esempio di `traceroute` da `gaia.cs.umass.edu` a `www.eurecom.fr`
+>![[traceroute.png|center|400]]
+
+### prodotto rate * ritardo
+Il prodotto $\text{rate} \cdot\text{ritardo}$ rappresenta il **massimo numero di bit che possono riempire un collegamento**.
+
+>[!example] esempio
+>Supponiamo di avere un link con un rate di $1\text{bps}$ e un ritardo di $5\text{sec}$.
+>
+>![[ratexritardo.png|center|350]]
+>
+>Non ci possono essere quindi più di $5\text{bit}$ contemporaneamente sul link.
+
+Possiamo pensare al link tra due punti come a un tubo. La sezione trasversale del tubo rappresenta il rate e la lunghezza il ritardo. Possiamo dire che il volume definisce il prodotto rate-ritardo.
+
+![[tubo.png|center|350]]
+
+
