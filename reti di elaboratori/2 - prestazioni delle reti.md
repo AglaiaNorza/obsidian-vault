@@ -67,7 +67,7 @@ In un percorso da una sorgente a una destinazione, un pacchetto passerà attrave
 >>![[through-cond.png|center|350]]
 >>
 >>In questo caso, quindi, il throughput end-to-end sarà 200kbps.
-## delay e loss
+## delay
 Il throughput può variare per una serie di motivi: numero di utenti connessi, latenze, o addirittura perdita di pacchetti.
 
 Tra i fattori che incidono sul tempo di trasmissione ci sono l'accodamento dei pacchetti nei buffer dei router (necessario quando il traffico in ingresso supera la capacità di uscita), il tempo di elaborazione del pacchetto all'interno del nodo e il tempo di trasmissione effettivo del pacchetto da parte del router.
@@ -111,4 +111,40 @@ $$\text{Ritardo di propagazione}=\frac{d}{s}=\frac{\text{lunghezza collegamento}
 >
 >Il tempo che intercorre da quando l'intera colonna di vetture si trova di fronte al primo casello di partenza a quando tutte le auto hanno passato il secondo casello è dato dalla somma del ritardo di trasmissione e del ritardo di propagazione, ovvero $62\text{ min}$ (la prima auto arriverà prima di 62 minuti, ma l'ultima passerà esattamente al 62-esimo).
 
-## ritardo di nodo
+### ritardo di nodo
+il ritardo di nodo $d_{nodal}$ è dato dalla somma di:
+- ritardo di **trasmissione**
+- ritardo di **propagazione**
+- ritardo di **elaborazione**
+- ritardo di **accodamento**
+
+$$d_{nodal}=d_{trans}+d_{prop}+d_{proc}+d_{queue}$$
+
+### ritardo di accodamento
+- può variare da pacchetto a pacchetto (si fa infatti uso di misure statistiche)
+- dipende dal *tasso di arrivo*, dal *rate* e dalla *lunghezza dei pacchetti*
+
+Dati:
+- $R=\text{rate di trasmissione (bps)}$
+- $L=\text{lunghezza del pacchetto (bit)}$
+- $a = \text{tasso medio di arrivo dei pacchetti (pkt/s)}$
+
+abbiamo:
+
+$$\frac{La}{R}=\text{intensità di traffico}$$
+
+Se: 
+- $La/R \sim 0$ --> poco ritardo
+- $La/R \rightarrow 1$ --> ritardo consistente
+- $La/R>1$ --> più lavoro in arrivo di quanto possa essere effettivamente svolto 
+
+## packet loss
+Se una coda o un buffer hanno capacità limitata, quando il pacchetto trova la coda piena, verrà **scartato** (e sarà quindi perso).
+
+Un pacchetto perso può essere ritrasmesso dal nodo precedente, dal sistema terminale che lo ha generato, o non essere ritrasmesso.
+
+## ritardi e percorsi in internet
+Cosa significano effettivamente packet delay e loss per Internet?
+
+Esiste un programma diagnostico, `traceroute`, che fornisce una misura del ritardo dalla sorgente a tutti i router lungo il percorso Internet punto-punto verso la destinazione.
+
