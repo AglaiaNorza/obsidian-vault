@@ -46,9 +46,3 @@ def sortTop(G):
 - il while viene eseguito $O(n)$ volte e il costo totale del for al termine del while è $O(m)$
 
 il costo totale è quindi $O(n+m)$.
-
-
-
-- A[i] = numero di archi che entrano in i
-- trovo sorgente in $O(n)$
-
