@@ -13,7 +13,7 @@ Un DAG ha infatti sempre un **nodo sorgente**, ovvero un nodo in cui non entrano
 
 > <small>fatto anche [[19 - il meccanismo di lock, lock binario#lock binario|qui]] (basi di dati 1, serializzabilità)</small>
 
-**algoritmo per il sort topologico**
+#### algoritmo per il sort topologico (basato sulle sorgenti)
 - restituisce un sort topologico di $G$ se esiste - altrimenti, una lista vuota
  
 ```python
@@ -46,3 +46,11 @@ def sortTop(G):
 - il while viene eseguito $O(n)$ volte e il costo totale del for al termine del while è $O(m)$
 
 il costo totale è quindi $O(n+m)$.
+#### algoritmo per il sort topologico basato su DFS
+- effettua una visita DFS 
+- man mano che termina la visita dei vari nodi
+
+
+la somma del costo delle visite è la somma dei nodi e degli archi.
+
+
