@@ -1,3 +1,18 @@
+> [!info] protocollo
+> Un **protocollo** definisce le regole che il mittente, il destinatario e tutti i sistemi intermedi coinvolti devono rispettare per essere in grado di comunicare.
+
+In alcune situazioni, è opportuno suddividere i compiti fra più livelli (layer) - questo permette di suddividere un compito complesso in più compiti semplici, e permette la **modularizzazione** (che rende i livelli indipendenti).
+
+- ogni modulo/livello può essere considerato come un black box, senza preoccuparsi delle modalità con cui i dati vengono processati e prodotti
+- si **separano i servizi dalla loro implementazione**: un livello usa servizi dal livello inferiore, e offre servizi al livello superiore
+- se due macchine forniscono lo stesso output  dallo stesso input, possono essere considerati *equivalenti* 
+
+Talvolta è richiesta una **comunicazione bidirezionale**: ciascun livello deve essere capace di effettuare i due compiti opposti, uno per ciascuna direzione (per esempio crittografare e decrittografare).
+
+I livelli sono *direttamente collegati*, ovvero il protocollo implementato a ciascun livello specifica una comunicazione diretta tra pari livelli delle due parti
+
+
+
 ## organizzazione a più livelli
 
 ### principi
@@ -27,3 +42,5 @@ visto che le porte dello switch sono omogenee, c'è solo un protocollo.
 
 
 un protocollo non affidabile è più veloce
+
+
