@@ -13,12 +13,47 @@ I livelli sono *direttamente collegati*, ovvero il protocollo implementato a cia
 
 ## stack protocollare TCP/IP
 (Lo stack protocollare prende il nome di TCP/IP perché TCP e IP sono i due protocolli più importanti).
-Si tratta di una **gerarchia** di protocolli formati da moduli che interagiscono tra di loro, ciascuno dei quali fornisce funzionalità specifiche. La struttura gerarchica è data dal fatto che ciascun protocollo di livello superiore è supportato dai servizi forniti dai protocolli di livello inferiore.
+
+La rete è organizzata come una pila di **strati** (layer) o **livelli**, costruiti l'uno sull'altro. Ogni livello offre servizi agli strati di livello superiore, nascondendo i dettagli di implementazione.
+
+- strati dello stesso livello di computer diversi sono in comunicazione tra di loro, attraverso i **protocolli**
+- le entità che formano gli strati sono chiamati **pari** (peer)
 
 
 
-**trasporto** - trasferisce i messaggi dal livello applicazione di un client a quello di un server
-- TCP affidabile, UDP non affidabile (correttezza e ordine di arrivo)
+La pila TCP/IP era originariamente definita in termini di quattro livelli software + un livello hardware, ma è oggi intesa come composta di cinque livelli.
+
+![[TCPIP-liv.png|center|500]]
+
+### livello applicazione
+
+**Applicazione** --> sede delle applicazioni di rete
+- usa i protocolli: HTTP, SMTP, FTP, DNS
+- i pacchetti sono chiamati *messaggi*
+
+**Trasporto** --> trasferimento dei messaggi dal livello applicazione di un client a quello di un server
+- protocolli: TCP affidabile, UDP non affidabile (l'affidabilità fa riferimento a correttezza e ordine di arrivo)
+- i pacchetti sono chiamati *segmenti*
+
+**Rete** --> instradamento dei segmenti dall'origine alla destinazione
+- IP, protocolli di instradamento
+- pacchetti: *datagrammi*
+
+**Link** (hardware) --> trasmissione di datagrammi da un nodo a quello successivo sul percorso
+- Ethernet, Wi-Fi, PPP (lungo un percorso sorgente-destinazione, un datagramma può essere gestito da protocolli diversi)
+- pacchetti: *frame*
+
+**Fisico** --> trasferimento dei singoli bit
+
+>[!tip] comunicazione in una internet
+>
+>![[internet-comm.png|center|400]]
+>
+>- grazie al layering, i sistemi implementano solo i livelli necessari, riducendo la complessità
+>- nel router, ci possono essere fino a $n$ livelli fisico-collegamento, con $n$ numero di link a cui il router è collegato
+>- invece, poiché le porte dello switch sono omogenee, c'è un solo protocollo
+
+
 
 
 **rete**: instradamento dei segmenti dall'origine alla destinazione (trova la rotta)
