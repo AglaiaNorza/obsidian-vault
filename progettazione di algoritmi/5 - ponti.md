@@ -35,4 +35,46 @@ Notiamo che gli archi che non sono ponti sono *coperti* da archi non attraversat
 
 La logica da seguire è quindi questa:
 
-Per ogni arco padre-figlio $(u,v)$ presente nell'albero DFS, il nodo 
+Per ogni arco padre-figlio $(u,v)$ presente nell'albero DFS, il nodo $u$ è in grado di scoprire se l'arco $(u,\,v)$ è un ponte in questo modo: per ogni nodo $v$:
+- calcola la sua altezza nell'albero
+- calcola e restituisce al padre $u$ l'altezza minima che si può raggiungere con archi che partono da nodi del suo sottoalbero diversi da $(u,\,v)$
+
+Il nodo $u$ confronta la sua altezza con quella ricevuta: perché sia ponte, l'altezza di $u$ deve essere *minore* di quella restituita dal figlio.
+
+>[!summary] quindi
+>- nodo $v$ --> esplora il proprio sottoalbero e restituisce $b$: il minimo livello da sé raggiungibile (utilizzando anche archi all'indietro)
+>- nodo $u$ --> confronta $b$ con la propria altezza - se $b>\text{altezza}$, l'arco $(u,\,v)$ è un ponte (è l'unico collegamento); altrimenti, un c'è un percorso alternativo e l'arco non è un ponte
+>
+>![[ponte-algo.png|center|400]]
+
+```python
+def DFSp(x, padre, altezza, ponti):
+	if padre == -1:
+		altezza[x] = 0 # primo nodo
+	else:
+		altezza[x] = altezza[padre] + 1
+	
+	min_raggiungibile = altezza[x]
+	
+	for y in G[x]:
+		if altezza[y] == -1: # non visitato
+			b = DFSp(y, x, altezza, ponti)
+			
+			if b > altezza[x]:
+				ponti.append((x,y))
+			
+			min_raggiungibile = min(min_raggiungibile, b)
+		
+		elif y != padre: # già visitato ma non padre: arco all'indietro
+			min_raggiungibile = min(min_raggiungibile, altezza[y])
+			
+			# visto che (x,y) è un arco all'indietro, il min raggiungibile sarà sicuramente <= altezza[y] (y potrebbe arrivare ancora più indietro)
+	
+	return min_raggiungibile
+
+altezza = [-1]*len(G)
+ponti = []
+
+DFSp(0, -1, altezza, ponti) 
+# i ponti si troveranno dentro "ponti"
+```
