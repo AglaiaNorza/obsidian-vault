@@ -1,0 +1,38 @@
+> [!info] ponte
+> Un **ponte** è un arco la cui eliminazione disconnette un grafo (ovvero aumenta il numero di componenti connesse). Equivalentemente, un arco è un ponte se e solo se *non è contenuto in nessun ciclo*. 
+
+- un grafo può non avere nessun ponte (esempio: un ciclo), o essere composto esclusivamente da ponti (esempio: un albero)
+
+![[ponti-es.png|center|400]]
+
+### determinare l'insieme dei ponti di un grafo
+Una prima soluzione si basa sulla *ricerca esaustiva*: si prova, per *ogni arco* del grafo, se questo è un arco o no.
+
+Verificare se un arco $(a,b)$ è un ponte per $G$ richiede $O(m)$: basta eliminare l'arco $(a,b)$ da $G$ ed effettuare una DFS per controllare se $b$ rimane raggiungibile da $a$.
+- la complessità sarebbe $m\cdot O(m)=O(m^2)=O(n^4)$
+
+>[!tip] Il problema è in realtà risolvibile in $O(m)$, usando un'unica visita DFS
+>L'intuizione si basa sul fatto che i ponti vanno ricercati unicamente tra i $n-1$ archi dell'albero DFS: 
+>- un arco non presente nell'albero DFS non può essere ponte perché, anche se venisse eliminato, gli archi dell'albero DFS garantirebbero la connessione.
+
+Notiamo che gli archi che non sono ponti sono *coperti* da archi non attraversati durante la visita.
+
+>[!info] proprietà
+>Sia $(u,v)$ un arco dell'albero DFS con $u$ padre di $v$. L'arco $u-v$ è un ponte *se e solo se* non ci sono archi tra i nodi del **sottoalbero** radicato in $v$ e il nodo $u$ o nodi antenati di $u$
+>
+>>[!note]- dimostrazione
+>> - $\implies$
+>> 
+>> Supponiamo per assurdo che $x-y$ sia un arco tra un antenato di $u$ e un disccendente di $v$. Dopo l'eliminazione di $u-v$, tutti i nodi dell'albero resterebbero connessi grazie all'arco $x-y$
+>> 
+>> ![[ponti1.png|center|150]]
+>> 
+>> - $\Longleftarrow$
+>>
+>>In questo caso, l'eliminazione dell'arco $u-v$ disconnette i nodi dell'albero radicato in $v$ dal resto del grafo. Infatti, tutti gli archi che non appartengono all'albero e che partono da nodi nel sottoalbero di $v$ vanno verso $v$ o un suo discendente.
+>>
+>>![[ponti2.png|center|150]]
+
+La logica da seguire è quindi questa:
+
+Per ogni arco padre-figlio $(u,v)$ presente nell'albero DFS, il nodo 
