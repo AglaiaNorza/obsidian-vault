@@ -38,3 +38,6 @@ def BFS(x, G):
 	return visitati
 ```
 
+>[!note] dimostrazione della correttezza
+>alla fine dell'algoritmo, $\text{visitati}[u]$
+>
