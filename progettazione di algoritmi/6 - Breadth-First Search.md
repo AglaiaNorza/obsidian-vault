@@ -39,5 +39,9 @@ def BFS(x, G):
 ```
 
 >[!note] dimostrazione della correttezza
->alla fine dell'algoritmo, $\text{visitati}[u]$
+>alla fine dell'algoritmo, $\text{visitati}[u] = 1\iff\text{il nodo } u \text{ è raggiungibile da } x$
+>
+>- se $u$ è raggiungibile da $x$, allora $\text{visitati}[u]=1$
+>
+>Se $u$ è raggiungibile, c'è un cammino $P$ da $x$ a $u$. Supponiamo per assurdo che al termine, $\text{visitati}[u]=0$. Sia $b$ il primo nodo che si incontra nel cammino $P$ con $v[b]=0$ e $a$ il suo predecessore
 >
