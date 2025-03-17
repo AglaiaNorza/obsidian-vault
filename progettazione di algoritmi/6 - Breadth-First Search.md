@@ -23,3 +23,18 @@ Ad ogni passo, si prende il primo nodo dalla coda, si esaminano i suoi adiacenti
 	- un nodo viene estratto dalla coda
 	- tutti i suoi adiacenti vengono visitati e messi in coda
 
+```python
+def BFS(x, G):
+	visitati = [0]*len(G)
+	visitati[x] = 1
+	coda = [x]
+
+	while coda:
+		u = coda.pop()
+		for y in G[u]:
+			if visitati[y] == 0:
+				visitati[y] = 1
+				coda.append(y) # va in coda solo se non visitato
+	return visitati
+```
+
