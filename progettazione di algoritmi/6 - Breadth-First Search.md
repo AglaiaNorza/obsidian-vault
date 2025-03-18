@@ -17,6 +17,7 @@ Ad ogni passo, si prende il primo nodo dalla coda, si esaminano i suoi adiacenti
 
 ^ sulla destra i tre alberi BFS risultanti da tre visite BFS di $G$ a partire da $0$, $5$, $2$ rispettivamente
 
+#### implementazione naïf
 **processo**:
 - si comincia con una coda contenente solo il nodo di partenza $x$.
 - finché la coda non risulta vuota, ad ogni passo:
@@ -38,10 +39,44 @@ def BFS(x, G):
 	return visitati
 ```
 
->[!note] dimostrazione della correttezza
+- un nodo finisce in coda al più una volta, quindi il `while` viene eseguito $O(n)$ volte
+- le liste di adiacenza dei nodi verranno scorse al più una volta, quindi il costo totale dei `for y in G[u]` è $O(m)$
+- però, l'estrazione in testa da una lista (`pop()`) ha costo proporzionale al numero di elementi presenti nella lista, ovvero anche $O(n)$
+
+quindi, il *costo* totale dell'algoritmo è $O(n^2)$.
+
+>[!bug]- caso pessimo
+>
+>![[bfs-worst.png|center|300]]
+>
+>Un esempio di caso pessimo per questo algoritmo è quello di un grafo in cui un nodo fa da sorgente e tutti gli altri sono pozzi.
+>In questo caso, tutti i nodi verranno inseriti nella coda (in quanto adiacenti alla sorgente), e verranno poi eseguite una serie di estrazioni dalla coda con costo decrescente da $n$. Il costo complessivo sarà quindi $\Theta(n^2)$ <small>($O(n)$ del while $\times O(n)$ dei `pop()`)</small>
+
+>[!note]- dimostrazione della correttezza
 >alla fine dell'algoritmo, $\text{visitati}[u] = 1\iff\text{il nodo } u \text{ è raggiungibile da } x$
 >
 >- se $u$ è raggiungibile da $x$, allora $\text{visitati}[u]=1$
 >
 >Se $u$ è raggiungibile, c'è un cammino $P$ da $x$ a $u$. Supponiamo per assurdo che al termine, $\text{visitati}[u]=0$. Sia $b$ il primo nodo che si incontra nel cammino $P$ con $v[b]=0$ e $a$ il suo predecessore
->
+>TODO finisci
+
+#### implementazione in $O(n+m)$
+Se si potesse eseguire un `pop()` in $O(1)$, l'algoritmo costerebbe $O(n+m)$ - basta non eseguire effettivamente le cancellazioni, ma semplicemente utilizzare un puntatore per indicare l'inizio della coda all'interno della lista (incrementandolo ogni volta che si "cancella" dalla coda).
+
+```python 
+def BFS(x, G):
+	visitati = [0]*len(G)
+	visitati[x] = 1
+	coda = [x]
+	i = 0
+	while len(coda) > i:
+		u = coda[i]
+		i += 1
+		for y in G[u]:
+			if visitati[y] == 0:
+				visitati[y] = 1
+				coda.append(y)
+	return visitati
+```
+
+>[!info] implementazione con `deque`
