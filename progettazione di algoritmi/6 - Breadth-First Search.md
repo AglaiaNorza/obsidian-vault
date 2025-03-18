@@ -2,7 +2,7 @@
 > Dati due nodi $a$ e $b$ di un grafo $G$, definiamo **distanza minima** in $G$ di $a$ da $b$ il *numero minimo di archi* che bisogna attraversare per raggiungere $b$ a partire da $a$.
 > - la distanza è posta a $+\infty$ se $b$ non è raggiungibile partendo da $a$
 
-### visita in ampiezza
+## visita in ampiezza
 La visita in ampiezza esplora i nodi partendo da quelli a distanza $1$ dalla sorgente $s$. Poi visita quelli a distanza $2$ e così via.
 - l'algoritmo visita quindi tutti i nodi a livello $k$ prima di passare a quelli a livello $k+1$.
 
@@ -17,7 +17,7 @@ Ad ogni passo, si prende il primo nodo dalla coda, si esaminano i suoi adiacenti
 
 ^ sulla destra i tre alberi BFS risultanti da tre visite BFS di $G$ a partire da $0$, $5$, $2$ rispettivamente
 
-#### implementazione naïf
+### implementazione naïf
 **processo**:
 - si comincia con una coda contenente solo il nodo di partenza $x$.
 - finché la coda non risulta vuota, ad ogni passo:
@@ -60,7 +60,7 @@ quindi, il *costo* totale dell'algoritmo è $O(n^2)$.
 >Se $u$ è raggiungibile, c'è un cammino $P$ da $x$ a $u$. Supponiamo per assurdo che al termine, $\text{visitati}[u]=0$. Sia $b$ il primo nodo che si incontra nel cammino $P$ con $v[b]=0$ e $a$ il suo predecessore
 >TODO finisci
 
-#### implementazione in $O(n+m)$
+### implementazione in $O(n+m)$
 Se si potesse eseguire un `pop()` in $O(1)$, l'algoritmo costerebbe $O(n+m)$ - basta non eseguire effettivamente le cancellazioni, ma semplicemente utilizzare un puntatore per indicare l'inizio della coda all'interno della lista (incrementandolo ogni volta che si "cancella" dalla coda).
 
 ```python 
@@ -79,4 +79,28 @@ def BFS(x, G):
 	return visitati
 ```
 
->[!info] implementazione con `deque`
+> [!info]- implementazione con `deque`
+> Il modulo `Collections` di python contiene la struttura dati `deque` (double-ended queue) (è implementata tramite una doubly linked list)
+> 
+> ![[deque.png|center|300]]
+>  
+> ```python
+> def BFS(x, G):
+> 	visitati=[0]*len(G)
+> 	visitati[x] = 1
+> 	from collections import deque
+> 	coda = deque([x])
+> 	while coda:
+> 		u = coda.popleft()
+> 		for y i G[u]:
+> 			if visitati[y] == 0:
+> 				visitati[y] = 1
+> 				coda.append(y)
+> 	return visitati
+> ```
+
+### albero BFS
+La procedura può essere modificata in modo da restituire in $O(n+m)$ l'albero di visita BFS rappresentato tramite vettore dei padri.
+
+> [!example] albero BFS
+> ![[BFS-tree.png|center|350]]
