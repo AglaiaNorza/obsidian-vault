@@ -319,4 +319,4 @@ Consideriamo il caso di un grafo diretto $G$ avente un arco $(u,v)$ per ogni $u\
 - ma gli archi sono $\frac{n (n-1)}{2}=O(n^2)$, quindi:
 - $O(n)\times O(n^2)=O(n^3)$
 
-Esistono algoritmi che lavorano in tempo $O(n+m)$, come l'algoritmo di Tarjan e quello di Kosaraju (non trattati) (li aggiungerò comunque ma non fanno parte del programma).
+Esistono algoritmi che lavorano in tempo $O(n+m)$, come l'algoritmo di Tarjan e quello di Kosaraju (li aggiungerò for funsies prima o poi ma non fanno parte del programma).
