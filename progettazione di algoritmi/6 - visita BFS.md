@@ -121,7 +121,7 @@ def BFSpadri(x, G):
 ```
 
 >[!info] cammino
->grazie al vettore dei padri $P$, come già visto per la visita DFS, con la [[1 - visita DFS, colorabilità, componenti connesse#trovare un cammino|procedura]] $\text{Cammini(x, P)}$, si può ottenere in $O(n)$ un cammino dalla radice dell'albero al nodo $x$.
+>grazie al vettore dei padri $P$, come già visto per la visita DFS, con la [[2 - visita DFS, colorabilità, componenti connesse#trovare un cammino|procedura]] $\text{Cammini(x, P)}$, si può ottenere in $O(n)$ un cammino dalla radice dell'albero al nodo $x$.
 
 Però, in più, vale anche:
 >[!tip] la distanza minima di un vertice $x$ da $s$ (radice) nel grafo $G$ equivale alla **profondità** di $x$ nell'albero BFS.
