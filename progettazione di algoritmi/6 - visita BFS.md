@@ -103,4 +103,57 @@ def BFS(x, G):
 La procedura può essere modificata in modo da restituire in $O(n+m)$ l'albero di visita BFS rappresentato tramite vettore dei padri.
 
 > [!example] albero BFS
-> ![[BFS-tree.png|center|350]]
+> ![[BFS-tree.png|center|400]]
+
+```python
+def BFSpadri(x, G):
+	P = [-1]*len(G)
+	P[x] = [x]
+	coda = [x]
+	i = 0
+	while len(coda) > i:
+		u = coda[i]
+		i += 1
+		for y in G[u]:
+			if P[y] == -1:
+				P[y] = u
+				coda.append(y)
+```
+
+>[!info] cammino
+>grazie al vettore dei padri $P$, come già visto per la visita DFS, con la [[1 - visita DFS, colorabilità, componenti connesse#trovare un cammino|procedura]] $\text{Cammini(x, P)}$, si può ottenere in $O(n)$ un cammino dalla radice dell'albero al nodo $x$.
+
+Però, in più, vale anche:
+>[!tip] la distanza minima di un vertice $x$ da $s$ (radice) nel grafo $G$ equivale alla **profondità** di $x$ nell'albero BFS.
+>>[!note] dimostrazione
+>>Si dimostra per induzione sulla distanza $d$ di $x$ da $s$. 
+>>- *caso base*: è banalmente vero per $d=0$, in quanto $s$ è l'unico vertice a distanza $0$ da se stesso, ed ha profondità $0$ nell'albero.
+>>- *ipotesi induttiva*: supponiamo sia vero per tutti i vertici a distanza al più $d-1$.
+>>
+>>Consideriamo un vertice $x$ a distanza $d$. Sia $P$ un **cammino minimo** da $s$ a $x$, e sia $v$ il predecessore di $x$ in questo cammino. Per ipotesi induttiva sappiamo che $v$ è a profondità $d-1$.
+>>- se $x$ è stato inserito nell'albero grazie a $v$ (è stato esplorato partendo da $v$), allora sappiamo che si troverà a distanza $d$.
+>>
+>>Supponiamo quindi che sia stato inserito grazie ad un nodo $u\neq v$.
+>> 
+>>La profondità di $u$ non può essere inferiore a $d-1$, o avremmo trovato un cammino $s\to u\to x$ di lunghezza inferiore a $d$ (il che contraddirebbe l'ipotesi iniziale). Ma la profondità di $u$ non può essere maggiore di $d-1$, perché il nodo $v$ sarebbe stato visitato prima di $u$ e $x$ sarebbe stato inserito grazie a $v$. Quindi, si ha necessariamente che la profondità di $u$ è $d-1$, e che la profondità di $v$ è $d$.
+
+### vettore delle distanze
+La procedura può anche essere modificata in modo da restituire in $O(n+m)$ il **vettore delle distanze** $D$.
+- al nodo $x$ viene assegnata distanza zero, e a tutti gli altri $-1$ - a ciascun nodo via via visitato viene assegnata la distanza del padre incrementata di $1$.
+- al termine della procedura, $D[u]$ conterrà $-1$ se il nodo $u$ non è raggiungibile da $x$, e la distanza minima di $u$ da $x$ altrimenti.
+
+```python
+def BFSdistanze(x, G):
+	D = [-1]*len(G)
+	D[x] = 0
+	coda = [x]
+	i = 0
+	while len(coda) > i:
+		u = coda[i]
+		i += 1
+		for y in G[u]:
+			if D[y] == -1:
+				D[y] = D[u] + 1
+				coda.append(y)
+	return D
+```

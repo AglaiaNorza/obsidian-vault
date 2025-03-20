@@ -5,3 +5,4 @@
 >- [[3 - sort topologico]]
 >- [[4 - individuare cicli]]
 >- [[5 - ponti]]
+>- [[6 - visita BFS]]
