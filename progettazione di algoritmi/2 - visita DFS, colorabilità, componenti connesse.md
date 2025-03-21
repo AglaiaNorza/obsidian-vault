@@ -227,13 +227,14 @@ def Componenti(x, G, C, c):
 		if C[y] == 0:
 			Componenti(y, G, C, c)
 
-C = [0]*len(G)
-c = 0
-for x in range(len(G)):
-	if C[x] == 0:
-		c+=1
-		Componenti(x, G, C, c)
-return C
+def main(G):
+	C = [0]*len(G)
+	c = 0
+	for x in range(len(G)):
+		if C[x] == 0:
+			c+=1
+			Componenti(x, G, C, c)
+	return C
 ```
 
 - questo algoritmo ha complessità $O(n+m)$
