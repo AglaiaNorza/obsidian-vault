@@ -94,17 +94,18 @@ I nodi visitati e gli archi attraversati formano un albero detto **albero DFS**.
 La visita DFS può essere modificata in modo da memorizzare il vettore dei padri anziché quello dei visitati.
 
 ```python
-def Padri(u, G):
+def DFSp(x, G, P):
 	for y in G[x]:
 		if P[y] == -1:
 			P[y] = x
-			DFSr(y, G, P)
+			DFSp(y, G, P)
 
-n = len(G)
-P = [-1]*n
-P[u] = u
-DFSr(u, G, P)
-return P
+def padri(u, G):
+	n = len(G)
+	P = [-1]*n
+	P[u] = u
+	DFSr(u, G, P)
+	return P
 ```
 
 - al termine dell'algoritmo, $P[v] == -1$ se non è stato visitato. altrimenti, contiene il padre di $v$ 
