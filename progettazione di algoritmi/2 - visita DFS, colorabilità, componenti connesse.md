@@ -217,7 +217,7 @@ Il vettore ($C$) ha tanti elementi quanti sono i nodi del grafo, e $C[u]=C[v]\if
 
 Per l'esempio sopra, il vettore sarebbe: 
  
-$C = \begin{array}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|} \hline 2 & 1 & 2 & 3 & 4 & 5 & 2 & 1 & 1 & 1 & 2 & 3 & 5 & 1 & 5 & 1 & 2 & 5  & 3 \\ \hline \end{array}$
+$C = \begin{array}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|} \hline 1 & 2 & 1 & 3 & 4 & 5 & 1 & 2 & 2 & 2 & 1 & 3 & 5 & 2 & 5 & 2 & 1 & 5  & 3 \\ \hline \end{array}$
 
 **algoritmo per il vettore delle componenti connesse**:
 ```python
