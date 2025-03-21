@@ -6,4 +6,4 @@
 >- [[4 - individuare cicli]]
 >- [[5 - ponti]]
 >- [[6 - visita BFS]]
->- [[7 - grafi pesati, Dijkstra]]
+>- [[7 - grafi pesati, algoritmo di Dijkstra]]

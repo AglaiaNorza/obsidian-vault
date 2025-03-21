@@ -64,6 +64,13 @@ L'algoritmo rientra nel paradigma della **tecnica greedy**. Opera infatti second
 - il cammino dal nodo sorgente ad un nuovo nodo viene deicso ad ogni passo, senza più tornare sulla decisione
 - le decisioni vengono prese in base ad un *criterio locale*: tra tutti i cammini percorribili, si sceglie quello che costa meno
 
+> [!tip] implementazioni
+> È impossibile risolvere il problema in meno di $\Omega(n+m)$.
+> Esistono tre implementazioni principali:
+> - una senza strutture dati, in $\Theta(n^2)$: è ottima nel caso dei *grafi densi* (in cui $m\in O(n^2)$), ma non nel caso di grafi sparsi ($m\in O(n)$)
+> - una che utilizza la Heap, in $O((n+m)\log n)$: funziona meglio nel caso di *grafi sparsi*, ma nel caso di un grafo denso è preferibile la prima
+> - una terza, che utilizza la Heap di Fibonacci, in $O(n\log n+m)$: la migliore in entrambi i casi (ma non trattata)
+
 **pseudocodice**:
 - `P[0...n-1]` vettore dei padri inizializzato a `-1`
 - `D[0...n-1]` vettore delle distanze inizializzato a `+inf` (perché si utilizzerà la funzione `min()`)
@@ -153,4 +160,55 @@ def dijkstra(s, G):
 ```
 
 - il costo delle istruzioni al di fuori del `while` è $\Theta(n)$.
-- il `while` viene eseguito al più $n-1$ volte (ad ogni iterazione un nuovo nodo viene selezionato e reso definitivo)
+- il `while` viene eseguito al più $n-1$ volte (ad ogni iterazione un nuovo nodo viene selezionato e reso definitivo). Al suo interno:
+	- il primo `for` viene eseguito esattamente $n$ volte
+	- il secondo `for` viene eseguito al più $n$ volte (tante quanti sono gli adiacenti)
+
+Il costo del while è quindi $\Theta(n^2)$, che è anche la complessità dell'implementazione.
+
+[ TODO: inserire passaggi esempio ]
+### implementazione con Heap
+Questa implementazione si basa sull'intuizione per cui, se si evitasse di scorrere ogni volta il vettore $lista$ per trovare il minimo, si eviterebbe di pagare $\Theta(n)$ ad ogni iterazione del while.
+- si può quindi sostituire $lista$ con una Heap, che ha complessità $\log n$ per l'estrazione del minimo e per l'inserimento
+
+Manteniamo un **heap minimo** contenente triple $(costo,u,v)$, dove $u$ è un nodo già inserito nell'albero dei cammini minimi e $costo$ rappresenta la distanza che si avrebbe qualora il nodo $y$ venisse inserito nell'albero dei cammini minimi attraverso $x$.
+- ogni volta che aggiungiamo un nodo $x$ all'albero, aggiorniamo anche l'heap inserendo, per ogni vicino $y$ di $x$, una nuova tripla $(distanzaagiornata,x,y)$ 
+- dato che non rimuoviamo elementi già presenti nell'heap, possono esistere più entry dello stesso nodo con distanze differenti. Tuttavia, sappiamo che la prima volta che un nodo viene estratto, questa corrisponde alla distanza minnima calcolata fino a quel punto (quindi le successive estrazioni possono essere trascurate).
+	- quindi, ad ogni estrazione di un nodo controlliamo prima se esso è già stato aggiunto all'albero (e, in tal caso, ignoriamo l'estrazione)
+
+```python
+from heapq import heappush, heappop
+
+def dijkstra1(s, G):
+	n = len(G)
+	D = [float('inf')]*n
+	P = [-1]*n
+	D[s] = 0
+	P[s] = s
+	H = [] # min-heap
+	
+	# inizializzazione heap (con vicini di s)
+	for y, costo in G[s]:
+		heappush(H, (costo, s, y))
+	
+	while H:
+		# estraggo il nodo con distanza minore
+		costo, x, y = heappop(H)
+		if P[y] == -1:
+			P[y] = x
+			D[y] = costo
+			
+			for v, peso in G[y]:
+				if P[v] == -1:
+					heappush(H, (D[y]+peso, y, v))
+	
+	return D, P
+```
+
+Nella heap ci possono essere anche $O(m)$ elementi, quindi i costi di inserimento ed estrazione saranno $O(\log m)=O(\log n^2)=O(2 \log n)=O(\log n)$.
+
+- l'inizializzazione di $D$ e $P$ costa $\Theta(n)$, e l'inserimento dei vicini di $s$ costa $O(n \log n)$.
+
+il costo del `while` con al suo interno un `for` è dato invece da:
+- ad ogni iterazione del `while` si elimina un elemento da $H$ e, eventualmente, tramite il `for` annidato si scorre la lista di adiacenza di un nodo e si aggiungono elementi ad $H$.  Ogni lista di adiacenza può essere scorsa al più una volta, quindi ad $H$ possono essere aggiunti al massimo $O(m)$ elementi. Il numero di iterazioni del while è quindi $O(m)$. 
+- 
