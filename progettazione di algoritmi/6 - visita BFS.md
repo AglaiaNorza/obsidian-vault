@@ -52,7 +52,7 @@ quindi, il *costo* totale dell'algoritmo è $O(n^2)$.
 >Un esempio di caso pessimo per questo algoritmo è quello di un grafo in cui un nodo fa da sorgente e tutti gli altri sono pozzi.
 >In questo caso, tutti i nodi verranno inseriti nella coda (in quanto adiacenti alla sorgente), e verranno poi eseguite una serie di estrazioni dalla coda con costo decrescente da $n$. Il costo complessivo sarà quindi $\Theta(n^2)$ <small>($O(n)$ del while $\times O(n)$ dei `pop()`)</small>
 
->[!note]- dimostrazione della correttezza
+>[!note]- dimostrazione della correttezza TODO
 >alla fine dell'algoritmo, $\text{visitati}[u] = 1\iff\text{il nodo } u \text{ è raggiungibile da } x$
 >
 >- se $u$ è raggiungibile da $x$, allora $\text{visitati}[u]=1$
