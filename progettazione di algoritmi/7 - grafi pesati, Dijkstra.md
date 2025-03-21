@@ -59,13 +59,22 @@ L'algoritmo rientra nel paradigma della **tecnica greedy**. Opera infatti second
 >Infatti, poiché sceglie il cammino meno costoso ad ogni passo, non considera il caso in cui si percorrerà prima un arco con peso maggiore per poi incontrare archi con pesi negativi (che abbasseranno quindi il costo totale).
 
 ### prova di correttezza
-Si dimostra per induzione sul numero di iterazioni del `while` (che assegna una nuova distanza ad un nodo).
 
-Dobbiamo dimostrare che **la distanza assegnata è quella minima**.
+> [!note] dimostrazione
+> Si dimostra per induzione sul numero di iterazioni del `while` (che assegna una nuova distanza ad un nodo).
+> 
+> Dobbiamo dimostrare che **la distanza assegnata è quella minima**.
+> 
+> - *caso base*: al passo zero viene assegnata distanza zero alla sorgente (e, poiché non consideriamo il caso di pesi negativi, non c'è una distanza minore)
+> - *ipotesi induttiva*: assumiamo che i cammini costruiti fino al passo $i>0$ siano minimi
+> 
+> Sia $T_{i}$ l'albero dei cammini minimi costruito fino al passo $i>0$ e $(u,v)$ l'arco aggiunto al passo $i+1$. Per dimostrare che $D[v]$ è la distanza minima, basta mostrare che il costo di un eventuale cammino alternativo è sempre superiore o uguale a $D[v]$.
+> 
+> Sia $C$ un qualsiasi cammino $s\to v$ alternativo a quello presente nell'albero e $(x,y)$ il primo arco che incontriamo percorrendo $C$ all'indietro tale che $x$ è nell'albero $T_{i}$ e $y$ no (ovvero l'ultimo arco percorso dal cammino).
+> - per ipotesi induttiva (e poiché non consideriamo archi con pesi negativi) $costo(C)\geq Dist(x)+peso(x,y)$
+> 
+> Ma l'algoritmo ha scelto $(u,v)$ invece che $(x,y)$, quindi, in base alla regola con cui esso sceglie l'arco con cui estendere l'albero, si ha necessariamente $D[x]+p(x,y)\geq D[u]+p(u,v)$.  
+> - da qui segue $costo(C)\geq D[x]+peso(x,y)\geq D[u]+p(u,v)=D[v]$
+> 
+> Il cammino alternativo ha quindi un costo superiore a $D[v]$.
 
-- *caso base*: al passo zero viene assegnata distanza zero alla sorgente (e, poiché non consideriamo il caso di pesi negativi, non c'è una distanza minore)
-- *ipotesi induttiva*: assumiamo che i cammini costruiti fino al passo $i>0$ siano minimi
-
-Sia $T_{i}$ l'albero dei cammini minimi costruito fino al passo $i>0$ e $(u,v)$ l'arco aggiunto al passo $i+1$. Per dimostrare che $D[v]$ è la distanza minima, basta mostrare che il costo di un eventuale cammino alternativo è sempre superiore o uguale a $D[v]$.
-
-Sia $C$ un qualsiasi cammino alternativo $s\to v$ e $(x,y)$ il primo arco che incontriamo percorrendolo all'indietro, tale ceh (ovvero l'ultimo arco del cammino).
