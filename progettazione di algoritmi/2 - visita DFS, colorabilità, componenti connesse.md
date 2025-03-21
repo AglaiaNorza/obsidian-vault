@@ -289,7 +289,7 @@ def ComponenteFC(x, G):
 ```
 
 ```python
-def Trasposto(G)
+def Trasposto(G):
 	GT = [ [] for _ in G]
 	for i in range(len(G)):
 		for v in G[i]:
