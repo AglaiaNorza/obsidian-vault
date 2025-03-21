@@ -2,6 +2,23 @@
 >Un grafo $G$ è detto **pesato** se ad ogni arco $e\in E$ è associato un valore numerico (detto *peso*) <small>(funzione $w:E\to R$ associa ad ogni arco un peso)</small>.
 >- il *peso di un cammino* $P$ è dato dalla somma dei pesi degli archi che lo costituiscono
 
+Per rappresentare un grafo pesato tramite lista di adiacenza, per l'arco $(x,y)$ di peso $c$ nella lista di adiacenza di $x$, invece che il solo nodo di destinazione $y$, ci sarà la coppia $(y,c)$.
+
+![[grafopesato.png|center|400]]
+
+il grafo sopra avrà lista di adiacenza:
+```python
+G = [
+	[(1, 17), (5, 4)],
+	[(0, 17), (4, 5), (5, 6)],
+	[(3, 12), (4, 10)],
+	[(2, 12), (4, 4), (5, 1)],
+	[(1, 5), (2, 10), (3, 4)],
+	[(0, 4), (1, 6), (3, 1)]
+]
+```
+
+
 >[!example]- analogia dei contenitori d'acqua
 >Abbiamo tre contenitori d'acqua con capienza 4, 7 e 10 litri. Inizialmente, i contenitori da 4 e 7 litri sono pieni, mentre quello da 10 è vuoto. Possiamo fare un solo tipo di operazione: versare acqua da un contenitore ad un altro, fermandoci quando il contenitore sorgente è vuoto o quello destinazione pieno.
 >
@@ -78,3 +95,62 @@ L'algoritmo rientra nel paradigma della **tecnica greedy**. Opera infatti second
 > 
 > Il cammino alternativo ha quindi un costo superiore a $D[v]$.
 
+### implementazione tramite lista
+Si può mantenere una lista in cui, per ogni nodo $x$ viene memorizzata una tripla $(\text{definitivo, costo, origine})$, in cui:
+- **definitivo** --> flag che assume valore $1$ se il costo per raggiungere $x$ è stato definitivamente stabilito (ovvero se l'algoritmo ha stabilito che non esiste un percorso migliore per arrivare al nodo $x$)
+- **costo** --> costo corrente minimo noto per raggiungere $x$ dalla sorgente $s$
+	- all'inizio, viene inizializzato a $0$ per $s$ e a $\infty$ per tutti gli altri nodi
+- **origine** --> nodo "padre" lungo il cammino minimo dalla sorgente a $x$
+	- inizializzato a $-1$
+
+All'inizio, l'unico nodo dell'albero è la sorgente, quindi la lista è inizializzata così:
+
+$$
+lista[x] = \begin{cases} (1,0,s) & x=s \\ (0,costo,s) & (costo,x)\in G[s] \\ (0,+\infty,-1) & \text{altrimenti}\end{cases}
+$$
+
+Seguono una serie di iterazioni dove vengono eseguiti questi passaggi:
+1) **selezione del nodo con costo minimo non definitivo**: si scorre $Lista$ per individuare il nodo $x$ che non è ancora definitivo e che ha il costo corrente minimo --> è il candidato per il quale il cammino minimo dalla sorgente è attualmente noto
+2) **verifica di terminazione**: se il costo minimo trovato è $\infty$, significa che non esistono altri nodi raggiungibili non definitivi. Il ciclo si interrompe.
+3) **marcare $x$ come definitivo**: la flag del nodo selezionato viene aggiornata a $1$ (il suo costo definitivo è stato fissato e non sarà più modificato)
+4) **aggiornamento dei vicini di $x$** : per ogni nodo $y$ adiacente a $x$, se $y$ non è ancora definitivo e il nuovo costo ottenuto passando per esso (ovvero $costo_{x}+costo_{(x,y)}$) è inferiore o uguale al costo attuale memorizzato per $y$, si aggiorna la terna di $y$ 
+
+```python
+def dijkstra(s, G):
+	n = len(G)
+	Lista = [(0, float('inf'), -1)]*n
+	Lista[s] = (1, 0, s) 
+	
+	for y, costo in G[s]:
+		# aggiorno vicini di s
+		Lista[y] = (0, costo, s)
+	
+	while True:
+		minimo, x = float('inf'), -1
+		# cerco il nodo non definitivo con costo minimo
+		# considerati solo i vicini, gli altri avranno inf
+		for i in range(n):
+			if Lista[i][0] == 0 and Lista[i][1] < minimo:
+				minimo, x = Lista[i][1], i
+		
+		if minimo == float('inf'):
+			# non ci sono più nodi raggiunbili non definitivi
+			break
+		
+		# rendo definitivo il nodo x
+		definitivo, costo_x, origine = Lista[x]
+		Lista[x] = (1, costo_x, origine)
+		
+		# aggiornamento vicini
+		for y, costo_arco in G[x]:
+			# se y non è definitivo e  c'è un cammino migliore passando per x
+			if Lista[y][0] == 0 and minimo + costo_arco < Lista[y][1]:
+				Lista[y] = (0, minimo + costo_arco, x)
+	
+	# estrae vettori delle distanze e dei padri
+	D,P = [costo for _,costo,_ in Lista], [origine for _,_,origine in Lista]
+	return D, P
+```
+
+- il costo delle istruzioni al di fuori del `while` è $\Theta(n)$.
+- il `while` viene eseguito al più $n-1$ volte (ad ogni iterazione un nuovo nodo viene selezionato e reso definitivo)

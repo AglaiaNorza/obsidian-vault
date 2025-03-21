@@ -163,7 +163,6 @@ $$\begin{bmatrix} 0 & 0 & \textcolor{red}{1} & 0 & 0 & 0 \\ 0 & 0 & \textcolor{r
 C'è un semplice test che ci permette di eliminare uno dei due nodi rappresentati da ogni posizione della matrice:
 $$
 M[i][j] = \begin{cases} 1 & i \ \text{ non è pozzo } \\ 0 & j \ \text{ non è pozzo universale} \end{cases}
-
 $$
 
 - se $M[i][j]==1$, sicuramente so che $i$ (la riga, ovvero il nodo da cui l'arco parte) non è un pozzo --> infatti, c'è un arco che parte da esso
