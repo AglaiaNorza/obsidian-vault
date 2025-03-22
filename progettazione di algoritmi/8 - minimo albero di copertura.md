@@ -37,6 +37,8 @@ kruskal(G):
 	return T
 ```
 
+### dimostrazione di correttezza
+
 >[!note] correttezza
 >Dobbiamo mostrare che, al termine dell'algoritmo, $T$ è un albero di copertura e che non c'è un altro albero che costa meno.
 >
@@ -48,15 +50,53 @@ kruskal(G):
 >
 >2) **non c'è un albero di copertura per $G$ che costa meno dell'albero $T$ ottenuto**
 >
->Sia $T$ l'albero di copertura prodotto dall'algoritmo di Kruskal, e sia $T^*$ un altro albero di copertura con lo stesso costo minimo. Assumiamo che $T$ e $T^*$ differiscano nel numero di archi: supponiamo che $T^*$ sia l'albero di copertura con lo stesso costo che differisce nel *minor numero* di archi da $T$.
+>Sia $T$ l'albero di copertura prodotto dall'algoritmo di Kruskal, e sia $T^*$ un altro albero di copertura con lo stesso costo minimo. Assumiamo che $T$ e $T^*$ differiscano: supponiamo che $T^*$ sia l'albero di copertura con lo stesso costo che differisce nel *minor numero* di archi da $T$. <small>(il numero di archi dei due rimane lo stesso, ma hanno x archi diversi con x minimo)</small> 
 >
 >Consideriamo l'ordine $e_{1},e_{2},\dots$ con cui gli archi sono stati presi in considerazione nel corso dell'algoritmo. Sia $e$ il primo arco che compare in $T$ e non in $T^*$. Se $e$ fosse inserito in $T^*$, creerebbe un ciclo $C$ <small>(perché $T^*$ è un albero di copertura, quindi l'aggiunta di un altro arco genererebbe necessariamente un ciclo)</small>. Il ciclo $C$ contiene almeno un arco $e'$ che non appartiene a $T$ (se tutti gli archi di $C$ fossero in $T$, allora l'algoritmo non avrebbe aggiunto $e$). 
 >
 >Consideriamo ora l'albero $T'$, ottenuto da $T^*$ inserendo $e$ ed eliminando $e'$. Il costo del nuovo albero $T'$ è $costo(T^*)-costo(e')+costo(e)$. Questo non può aumentare rispetto a quello di $T^*$, perché $costo(e)\leq costo(e')$ (perché tra $e$ ed $e'$, Kruskal ha considerato prima $e$).
 >
->Quindi, $T'$ è un altro albero di copertura ottimo che differisce da $T$ in meno archi di quanto faccia $T^*$, il che contraddice l'ipotesi per cui $T^*$ differisce da $T$ nel minor numero di archi.
+>Quindi, $T'$ è un altro albero di copertura ottimo che differisce da $T$ in meno archi di quanto faccia $T^*$ (perché, rispetto a $T^*$, al posto dell'arco $e'$ ha l'arco $e$, che appartiene a $T$), il che contraddice l'ipotesi per cui $T^*$ differisce da $T$ nel minor numero di archi.
+>
+>![[kruskal-dim.png|center|400]]
+>
+>[ mi sembra un po' sus nel caso in cui $T^*$ differisca da $T$ solo per $e$ vs $e'$, chiederò chiarimenti ]
 
+### implementazione
+- con un pre-processing, ordino gli archi nella lista $E$ così che, scorrendola, ottengo di volta in volta l'arco di costo minimo in tempo $O(1)$
+- verifico che l'arco $(x,y)$ non formi ciclo in $T$ controllando se $y$ è raggiungibile da $x$ in $T$
 
+```python
+def kruskal(G):
+	E = [(c,u,v) for un in range(len(G)) for v,c in G[u] if u < v].sort()
+	T = [[] for _ in G]
+	
+	for c,u,v in E:
+		if not connessi(u,v,T):
+			T[u].append(v)
+			T[v].append(u)
+	return T
+```
 
+```python
+def DFSr(a, b, T, visitati):
+	visitati[a] = 1
+	for z in T[a]:
+		if z == b:
+			return True
+		if not visitati[z]:
+			if DFSr(z, b, T, visitati):
+				return True
+	return false
 
-Si ha che $m \log m\in O(m\log n)$. Infatti, $m\log m\leq m\log n^2=2 \,m\log n\in O(m\log n)$.
+def connessi(u,v,T):
+	visitati = [0]*len(T)
+	return DFSr(u, v, T, visitati)
+```
+
+- l'ordinamento esterno al `for` costa $O(m \log m)=O(m\log n)$ 
+	- ($m\log m\leq m\log n^2=2 \,m\log n\in O(m\log n)$)
+- il `for` fa $m$ iterazioni, e controllare che l'arco $(a,b)$ non crei un ciclo in $T$ costa quanto la visita di un grafo aciclico, ovvero $O(n)$
+	- il `for` richiede quindi $O(m\cdot n)$
+
+La complessità totale è $O(m\cdot n)$.

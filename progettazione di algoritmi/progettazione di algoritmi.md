@@ -7,3 +7,4 @@
 >- [[5 - ponti]]
 >- [[6 - visita BFS]]
 >- [[7 - grafi pesati, algoritmo di Dijkstra]]
+>- [[8 - minimo albero di copertura]]
