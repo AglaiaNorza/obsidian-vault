@@ -211,4 +211,7 @@ Nella heap ci possono essere anche $O(m)$ elementi, quindi i costi di inseriment
 
 il costo del `while` con al suo interno un `for` è dato invece da:
 - ad ogni iterazione del `while` si elimina un elemento da $H$ e, eventualmente, tramite il `for` annidato si scorre la lista di adiacenza di un nodo e si aggiungono elementi ad $H$.  Ogni lista di adiacenza può essere scorsa al più una volta, quindi ad $H$ possono essere aggiunti al massimo $O(m)$ elementi. Il numero di iterazioni del while è quindi $O(m)$. 
-- 
+- escludendo il `for` annidato, il costo di ciascuna iterazione del while è $O(\log n)$ a causa dell'estrazione da $H$ - quindi, senza il `for`, il `while` costerebbe $O(m \log n)$.
+- Il `for` scorre la lista di adiacenza di un nodo $y$. Tuttavia, ogni arco $(y,v)$ viene esaminato una sola volta in tutto l'algoritmo (quando il nodo $y$ viene estratto da $H$). Per ogni arco esaminato nel `for`, può essere eseguita un'operazione di inserimento in $H$, che ha costo $O(\log n)$. Poiché in totale ci sono $O(m)$ archi, il numero complessivo di operazioni di inserimento in $H$ è al massimo $O(m)$, e quindi il costo totale del `for` nell'intero algoritmo è $O(m \log n)$
+
+La complessità di questa operazione è quindi $O(n \log n)+O(m\log n)+O(m \log n)=O((m+n)\log n)$
