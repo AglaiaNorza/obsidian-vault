@@ -25,7 +25,6 @@ Anche questo algoritmo rientra nel paradigma della **programmazione greedy**:
 - (*decisioni irrevocabili*) una volta deciso se inserire o meno un arco in $T$, non ritorna più sulla decisione
 - (*decisioni prese in base ad un criterio locale*) se un arco crea un ciclo, non lo si aggiunge; altrimenti, lo si sceglie in quanto è il meno costoso a non creare cicli 
 
-
-
+....
 
 Si ha che $m \log m\in O(m\log n)$. Infatti, $m\log m\leq m\log n^2=2 \,m\log n\in O(m\log n)$.
