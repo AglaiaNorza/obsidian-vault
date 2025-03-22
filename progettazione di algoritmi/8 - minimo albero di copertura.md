@@ -2,3 +2,7 @@ Consideriamo un grafo non pesato connesso non diretto - l'obiettivo è eliminare
 - si cerca l'albero che costa meno
 
 ### algoritmo di Kruskal
+
+
+
+Si ha che $m \log m\in O(m\log n)$. Infatti, $m\log m\leq m\log n^2=2 \,m\log n\in O(m\log n)$.
