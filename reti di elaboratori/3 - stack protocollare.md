@@ -19,17 +19,59 @@ La rete è organizzata come una pila di **strati** (layer) o **livelli**, costru
 - strati dello stesso livello di computer diversi sono in comunicazione tra di loro, attraverso i **protocolli**
 - le entità che formano gli strati sono chiamati **pari** (peer)
 
-
-
 La pila TCP/IP era originariamente definita in termini di quattro livelli software + un livello hardware, ma è oggi intesa come composta di cinque livelli.
 
 ![[TCPIP-liv.png|center|500]]
 
 ### livello applicazione
 
-**Applicazione** --> sede delle applicazioni di rete
+- sede delle applicazioni di rete
 - usa i protocolli: HTTP, SMTP, FTP, DNS
 - i pacchetti sono chiamati *messaggi*
+
+Il livello applicazione fornisce **servizi** all'utente.
+La comunicazione è fornita per mezzo di una **connessione logica**: i livelli applicazione ai due lati della comunicazione agiscono come se esistesse un collegamento diretto bidirezionale attraverso il quale poter inviare e ricevere messaggi.
+
+![[app-lvl.png|center|400]]
+
+- la comunicazione reale avviene attraverso più livelli e dispositivi, e vari canali fisici
+
+Il livello applicazione è molto flessibile, e consente di aggiungere nuovi protocolli con estrema facilità senza modificare gli altri livelli. Ogni protocollo aggiunto ad un dato livello deve essere progettato in modo da usare servizi del livello inferiore.
+#### protocolli standard
+A livello applicazione esistono diversi protocolli standardizzati e documentati dagli enti responsabili della gestione di Internet. Ogni protocollo standard è costituito da una coppia di programmi che interagiscono con l'utente e con il livello di trasporto per fornire uno specifico servizio.
+- per esempio, un'applicazione web è specificata dal protocollo HTTP
+#### protocolli non standard
+È possibile creare un'applicazione non standard scrivendo due programmi che forniscono servizi agli utenti (facendo uso dei servizi di trasporto) senza dover chiedere autorizzazioni.
+
+#### creare un'applicazione di rete
+>[!example]- alcune applicazioni di rete
+>- posta elettronica
+>- web
+>- messaggistica istantanea
+>- condivisione di file P2P
+>- SSH
+>- giochi multiutente via rete
+>- streaming
+>- telefono via internet
+>- videochiamate
+
+Per creare un'applicazione di rete è necessario scrivere programmi che 
+- girino su sistemi terminali diversi
+- comunichino attraverso la rete
+- funzionino su più macchine e siano indipendenti dalla tecnologia che c'è sotto
+
+#### architettura dell'applicazione
+Esistono tre diversi paradigmi per la gestione dei servizi:
+- i due programmi devono essere entrambi in grado di richiedere e offrire servizi (**peer-to-peer**)
+- ciascuno dei due programmi deve occuparsi di uno dei due compiti(**client-server**)
+- architetture ibride (**client-server E p2p**)
+
+##### paradigma client-server
+Il ruolo delle due entità è totalmente differente: non è possibile eseguire un client come programma server e viceversa. Infatti
+
+- il **client** --> *richiede* i servizi, e va in esecuzione solo quando il servizio è necessario (di solito ci sono numerosi client che richiedono i servizi)
+- il **server** --> è il *fornitore* dei servizi, ed è sem
+
 
 **Trasporto** --> trasferimento dei messaggi dal livello applicazione di un client a quello di un server
 - protocolli: TCP affidabile, UDP non affidabile (l'affidabilità fa riferimento a correttezza e ordine di arrivo)
