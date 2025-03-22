@@ -70,8 +70,10 @@ Esistono tre diversi paradigmi per la gestione dei servizi:
 Il ruolo delle due entità è totalmente differente: non è possibile eseguire un client come programma server e viceversa. Infatti
 
 - il **client** --> *richiede* i servizi, e va in esecuzione solo quando il servizio è necessario (di solito ci sono numerosi client che richiedono i servizi)
-- il **server** --> è il *fornitore* dei servizi, ed è sem
+- il **server** --> è il *fornitore* dei servizi, ed è sempre in esecuzione, in attesa di richieste dal client (c'è un numero limitato di processi server pronti ad offrire uno specifico servizio)
 
+[ da finire ]
+### altri livelli
 
 **Trasporto** --> trasferimento dei messaggi dal livello applicazione di un client a quello di un server
 - protocolli: TCP affidabile, UDP non affidabile (l'affidabilità fa riferimento a correttezza e ordine di arrivo)
