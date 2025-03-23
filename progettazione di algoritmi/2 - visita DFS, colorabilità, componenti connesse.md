@@ -247,6 +247,8 @@ Una **componente fortemente connessa** di un grafo <u>diretto</u> è un sottogra
 >>[!example] grafo fortemente connesso
 >> 
 >>![[strongly-connected.png|center|300]]
+>
+>- ogni nodo deve quindi essere raggiungibile da tutti gli altri nodi
 
 esempio di grafo con 5 componenti:
 

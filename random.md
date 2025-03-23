@@ -15,5 +15,4 @@ Questo è impossibile, in quanto implicherebbe che $S$ sia un MST per $G$ (falso
 $T$ è quindi MST anche di $G'$.
 
 2)
-
-è garantito che si incontri almeno
+Poiché un grafo fortemente connesso è sempre ciclico, si incontrerà sicuramente almeno un arco all'indietro. Per gli altri tipi di archi, dipende dalla configurazione del grafo.
