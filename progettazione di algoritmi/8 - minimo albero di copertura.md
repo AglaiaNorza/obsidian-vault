@@ -3,8 +3,7 @@
 >- <small>(un albero di copertura  di un grafo connesso indiretto è un albero che contiene tutti i nodi del grafo e contiene soltanto un sottoinsieme degli archi: quelli necessari per connettere tra loro tutti i vertici con uno e un solo cammino)</small>
 
 >[!tip] minimum spanning tree
-Sia $G$ un grafo indiretto connesso pesato. Un **albero di copertura minimale** è un suo albero di copertura $T\subseteq G$ tale che la somma di tutti i pesi degli archi
-di $T$ è minima rispetto a quella di tutti gli altri alberi di copertura.
+>Sia $G$ un grafo indiretto connesso pesato. Un **albero di copertura minimale** è un suo albero di copertura $T\subseteq G$ tale che la somma di tutti i pesi degli archi di $T$ è minima rispetto a quella di tutti gli altri alberi di copertura.
 > - un MST non è unico
 
 >[!bug] se si ha un sottografo $G'=(V',E')$ connesso tale che $V'=V$ e tale che la somma dei pesi dei suoi archi sia minima, allora $G'$ è necessariamente un albero (e quindi un MST)
