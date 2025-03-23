@@ -241,7 +241,12 @@ def main(G):
 ## componente fortemente connessa
 Una **componente fortemente connessa** di un grafo <u>diretto</u> è un sottografo composto da un insieme massimale di nodi connessi da cammini.
 
-- come per i grafi indiretti, un grafo diretto si dice **fortemente connesso** se ha una sola componente.
+>[!tip] grafo fortemente connesso
+>Come per i grafi indiretti, un grafo diretto si dice **fortemente connesso** se ha una sola componente.
+>- un grafo fortemente connesso con più di un nodo è sempre *ciclico*
+>>[!example] grafo fortemente connesso
+>> 
+>>![[strongly-connected.png|center|300]]
 
 esempio di grafo con 5 componenti:
 
