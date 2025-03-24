@@ -100,7 +100,8 @@ def connessi(u,v,T):
 
 La complessità totale è $O(m\cdot n)$.
 
-### implementazione con union e find
+### implementazione con union-find
+
 `crea(C)` $\Theta(n)$
 `find(x,C)` $\Theta(\log n)$
 `union(a,b,c)` $\Theta(1)$
