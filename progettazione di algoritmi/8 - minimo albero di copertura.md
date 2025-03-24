@@ -99,3 +99,19 @@ def connessi(u,v,T):
 	- il `for` richiede quindi $O(m\cdot n)$
 
 La complessità totale è $O(m\cdot n)$.
+
+### implementazione con union e find
+`crea(C)` $\Theta(n)$
+`find(x,C)` $\Theta(\log n)$
+`union(a,b,c)` $\Theta(1)$
+
+
+
+
+Ogni albero di altezza $k$ avrà al suo interno almeno $2^k$ elementi.
+- *caso base*: $k=0$ --> c'è un nodo solo ($2^0$)
+- *ipotesi induttiva*: gli alberi con altezza $k-1$ hanno almeno $2^{k-1}$ elementi
+
+altezza diversa: uno $h$ e l'altro $k<h$.
+Il primo ha $2^h$ nodi, il secondo $2^k$.
+Si avrà un nuovo albero con altezza $h$, che avrà quindi almeno $2^h$ nodi.
