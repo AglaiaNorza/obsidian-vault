@@ -149,3 +149,80 @@ Esistono due tipi di connessioni HTTP:
 | `Upgrade`           | specifica il protocollo di comunicazione preferito                    |
 | `Cookie`            | comunica il cookie al server                                          |
 | `If-Modified-Since` | invia il documento solo se è più recente della data specificata       |
+#### risposta HTTP
+
+> [!info] formato risposta
+> 
+> ![[risposta-HTTP.png|center|550]]
+> 
+> esempio di risposta HTTP:
+> ```js
+> HTTP/1.1 200 OK //riga di stato
+> Connection close
+> Date: Thu, 06 Aug 1998 12:00:15 GMT
+> Server: Apache/1.3.0 (Unix)
+> Last-Modified: Mon, 22 Jun 1998 ...
+> Content-Length: 6821      //in byte
+> Content-Type: text/html
+> (carriage return e line feed extra)
+> dati dati dati dati dati    // ad esempio, file HTML
+> ```
+
+
+##### codici di risposta
+Si trovano nella prima riga del messaggio di risposta server-client.
+
+| code  | meaning        | examples                                               |
+| ----- | -------------- | ------------------------------------------------------ |
+| `1xx` | *information*  | `100` = server agrees to handle client’s request       |
+| `2xx` | *success*      | `200` = request succeeded; `204` = no content present  |
+| `3xx` | *redirection*  | `301` = page moved; `304` = cached page still valid    |
+| `4xx` | *client error* | `403` = forbidden page; `404` = page not found         |
+| `5xx` | *server error* | `500` = internal server error; `503` = try again later |
+
+##### intestazioni nella risposta
+
+| intestazione       | descrizione                                               |
+| ------------------ | --------------------------------------------------------- |
+| `Date`             | data corrente                                             |
+| `Upgrade`          | specifica il protocollo preferito                         |
+| `Server`           | indica il programma server utilizzato                     |
+| <br>`Set-Cookie`   | il server richiede al client di memorizzare un cookie     |
+| `Content-Encoding` | specifica lo schema di codifca                            |
+| `Content-Language` | specifica la lingua del documento                         |
+| `Content-Length`   | indica la lunghezza del documento                         |
+| `Content-Type`     | specifica la tipologia di contenuto                       |
+| `Location`         | chiede al client di inviare la richiesta ad un altro sito |
+| `Last-Modified`    | fornisce data e ora di ultima modifca del documento       |
+### esempi di richiesta-risposta
+>[!example] richiesta `GET`
+>
+>![[get-ex.png|center|500]]
+>
+>La riga di richiesta contiene il metodo (`GET`), l’URL e la versione (1.1) del protocollo HTTP. L’intestazione è costituita da due righe in cui si specifica che il client accetta immagini nei formati GIF e JPEG. Il messaggio di richiesta non ha corpo.
+>
+>Il messaggio di risposta contiene la riga di stato e quattro righe di intestazione che contengono la data, il server, il metodo di codifica del contenuto (la versione MIME, argomento che verrà descritto nel paragrafo dedicato alla posta elettronica) e la lunghezza del documento.
+
+>[!example] richiesta `PUT`
+>
+>![[PUT-ex.png|center|500]]
+>
+>(il cliente spedisce al server una pagina web da pubblicare)
+>
+>La riga di richiesta contiene il metodo (`PUT`), l’URL e la versione (1.1) del protocollo HTTP. L’intestazione è costituita da quattro righe d’intestazione. Il corpo del messaggio di richiesta contiene la pagina Web inviata.
+>
+>Il messaggio di risposta contiene la riga di stato e quattro righe di intestazione.
+>
+>- Il documento creato, un documento CGI, è incluso nel corpo del messaggio di risposta.
+
+### cookie
+HTTP è un protocollo "senza stato" (**stateless**): una volta servito il client, il server sen ne dimentica e non mantiene informazioni sulle richieste fatte.
+
+I protocolli che mantengono lo stato sono complessi: la storia passata deve essere memorizzata, e, se il server e/o client si bloccano, ci potrebbero essere incongruenze tra gli stati che devono essere riconciliate.
+- ci sono però molti casi in cui il server ha bisogno di ricordarsi degli utenti (per esempio per la profilazione) 
+- non si possono mantenere gli indirizzi IP in quanto molti utenti possono lavorare su computer condivisi, e molti ISP assegnano lo stesso IP a pacchetti di utenti diversi
+
+La soluzione al problema sono i **cookie** (RFC 6265), che consentono ai siti di tenere traccia degli utenti.
+- i cookie permettono di *creare una sessione di richieste e risposte HTTP* che sia stateful (un contesto più largo rispetto alla singola richiesta/risposta)
+
+
