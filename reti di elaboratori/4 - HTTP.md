@@ -215,7 +215,7 @@ Si trovano nella prima riga del messaggio di risposta server-client.
 >
 >- Il documento creato, un documento CGI, è incluso nel corpo del messaggio di risposta.
 
-### cookie
+## cookie
 HTTP è un protocollo "senza stato" (**stateless**): una volta servito il client, il server sen ne dimentica e non mantiene informazioni sulle richieste fatte.
 
 I protocolli che mantengono lo stato sono complessi: la storia passata deve essere memorizzata, e, se il server e/o client si bloccano, ci potrebbero essere incongruenze tra gli stati che devono essere riconciliate.
@@ -225,4 +225,31 @@ I protocolli che mantengono lo stato sono complessi: la storia passata deve esse
 La soluzione al problema sono i **cookie** (RFC 6265), che consentono ai siti di tenere traccia degli utenti.
 - i cookie permettono di *creare una sessione di richieste e risposte HTTP* che sia stateful (un contesto più largo rispetto alla singola richiesta/risposta)
 
+### sessioni
+Ci possono essere diversi tipi di sessione in base al tipo di informazioni scambiate e alla natura del sito.
+
+Le caratteristiche generali di una sessione sono:
+- ha un inizio e una fine
+- ha un tempo di vita relativamente corto
+- sia il client che il server possono chiudere la sessione
+- la sessione è implicita nello scambio di informazione dello stato
+
+>[!warning] per sessione non si intende una connessione persistente, ma una **sessione logica** composta da richieste e risposte HTTP (che può essere creata su connessioni persistenti e non persistenti)
+
+### interazione utente-server
+Le componenti delle interazioni utente-server, per quanto riguarda i cookie, sono:
+- una riga di intestazione nel messaggio di risposta HTTP
+- una riga di intestazione nel messaggio di richiesta HTTP
+- un file cookie mantenuto sul sistema terminale dell’utente e gestito dal browser dell’utente
+- un database sul server
+
+>[!example] esempio
+>- L’utente A accede sempre a Internet dallo stesso PC (non necessariamente con lo stesso IP)
+>- Visita per la prima volta un particolare sito di commercio elettronico
+>- Quando la richiesta HTTP iniziale giunge al sito, il sito crea un identificativo unico (ID) e una entry nel database per ID
+>- L’utente A invierà ogni futura richiesta inserendo l’ID nella richiesta
+
+> [!example] esempio di utilizzo cookie
+>  
+> ![[cookie-es.png|center|400]]
 
