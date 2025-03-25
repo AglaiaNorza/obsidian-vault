@@ -325,23 +325,29 @@ Si introduce un server proxy (tipicamente installato da un ISP) che ha una **mem
 >- *riduce il traffico* sul collegamento di accesso a internet
 >- consente ai provider meno efficienti di *fornire dati con efficacia*
 
->[!example] esempio in assenza di cache
-stimiamo il tempo di risposta:
-valutiamo [[2 - prestazioni delle reti#ritardo di accodamento|l’intensità di traffico]]: 
->$$
->\text{intensità di traffico su LAN= }\frac{L \cdot a}{R} = \frac{15req/s \cdot 1mb/req}{100Mbps}=15\%
->$$
->$$
->\text{ ``` su collegamento d'accesso} = \frac{L\cdot a}{R}= \frac{15req/s \cdot 1Mb}{15Mbps} = 100\%
->$$
+>[!example]- esempio in assenza di cache
 >
->$$
->\text{ ritardo totale = ritardo di Internet + ritardo di accesso + ritardo LAN}
->$$
->$$
->\text{ritardo totale = 2sec + minuti + millisecondi}
->$$
->una soluzione possibile potrebbe essere aumentare l’ampiezza di banda del collegamento d’accesso a 100mbps, per esempio. in questo caso, l’utilizzo sul collegamento d’accesso sarebbe del 15% (millisecondi), e il ritardo totale sarebbe più che gestibile. ciò però non è sempre attuabile, e comunque risulta costoso aggiornare il collegamento
+>![[es-cacheless.png|center|450e]]
+stimiamo il tempo di risposta - valutiamo [[2 - prestazioni delle reti#ritardo di accodamento|l’intensità di traffico]]: 
+>$$\text{intensità di traffico su LAN= }\frac{L \cdot a}{R} = \frac{15req/s \cdot 1mb/req}{100Mbps}=15\%$$
+> 
+>$$\text{ ``` su collegamento d'accesso} = \frac{L\cdot a}{R}= \frac{15req/s \cdot 1Mb}{15Mbps} = 100\%$$
+>
+>$$\text{ ritardo totale = ritardo di Internet + ritardo di accesso + ritardo LAN}$$
+> 
+>$$\text{ritardo totale = 2sec + minuti + millisecondi}$$
+> 
+>Una soluzione potrebbe essere aumentare l’ampiezza di banda del collegamento d’accesso a 100mbps. In questo caso, l’utilizzo sul collegamento d’accesso sarebbe del 15% , e il ritardo totale sarebbe più che gestibile. Ciò non è però sempre attuabile, e aggiornare il collegamento risulta costoso.
+
+>[!example] esempio in presenza di cache
+>
+>![[cache-esempio.png|center|300]]
+> 
+>supponiamo un hit rate di 0,4:
+>- il 40% delle richieste sarà soddisfatto quasi immediatamente (circa 10ms) (anche se la cache proxy deve comunque inviare richieste al server per verificare che la pagina non sia obsoleta, i messaggi ricevuti saranno più piccoli, quindi avrà un carico minore e prestazioni migliori)
+>- il 60% delle richieste sarà soddisfatto dal server d’origine
+>- l’utilizzo del collegamento d’accesso si è ridotto al 60%, determinando ritardi trascurabili (circa 10ms)
+>- ritardo totale medio = ritardo di Internet + ritardo di accesso + ritardo della LAN $\simeq 1,2\sec$
 #### inserimento di un oggetto in cache
 I passi per l'inserimento sono:
 - il client invia un messaggio di richiesta HTTP alla cache 
@@ -372,4 +378,13 @@ Host: www.sito/com
 - la cache esegue una richiesta verso il web server che mantiene l'oggetto, per verificarne la validità tramite il metodo `GET condizionale`
 
 >[!info] `GET condizionale`
->Il metodo `GET condizionale` utilizza il metodo `GET`, ma include una riga di intestazione `If-Modified-Since`.
+>Il metodo `GET condizionale` utilizza il metodo `GET`, ma include una riga di intestazione `If-Modified-Since`. 
+>
+>L'obiettivo è evitare l'invio di un oggetto da parte del server se la cache ha una copia aggiornata dell'oggetto.
+>- la cache specifica la data della copia dell'oggetto nella richiesta HTTP (`If-modified-since: <data>`)
+>- la risposta del server non contiene l'oggetto se la copia nella cache è aggiornata (`HTTP/1.0 304 Not Modified`)
+>  
+>>[!example] esempio
+>>
+>>![[get-condiz.png|center|300]]
+
