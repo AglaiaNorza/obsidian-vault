@@ -118,8 +118,8 @@ Un modo efficiente di implementare questa struttura dati è mediante *vettore de
 Ma il costo della `Find()` si può ridurre ancora per arrivare a un costo di $O(\log n)$ se, ogni volta che si effettua una `Union()`, si sceglie come nuova radice l'albero che contiene il *maggior numero di elementi*. 
 
 >[!note] dimostrazione
->Dimostriamo che, facendo unioni in base all'altezza (union by rank), si mantiene la proprietà per cui, se una componente ha altezza $h$, essa conterrà almeno $2^h$ nodi, dalla quale possiamo dedurre che l'altezza delle componenti (e quindi il costo della `Find()` non supererà mai $\log_{2}n$.
->- (infatti, $2^{\log_{2}n}=n$, quindi, se $h>\log n$, si avrebbero più di $n$ elementi in una componente)
+>Dimostriamo che, facendo unioni in base all'altezza (union by rank), si mantiene la proprietà per cui, se una componente ha altezza $h$, essa conterrà almeno $2^h$ nodi, dalla quale possiamo dedurre che l'altezza delle componenti (e quindi il costo della `Find()`) non supererà mai $\log_{2}n$.
+>- ($2^{\log_{2}n}=n$, quindi, se $h>\log n$, si avrebbero più di $n$ elementi in una componente, il che è impossibile)
 >
 > Assumiamo per assurdo che durante una delle fusioni si sia formata una nuova componente di altezza $h$ per cui la proprietà non è valida. Siano $ca$ e $cb$ le due componenti la cui fusione ha generato la nuova componente.
 > 
@@ -128,17 +128,10 @@ Ma il costo della `Find()` si può ridurre ancora per arrivare a un costo di $O(
 > 
 > $ca$ e $cb$ avevano entrambe altezza $h-1$ e ognuna aveva almeno $2^{h-1}$ elementi (perché nelle fusioni precedenti la proprietà era valida). Il numero totale di elementi della nuova componente è $2^{h-1}+2^{h-1}=2^h$ --> la proprietà è verificata.
 > 
-> 2) **
+> ![[union-1.png|center|500]]
 > 
-> In questo caso, l'altezza dopo la fusione sarà necessariamente quella della componente con altezza maggiore (l)
-
-
-
-Ogni albero di altezza $k$ avrà al suo interno almeno $2^k$ elementi.
-- *caso base*: $k=0$ --> c'è un nodo solo ($2^0$)
-- *ipotesi induttiva*: gli alberi con altezza $k-1$ hanno almeno $2^{k-1}$ elementi
-
-altezza diversa: uno $h$ e l'altro $k<h$.
-Il primo ha $2^h$ nodi, il secondo $2^k$.
-Si avrà un nuovo albero con altezza $h$, che avrà quindi almeno $2^h$ nodi.
-
+> 2) *altezza di $ca$ > altezza $cb$*
+> 
+> In questo caso, l'altezza dopo la fusione sarà necessariamente quella di $ca$. <small>(Infatti, l'altezza di $cb$ aumenterà di 1 (la nuova radice), e la situazione sarà $ca\geq cb$)</small>. $ca$ conteneva già da sola $2^h$ elementi, quindi la proprietà è verificata.
+> 
+> ![[union-2.png|center|500]]
