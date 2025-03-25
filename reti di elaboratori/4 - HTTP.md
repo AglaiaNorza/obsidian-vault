@@ -253,3 +253,4 @@ Le componenti delle interazioni utente-server, per quanto riguarda i cookie, son
 >  
 > ![[cookie-es.png|center|400]]
 
+Il server mantiene tutte le informazioni sul client in un file, e gli assegna un identificatore (cookie), che viene fornito al client
