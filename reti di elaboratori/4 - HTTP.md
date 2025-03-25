@@ -253,4 +253,93 @@ Le componenti delle interazioni utente-server, per quanto riguarda i cookie, son
 >  
 > ![[cookie-es.png|center|400]]
 
-Il server mantiene tutte le informazioni sul client in un file, e gli assegna un identificatore (cookie), che viene fornito al client
+[ pezzo fatto ]
+
+I file cookie possono contenere autorizzazioni, carta per acquisti, preferenze dell'utente, stato della sessione dell'utente.
+
+Essi *mantengono anche lo stato* del mittente e del ricevente per più transazioni (gli stati saranno poi trasportati dai messaggi HTTP).
+### durata di un cookie
+Il server chiude una sessione inviando al client un'intestazione `Set-Cookie` nel messaggio con `Max-Age=0`.
+
+>[!info] attributo `Max-Age`
+>L'attributo `Max-Age` definisce il tempo di vita in secondi di un cookie. Dopo delta secondi, il client dovrebbe rimuovere il cookie.
+
+### altre soluzioni per mantenere lo stato
+Altri metodi per mantenere lo stato (e quindi creare una sessione) sono:
+- Attraverso il metodo POST
+- inserendole nell'URL
+
+>[!bug] vantaggi e svantaggi
+>**pros**:
+>- facile da implementare
+>- non richiede l'introduzione di particolari funzionalità sul server
+>
+>**cons**:
+>- può generare lo scambio di grandi quantità di dati
+>- le risorse del server devono essere re-inizializzate ad ogni richiesta
+
+## web caching
+Il **caching** è definito come l'*accumulo delle pagine per un utilizzo successivo*. L'obiettivo è **migliorare le prestazioni dell'applicazione web**. 
+
+Un modo semplice sarebbe quello di salvare le pagine richieste per riutilizzarle in seguito senza doverle richiedere al server.
+- tecnica efficiente con pagine che vengono visitate molto spesso
+
+Il caching può essere eseguito da:
+- browser
+- proxy
+
+### browser caching
+Il browser può mantenere una cache (*personalizzabile dall'utente*) delle pagine visitate. 
+
+Esistono vari meccanismi per la gestione della cache locale:
+- l'utente può impostare il *numero di giorni* dopo i quali i contenuti della cache vengono cancellati
+- la pagina può essere mantenuta in cache in base alla sua *ultima modifica*
+- si possono utilizzare informazioni nei campi di *intestazione dei messaggi* per gestire la cache
+	- non sempre rispettato dai browser
+	- es: campo expires che specifica la scadenza dopo la quale la pagina è considerata obsoleta
+
+### caching con server proxy
+L'obiettivo è quello di soddisfare la richiesta del client *senza coinvolgere il server d'origine*.
+
+Si introduce un server proxy (tipicamente installato da un ISP) che ha una **memoria** per mantenere copie delle pagine visitate, e il browser può essere configurato per tramettere tutte le richieste HTTP alla cache (se l'oggetto è in cache, viene fornito - altrimenti, la cache lo richiede al server d'origine e lo inoltra al client).
+
+>[!tip] La cache opera quindi sia come client che come server.
+
+>[!question] perché il caching web?
+>- *riduce i tempi di risposta* alle richieste dei clent
+>- *riduce il traffico* sul collegamento di accesso a internet
+>- consente ai provider meno efficienti di *fornire dati con efficacia*
+
+>[!example] esempio in assenza di cache
+
+#### inserimento di un oggetto in cache
+I passi per l'inserimento sono:
+- il client invia un messaggio di richiesta HTTP alla cache 
+```js
+GET /page/figure.gif
+Host: www.sito.com
+```
+- La cache non ha l'oggetto
+- La cache invia una richiesta HTTP al server
+- il server invia una risposta HTTP alla cache
+```js
+HTTP/1.1 200 OK
+Date: ...
+...
+Last-Modified: Wed, 2 Jul 2008 09:23:24
+```
+- la cache memorizza la pagina per richieste future, mantenendo la *data di ultima modifica*
+- la cache invia la risposta al client
+
+#### validazione dell'oggetto, GET condizionale
+- il client invia un messaggio di richiesta HTTP alla cache
+```js
+GET /page/figure.gif
+Host: www.sito/com
+```
+- la cache ha l'oggetto
+- la cache, prima di inviare l'oggetto, deve verificare che *non sia scaduto* (ovvero non sia stato modificato sul server di origine)
+- la cache esegue una richiesta verso il web server che mantiene l'oggetto, per verificarne la validità tramite il metodo `GET condizionale`
+
+>[!info] `GET condizionale`
+>Il metodo `GET condizionale` utilizza il metodo `GET`, ma include una riga di intestazione `If-Modified-Since`.
