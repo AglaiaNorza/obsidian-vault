@@ -178,3 +178,4 @@ def kruskal(G):
 			T[y].append(x) 
 	return T
 ```
+
