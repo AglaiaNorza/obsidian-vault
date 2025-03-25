@@ -82,3 +82,8 @@ def sortTop1(G):
 	lista.reverse()
 	return lista
 ```
+
+La complessità di questo algoritmo è $O(n+m)$ (perché nella DFS si visitano sempre nodi diversi) $+\; O(n)$ (per il `reverse()`), ovvero $O(n+m)$.
+
+>[!question]- perche non appendere in testa ?
+>il costo dell’append in testa è proporzionale alla dimensione della lista, quindi l’append dell’ultimo elemento costerebbe $O(n)$(quindi, per la sommatoria di Gauss, il costo totale arriverebbe a  $\Theta\left( \frac{n(n-1)}{2}\right) = \Theta (n^2)$). Appendere in coda invece costa sempre $O(1)$, e il reverse costa $O(n)$.
