@@ -66,7 +66,8 @@ kruskal(G):
 
 ```python
 def kruskal(G):
-	E = [(c,u,v) for un in range(len(G)) for v,c in G[u] if u < v].sort()
+	E = [(c,u,v) for un in range(len(G)) for v,c in G[u] if u < v]
+	E.sort()
 	T = [[] for _ in G]
 	
 	for c,u,v in E:
@@ -135,3 +136,45 @@ Ma il costo della `Find()` si può ridurre ancora per arrivare a un costo di $O(
 > In questo caso, l'altezza dopo la fusione sarà necessariamente quella di $ca$. <small>(Infatti, l'altezza di $cb$ aumenterà di 1 (la nuova radice), e la situazione sarà $ca\geq cb$)</small>. $ca$ conteneva già da sola $2^h$ elementi, quindi la proprietà è verificata.
 > 
 > ![[union-2.png|center|500]]
+
+L'implementazione delle operazioni deve quindi tenere conto del numero di elementi in ogni componente. Ogni elemento sarà caratterizzato da una coppia $(x,\,numero)$ dove $x$ è il nome dell'elemento e $numero$  è il *numero di nodi* dell'albero radicato in $x$.
+
+```python
+def Crea(G):
+	C = [(i,1) for i in range(len(G))] # si inizializza con una componente per nodo
+	return C
+```
+
+```python
+def Find(u, C):
+	while u != C[u]:
+		u = C[u]
+	return u
+```
+
+```python
+def Union(a, b, C):
+	tota, totb = C[a][1], C[b][1]
+	if tota >= totb:
+		C[a] = (a, tota + totb) # a nuova radice
+		C[b] = (a, totb)
+	else:
+		C[a] = (b, tota)
+		C[b] = (b, tota + totb) # b nuova radice
+```
+
+l'implementazione di Kruskal sarà quindi:
+```python
+def kruskal(G):
+	E = [(c, u ,v) for u in G for v,c in G[u] if u < v]
+	E.sort()
+	T = [[] for _ in G]
+	C = crea(T)
+	for c, u ,v in E:
+		cu = find(u, C)
+		cv = find(v, C)
+		if cu != cv:
+			T[x].append(y)
+			T[y].append(x) 
+	return T
+```
