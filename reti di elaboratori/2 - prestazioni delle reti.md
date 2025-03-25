@@ -86,6 +86,22 @@ L'elaborazione prevede:
 Il pacchetto viene messo in coda sul buffer di uscita, dove ci sono altri pacchetti. 
 - si genera un'attesa di trasmissione (possibile sia nella coda di input che nella coda di output): dipende dalla congestione del router
 	- può variare da pacchetto a pacchetto (diverse code possono essere più o meno piene)
+- può variare da pacchetto a pacchetto (si fa infatti uso di misure statistiche)
+- dipende dal *tasso di arrivo*, dal *rate* e dalla *lunghezza dei pacchetti*
+
+Dati:
+- $R=\text{rate di trasmissione (bps)}$
+- $L=\text{lunghezza del pacchetto (bit)}$
+- $a = \text{tasso medio di arrivo dei pacchetti (pkt/s)}$
+
+abbiamo:
+
+$$\frac{La}{R}=\text{intensità di traffico}$$
+
+Se: 
+- $La/R \sim 0$ --> poco ritardo
+- $La/R \rightarrow 1$ --> ritardo consistente
+- $La/R>1$ --> più lavoro in arrivo di quanto possa essere effettivamente svolto 
 ### ritardo di trasmissione
 È il tempo richiesto per trasmettere tutti i bit del pacchetto sul collegamento (dipende quindi dal canale).
 Se il primo bit viene trasmesso al tempo $t_{1}$ e l'ultimo al tempo $t_{2}$, il ritardo di trasmissione è $t_{2}-t_{1}$.
@@ -119,25 +135,6 @@ il ritardo di nodo $d_{nodal}$ è dato dalla somma di:
 - ritardo di **accodamento**
 
 $$d_{nodal}=d_{trans}+d_{prop}+d_{proc}+d_{queue}$$
-
-### ritardo di accodamento
-- può variare da pacchetto a pacchetto (si fa infatti uso di misure statistiche)
-- dipende dal *tasso di arrivo*, dal *rate* e dalla *lunghezza dei pacchetti*
-
-Dati:
-- $R=\text{rate di trasmissione (bps)}$
-- $L=\text{lunghezza del pacchetto (bit)}$
-- $a = \text{tasso medio di arrivo dei pacchetti (pkt/s)}$
-
-abbiamo:
-
-$$\frac{La}{R}=\text{intensità di traffico}$$
-
-Se: 
-- $La/R \sim 0$ --> poco ritardo
-- $La/R \rightarrow 1$ --> ritardo consistente
-- $La/R>1$ --> più lavoro in arrivo di quanto possa essere effettivamente svolto 
-
 ## packet loss
 Se una coda o un buffer hanno capacità limitata, quando il pacchetto trova la coda piena, verrà **scartato** (e sarà quindi perso).
 

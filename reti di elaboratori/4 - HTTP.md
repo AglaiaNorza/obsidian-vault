@@ -326,7 +326,22 @@ Si introduce un server proxy (tipicamente installato da un ISP) che ha una **mem
 >- consente ai provider meno efficienti di *fornire dati con efficacia*
 
 >[!example] esempio in assenza di cache
-
+stimiamo il tempo di risposta:
+valutiamo [[2 - prestazioni delle reti#ritardo di accodamento|l’intensità di traffico]]: 
+>$$
+>\text{intensità di traffico su LAN= }\frac{L \cdot a}{R} = \frac{15req/s \cdot 1mb/req}{100Mbps}=15\%
+>$$
+>$$
+>\text{ ``` su collegamento d'accesso} = \frac{L\cdot a}{R}= \frac{15req/s \cdot 1Mb}{15Mbps} = 100\%
+>$$
+>
+>$$
+>\text{ ritardo totale = ritardo di Internet + ritardo di accesso + ritardo LAN}
+>$$
+>$$
+>\text{ritardo totale = 2sec + minuti + millisecondi}
+>$$
+>una soluzione possibile potrebbe essere aumentare l’ampiezza di banda del collegamento d’accesso a 100mbps, per esempio. in questo caso, l’utilizzo sul collegamento d’accesso sarebbe del 15% (millisecondi), e il ritardo totale sarebbe più che gestibile. ciò però non è sempre attuabile, e comunque risulta costoso aggiornare il collegamento
 #### inserimento di un oggetto in cache
 I passi per l'inserimento sono:
 - il client invia un messaggio di richiesta HTTP alla cache 
