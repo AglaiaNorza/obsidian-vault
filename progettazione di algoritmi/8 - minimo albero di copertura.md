@@ -58,8 +58,7 @@ kruskal(G):
 >Quindi, $T'$ è un altro albero di copertura ottimo che differisce da $T$ in meno archi di quanto faccia $T^*$ (perché, rispetto a $T^*$, al posto dell'arco $e'$ ha l'arco $e$, che appartiene a $T$), il che contraddice l'ipotesi per cui $T^*$ differisce da $T$ nel minor numero di archi.
 >
 >![[kruskal-dim.png|center|400]]
->
->[ mi sembra un po' sus nel caso in cui $T^*$ differisca da $T$ solo per $e$ vs $e'$, chiederò chiarimenti ]
+
 
 ### implementazione
 - con un pre-processing, ordino gli archi nella lista $E$ così che, scorrendola, ottengo di volta in volta l'arco di costo minimo in tempo $O(1)$
@@ -107,6 +106,8 @@ Le tre operazioni fondamentali sono:
 - `Crea(C)`: restituisce una struttura dati Union-Find sull'insieme S di elementi dove ciascun elemento è in un insieme separato
 - `Find(x,C)`: restituisce il nome dell'insieme nella struttura dati C a cui appartiene l'elemento x
 - `Union(A,B,C)`: modifica la struttura dati C fondendo la componente A con la componente B e restituisce il nome della nuova componente
+
+
 
 
 Ogni albero di altezza $k$ avrà al suo interno almeno $2^k$ elementi.
