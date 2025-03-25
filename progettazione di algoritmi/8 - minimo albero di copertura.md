@@ -100,7 +100,7 @@ def connessi(u,v,T):
 
 La complessità totale è $O(m\cdot n)$.
 
-### implementazione con union-find
+### implementazione con union-find in $O(m\log n)$
 Union-Find (o Disjoint Set Union) è una struttura dati per gestire **insiemi disgiunti** che permette operazioni di unione e ricerca efficienti.
 
 In questo caso, gli insiemi disgiunti rappresentano le componenti connesse del grago.
@@ -179,3 +179,11 @@ def kruskal(G):
 	return T
 ```
 
+- l'ordinamento costa $O(m \log n)$
+- il `for` viene iterato $m$ volte
+	- l'estrazione dell'arco $(a,b)$ da $E$ costa $\Theta(1)$
+	- il `Find()` costa $O(\log n)$
+	- la `Union()` costa $\Theta(1)$ e viene eseguita $n-1$ volte all'interno del for
+	- `for` costa quindi $O(m \log n)$
+
+Il costo totale è $O(m \log n)$.
