@@ -358,3 +358,7 @@ Host: www.sito/com
 
 >[!info] `GET condizionale`
 >Il metodo `GET condizionale` utilizza il metodo `GET`, ma include una riga di intestazione `If-Modified-Since`.
+
+
+
+testprovaprova
