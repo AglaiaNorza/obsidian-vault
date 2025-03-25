@@ -109,7 +109,6 @@ Le tre operazioni fondamentali sono:
 - `Union(A,B,C)`: modifica la struttura dati C fondendo la componente A con la componente B e restituisce il nome della nuova componente
 
 
-
 Ogni albero di altezza $k$ avrà al suo interno almeno $2^k$ elementi.
 - *caso base*: $k=0$ --> c'è un nodo solo ($2^0$)
 - *ipotesi induttiva*: gli alberi con altezza $k-1$ hanno almeno $2^{k-1}$ elementi
