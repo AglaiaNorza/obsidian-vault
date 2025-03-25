@@ -47,10 +47,38 @@ def sortTop(G):
 
 il costo totale è quindi $O(n+m)$.
 #### algoritmo per il sort topologico basato su DFS
-- effettua una visita DFS 
-- man mano che termina la visita dei vari nodi
+- si effettua una visita DFS 
+- man mano che termina la visita dei vari nodi, si inseriscono in una lista
+- si restituisce come ordinamento dei nodi il reverse della lista
 
+>[!note] prova di correttezza
+>Siano $x$ e $y$ due nodi in $G$, con arco $(x,y)$. Consideriamo sia il caso in cui l'arco viene attraversato che quello in cui non viene attraversato dalla visita, e vediamo che in entrambi, prima di effettuare il reverse, $x$ precede $y$.
+>
+>1) l'arco $(x,y)$ *viene attraversato* durante la visita --> la visita di $y$ finisce prima della visita di $x$, e $y$ finisce nella lista prima di $x$
+>2) l'arco $(x,y)$ *non viene attraversato* durante la visita --> significa che il nodo $y$ è già stato visitato prima della visita di $x$, e la sua visita è già terminata (infatti, non può esserci un cammino $y\to x$, o il grafo non sarebbe aciclico). Quindi, anche in questo caso, $y$ si trova prima di $x$ nella lista.
 
-la somma del costo delle visite è la somma dei nodi e degli archi.
+>[!example] esempio
+>
+>![[topologico-dfs.png|center|450]]
+>
+>$\text{ordine di fine visita: } 4,\,3,\,2,\,1,\,5,\,0,\,6$
+>(il sort topologico sarà quindi $6,\,0,\,5,\,1,\,2,\,3,\,4$)
+>
 
+```python
+def DFS(u, G, visitati, lista):
+	visitati[u] = 1
+	for v in G[u]:
+		if visitati[v] == 0:
+			DFSr(v, G, visitati, lista)
+	lista.append(u)
 
+def sortTop1(G):
+	visitati = [0]*len(G)
+	lista = []
+	for u in range(len(G)):
+		if visitati[u] == 0:
+			DFS(u, G, visitati, lista)
+	lista.reverse()
+	return lista
+```
