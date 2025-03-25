@@ -100,12 +100,13 @@ def connessi(u,v,T):
 
 La complessità totale è $O(m\cdot n)$.
 
-### implementazione con union e find
-`crea(C)` $\Theta(n)$
-`find(x,C)` $\Theta(\log n)$
-`union(a,b,c)` $\Theta(1)$
+### implementazione con union-find
+Union-Find (o Disjoint Set Union) è una struttura dati per gestire insiemi disgiunti che permette operazioni di unione e ricerca efficienti.
 
-
+Le tre operazioni fondamentali sono:
+- `Crea(C)`: restituisce una struttura dati Union-Find sull'insieme S di elementi dove ciascun elemento è in un insieme separato
+- `Find(x,C)`: restituisce il nome dell'insieme nella struttura dati C a cui appartiene l'elemento x
+- `Union(A,B,C)`: modifica la struttura dati C fondendo la componente A con la componente B e restituisce il nome della nuova componente
 
 
 Ogni albero di altezza $k$ avrà al suo interno almeno $2^k$ elementi.
@@ -115,3 +116,4 @@ Ogni albero di altezza $k$ avrà al suo interno almeno $2^k$ elementi.
 altezza diversa: uno $h$ e l'altro $k<h$.
 Il primo ha $2^h$ nodi, il secondo $2^k$.
 Si avrà un nuovo albero con altezza $h$, che avrà quindi almeno $2^h$ nodi.
+

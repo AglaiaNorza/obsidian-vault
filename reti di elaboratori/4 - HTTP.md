@@ -249,11 +249,26 @@ Le componenti delle interazioni utente-server, per quanto riguarda i cookie, son
 >- Quando la richiesta HTTP iniziale giunge al sito, il sito crea un identificativo unico (ID) e una entry nel database per ID
 >- L’utente A invierà ogni futura richiesta inserendo l’ID nella richiesta
 
-> [!example] esempio di utilizzo cookie
+> [!example]- esempio di utilizzo cookie
 >  
 > ![[cookie-es.png|center|400]]
 
-[ pezzo fatto ]
+### nel dettaglio
+Il server mantiene tutte le informazioni sul client in un file e gli assegna un identificatore (cookie), che viene fornito al client. Il cookie inviato al client è un **identificatore di sessione** (SID), sotto forma di una stringa di numeri (per evitare che sia utilizzato da utenti "maligni")
+
+> [!example] esempio
+> ```
+> == Server -> User Agent ==
+> Set-Cookie: SID=31d4d96e407aad42
+> ```
+
+Ogni volta che il client manda una richiesta al server, fornisce il suo identificatore: il browser consulta il file cookie, estrae il numero di cookie per il sito che si vuole visitare e lo inserisce nella richiesta HTTP.
+
+Il server, mediante il cookie fornito dal client, accede al relativo file e fornisce risposte personalizzate.
+
+>[!example]- esempio
+>
+>![[cookie-es2.png|center|500]]
 
 I file cookie possono contenere autorizzazioni, carta per acquisti, preferenze dell'utente, stato della sessione dell'utente.
 
