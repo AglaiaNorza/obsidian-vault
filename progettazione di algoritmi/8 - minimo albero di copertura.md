@@ -100,13 +100,37 @@ def connessi(u,v,T):
 La complessità totale è $O(m\cdot n)$.
 
 ### implementazione con union-find
-Union-Find (o Disjoint Set Union) è una struttura dati per gestire insiemi disgiunti che permette operazioni di unione e ricerca efficienti.
+Union-Find (o Disjoint Set Union) è una struttura dati per gestire **insiemi disgiunti** che permette operazioni di unione e ricerca efficienti.
 
-Le tre operazioni fondamentali sono:
-- `Crea(C)`: restituisce una struttura dati Union-Find sull'insieme S di elementi dove ciascun elemento è in un insieme separato
-- `Find(x,C)`: restituisce il nome dell'insieme nella struttura dati C a cui appartiene l'elemento x
-- `Union(A,B,C)`: modifica la struttura dati C fondendo la componente A con la componente B e restituisce il nome della nuova componente
+In questo caso, gli insiemi disgiunti rappresentano le componenti connesse del grago.
 
+> [!info] operazioni fondamentali
+> Le tre operazioni fondamentali di Union-Find sono:
+> - `Crea(C)`: restituisce una struttura dati Union-Find sull'insieme S di elementi dove ciascun elemento è in un insieme separato
+> - `Find(x,C)`: restituisce il nome dell'insieme nella struttura dati C a cui appartiene l'elemento x
+> - `Union(A,B,C)`: modifica la struttura dati C fondendo la componente A con la componente B e restituisce il nome della nuova componente
+
+L'operazione `Find()` ci permette di determinare a quale componente connessa appartenga un nodo $u$, e può essere sfruttata per determinare se due nodi $u$ e $v$ appartengono alla stessa componente.
+- se viene aggiunto l'arco $(u,v)$ al grafo si verifica quindi innanzitutto se $u$ e $v$ sono nella stessa componente connessa e, se non lo sono, si utilizza l'operazione `Union()` per unire le due componenti.
+
+Un modo efficiente di implementare questa struttura dati è mediante *vettore dei padri*. In questo modo, l'operazione `Find()` ha costo $O(n)$, in quanto basta risalire alla radice del nodo, e l'operazione `Union()` costa $O(1)$, in quanto basta rendere una delle due componenti figlia dell'altra.
+
+Ma il costo della `Find()` si può ridurre ancora per arrivare a un costo di $O(\log n)$ se, ogni volta che si effettua una `Union()`, si sceglie come nuova radice l'albero che contiene il *maggior numero di elementi*. 
+
+>[!note] dimostrazione
+>Dimostriamo che, facendo unioni in base all'altezza (union by rank), si mantiene la proprietà per cui, se una componente ha altezza $h$, essa conterrà almeno $2^h$ nodi, dalla quale possiamo dedurre che l'altezza delle componenti (e quindi il costo della `Find()` non supererà mai $\log_{2}n$.
+>- (infatti, $2^{\log_{2}n}=n$, quindi, se $h>\log n$, si avrebbero più di $n$ elementi in una componente)
+>
+> Assumiamo per assurdo che durante una delle fusioni si sia formata una nuova componente di altezza $h$ per cui la proprietà non è valida. Siano $ca$ e $cb$ le due componenti la cui fusione ha generato la nuova componente.
+> 
+> Possono essere accadute due cose:
+> 1) *$ca$ e $cb$ erano componenti con la stessa altezza*
+> 
+> $ca$ e $cb$ avevano entrambe altezza $h-1$ e ognuna aveva almeno $2^{h-1}$ elementi (perché nelle fusioni precedenti la proprietà era valida). Il numero totale di elementi della nuova componente è $2^{h-1}+2^{h-1}=2^h$ --> la proprietà è verificata.
+> 
+> 2) **
+> 
+> In questo caso, l'altezza dopo la fusione sarà necessariamente quella della componente con altezza maggiore (l)
 
 
 
