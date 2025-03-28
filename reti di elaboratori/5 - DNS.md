@@ -71,4 +71,161 @@ Le informazioni sono organizzate in base al **dominio**, e ci sono tre classi di
 In Internet ci sono 13 server DNS radice, ognuno replicato per motivi di sicurezza e affidabilità (per un totale di 247 root server).
 
 I root server vengono contattati dai server DNS locali, e:
-- contattano server DNS TLD se non conoscono la m
+- contattano server DNS TLD se non conoscono la mappatura
+- ottengono la mappatura
+- restituiscono la mappatura del server DNS locale
+
+![[dns-root.png|center|500]]
+
+### server TLD
+I server Top-Level Domain si occupano dei domini `com`, `org`, `net`, `edu` ecc., e di tutti i domini locali di alto livello, quali `it`, `uk`, `fr`, `ca` e `jp`.
+
+**etichette dei domini generici**:
+
+| etichetta | descrizione                            |
+| --------- | -------------------------------------- |
+| `aero`    | companie aree e aziende aerospaziali   |
+| `biz`     | aziende (simile a com)                 |
+| `com`     | organizzazioni commerciali             |
+| `coop`    | associazioni di cooperazione           |
+| `edu`     | istituzioni educative                  |
+| `gov`     | istituzioni governative                |
+| `info`    | fornitori di servizi informatici       |
+| `int`     | organizzazioni internazionali          |
+| `mil`     | organizzazioni militari                |
+| `museum`  | musei                                  |
+| `name`    | nomi di persone                        |
+| `net`     | organizzazioni che si occupano di reti |
+| `org`     | organizzazioni senza scopo di lucro    |
+| `pro`     | organizzazioni professionali           |
+### authoritative servers
+Un authoritative server viene interrogato per risolvere il nome di un host pubblicamente accessibile.
+- ogni organizzazione dotata di host pubblicamente accessibili deve fornire i record DNS di pubblico dominio che mappano i nomi di tali host in indirizzi IP
+- possono essere mantenuti dall'organizzazione o da un service provider
+- in genere sono due server: primario e secondario
+
+>[!example] esempio
+> 
+>![[authoritative-es.png|center|450]]
+
+### server DNS locale
+- non appartengono strettamente alla gerarchia dei server
+- ciascun ISP ne ha uno (detto anche "default name server")
+
+Quando un host effettua una richiesta DNS, la query viene inviata al suo server DNS locale, che opera da proxy e inoltra la query in una gerarchia di server DNS.
+
+## query 
+La restituzione dell'indirizzo IP può avvenire tramite query iterativa o query ricorsiva.
+### query iterativa
+Ogni volta che il DNS locale fa una query, esso stesso riceve risposta da uno dei livelli della gerarchia e si occupa di inviare un'altra richiesta al livello inferiore.
+- (il server contattato risponde con il nome del prossimo server da contattare)
+
+![[query-iterativa.png|center|400]]
+
+### query ricorsiva
+Il compito di tradurre il nome viene affidato al server DNS contattato (in maniera ricorsiva).
+
+![[query-ricorsiva.png|center|400]]
+
+## caching
+Il DNS sfrutta il caching per migliorare le prestazioni e per ridurre il numero di messaggi DNS che "rimbalzano" in Internet.
+
+Una volta che un server DNS impara la mappatura, la mette nella **cache**.
+- tipicamente, un server DNS locale memorizza nella cache gli indirizzi IP dei server TLD o di competenza (quindi non si visitano molto spesso i server radice)
+- le informazioni nella cache vengono invalidate dopo un certo periodo
+
+## DNS record
+Ogni mapping è mantenuto nei database sotto forma di **resource record**.
+
+| tipo      | interpretazione del campo valore                                                        |
+| --------- | --------------------------------------------------------------------------------------- |
+| **A**     | indirizzo IPv4 a 32 bit                                                                 |
+| **NS**    | identifica i server autoritativi di una zona                                            |
+| **CNAME** | indica che un nome di dominio è un alias per il nome di un dominio ufficiale (canonico) |
+| **SOA**   | specifica una serie di informazioni autoritative riguardo una zona                      |
+| **MX**    | indica il server di posta del dominio                                                   |
+| **AAAA**  | indirizzo IPv6                                                                          |
+
+
+>[!info] type A
+>$$
+>\text{hostname} \Rightarrow \text{IP \textcolor{red}{a}ddress}
+>$$
+>- `name` è il nome dell’host
+>- `value` è l’indirizzo IP
+es: `(relay1.bar.foo.com, 45.37.93.126, A)`
+
+>[!info] type CNAME
+>$$
+>\text{alias} \Rightarrow \text{\textcolor{red}{c}anonical \textcolor{red}{name}}
+>$$
+>- `name` è il nome alias di qualche nome canonico
+>- `value` è il nome canonico
+es: `(foo.com, relay1.bar.foo.com, CNAME)`
+
+>[!info] type NS
+>$$
+>\text{domain name} \Rightarrow \text{\textcolor{red}{n}ame \textcolor{red}{s}erver}
+>$$
+>- `name` è il dominio (es: `foo.com`)
+>- `value` è il nome dell’host del server di competenza di questo dominio
+es: `(foo.com, dns.foo.com, NS)`
+
+>[!info] type MX
+>$$
+>\text{alias} \Rightarrow \text{\textcolor{red}{m}ail server canonical name}
+>$$
+>- `value` è il nome canonico del server di posta associato a `name`
+es: `(foo.com, mail.bar.foo.com, MX)`
+
+>[!example] esempio
+>Un server di competenza conterrà un record di tipo `A` per l’hostname, mentre un server non di competenza conterrà un record di tipo `NS` per il dominio che include l’hostname, e un record di tipo `A` che fornisce l’indirizzo IP del server DNS di competenza nel campo `value` del record DNS.
+
+## messaggi
+Nel protocollo DNS, le query e i messaggi di risposta hanno lo stesso formato.
+
+![[messaggi-dns.png|center|500]]
+
+- **identificazione** --> numero di 16 bit per la domanda - la risposta usa lo stesso numero
+- **flag**:
+	- *domanda o risposta*
+	- *richiesta di ricorsione*
+	- *ricorsione disponibile*
+	- *risposta di competenza* (il server è competente per il nome richiesto)
+- **numero** --> numero di occorrenze delle quattro sezioni di tipo di dati che seguono (numero di domande/di RR di risposta ecc.)
+- nel **corpo** del messaggio si hanno:
+	- **domande** --> campi per il nome richiesto e il tipo di domanda
+	- **risposte** -> RR nella risposta alla domanda (più RR nel caso di server replicato)
+	- **competenze** --> record per i server di competenza
+	- **informazioni aggiuntive** che possono essere usate
+		- nel caso di una risposta `MX`, il campo di risposta contiene il record MX con il nome canonico del server di posta, mentre la sezione aggiuntiva contiene un record di tipo `A` con l'indirizzo IP relativo all'hostname canonico del server di posta
+
+> [!example] esempio
+> Immaginiamo che un client voglia risolvere `www.example.com` in un indirizzo IP.
+> 
+> 1) Il client invia al server DNS una *richiesta* con:
+>- `ID`: 1234
+>- `Flags`: richiesta (`QR = 0`)
+>- `Numero di domande`: 1 (`www.example.com`, tipo `A`)
+>- Le altre sezioni sono vuote.
+> 
+>1) Il server DNS *risponde* con:
+>- `ID`: 1234 (lo stesso della richiesta)
+>- `Flags`: risposta (`QR = 1`)
+>- `Numero di domande`: 1 (`www.example.com`)
+>- `Numero di RR di risposta`: 1 (`A 93.184.216.34`)
+>- `Numero di RR autorevoli`: 1 (`NS ns1.example.net`)
+>- `Numero di RR addizionali`: 1 (`ns1.example.net A 203.0.113.10`)
+> 
+>La risposta dice che:
+>- `www.example.com` ha l’IP `93.184.216.34` (sezione Risposte).
+>- Il server DNS autoritativo è `ns1.example.net` (sezione Competenza).
+>- L'IP di `ns1.example.net` è `203.0.113.10` (sezione Informazioni Aggiuntive).
+
+## inserire record nel database DNS
+Per aggiungere nuovi domini al DNS, si può contattare un **registrar** (aziende commerciali accreditate dall’ICANN), che, in cambio di un compenso, verifica l’unicità del dominio richiesto e lo inserisce nel database (TLD).
+- dovremo poi aggiungere i relativi RR necessari nel nostro server di competenza (almeno un RR di tipo `A`)
+
+>[!example] in che modo gli utenti otterranno l'IP di un nuovo sito web?
+>
+>![[dns-new-ex.png|center|400]]
