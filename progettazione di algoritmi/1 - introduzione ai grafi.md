@@ -25,6 +25,13 @@ Si ha:
 >
 >**corollario (handshaking lemma)**: Dato un grafo $G=(V,E)$, il numero dei nodi di $G$ che hanno grado dispari è pari.
 
+>[!example] Se $G$ ha almeno due nodi, allora in $G$ ci sono due nodi con lo stesso grado.
+>Prendiamo un grafo $G$ con $n=|V|\geq 2$. Ogni nodo può avere un grado che va da $0$ a $n-1$ <small>(ci sono quindi $n$ possibili gradi)</small>. 
+>
+>Se tutti gli $n$ nodi avessero grado diverso, allora vorrebbe dire necessariamente che un nodo dovrebbe avere grado $n-1$, e un altro $0$. 
+>Ma la coesistenza di un nodo con grado $n-1$ e uno con grado $0$ è impossibile (se un nodo è connesso a tutti gli altri, non ce ne può essere un altro completamente isolato). Si ha quindi necessariamente che almeno due nodi hanno lo stesso grado.
+
+
 >[!info] nodi adiacenti
 >Due nodi $u,v$ si dicono **adiacenti** se l'arco $(u,v) \in E$ <small>(se sono connessi da un arco)</small>.
 
