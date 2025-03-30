@@ -172,7 +172,7 @@ Questa implementazione si basa sull'intuizione per cui, se si evitasse di scorre
 - si può quindi sostituire $lista$ con una Heap, che ha complessità $\log n$ per l'estrazione del minimo e per l'inserimento
 
 Manteniamo un **heap minimo** contenente triple $(costo,u,v)$, dove $u$ è un nodo già inserito nell'albero dei cammini minimi e $costo$ rappresenta la distanza che si avrebbe qualora il nodo $y$ venisse inserito nell'albero dei cammini minimi attraverso $x$.
-- ogni volta che aggiungiamo un nodo $x$ all'albero, aggiorniamo anche l'heap inserendo, per ogni vicino $y$ di $x$, una nuova tripla $(distanzaagiornata,x,y)$ 
+- ogni volta che aggiungiamo un nodo $x$ all'albero, aggiorniamo anche l'heap inserendo, per ogni vicino $y$ di $x$, una nuova tripla $(distanzaaggiornata,x,y)$ 
 - dato che non rimuoviamo elementi già presenti nell'heap, possono esistere più entry dello stesso nodo con distanze differenti. Tuttavia, sappiamo che la prima volta che un nodo viene estratto, questa corrisponde alla distanza minnima calcolata fino a quel punto (quindi le successive estrazioni possono essere trascurate).
 	- quindi, ad ogni estrazione di un nodo controlliamo prima se esso è già stato aggiunto all'albero (e, in tal caso, ignoriamo l'estrazione)
 
