@@ -6,7 +6,7 @@
 ![[ponti-es.png|center|400]]
 
 ### determinare l'insieme dei ponti di un grafo
-Una prima soluzione si basa sulla *ricerca esaustiva*: si prova, per *ogni arco* del grafo, se questo è un arco o no.
+Una prima soluzione si basa sulla *ricerca esaustiva*: si prova, per *ogni arco* del grafo, se questo è un ponte o no.
 
 Verificare se un arco $(a,b)$ è un ponte per $G$ richiede $O(m)$: basta eliminare l'arco $(a,b)$ da $G$ ed effettuare una DFS per controllare se $b$ rimane raggiungibile da $a$.
 - la complessità sarebbe $m\cdot O(m)=O(m^2)=O(n^4)$
