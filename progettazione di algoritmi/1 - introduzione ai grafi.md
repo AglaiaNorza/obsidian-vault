@@ -14,8 +14,21 @@ Si ha:
 > [!info] grado di un nodo 
 > Il **grado** di un nodo è il numero di archi che incidono su un nodo.
 
+>[!tip] somma dei gradi dei vertici, handshaking lemma
+>Dato un grafo $G=(V,\,E)$, si ha che
+>
+>$$\sum_{v\in V}deg(v)=2m$$
+>
+><small>(la somma dei gradi di tutti i nodi è pari a $2m$).</small>
+> 
+>(si vede chiaramente che, per ogni arco $e\in E$, esistono esattamente due nodi ad esso incidenti, e di cui quindi esso aumenta il grado di 1)
+>
+>**corollario (handshaking lemma)**: Dato un grafo $G=(V,E)$, il numero dei nodi di $G$ che hanno grado dispari è pari.
+
 >[!info] nodi adiacenti
 >Due nodi $u,v$ si dicono **adiacenti** se l'arco $(u,v) \in E$ <small>(se sono connessi da un arco)</small>.
+
+
 ### grafi diretti e indiretti
 Un grafo si dice **diretto** se i suoi archi hanno una **direzione**.
 Altrimenti, si dice **indiretto**.
@@ -152,9 +165,7 @@ Si utilizza una **lista di liste** $G$, con tanti elementi quanti sono i nodi de
 >I costi sono quindi:
 >- presenza di un **arco**: worst case: $O(n)$
 >- ricerca dei **nodi adiacenti**: worst case: $O(n)$ 
-## esercizi
-
-### verificare se un grafo diretto ha un pozzo universale
+## esercizio: verificare se un grafo diretto ha un pozzo universale
 In questo caso, è più comodo utilizzare la rappresentazione tramite matrice - essa ci permette infatti di risolvere il problema in $\Theta(n)$. 
 
 Osserviamo un esempio di un pozzo universale in questa rappresentazione:
