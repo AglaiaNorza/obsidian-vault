@@ -1,4 +1,4 @@
-Un **ordinamento topologico** è una permutazione dei nodi di un grafo tale che, se $(u,v)\in E$, allora $u$ compare prima di $v$ nell'ordinamento (ovvero tutte le frecce puntano in una sola direzione).
+Un **ordinamento topologico** è una permutazione dei nodi di un grafo tale che, se $(u,v)\in E$, allora $u$ compare prima di $v$ nell'ordinamento <small>(ovvero tutte le frecce puntano in una sola direzione).</small>
 
 - non è sempre possibile trovarne uno
 
