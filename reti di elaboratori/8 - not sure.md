@@ -1,3 +1,7 @@
+---
+created: 2025-03-27T14:27
+updated: 2025-04-01T18:01
+---
 Stop-and-wait è un meccanismo 
 
 

@@ -1,3 +1,7 @@
+---
+created: 2025-03-29T16:36
+updated: 2025-04-01T18:04
+---
 Dato un grafo $G$ (diretto o indiretto), vogliamo sapere se esso è ciclico
 
 Un'idea (<u>errata</u>) di partenza potrebbe essere quella di visitare un grafo e, se si incontra un nodo già visitato, interrompere la visita e restituire $\text{True}$ (e, altrimenti, restituire $\text{False}$), ma:

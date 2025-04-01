@@ -1,3 +1,7 @@
+---
+created: 2025-03-18T14:49
+updated: 2025-04-01T18:02
+---
 > [!info] protocollo
 > Un **protocollo** definisce le regole che il mittente, il destinatario e tutti i sistemi intermedi coinvolti devono rispettare per essere in grado di comunicare.
 

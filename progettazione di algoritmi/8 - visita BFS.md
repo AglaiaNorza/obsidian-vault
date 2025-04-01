@@ -1,3 +1,7 @@
+---
+created: 2025-03-29T16:36
+updated: 2025-04-01T18:05
+---
 > [!info] distanza minima
 > Dati due nodi $a$ e $b$ di un grafo $G$, definiamo **distanza minima** in $G$ di $a$ da $b$ il *numero minimo di archi* che bisogna attraversare per raggiungere $b$ a partire da $a$.
 > - la distanza è posta a $+\infty$ se $b$ non è raggiungibile partendo da $a$

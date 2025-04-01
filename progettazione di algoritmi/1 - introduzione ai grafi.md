@@ -1,3 +1,7 @@
+---
+created: 2025-03-22T10:30
+updated: 2025-04-01T18:03
+---
 ## grafi
 Un grafo è formato da:
 - **nodi**

@@ -1,3 +1,7 @@
+---
+created: 2025-03-29T16:36
+updated: 2025-04-01T18:05
+---
 Dato un grafo diretto e pesato $G$ in cui i pesi degli archi possono essere *anche negativi* e fissato un suo nodo $s$, vogliamo determinare il costo minimo dei cammini che conducono da $s$ a tutti gli altri nodi del grafo Se non esiste un cammino, il costo sarà considerato infinito.
 
 >[!info] ciclo negativo

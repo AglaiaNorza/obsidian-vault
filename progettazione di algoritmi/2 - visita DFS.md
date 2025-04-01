@@ -1,3 +1,7 @@
+---
+created: 2025-03-29T16:36
+updated: 2025-04-01T18:04
+---
 ## concetti base
 
 >[!info] raggiungibilità

@@ -1,3 +1,7 @@
+---
+created: 2025-03-20T14:18
+updated: 2025-04-01T18:02
+---
 Per stabilire una comunicazione tra due processi, è necesario un metodo per individuare:
 - host locale
 - host remoto
