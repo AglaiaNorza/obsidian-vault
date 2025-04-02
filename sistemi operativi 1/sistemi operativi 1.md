@@ -1,3 +1,7 @@
+---
+created: 2025-02-28T08:57
+updated: 2025-04-01T18:16
+---
 > [!info] index
 > - [[1 - sistemi operativi]]
 > - [[2 - processi (e thread)]]
