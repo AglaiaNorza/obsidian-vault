@@ -1,6 +1,6 @@
 ---
 created: 2025-03-31T14:25
-updated: 2025-04-01T18:04
+updated: 2025-04-02T09:51
 ---
 Un **ordinamento topologico** è una permutazione dei nodi di un grafo tale che, se $(u,v)\in E$, allora $u$ compare prima di $v$ nell'ordinamento <small>(ovvero tutte le frecce puntano in una sola direzione).</small>
 
@@ -26,7 +26,7 @@ def sortTop(G):
 	gradoEnt = [0]*n
 	for i in range(n):
 		for j in G[i]:
-			gradoEnt(j) += 1 
+			gradoEnt[j] += 1 
 			# se j compare in una qualsiasi lista di adiacenza, 
 			# vuol dire che ha archi entranti
 
