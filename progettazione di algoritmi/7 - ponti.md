@@ -1,6 +1,6 @@
 ---
 created: 2025-03-29T16:36
-updated: 2025-04-01T18:04
+updated: 2025-04-02T19:05
 ---
 > [!info] ponte
 > Un **ponte** è un arco la cui eliminazione disconnette un grafo (ovvero aumenta il numero di componenti connesse). Equivalentemente, un arco è un ponte se e solo se *non è contenuto in nessun ciclo*. 
@@ -52,7 +52,7 @@ Il nodo $u$ confronta la sua altezza con quella ricevuta: perché sia ponte, l'a
 >![[ponte-algo.png|center|400]]
 
 ```python
-def DFSp(x, padre, altezza, ponti):
+def DFSp(G, x, padre, altezza, ponti):
 	if padre == -1:
 		altezza[x] = 0 # primo nodo
 	else:
@@ -76,9 +76,10 @@ def DFSp(x, padre, altezza, ponti):
 	
 	return min_raggiungibile
 
-altezza = [-1]*len(G)
-ponti = []
+def ponti(G):
+	altezza = [-1]*len(G)
+	ponti = []
 
-DFSp(0, -1, altezza, ponti) 
-# i ponti si troveranno dentro "ponti"
+	DFSp(G, 0, -1, altezza, ponti) 
+	# i ponti si troveranno dentro "ponti"
 ```
