@@ -1,6 +1,6 @@
 ---
 created: 2025-02-28T08:57
-updated: 2025-04-01T18:16
+updated: 2025-04-04T17:11
 ---
 > [!info] index
 > - [[1 - sistemi operativi]]
