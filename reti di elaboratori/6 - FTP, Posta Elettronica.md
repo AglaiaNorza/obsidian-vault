@@ -1,6 +1,6 @@
 ---
 created: 2025-03-21T15:06
-updated: 2025-04-05T15:44
+updated: 2025-04-05T16:52
 ---
 ## FTP
 L'FTP (File Transfer Protocol) è un programma di trasferimento di file da/a un host remoto.
@@ -202,14 +202,41 @@ Per permettere di inviare messaggi in formati diversi dall'ASCII, è stato defin
 SMTP è un protocollo di *push*: si occupa della consegna del messaggio sul server del destinatario - non può quindi essere usato per operazioni di pull.
 
 Per queste ultime, si possono usare:
-- POP3
-- IMAP
-- HTTP
+- POP3 (Post Office Protocol - version 3)
+- IMAP (Internet Mail Access Protocol) - ha funzioni più complesse e permette la manipolazione di messaggi memorizzati sul server
+- HTTP - gmail, hotmail ecc.
 
 ### POP3
 Il protocollo **POP3** permette al client ricevente di aprire una connessione TCP verso il server di posta sulla **porta 110**.
+
+- è un protocollo *stateless* tra le varie sessioni.
+- non fornisce all'utente procedure per creare cartelle remote ed assegnare loro messaggi: l'utente può crearle solo localmente
 
 Una volta stabilita la connessione, si procede in 3 fasi:
 1) **autorizzazione**: lo user agent invia nome utente e password per essere identificato
 2) **transazione**: l'agente utente recupera i messaggi
 3) **aggiornamento**: dopo che il client ha inviato il `QUIT` (e la connessione si è quindi conclusa), vengono cancellati i messaggi marcati per la rimozione
+
+>[!summary] comandi POP3
+>
+>![[comandi-POP3.png|center|500]]
+>
+> - questo esempio usa la modalità "scarica e cancella": roberto non può rileggere le mail se cambia client (saranno eliminate sul server e salvate solo sul client da cui le ha lette e scaricate)
+> - si può usare anche la modalità "scarica e mantieni", che mantiene i messaggi sul server dopo che sono stati scaricati dal client
+
+### IMAP
+> Con POP3, se si accede alla mail da computer diversi, le cartelle create localmente dal proprio programma di posta non sono mantenute - questo problema è risolto da IMAP.
+
+Il protocollo **IMAP** mantiene tutti i messaggi in un *unico luogo*: il server
+- consente all'utente di organizzare i messaggi in cartelle
+
+Inoltre, IMAP è **stateful**: conserva lo stato dell'utente tra le varie sessioni (nomi delle cartelle, associazioni tra identificatori dei messaggi e nomi delle cartelle)
+
+### HTTP
+Alcuni mail server forniscono accesso alla mail via web (attraverso il protocollo HTTP).
+- lo user agent è il web browser
+- l'utente comunica con il suo mailbox mediante http, ma il protocollo di comunicazione tra mail server rimane SMTP
+
+>[!example] webmail
+>
+>![[webmail.png|center|500]]
