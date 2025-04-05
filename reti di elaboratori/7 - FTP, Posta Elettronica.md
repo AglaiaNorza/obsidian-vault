@@ -1,6 +1,6 @@
 ---
 created: 2025-03-21T15:06
-updated: 2025-04-05T10:57
+updated: 2025-04-05T15:44
 ---
 ## FTP
 L'FTP (File Transfer Protocol) è un programma di trasferimento di file da/a un host remoto.
@@ -145,14 +145,18 @@ I comandi sono composti da testo ASCII, mentre le risposte da un codice di stato
 >[!example] esempio (scenario)
 >1. alice usa il suo user agent per comporre il messaggio da inviare a `rob@someschool.edu`
 >2. lo user agent di alice invia un messaggio al server di posta di alice: il messagio è posto nella coda di messaggi
->3. il lato client di SMTP apre una connessione TCP con il server di posta di roberto
->4. il client SMTP invia il messaggio di alice sulla connessione TCP
+>3. il lato client di SMTP del mail server di alice apre una connessione TCP con il server di posta di roberto
+>4. il client SMTP invia il messaggio di alice sulla connessione TCP tramite il message transfer agent
 >5. il server di posta di roberto riceve il messaggio e lo pone nella casella di posta di roberto
->6. roberto invoca il suo user agent per leggere il messagio
+>6. roberto invoca il suo user agent per leggere il messagio (lo user agent di roberto preleverà il messaggio tramite il message access agent del suo mail server)
 >
 >![[mail-es.png|center|400]]
+>
+
 
 ### scambio di messaggi al livello di protollo
+![[smtp-es2.png|center|500]]
+
 1) il client SMTP (che gira sull'host server di posta in invio) fa stabilire una *connessione sulla porta 25* verso il server SMTP (sull'host server di posta in ricezione)
 	1) se il server è inattivo, il client riprova più tardi
 	2) se il server è attivo, viene stabilita la connessione
@@ -161,3 +165,51 @@ I comandi sono composti da testo ASCII, mentre le risposte da un codice di stato
 4) il messaggio arriva al server destinatario (TCP è affidabile)
 	1) (la connessione è persistente) se ci sono altri messaggi, si usa la stessa conessione, altrimenti il client invia richiesta di *chiusura connessione*
 
+>[!example] esempio di interazione SMTP
+>
+>![[SMP-interaction.png|center|450]]
+
+### formato dei messaggi di posta elettronica
+Un messaggio di posta elettronica è composto da:
+- righe di intestazione 
+	- per esempio: to, from, subject
+- corpo (in caratteri ASCII)
+
+| header  | descrizione                                                                      |
+| ------- | -------------------------------------------------------------------------------- |
+| to      | indirizzo di uno o più destinatari                                               |
+| from    | indirizzo del mittente                                                           |
+| cc      | indirizzo di uno o più destinatari a cui si invia per conoscenza (crack cocaina) |
+| bcc     | blind cc: gli altri destinatari non sanno che anche lui riceve il messaggio      |
+| subject | argomento del messaggio                                                          |
+| sender  | chi materialmente effettua l’invio (es: nome della segretaria)                   |
+
+>[!example] esempio delle fasi di trasferimento
+>
+>![[trasferimento-es.png|center|300]]
+
+#### protocollo MIME
+Per permettere di inviare messaggi in formati diversi dall'ASCII, è stato definito il protocollo MIME (Multipurpose Internet Mail Extension).
+- ci sono alcune righe aggiuntive nell'intestazione dei messaggi per dichiarare il tipo di contenuto MIME:
+
+![[MIME.png|center|500]]
+
+- alcune righe di intestazione vengono inserite anche dal server di ricezione SMTP
+
+![[MIME2.png|center|450]]
+
+## protocolli di accesso alla posta
+SMTP è un protocollo di *push*: si occupa della consegna del messaggio sul server del destinatario - non può quindi essere usato per operazioni di pull.
+
+Per queste ultime, si possono usare:
+- POP3
+- IMAP
+- HTTP
+
+### POP3
+Il protocollo **POP3** permette al client ricevente di aprire una connessione TCP verso il server di posta sulla **porta 110**.
+
+Una volta stabilita la connessione, si procede in 3 fasi:
+1) **autorizzazione**: lo user agent invia nome utente e password per essere identificato
+2) **transazione**: l'agente utente recupera i messaggi
+3) **aggiornamento**: dopo che il client ha inviato il `QUIT` (e la connessione si è quindi conclusa), vengono cancellati i messaggi marcati per la rimozione
