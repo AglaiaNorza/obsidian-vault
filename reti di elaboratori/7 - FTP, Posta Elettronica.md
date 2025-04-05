@@ -1,6 +1,6 @@
 ---
 created: 2025-03-21T15:06
-updated: 2025-04-05T09:29
+updated: 2025-04-05T10:57
 ---
 ## FTP
 L'FTP (File Transfer Protocol) è un programma di trasferimento di file da/a un host remoto.
@@ -96,3 +96,68 @@ Esiste una corrispondenza 1:1 tra il comando immesso dall'utente e quello FTP in
 | 500    | errore di sintassi; comando non riconosciuto       |
 | 501    | errore di sintassi nei parametri o negli argomenti |
 | 530    | login dell’utente fallito                          |
+Le risposte sono composte da un numero di 3 cifre (codice della risposta) e un testo (parametri necessari o informazioni supplementari).
+
+>[!example] esempio richiesta e risposta
+>![[FTP-es.png|center|500]]
+
+## posta elettronica
+La posta elettronica ha tre componenti principali:
+1) **User Agent** ("mail reader") --> usato per scrivere e inviare un messaggio, o per leggerlo
+	- viene attivato dall'utente o da un timer, e informa l'utente se c'è una nuova mail
+	- si occupa anche di composizione, editing, lettura dei messaggi
+	- (esempi: Outlook, Thunderbird..)
+2) **Message Transfer Agent** --> (lato server) usato per trasferire il messaggio attraverso Internet
+	- composto da una **mailbox** con i messaggi in arrivo e da una **coda dei messaggi** da trasmettere (eseguirà tentativi ogni x minuti per alcuni giorni)
+
+>[!tip] comunicazione tra MTA
+>Per la comunicazione tra *server di posta*, i Mail Transfer Agent usano il **SMTP** (Simple Mail Transfer Protocol)
+>
+>![[SMTP-MTA.png|center|300]]
+
+3) **Message Access Agent** --> usato per leggere le mail in arrivo
+
+>[!example] posta elettronica: scenario classico
+> 
+>![[SMTP-es.png|center|450]]
+
+## protocollo SMTP
+Il protocollo SMTP (Simple Mail Transfer Protocol) usa TCP per trasferire in modo *affidabile* i messaggi di posta elettronica dal client al server, utilizzando la **porta 25**.
+- il trasferimento è *diretto*: dal server trasmittente al server ricevente
+
+Ci sono 3 fasi di trasferimento
+1) **handshaking**
+2) **trasferimento di messaggi**
+3) **chiusura**
+
+I comandi sono composti da testo ASCII, mentre le risposte da un codice di stato ed un'espressione.
+
+- SMTP usa **connessioni persistenti**, e più oggetti vengono trasmessi in un unico messaggio
+- il messaggio (intestazione e corpo) deve essere nel formato ASCII a 7 bit
+
+>[!question]- differenze tra HTTP ed STMP
+>una delle differenze sostanziali tra HTTP ed STMP (entrambi protocolli utilizzati per trasferire file da un host all’altro) è:
+>- HTTP è un protocollo di **pull**: gli utenti iniziano le connessioni TCP e scaricano i file da loro richiesti
+>- SMTP è un protocollo di **push**: il server di posta inizia la connessione TCP e spedisce il file
+>
+>In più, in HTTP, ogni oggetto è incapsulato nel suo messaggio di risposta (mentre appunto SMTP permette di trasmettere più oggetti in un unico messaggio)
+
+>[!example] esempio (scenario)
+>1. alice usa il suo user agent per comporre il messaggio da inviare a `rob@someschool.edu`
+>2. lo user agent di alice invia un messaggio al server di posta di alice: il messagio è posto nella coda di messaggi
+>3. il lato client di SMTP apre una connessione TCP con il server di posta di roberto
+>4. il client SMTP invia il messaggio di alice sulla connessione TCP
+>5. il server di posta di roberto riceve il messaggio e lo pone nella casella di posta di roberto
+>6. roberto invoca il suo user agent per leggere il messagio
+>
+>![[mail-es.png|center|400]]
+
+### scambio di messaggi al livello di protollo
+1) il client SMTP (che gira sull'host server di posta in invio) fa stabilire una *connessione sulla porta 25* verso il server SMTP (sull'host server di posta in ricezione)
+	1) se il server è inattivo, il client riprova più tardi
+	2) se il server è attivo, viene stabilita la connessione
+2) il server e il client effettuano una forma di *handshaking*: il client indica indirizzo email di mittente e destinatario
+3) il client invia il messaggio
+4) il messaggio arriva al server destinatario (TCP è affidabile)
+	1) (la connessione è persistente) se ci sono altri messaggi, si usa la stessa conessione, altrimenti il client invia richiesta di *chiusura connessione*
+
