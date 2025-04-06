@@ -1,6 +1,6 @@
 ---
 created: 2025-03-29T16:36
-updated: 2025-04-01T18:05
+updated: 2025-04-06T16:21
 ---
 >[!info] grafo pesato
 >Un grafo $G$ è detto **pesato** se ad ogni arco $e\in E$ è associato un valore numerico (detto *peso*) <small>(funzione $w:E\to R$ associa ad ogni arco un peso)</small>.
@@ -85,6 +85,7 @@ L'algoritmo rientra nel paradigma della **tecnica greedy**. Opera infatti second
 
 >[!warning] attenzione: l'algoritmo non è corretto nel caso di grafi con pesi anche negativi
 >Infatti, poiché sceglie il cammino meno costoso ad ogni passo, non considera il caso in cui si percorrerà prima un arco con peso maggiore per poi incontrare archi con pesi negativi (che abbasseranno quindi il costo totale).
+>- in caso di pesi negativi, si usa l'[[11 - algoritmo di Bellman-Ford|algoritmo di Bellman-Ford]]
 
 ### prova di correttezza
 
