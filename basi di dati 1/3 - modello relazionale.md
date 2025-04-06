@@ -1,3 +1,7 @@
+---
+created: 2024-10-10T21:14
+updated: 2025-04-06T14:59
+---
 - il modello relazionale è un modello basato sulla nozilone matematica di **relazione**.
 - le relazioni si traducono in maniera naturale in **tabelle** (quindi i termini tabella e relazione sono interscambiabili)
 - dati e relazioni (riferimenti) tra dati di tabelle diverse sono rappresentati come **valori**
@@ -90,7 +94,7 @@ Una **dipendenza funzionale** stabilisce un particolare legame semantico tra due
 >Diremo che una relazione r con schema R soddisfa la dipendenza funzionale `X -> Y` se:
 >1) la dipendenza funzionale `X -> Y` è applicabile ad R, ovvero sia X che Y sono sottoinsiemi di R.
 >2) le ennuple r che concordano su X, concordano anche su Y (se le tuple sono uguali su X, devono essere uguali anche su Y)
->   `t1[X] = t2[Y]` --> `t1[Y] = t2[X]` (--> implica)
+>   `t1[X] = t2[Y]` $\implies$ `t1[Y] = t2[X]` 
 > 
 > es. un'istanza con una sola tupla soddisfa `X->Y`, e la premessa della seconda condizione è verificata, quindi soddisfa la dipendenza funzionale, ma senza implicazioni su Y
 

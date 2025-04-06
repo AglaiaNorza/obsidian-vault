@@ -1,3 +1,7 @@
+---
+created: 2024-11-05T18:26
+updated: 2025-04-06T15:00
+---
 (con memoria, si intende RAM)
 
 - le applicazioni richiedono sempre più memoria - se il sistema operativo lasciasse a ogni processo la gestione della propria memoria, ogni processo utilizzerebbe tutta la memoria a disposizione
@@ -44,7 +48,7 @@ un singolo modulo è fatto da una parte di programma e una parte di dati condivi
 - su un modulo ancora scritto su disco ci possono essere indirizzi simbolici
 - invece, quando viene trasformato in qualcosa di eseguibile, ci sono due possibilità:
 	1) *indirizzo assoluto* - funziona solo se si sa da dove si parte
-	2) *indirizzo relativo* - suppongo di partire da 0 e uso l'indirizzo relativo rispetto al mio inizio --> l'esecuzione non va alla zona di memoria x, ma x + (indirizzo dell'inizio di dove mi trovavo)
+	2) *indirizzo relativo* - suppongo di partire da 0 e uso l'indirizzo relativo rispetto al mio inizio ⟶ l'esecuzione non va alla zona di memoria x, ma x + (indirizzo dell'inizio di dove mi trovavo)
 
 ![[indirizzi-programmi.png|center|400]]
 

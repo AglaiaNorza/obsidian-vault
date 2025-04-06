@@ -1,6 +1,6 @@
 ---
 created: 2025-03-29T16:36
-updated: 2025-04-01T18:04
+updated: 2025-04-06T14:59
 ---
 ## concetti base
 
@@ -79,7 +79,7 @@ Visto che la ricerca visita solo nodi non precedentemente visitati, con una visi
 I nodi visitati e gli archi attraversati formano un albero detto **albero DFS**.
 
 > [!info] vettore dei padri
-> L'albero DFS si può memorizzare tramite il **vettore dei padri** --> un vettore che contiene, per ogni entrata $i$, l'indice del suo nodo padre.
+> L'albero DFS si può memorizzare tramite il **vettore dei padri** ⟶ un vettore che contiene, per ogni entrata $i$, l'indice del suo nodo padre.
 > - (per convenzione, il padre della radice è essa stessa - $P[r]==r$)
 > - se $i$ non è un nodo dell'albero (in questo caso, se non è stato visitato), $P[i]==-1$
 

@@ -1,6 +1,6 @@
 ---
 created: 2025-03-26T18:31
-updated: 2025-04-01T18:02
+updated: 2025-04-06T15:00
 ---
 ## World Wide Web
 Il World Wide Web (WWW) è un'applicazione internet nata dalla necessità di scambio e condivisione di ingormazioni tra ricercatori universitari di varie nazioni.
@@ -10,10 +10,10 @@ Il World Wide Web (WWW) è un'applicazione internet nata dalla necessità di sca
 - hyperlinks e motori di ricerca permettono di navigare su molti siti
 
 Il World Wide Web è formato da:
-- Web client (es. browser) --> interfaccia con l'utente
+- Web client (es. browser) ⟶ interfaccia con l'utente
 - Web server 
-- HTML --> linguaggio per pagine web
-- HTTP --> protocollo per la *comunicazione tra client e server web*
+- HTML ⟶ linguaggio per pagine web
+- HTTP ⟶ protocollo per la *comunicazione tra client e server web*
 
 >[!example]- architettura generale di un browser
 >
@@ -35,17 +35,17 @@ protocol://host:porta/path # con specifica porta
 
 ### documenti web
 Esistono tre tipi di documenti web:
-1) documenti **statici** --> contenuto predeterminato memorizzato sul server
-2) documenti **dinamici** --> creati dal web server alla ricezione della richiesta
-3) documenti **attivi** --> contiene script o programmi che verranno eseguiti nel browser (lato client)
+1) documenti **statici** ⟶ contenuto predeterminato memorizzato sul server
+2) documenti **dinamici** ⟶ creati dal web server alla ricezione della richiesta
+3) documenti **attivi** ⟶ contiene script o programmi che verranno eseguiti nel browser (lato client)
 
 ## HTTP
 HTTP (HyperText Transfer Protocol) è un **protocollo a livello applicazione** del Web.
 
 ### modello client/server
 HTTP segue il modello **client/server**:
-- *client* --> il *browser* richiede, riceve e visualizza gli oggetti del web
-- *server* --> il server web invia oggetti in risposta ad una richiesta
+- *client* ⟶ il *browser* richiede, riceve e visualizza gli oggetti del web
+- *server* ⟶ il server web invia oggetti in risposta ad una richiesta
 
 >[!info] HTTP definisce in che modo i client web richiedono le pagine ai server web e come questi le traferiscono ai client
 

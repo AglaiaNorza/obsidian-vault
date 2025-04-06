@@ -1,6 +1,6 @@
 ---
 created: 2025-03-26T18:31
-updated: 2025-04-01T18:03
+updated: 2025-04-06T14:59
 ---
 Internet è una rete di reti, composta da reti di accesso e dal backbone internet.
 ## rete di accesso
@@ -103,9 +103,9 @@ abbiamo:
 $$\frac{La}{R}=\text{intensità di traffico}$$
 
 Se: 
-- $La/R \sim 0$ --> poco ritardo
-- $La/R \rightarrow 1$ --> ritardo consistente
-- $La/R>1$ --> più lavoro in arrivo di quanto possa essere effettivamente svolto 
+- $La/R \sim 0$ ⟶ poco ritardo
+- $La/R \rightarrow 1$ ⟶ ritardo consistente
+- $La/R>1$ ⟶ più lavoro in arrivo di quanto possa essere effettivamente svolto 
 ### ritardo di trasmissione
 È il tempo richiesto per trasmettere tutti i bit del pacchetto sul collegamento (dipende quindi dal canale).
 Se il primo bit viene trasmesso al tempo $t_{1}$ e l'ultimo al tempo $t_{2}$, il ritardo di trasmissione è $t_{2}-t_{1}$.

@@ -1,19 +1,19 @@
 ---
 created: 2025-03-03T13:49
-updated: 2025-04-01T18:03
+updated: 2025-04-06T14:59
 ---
 Una **rete** è composta da dispositivi, chiamati **nodi** (collegati tra di loro da **link**), in grado di scambiarsi informazioni. I nodi possono essere sistemi terminali (end system), che utilizzano la rete per eseguire applicazioni e comunicare tra loro, oppure dispositivi di interconnessione, che si occupano di instradare e gestire il traffico dati all'interno della rete.
 
 ### dispositivi terminali
 I **sistemi terminali** possono essere di due tipi:
-1) **host** --> macchine generalmente di proprietà degli utenti, dedicate ad eseguire applicazioni (es. computer, cellulari)
-2) **server** --> computer con elevate prestazioni che forniscono servizio a diverse applicazioni utente
+1) **host** ⟶ macchine generalmente di proprietà degli utenti, dedicate ad eseguire applicazioni (es. computer, cellulari)
+2) **server** ⟶ computer con elevate prestazioni che forniscono servizio a diverse applicazioni utente
 ### dispositivi di interconnessione
 I **dispositivi di interconnessione** rigenerano e/o modificano il segnale che ricevono.
 Si distinguono in:
-- **router** --> collegano due o più reti
-- **switch** --> collegano diversi sistemi terminali localmente
-- **modem** --> trasformano la codifica dei dati (trasformano i dati digitali del computer in dati analogici della rete)
+- **router** ⟶ collegano due o più reti
+- **switch** ⟶ collegano diversi sistemi terminali localmente
+- **modem** ⟶ trasformano la codifica dei dati (trasformano i dati digitali del computer in dati analogici della rete)
 ### collegamenti
 I dispositivi di rete sono collegati tramite mezzi chiamati **link**. 
 Questi possono essere *cablati* (es. rame, fibra ottica) o *wireless* (es. onde elettromagnetiche, satellite).
@@ -173,7 +173,7 @@ Lo switch (Ethernet) della LAN è generalmente collegato ad un router istituzion
 
 #### wireless
 Può essere:
-- **WiFi** --> tramite un Access Point locale connesso alla Ethernet cablata
+- **WiFi** ⟶ tramite un Access Point locale connesso alla Ethernet cablata
 	- ha un raggio di azione limitato a qualche decina di metri
-- **Cellulare** --> utilizza la rete cellulare, tramite gli Access Point della compagnia telefonica
+- **Cellulare** ⟶ utilizza la rete cellulare, tramite gli Access Point della compagnia telefonica
 	- ha un raggio di decine di chilometri

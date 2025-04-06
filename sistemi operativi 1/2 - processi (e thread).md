@@ -1,3 +1,7 @@
+---
+created: 2024-10-23T11:20
+updated: 2025-04-06T14:59
+---
 Il compito fondamentale di un sistema operativo è la **gestione dei processi** - computazioni di tipi diversi.
 Deve quindi: 
 - permettere l'esecuzione alternata di processi multipli (interleaving)
@@ -276,7 +280,7 @@ i vari registri nel PCB, che vengono copiati al momento di un process switch (PC
 - **kernel stack**: stack delle chiamate, usato per le funzioni da eseguire in modalità sistema
 
 ## thread
-è importante che alcune operazioni siano organizzate in maniera parallela (al loro interno) --> vengono suddivise in diverse esecuzioni (i thread).
+è importante che alcune operazioni siano organizzate in maniera parallela (al loro interno) ⟶ vengono suddivise in diverse esecuzioni (i thread).
 
 Diversi thread di uno stesso processo *condividono tutte le risorse* del processo tranne:
 - lo stack delle chiamate (e variabili locali) - ogni thread può chiamare funzioni diverse

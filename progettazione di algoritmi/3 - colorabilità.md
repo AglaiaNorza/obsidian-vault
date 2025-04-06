@@ -1,6 +1,6 @@
 ---
 created: 2025-03-29T16:36
-updated: 2025-04-01T18:04
+updated: 2025-04-06T14:59
 ---
 ## colorazione di grafi
 
@@ -24,7 +24,7 @@ L'algoritmo di bi-colorazione che prova che un grafo senza cicli dispari può se
 
 >[!note] prova di correttezza
 >Siano $x$ e $y$ due nodi adiacenti in $G$. Consideriamo i due casi e verifichiamo che, in ogni caso, i due nodi avranno colori opposti.
->1) L'arco $(x,y)$ viene attraversato durante la visita --> banalmente i due nodi hanno colori diversi
+>1) L'arco $(x,y)$ viene attraversato durante la visita ⟶ banalmente i due nodi hanno colori diversi
 >2) L'arco $(x,y)$ non viene attraversato durante la visita:
 >	- sia $x$ il nodo visitato prima. Esiste un cammino che da $x$ porta a $y$ - questo cammino si chiuderà a formare un ciclo con l'arco $(y,x)$. Per ipotesi, il ciclo è di lunghezza pari, quindi il cammino è di lunghezza dispari. Poiché sul cammino i colori si alternano, il primo nodo ($x$) e il secondo ($y$) avranno colori diversi. 
 

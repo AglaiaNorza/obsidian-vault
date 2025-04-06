@@ -1,6 +1,6 @@
 ---
 created: 2025-03-22T10:30
-updated: 2025-04-01T18:03
+updated: 2025-04-06T14:58
 ---
 ## grafi
 Un grafo è formato da:
@@ -9,7 +9,7 @@ Un grafo è formato da:
 
 Un grafo $G$ si indica come: $G(V,\,E)$, con:
 - $V$ insieme dei vertici, 
-- $E$ insieme degli archi --> coppie di nodi
+- $E$ insieme degli archi ⟶ coppie di nodi
 
 Si ha:
 - $|V|=n$ <small>(numero di vertici)</small>
@@ -90,8 +90,8 @@ Un albero ha sempre $m=n-1$ archi.
 
 >[!note]- si dimostra per induzione
 >induzione sul numero $n$ di nodi.
->- $n=0$ --> ci sono $0$ archi
->- ipotesi induttiva --> assumiamo che sia vero per alberi con fino a $n-1$ nodi
+>- $n=0$ ⟶ ci sono $0$ archi
+>- ipotesi induttiva ⟶ assumiamo che sia vero per alberi con fino a $n-1$ nodi
 >
 >Per un albero da $n$ nodi, mettendo da parte una foglia e l'arco che incide su di essa, rimane un albero di $n-1$ nodi. Per ipotesi induttiva, questo avrà esattamente $n-2$ archi. Aggiungendo quindi l'ultimo nodo e il suo arco, si otterranno $n-1$ archi totali
 
@@ -187,8 +187,8 @@ $$
 M[i][j] = \begin{cases} 1 & i \ \text{ non è pozzo } \\ 0 & j \ \text{ non è pozzo universale} \end{cases}
 $$
 
-- se $M[i][j]==1$, sicuramente so che $i$ (la riga, ovvero il nodo da cui l'arco parte) non è un pozzo --> infatti, c'è un arco che parte da esso
-- se $M[i][j]==0$, so che $j$ non è pozzo universale --> non c'è un arco entrante in $j$ (ma potremmo trovarci nella situazione $(2,2)$ dell'esempio, quindi non escludiamo $i$)
+- se $M[i][j]==1$, sicuramente so che $i$ (la riga, ovvero il nodo da cui l'arco parte) non è un pozzo ⟶ infatti, c'è un arco che parte da esso
+- se $M[i][j]==0$, so che $j$ non è pozzo universale ⟶ non c'è un arco entrante in $j$ (ma potremmo trovarci nella situazione $(2,2)$ dell'esempio, quindi non escludiamo $i$)
 
 Quindi, una soluzione sarebbe:
 ```python

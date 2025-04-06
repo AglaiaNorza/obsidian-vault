@@ -1,6 +1,6 @@
 ---
 created: 2025-03-31T14:25
-updated: 2025-04-04T17:11
+updated: 2025-04-06T15:01
 ---
 Un **ordinamento topologico** è una permutazione dei nodi di un grafo tale che, se $(u,v)\in E$, allora $u$ compare prima di $v$ nell'ordinamento <small>(ovvero tutte le frecce puntano in una sola direzione).</small>
 
@@ -58,8 +58,8 @@ il costo totale è quindi $O(n+m)$.
 >[!note] prova di correttezza
 >Siano $x$ e $y$ due nodi in $G$, con arco $(x,y)$. Consideriamo sia il caso in cui l'arco viene attraversato che quello in cui non viene attraversato dalla visita, e vediamo che in entrambi, prima di effettuare il reverse, $x$ precede $y$.
 >
->1) l'arco $(x,y)$ *viene attraversato* durante la visita --> la visita di $y$ finisce prima della visita di $x$, e $y$ finisce nella lista prima di $x$
->2) l'arco $(x,y)$ *non viene attraversato* durante la visita --> significa che il nodo $y$ è già stato visitato prima della visita di $x$, e la sua visita è già terminata (infatti, non può esserci un cammino $y\to x$, o il grafo non sarebbe aciclico). Quindi, anche in questo caso, $y$ si trova prima di $x$ nella lista.
+>1) l'arco $(x,y)$ *viene attraversato* durante la visita ⟶ la visita di $y$ finisce prima della visita di $x$, e $y$ finisce nella lista prima di $x$
+>2) l'arco $(x,y)$ *non viene attraversato* durante la visita ⟶ significa che il nodo $y$ è già stato visitato prima della visita di $x$, e la sua visita è già terminata (infatti, non può esserci un cammino $y\to x$, o il grafo non sarebbe aciclico). Quindi, anche in questo caso, $y$ si trova prima di $x$ nella lista.
 
 >[!example] esempio
 >

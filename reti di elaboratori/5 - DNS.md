@@ -1,6 +1,6 @@
 ---
 created: 2025-03-29T16:36
-updated: 2025-04-01T18:02
+updated: 2025-04-06T15:01
 ---
 
 ## indirizzi ip
@@ -191,17 +191,17 @@ Nel protocollo DNS, le query e i messaggi di risposta hanno lo stesso formato.
 
 ![[messaggi-dns.png|center|500]]
 
-- **identificazione** --> numero di 16 bit per la domanda - la risposta usa lo stesso numero
+- **identificazione** ⟶ numero di 16 bit per la domanda - la risposta usa lo stesso numero
 - **flag**:
 	- *domanda o risposta*
 	- *richiesta di ricorsione*
 	- *ricorsione disponibile*
 	- *risposta di competenza* (il server è competente per il nome richiesto)
-- **numero** --> numero di occorrenze delle quattro sezioni di tipo di dati che seguono (numero di domande/di RR di risposta ecc.)
+- **numero** ⟶ numero di occorrenze delle quattro sezioni di tipo di dati che seguono (numero di domande/di RR di risposta ecc.)
 - nel **corpo** del messaggio si hanno:
-	- **domande** --> campi per il nome richiesto e il tipo di domanda
-	- **risposte** -> RR nella risposta alla domanda (più RR nel caso di server replicato)
-	- **competenze** --> record per i server di competenza
+	- **domande** ⟶ campi per il nome richiesto e il tipo di domanda
+	- **risposte** ⟶ RR nella risposta alla domanda (più RR nel caso di server replicato)
+	- **competenze** ⟶ record per i server di competenza
 	- **informazioni aggiuntive** che possono essere usate
 		- nel caso di una risposta `MX`, il campo di risposta contiene il record MX con il nome canonico del server di posta, mentre la sezione aggiuntiva contiene un record di tipo `A` con l'indirizzo IP relativo all'hostname canonico del server di posta
 

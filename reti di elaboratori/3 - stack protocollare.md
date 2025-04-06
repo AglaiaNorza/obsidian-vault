@@ -1,6 +1,6 @@
 ---
 created: 2025-03-18T14:49
-updated: 2025-04-01T18:02
+updated: 2025-04-06T15:00
 ---
 > [!info] protocollo
 > Un **protocollo** definisce le regole che il mittente, il destinatario e tutti i sistemi intermedi coinvolti devono rispettare per essere in grado di comunicare.
@@ -82,8 +82,8 @@ Esistono tre diversi paradigmi per la gestione dei servizi:
 ##### paradigma client-server
 Il ruolo delle due entità è totalmente differente: non è possibile eseguire un client come programma server e viceversa. Infatti
 
-- il **client** --> *richiede* i servizi, e va in esecuzione solo quando il servizio è necessario (di solito ci sono numerosi client che richiedono i servizi)
-- il **server** --> è il *fornitore* dei servizi, ed è sempre in esecuzione, in attesa di richieste dal client (c'è un numero limitato di processi server pronti ad offrire uno specifico servizio)
+- il **client** ⟶ *richiede* i servizi, e va in esecuzione solo quando il servizio è necessario (di solito ci sono numerosi client che richiedono i servizi)
+- il **server** ⟶ è il *fornitore* dei servizi, ed è sempre in esecuzione, in attesa di richieste dal client (c'è un numero limitato di processi server pronti ad offrire uno specifico servizio)
 
 >[!bug] svantaggi
 >- il carico della comunicazione è concentrato sul server, che deve quindi essere molto potente
@@ -91,19 +91,19 @@ Il ruolo delle due entità è totalmente differente: non è possibile eseguire u
 >- costi di gestione per offrire servizio
 ### altri livelli
 
-**Trasporto** --> trasferimento dei messaggi dal livello applicazione di un client a quello di un server
+**Trasporto** ⟶ trasferimento dei messaggi dal livello applicazione di un client a quello di un server
 - protocolli: TCP affidabile, UDP non affidabile (l'affidabilità fa riferimento a correttezza e ordine di arrivo)
 - i pacchetti sono chiamati *segmenti*
 
-**Rete** --> instradamento dei segmenti dall'origine alla destinazione
+**Rete** ⟶ instradamento dei segmenti dall'origine alla destinazione
 - IP, protocolli di instradamento
 - pacchetti: *datagrammi*
 
-**Link** (hardware) --> trasmissione di datagrammi da un nodo a quello successivo sul percorso
+**Link** (hardware) ⟶ trasmissione di datagrammi da un nodo a quello successivo sul percorso
 - Ethernet, Wi-Fi, PPP (lungo un percorso sorgente-destinazione, un datagramma può essere gestito da protocolli diversi)
 - pacchetti: *frame*
 
-**Fisico** --> trasferimento dei singoli bit
+**Fisico** ⟶ trasferimento dei singoli bit
 
 >[!tip] comunicazione in una internet
 >
@@ -146,8 +146,8 @@ La sorgente effettua l'**incapsulamento**: prende il pacchetto dal livello super
 ### multiplexing e demultiplexing
 Dato che lo stack protocollare TCP/IP prevede più protocolli in uno stesso livello, è necessario eseguire il **multiplexing** alla sorgente e il **demultiplexing** alla destinazione.
 
-- **multiplexing** --> un protocollo può incapsulare (uno alla volta) i pacchetti ottenuti da più protocolli di livello superiore
-- **demultiplexing** --> un protocollo può decapsulare e consegnare i pacchetti a più protocolli del livello superiore
+- **multiplexing** ⟶ un protocollo può incapsulare (uno alla volta) i pacchetti ottenuti da più protocolli di livello superiore
+- **demultiplexing** ⟶ un protocollo può decapsulare e consegnare i pacchetti a più protocolli del livello superiore
 
 ![[mux-demux.png|center|500]]
 
