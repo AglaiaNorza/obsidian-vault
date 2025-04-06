@@ -1,9 +1,13 @@
 ---
 created: 2025-03-20T14:18
-updated: 2025-04-06T12:37
+updated: 2025-04-06T14:54
 ---
 ## connessione logica
 I protocolli di trasporto forniscono la **comunicazione logica** tra processi applicativi di host differenti.
+- gli host eseguono processi *come se fossero direttamente connessi* 
+
+I protocolli di trasporto vengono eseguiti nei **sistemi terminali**:
+- **lato invio** ⟶ incapsula i messaggi in segmenti e li
 
 Per stabilire una comunicazione tra due processi, è necesario un metodo per individuare:
 - host locale
