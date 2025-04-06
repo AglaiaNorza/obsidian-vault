@@ -1,6 +1,6 @@
 ---
 created: 2025-04-05T19:49
-updated: 2025-04-06T11:47
+updated: 2025-04-06T11:56
 ---
 # introduzione
 
@@ -261,5 +261,5 @@ La precedenza degli operatori segue il PEMDAS (Parentheses, Exponents, Multiplic
 
 - C permette di abbreviare gli assegnamenti: `d = d-4` è equivalente a `d -= 4`
 - esistono anche:
-	- il *pre-incremento*: `x++` (usa prima il valore di `x` e poi lo incrementa) 
-	- il *post-incremento*: `++x` (incrementa il valore di `x` prima di usarlo)
+	- il *post-incremento*: `x++` (usa prima il valore di `x` e poi lo incrementa) 
+	- il *pre-incremento*: `++x` (incrementa il valore di `x` prima di usarlo)
