@@ -1,6 +1,6 @@
 ---
 created: 2025-04-05T19:49
-updated: 2025-04-06T10:28
+updated: 2025-04-06T11:47
 ---
 # introduzione
 
@@ -24,7 +24,6 @@ Le fasi di *esecuzione* sono invece:
 
 ## il linguaggio C
 - è un linguaggio di *alto livello*: un programma è un insieme di istruzioni
-
 ### struttura di un programma C
 In C è *obbligatoria* la presenza di una **main function**.
 - main function e functions possono anche risiedere in diversi file `.c`
@@ -208,6 +207,7 @@ printf("format_string", value-list);
 - `format_string` deve contenere dei *placeholder*; ogni placeholder inizia con `%` e serve a specificare il tipo di dato della variabile che si troverà al suo posto
 - `value_list` può contenere sequenze di caratteri, variabili, costanti ed espressioni logico-matematiche
 - `printf` riceve valori, ma C permette di manipolare anche indirizzi di memoria e passarli come input a funzioni (anche se, per stampare il contenuto di una locazione di memoria, si usa `scanf`)
+- `printf` restituisce il *numero di caratteri stampati*
 
 > [!summary] placeholder comuni
 > - `%d` o `%i` per integer, `%l` per long
@@ -215,6 +215,7 @@ printf("format_string", value-list);
 > - `%f`, `%e`, `%g` per float (f - formato standard, e - notazione scientifica, g - sceglie automaticamente il formato migliore tra f ed e)
 > - `%lf` per double
 
+>[!tip] formato completo di un placeholder: `%[parameter][flags][width][.precision][length]type` ([per saperne di più](https://en.wikipedia.org/wiki/Printf_format_string))
 
 Possiamo controllare la spaziatura orizzontale e verticale della `printf` usando sequenze di escape `\`
 
@@ -235,3 +236,30 @@ Possiamo controllare la spaziatura orizzontale e verticale della `printf` usando
 | `\xhh`          | Hexadecimal Number | It represents the hexadecimal number.                                                  |
 | `\0`            | NULL               | It represents the NULL character.                                                      |
 #### input
+Per prendere input da terminale, si usa la funzione `scanf`. La sua sintassi è:
+```C
+scanf(format-string, address-list)
+```
+- `format-string` contiene placeholder che comunicano a `scanf` il tipo di dato in cui la stringa in input viene convertita
+- `address-list` contiene gli indirizzi di memoria in cui devono essere memorizzati i valori in input
+
+>[!example] esempio 
+>```C
+> scanf("%d", &peso);
+>```
+>- `peso` è una variabile intera - `&` estrae il suo indirizzo di memoria e lo passa a `scanf`
+
+`scanf` restituisce il *numero di valori letti in input*.
+### operatori
+- aritmetici: `+, -, *, /, %`
+- relazionali: `==, !=, <, <=, >, >=`
+- logici: `!, &&, ||`
+- bitwise: `&, |, ~, ^`
+- shift: `<<, >>`
+
+La precedenza degli operatori segue il PEMDAS (Parentheses, Exponents, Multiplication and Division, Addition and Substraction).
+
+- C permette di abbreviare gli assegnamenti: `d = d-4` è equivalente a `d -= 4`
+- esistono anche:
+	- il *pre-incremento*: `x++` (usa prima il valore di `x` e poi lo incrementa) 
+	- il *post-incremento*: `++x` (incrementa il valore di `x` prima di usarlo)
