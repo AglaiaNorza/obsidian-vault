@@ -1,7 +1,10 @@
 ---
 created: 2025-03-20T14:18
-updated: 2025-04-01T18:02
+updated: 2025-04-06T12:37
 ---
+## connessione logica
+I protocolli di trasporto forniscono la **comunicazione logica** tra processi applicativi di host differenti.
+
 Per stabilire una comunicazione tra due processi, è necesario un metodo per individuare:
 - host locale
 - host remoto
