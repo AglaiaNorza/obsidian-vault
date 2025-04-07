@@ -1,6 +1,6 @@
 ---
 created: 2025-04-05T18:10
-updated: 2025-04-05T19:37
+updated: 2025-04-07T13:21
 ---
 ## raffinamento dei requisiti
 1) Officine
@@ -23,7 +23,7 @@ updated: 2025-04-05T19:37
 	2) veicoli ( vedi 5 )
 	3) data e ora di accettazione
 	4) data e ora di consegna (se terminate)
-5) Veicoli
+5) VeicoliStringa
 	1) modello
 	2) tipo
 	3) targa
@@ -37,6 +37,7 @@ updated: 2025-04-05T19:37
 ![[Officine1.png|center]]
 
 ### specifica dei tipi di dato
+- Indirizzo : (via : Stringa, Civico : Intero > 0, CAP : Intero > 0)
 - CF: come da standard
 - NumeroTelefono: come da standard
 - Targa: come da standard
@@ -68,5 +69,5 @@ Ogni istanza di questa classe rappresenta un dipendente.
 - l'operazione non modifica il livello estensionale
 - il valore del risultato "result" è definito così:
 	- sia D il valore dell'attributo "anno_assunzione" del link "dip_officina" che coinvolge "this" e "o"
-	- sia A l'anno di "adesso" ???
+	- sia A l'anno di "adesso"
 	- "result" = A - D
