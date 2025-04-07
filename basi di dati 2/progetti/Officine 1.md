@@ -1,6 +1,6 @@
 ---
 created: 2025-04-05T18:10
-updated: 2025-04-07T13:21
+updated: 2025-04-07T14:38
 ---
 ## raffinamento dei requisiti
 1) Officine
@@ -71,3 +71,18 @@ Ogni istanza di questa classe rappresenta un dipendente.
 	- sia D il valore dell'attributo "anno_assunzione" del link "dip_officina" che coinvolge "this" e "o"
 	- sia A l'anno di "adesso"
 	- "result" = A - D
+
+### specifica della classe rip_terminata
+Ogni istanza di questa classe rappresenta una riparazione terminata.
+
+**data_fine(): Data**
+
+*pre-condizioni*:
+- nessuna
+
+*post-condizioni*:
+- l'operazione non modifica il livello estensionale
+- il valore del risultato "result" è definito così:
+	- sia D il valore dell'attributo "this.data_accettazione"
+	- sia G il valore dell'attributo "this.durata_giorni"
+	- result = D + G
