@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-04-07T17:25
+updated: 2025-04-07T18:50
 ---
 >[!info] overview
 >- è un protocollo **orientato alla connessione**: è richiesto un *setup* tra i processi client e server.
@@ -54,3 +54,39 @@ Il controllo del flusso viene realizzato tramite:
 	- il livello trasporto del mittente segnala al livello applicazione di sospendere l'invio di messaggi quando il buffer è pieno, e segnala di riprendere quando si libera spazio
 	- il livello trasporto del destinatario fa la stessa cosa con il livello trasporto del mittente
 
+## controllo degli errori
+L'affidabilità deve essere implementata a livello di trasporto, perché il livello di rete è inaffidabile. 
+Per avere un servizio di trasporto affidabile, è necessario implementare un **controllo degli errori** sui pacchetti, che possa:
+- rilevare e scartare pacchetti corrotti
+- tenere traccia dei pacchetti persi e gestirne il rinvio
+- riconoscere pacchetti duplicati e scartarli
+- bufferizzare i pacchetti fuori sequenza finché arrivano i pacchetti mancanti
+
+>[!tip] i messaggi scambiati tra livelli sono esenti da errori, quindi il controllo degli errori coinvolge solo i livelli trasporto mittente e destinatario
+
+Il mittente deve quindi sapere quali pacchetti ritrasmettere, e il destinatario deve saper riconoscere pacchetti duplicati e fuori sequenza. Per riuscirci, si introducono:
+- un **numero di sequenza** per ogni pacchetto (con numerazione sequenziale)
+- un **numero di riscontro** (ack), che permette di notificare al mittente la corretta ricezione di un pacchetto
+
+## integrazione di controllo di errori e controllo di flusso
+Si combinano i buffer del controllo di flusso e il numero di sequenza e ack del controllo degli errori. 
+
+Quindi, il **mittente**:
+- quando prepara un pacchetto, usa come numero di sequenza il numero $x$ della *prima locazione libera nel buffer*
+- quando invia il pacchetto, ne memorizza una copia nella locazione $x$
+- quando riceve un ack, libera la posizione di memoria che era occupata da quel pacchetto
+
+Il **destinatario**:
+- quando riceve un pacchetto con numero di sequenza $y$, lo memorizza nella locazione $y$ fino a quando il livello applicazione non è pronto a riceverlo
+- quando passa il pacchetto $y$ al livello applicazione, invia un ack al mittente
+
+I numeri di sequenza sono calcolati in modulo $2^m$, e possono essere rappresentati con un cerchio. Il buffer può essere rappresentato tramite un insieme di settori chiamati *sliding windows*, che occupano una parte del cerchio:
+
+![[buffer-cerchio.png|center|500]]
+
+Oppure, può essere rappresentato in maniera lineare:
+
+![[sliding-window.png|center|500]]
+
+## controllo della congestione
+La congestione avviene se il **carico** della rete è superiore alla sua **capacità**. Il controllo della congestione fa sì che questo non avvenga.
