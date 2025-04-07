@@ -1,6 +1,6 @@
 ---
 created: 2025-03-24T09:30
-updated: 2025-04-07T15:19
+updated: 2025-04-07T18:58
 ---
 >[!info] indice
 >- [[1 - introduzione alle reti]]
@@ -13,5 +13,5 @@ updated: 2025-04-07T15:19
 >- [[6 - FTP, Posta Elettronica]]
 >
 >livello trasporto:
->- [[7 - introduzione al livello trasporto]]
+>- [[7 - livello trasporto; introduzione e meccanismi]]
 >- [[7.1 - UDP]]
