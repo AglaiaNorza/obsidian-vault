@@ -1,6 +1,6 @@
 ---
 created: 2025-04-05T18:10
-updated: 2025-04-07T14:38
+updated: 2025-04-07T14:41
 ---
 ## raffinamento dei requisiti
 1) Officine
@@ -41,7 +41,6 @@ updated: 2025-04-07T14:38
 - CF: come da standard
 - NumeroTelefono: come da standard
 - Targa: come da standard
-- CodiceRiparazione: come da standard
 ### specifica della classe Officina
 Ogni istanza di questa classe rappresenta un'officina.
 
