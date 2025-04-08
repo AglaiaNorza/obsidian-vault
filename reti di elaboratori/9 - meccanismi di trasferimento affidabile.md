@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-04-08T12:44
+updated: 2025-04-08T21:50
 ---
 ## stop-and-wait
 Lo stop-and-wait è un meccanismo orientato alla connessione, che implementa controllo del flusso e controllo degli errori.
@@ -42,5 +42,51 @@ Per gestire pacchetti duplicati, stop-and-wait utilizza i numeri di sequenza $0$
 **diagramma di comunicazione**:
 
 ![[diagramma-snw.png|center|450]]
-### efficienza
+
+>[!error] Lo stop-and-wait è inefficiente quando il prodotto $\text{rate} \cdot\text{ritardo}$ (ovvero il numero di bit che il mittente può inviare prima di ricevere un ack) è elevato
+>>[!example] esempio
+>>Se per esempio:
+>>- rate = $1\text{Mbps}$
+>>- ritardo di andata e ritorno di 1 bit = $20\text{ms}$
+>>- pacchetti di dimensione $1000\text{bit}$
+>>
+>>$\text{rate} \cdot\text{ritardo}=(1\times 10^6)\times(20 \times 10^{-3})=20000\text{bit}$
+>>
+>>Il mittente potrebbe quindi inviare $20000\text{bit}$ nel tempo necessario per andare dal mittente al ricevente, ma ne invia solo $1000$ (un solo pacchetto)
+>>
+>>Il coefficiente di utilizzo del canale è $\frac{1000}{20000}=5\%$
+
+## protocolli con pipeline
+Con il **pipelining**, il mittente ammette *più pacchetti* in transito, ancora da notificare.
+- l'intervallo dei numeri di sequenza deve essere incrementato
+- i pacchetti devono essere memorizzati in un buffer presso mittente e/o ricevente
+
+Ci sono due forme generiche di protocolli con pipeline: **go-back-N** e **ripetizione selettiva**.
+
+### go-back-N
+- I **numeri di sequenza** sono calcolati modulo $2^m$ con $m$ dimensione del campo "numero di sequenza" in bit.
+- L'ack indica il numero di sequenza del *prossimo pacchetto atteso*
+- L'ack è **cumulativo**: se si invia un ack, vuol dire che tutti i pacchetti fino al numero di sequenza indicato nell'ack sono stati ricevuti correttamente
+	-  (esempio: ack# = 7 significa che i pacchetti fino al 6 sono stati ricevuti correttamente, e il destinatario attende il 7)
+
+#### finestre di invio e ricezione
+La <u>finestra di invio</u> definisce una porzione immaginaria di dimensione massima $2^m-1$ con tre variabili: $S_{f},\,S_{n},\,S_{\text{size}}$
+- $S_{f}$ rappresenta il **primo pacchetto non riscontrato** (primo = più vecchio)
+- $S_{n}$ rappresenta il **prossimo pacchetto da inviare**
+- $S_{\text{size}}$ rappresenta la **dimensione della finestra di invio**
+
+![[finestrai-gbn.png|center|550]]
+
+La finestra di invio può **scorrere** di una o più posizioni quando viene ricevuto un riscontro privo di errori con $S_{n}> \text{ack\#}\geq S_{f}$ (in aritmetica modulo $2^m$).
+- (ovvero si riceve un ack per un pacchetto con un numero minore di quelli ancora da inviare, e maggiore del primo inviato e non riscontrato (ovvero parte di quelli in sospeso))
+
+>[!example] esempio di scorrimento
+>
+>![[scorrimento-fin.png|center|500]]
+
+La <u>finestra di ricezione</u> ha dimensione 1.
+
+> [!info] schema generale
+>  
+> ![[go-back-n.png|center|500]]
 
