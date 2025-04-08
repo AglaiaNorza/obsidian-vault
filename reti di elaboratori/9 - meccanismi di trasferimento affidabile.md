@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-04-08T21:50
+updated: 2025-04-08T22:26
 ---
 ## stop-and-wait
 Lo stop-and-wait è un meccanismo orientato alla connessione, che implementa controllo del flusso e controllo degli errori.
@@ -84,7 +84,46 @@ La finestra di invio può **scorrere** di una o più posizioni quando viene rice
 >
 >![[scorrimento-fin.png|center|500]]
 
-La <u>finestra di ricezione</u> ha dimensione 1.
+>[!tip] dimensione della finestra di invio
+>La dimensione della finestra di invio deve essere $2^m-1$ perché:
+> 
+> Consideriamo $m=2$. I numeri di sequenza dei pacchetti sono $0,\,1,\,2,\,3$. 
+>
+>Se il mittente ha una finestra di dimensione $2^m-1=2^2-1=3$, allora:
+>- può inviare al massimo 3 pacchetti prima di ricevere un ACK (es. $0,\,1,\,2$).
+>- non potrà mai inviare un pacchetto "nuovo" con lo stesso numero di sequenza di un pacchetto vecchio che è ancora in attesa di ACK, quindi il destinatario saprà sempre distinguere se un pacchetto è nuovo o una copia
+>
+>Invece, con una finestra di dimensione $2^m=4$:
+>- il mittente può inviare i pacchetti $0,1,2,3$ e poi ritrasmettere $0$. Ma il destinatario, che riceve $0$, non può sapere se sia il vecchio pacchetto $0$ mai arrivato o un nuovo pacchetto $0$.
+>
+>![[dim-finestra-gbn.png|center|400]]
+
+
+---- 
+
+La <u>finestra di ricezione</u> ha **dimensione 1**, perché il destinatario è sempre in attesa di uno specifico pacchetto. Qualsiasi pacchetto arrivato fuori sequenza viene scartato.
+
+![[finestrar-gbn.png|center|550]]
+
+La finestra può scorrere di una sola posizione: $R_{n}=(R_{n}+1)mod\; 2^m$
+ 
+> [!tip] timer e rispedizione
+> Il mittente mantiene un **timer** per il più vecchio pacchetto non riscontrato. Allo scadere del timer si ha il "go back N", ovvero **tutti i pacchetti in attesa di riscontro vengono rispediti** (poiché la finestra di ricezione ha dimensione 1, il destinatario non può bufferizzare i pacchetti fuori sequenza)
+
+#### schemi
+>[!info] FSM mittente
+>
+>![[gbn-FSM1.png|center|500]]
+
+>[!info] FSM destinatario
+>
+>![[gbn-FSM2.png|center|500]]
+
+**go-back-N in azione (ack cumulativo)**:
+
+![[gbn-ackcum.png|center|400]]
+
+![[gbn-perso.png|center|400]]
 
 > [!info] schema generale
 >  
