@@ -1,6 +1,6 @@
 ---
 created: 2025-03-20T14:18
-updated: 2025-04-07T11:34
+updated: 2025-04-08T11:13
 ---
 I protocolli di trasporto forniscono la **comunicazione logica** tra processi applicativi di host differenti.
 - gli host eseguono processi *come se fossero direttamente connessi* 
@@ -99,5 +99,3 @@ L'interazione client-server è bidirezionale. È necessaria quindi una coppia di
 >- **socket address remoto** ⟶ è il socket address locale del client che si connette - si trova nel pacchetto di richiesta
 >
 >>[!warning] il socket address locale di un server *non cambia*, mentre il socket address remoto *varia ad ogni interazione* con client diversi o con lo stesso client su connessioni diverse
-
-
