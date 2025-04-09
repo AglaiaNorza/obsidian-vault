@@ -1,12 +1,12 @@
 ---
 created: 2025-03-29T16:36
-updated: 2025-04-01T18:04
+updated: 2025-04-09T21:02
 ---
 Dato un grafo $G$ (diretto o indiretto), vogliamo sapere se esso è ciclico
 
 Un'idea (<u>errata</u>) di partenza potrebbe essere quella di visitare un grafo e, se si incontra un nodo già visitato, interrompere la visita e restituire $\text{True}$ (e, altrimenti, restituire $\text{False}$), ma:
-- non funziona con i grafi indiretti perché in un grafo indiretto, se $(u,v)\in E$, anche $(v,u)\in E$, quindi nella lista di adiacenza di $u$ ci sarà $v$ e viceversa --> ogni arco verrebbe considerato un ciclo e farebbe ritornare True
-- non funziona neanche con alcuni grafi diretti: prendiamo come esempio il grafo $[[1, 2], [], [1] ]$: partendo dal nodo $0$, si visita prima il nodo $1$ (che non ha archi uscenti), e poi il nodo $2$. Ma il nodo $2$ ha un arco uscente verso $1$ (già visitato) --> l'algoritmo ritornerebbe quindi $\text{True}$, nonostante non ci siano cicli.
+- non funziona con i grafi indiretti perché in un grafo indiretto, se $(u,v)\in E$, anche $(v,u)\in E$, quindi nella lista di adiacenza di $u$ ci sarà $v$ e viceversa ⟶ ogni arco verrebbe considerato un ciclo e farebbe ritornare True
+- non funziona neanche con alcuni grafi diretti: prendiamo come esempio il grafo $[[1, 2], [], [1] ]$: partendo dal nodo $0$, si visita prima il nodo $1$ (che non ha archi uscenti), e poi il nodo $2$. Ma il nodo $2$ ha un arco uscente verso $1$ (già visitato) ⟶ l'algoritmo ritornerebbe quindi $\text{True}$, nonostante non ci siano cicli.
 - ![[graph-es1.png|150]]
 
 ### algoritmo per grafi indiretti

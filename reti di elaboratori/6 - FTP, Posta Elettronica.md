@@ -1,6 +1,6 @@
 ---
 created: 2025-03-21T15:06
-updated: 2025-04-05T16:52
+updated: 2025-04-09T21:02
 ---
 ## FTP
 L'FTP (File Transfer Protocol) è un programma di trasferimento di file da/a un host remoto.
@@ -48,7 +48,7 @@ La connessione di controllo si occupa delle informazioni di **controllo del tras
 #### connessione dati
 Si occupa del trasferimento dei file.
 - aperta dal server quando riceve un comando per trasferire file (es. `get`, `put`) sulla **porta 20**
-- la connessione viene chiusa (dal server) dopo il trasferimento dati --> si crea *una nuova connessione per ogni file trasferito* all'interno della sessione
+- la connessione viene chiusa (dal server) dopo il trasferimento dati ⟶ si crea *una nuova connessione per ogni file trasferito* all'interno della sessione
 
 >[!error] è una connessione **non persistente**
 
@@ -103,11 +103,11 @@ Le risposte sono composte da un numero di 3 cifre (codice della risposta) e un t
 
 ## posta elettronica
 La posta elettronica ha tre componenti principali:
-1) **User Agent** ("mail reader") --> usato per scrivere e inviare un messaggio, o per leggerlo
+1) **User Agent** ("mail reader") ⟶ usato per scrivere e inviare un messaggio, o per leggerlo
 	- viene attivato dall'utente o da un timer, e informa l'utente se c'è una nuova mail
 	- si occupa anche di composizione, editing, lettura dei messaggi
 	- (esempi: Outlook, Thunderbird..)
-2) **Message Transfer Agent** --> (lato server) usato per trasferire il messaggio attraverso Internet
+2) **Message Transfer Agent** ⟶ (lato server) usato per trasferire il messaggio attraverso Internet
 	- composto da una **mailbox** con i messaggi in arrivo e da una **coda dei messaggi** da trasmettere (eseguirà tentativi ogni x minuti per alcuni giorni)
 
 >[!tip] comunicazione tra MTA
@@ -115,7 +115,7 @@ La posta elettronica ha tre componenti principali:
 >
 >![[SMTP-MTA.png|center|300]]
 
-3) **Message Access Agent** --> usato per leggere le mail in arrivo
+3) **Message Access Agent** ⟶ usato per leggere le mail in arrivo
 
 >[!example] posta elettronica: scenario classico
 > 

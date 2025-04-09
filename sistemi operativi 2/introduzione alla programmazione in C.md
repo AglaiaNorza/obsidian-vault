@@ -1,6 +1,6 @@
 ---
 created: 2025-04-05T19:49
-updated: 2025-04-06T11:56
+updated: 2025-04-09T21:02
 ---
 # introduzione
 
@@ -137,10 +137,10 @@ Le variabili globali si dichiarano fuori dalle funzioni, i parametri nell'header
 >##### a inizio funzione
 >**vantaggi**:
 >- historical context (era una convenzione)
->- memory allocation --> il compilatore alloca la memoria per tutte le variabili una sola volta (più efficiente)
->- scope visibility --> lo scope delle variabili è più chiaro e prevedibile
->- error prevention --> si evitano errori legati all'uso di variabili prima della loro dichiarazione
->- code clarity --> il codice è più leggibile
+>- memory allocation ⟶ il compilatore alloca la memoria per tutte le variabili una sola volta (più efficiente)
+>- scope visibility ⟶ lo scope delle variabili è più chiaro e prevedibile
+>- error prevention ⟶ si evitano errori legati all'uso di variabili prima della loro dichiarazione
+>- code clarity ⟶ il codice è più leggibile
 >
 >**svantaggi**:
 >- è meno chiaro quando le variabili vengano utilizzate per la prima volta
@@ -188,9 +188,9 @@ L'assegnazione di un valore ad una variabile può essere fatta:
 - l tipo `char` può essere assegnato un carattere [ASCII](https://www.ascii-code.com/) attraverso le single quote: al posto di`char c = 97;`, si può scrivere `char c = 'a';`
 #### booleani
 Esistono due tipi di dati per rappresentare valori booleani:
-- `_Bool` --> può memorizzare solo `0` e `1`
+- `_Bool` ⟶ può memorizzare solo `0` e `1`
 	- qualsiasi valore diverso da `0` verrà memorizzato come `1`
-- `bool` --> memorizza `true` e `false`
+- `bool` ⟶ memorizza `true` e `false`
 	- richiede l'uso di `<stdbool.h>`
 
 In ogni espressione logica, `0` significa `false` e `1` o <u>diverso da zero</u> significa `true`.

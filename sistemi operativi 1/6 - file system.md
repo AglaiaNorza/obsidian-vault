@@ -1,3 +1,7 @@
+---
+created: 2024-11-24T17:06
+updated: 2025-04-09T21:01
+---
 ## visione d'insieme
 I **file** sono l'elemento principale per la maggior parte delle applicazione (fanno spesso da input e output). 
 - "sopravvivono" ai processi (a differenza della RAM dei processi, che viene sovrascritta)
@@ -97,14 +101,14 @@ Gli **elementi** di una directory sono:
 	- tipo del file
 	- organizzazione del file (per sistemi che supportano diverse possibili organizzazioni)
 2) *informazioni sull'indirizzo*:
-	- volume --> dispositivo su cui il file è memorizzato
+	- volume ⟶ dispositivo su cui il file è memorizzato
 	- indirizzo di partenza (da quale traccia o disco)
 	- dimensione attuale (in byte, word o blocchi)
-	- dimensione allocata --> dimensione massima del file
+	- dimensione allocata ⟶ dimensione massima del file
 3) *controllo di accesso*:
-	- proprietario --> può concedere e negare i permessi ad altri utenti, e cambiare tali impostazioni
-	- informazioni sull'accesso --> potrebbe contenere username e password per ogni utente autorizzato a leggere/scrivere
-	- azioni permesse --> per controllare lettura, scrittura, esecuzione, spedizione tramite rete
+	- proprietario ⟶ può concedere e negare i permessi ad altri utenti, e cambiare tali impostazioni
+	- informazioni sull'accesso ⟶ potrebbe contenere username e password per ogni utente autorizzato a leggere/scrivere
+	- azioni permesse ⟶ per controllare lettura, scrittura, esecuzione, spedizione tramite rete
 4) *informazioni sull'uso*:
 	- data di creazione
 	- identità del creatore
@@ -164,8 +168,8 @@ Per questo l'**allocazione dinamica** è quasi sempre preferita:
 - la dimensione del file viene aggiustata in base alle syscall `append` e `truncate`
 ### dimensione delle porzioni
 Per decidere la dimensione delle porzioni si hanno due opzioni agli estremi:
-1) si alloca una *porzione larga abbastanza per l'intero file* --> opzione efficiente per il processo che vuole creare il file (viene allocata memoria contigua)
-2) si alloca *un blocco alla volta* --> efficiente per il Sistema Operativo che deve gestire molti file
+1) si alloca una *porzione larga abbastanza per l'intero file* ⟶ opzione efficiente per il processo che vuole creare il file (viene allocata memoria contigua)
+2) si alloca *un blocco alla volta* ⟶ efficiente per il Sistema Operativo che deve gestire molti file
 	- ciascun blocco è una sequenza di $n$ settori contigui, con $n$ fisso e piccolo (spesso =1)
 
 Si cerca quindi un trade-off tra efficienza del singolo file e del sistema:
@@ -290,8 +294,8 @@ Sono quindi un insieme di settori in memoria secondaria che possono essere usati
 - un volume può essere l'unione di volumi più piccoli
 ### dati e metadati
 >[!info] info
->- dati --> **contenuto** dei file
->- metadati --> lista di blocchi liberi, lista di blocchi all'interno dei file, data di ultima modifica ecc.
+>- dati ⟶ **contenuto** dei file
+>- metadati ⟶ lista di blocchi liberi, lista di blocchi all'interno dei file, data di ultima modifica ecc.
 
 I metadati, come i dati, si devono trovare su disco (perché devono essere persistenti), ma, per efficienza, vengono tenuti anche in memoria principale.
 Però, mantenere consistenti i metadati in memoria principale e su disco è inefficiente - si fa quindi di tanto in tanto, quando il disco è poco usato, e con più aggiornamenti insieme.
@@ -315,9 +319,9 @@ Se al reboot il bit di shutdown è `0`:
 2) si correggono le inconsistenze nel file system basandosi sulle operazioni salvate nel journal
 
 Ci sono due tipi di journaling:
-- **fisico** --> copia nel journal tutti i blocchi che dovranno essere scritti nel file system, inclusi i metadati
+- **fisico** ⟶ copia nel journal tutti i blocchi che dovranno essere scritti nel file system, inclusi i metadati
 	- nel caso di crash, basta copiare il contenuto del journal nel file system al boot successivo
-- **logico** --> copia nel journal soltanto i metadati delle operazioni effettuate
+- **logico** ⟶ copia nel journal soltanto i metadati delle operazioni effettuate
 	- nel caso di crash, si copiano i metadati dal journal al file system, ma si rischia la corruzione di dati (per esempio un append modifica la lunghezza, ma i contenuti aggiunti sono andati persi perché non salvati nel journal)
 
 #### alternative al journaling
@@ -380,9 +384,9 @@ Gli hardlink sono invece puntatori diretti al descrittore del file originale (es
 ![[UNIX-volume.png|center|400]]
 
 (manca i-node list)
-- **boot sector** --> simile al blocco di boot per FAT (vedi [[6 - file system#FAT|sotto]]) - contiene informazioni e dati necessari per il bootstrap
-- **superblock** --> contiene informazioni sui metadati del filesystem, e ce ne sono copie ridondanti (in gruppi di blocchi sparsi del fs, tranne la prima copia, che è sempre in una parte prefissata) in caso di corruzione
-- **i-list** --> lista numerata di i-node (un i-node per ogni file salvato nel sistema). Ciascun i-node nella lista punta ai blocchi dei file nella sezione data del volume
+- **boot sector** ⟶ simile al blocco di boot per FAT (vedi [[6 - file system#FAT|sotto]]) - contiene informazioni e dati necessari per il bootstrap
+- **superblock** ⟶ contiene informazioni sui metadati del filesystem, e ce ne sono copie ridondanti (in gruppi di blocchi sparsi del fs, tranne la prima copia, che è sempre in una parte prefissata) in caso di corruzione
+- **i-list** ⟶ lista numerata di i-node (un i-node per ogni file salvato nel sistema). Ciascun i-node nella lista punta ai blocchi dei file nella sezione data del volume
 ### kernel e i-node
 Il Kernel UNIX usa due strutture di controllo separate per gestire file aperti e descrittori i-node:
 - puntatore a descrittori dei file attualmente in uso, salvato nel PCB
@@ -391,16 +395,16 @@ Il Kernel UNIX usa due strutture di controllo separate per gestire file aperti e
 ![[kernel-inode.png|center|300]]
 ### linux
 Linux, nativamente, supporta:
-- ext2 --> dai file system Unix originari
-- ext3 --> ext2 + journaling
-- ext4 --> ext3 in grado di memorizzare singoli file >2TB e file system >16TB
+- ext2 ⟶ dai file system Unix originari
+- ext3 ⟶ ext2 + journaling
+- ext4 ⟶ ext3 in grado di memorizzare singoli file >2TB e file system >16TB
 
 Ha inoltre pieno supporto per gli i-node, memorizzati nella parte iniziale del file system.
 Permette anche di leggere altri file system, come quelli di Windows.
 ## gestione dei file su windows
 Su Windows esistono due tipi di file system:
-- FAT - file system vecchio (da MS-DOS) --> allocazione concatenata con blocchi (cluster) di dimensione fissa
-- NTFS - file system nuovo --> allocazione con bitmap, con blocchi (cluster) di dimensione fissa
+- FAT - file system vecchio (da MS-DOS) ⟶ allocazione concatenata con blocchi (cluster) di dimensione fissa
+- NTFS - file system nuovo ⟶ allocazione con bitmap, con blocchi (cluster) di dimensione fissa
 ### FAT
 - sta per File Allocation Table
 
@@ -418,7 +422,7 @@ contiene informazioni necessarie per l'accesso al volume:
 - tipo e puntatore alle altre sezioni del volume
 - bootloader del sistema operativo in BIOS/MBR
 ##### regione FAT
-contiene due copie della file allocation table, sincronizzate ad ogni scrittura su disco --> ridondanza utile in caso di corruzione
+contiene due copie della file allocation table, sincronizzate ad ogni scrittura su disco ⟶ ridondanza utile in caso di corruzione
 - mappa il contenuto della regione dati, indicando a quali directory/file i diversi cluster appartengono
 ##### regione root directory
 E’ una *directory table* che contiene tutti i file entry per la directory root di sistema (che ha dimensione fissa e limitata in FAT12 e FAT16). Contiene quindi tutti i metadati dei file (nome, timestamp, dimensione, ecc.)
@@ -464,13 +468,13 @@ Il valore dell'attributo può essere incluso direttamente nel record (**attribut
 
 > [!summary] record
 > I primi 27 record sono riservati per i metadati del file system:
-> - record 0 --> descrive l’MFT stesso (tutti i file nel volume)
-> - record 1 --> contiene una copia non residente dei primi record dell’MFT  
-> - record 2 --> contiene le informazioni di journaling (metadata-only)
-> - record 3 --> contiene le informazioni sul volume (id, label, versione FS, ecc.)
-> - record 4 --> tabella degli attributi usati nell’MFT
-> - record 5 --> directory principale del volume - contiene i puntatori ai record della MFT che rappresentano file e directory nella root del volume
-> - record 6 --> definisce la lista dei blocchi liberi usando una *bitmap*
+> - record 0 ⟶ descrive l’MFT stesso (tutti i file nel volume)
+> - record 1 ⟶ contiene una copia non residente dei primi record dell’MFT  
+> - record 2 ⟶ contiene le informazioni di journaling (metadata-only)
+> - record 3 ⟶ contiene le informazioni sul volume (id, label, versione FS, ecc.)
+> - record 4 ⟶ tabella degli attributi usati nell’MFT
+> - record 5 ⟶ directory principale del volume - contiene i puntatori ai record della MFT che rappresentano file e directory nella root del volume
+> - record 6 ⟶ definisce la lista dei blocchi liberi usando una *bitmap*
 > 
 > Dal record 28 in poi ci sono i descrittori dei file normali.
 > 
