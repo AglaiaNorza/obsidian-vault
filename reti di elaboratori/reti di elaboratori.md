@@ -1,6 +1,6 @@
 ---
 created: 2025-03-24T09:30
-updated: 2025-04-08T12:40
+updated: 2025-04-09T21:00
 ---
 >[!info] indice
 >- [[1 - introduzione alle reti]]
@@ -15,3 +15,4 @@ updated: 2025-04-08T12:40
 >livello trasporto:
 >- [[7 - livello trasporto]]
 >- [[8 - UDP]]
+>- [[9 - meccanismi di trasferimento affidabile]]
