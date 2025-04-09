@@ -1,3 +1,7 @@
+---
+created: 2025-03-10T10:51
+updated: 2025-04-09T21:03
+---
 ## verificare se un grafo diretto ha un pozzo universale
 In questo caso, è più comodo utilizzare la rappresentazione tramite matrice - essa ci permette infatti di risolvere il problema in $\Theta(n)$. 
 
@@ -10,8 +14,8 @@ M[i][j] = \begin{cases} 1 & i \ \text{ non è pozzo } \\ 0 & j \ \text{ non è p
 
 $$
 
-- se $M[i][j]==1$, sicuramente so che $i$ (la riga, ovvero il nodo da cui l'arco parte) non è un pozzo --> infatti, c'è un arco che parte da esso
-- se $M[i][j]==0$, so che $j$ non è pozzo universale --> non c'è un arco entrante in $j$ (ma potremmo trovarci nella situazione $(2,2)$ dell'esempio, quindi non escludiamo $i$)
+- se $M[i][j]==1$, sicuramente so che $i$ (la riga, ovvero il nodo da cui l'arco parte) non è un pozzo ⟶ infatti, c'è un arco che parte da esso
+- se $M[i][j]==0$, so che $j$ non è pozzo universale ⟶  non c'è un arco entrante in $j$ (ma potremmo trovarci nella situazione $(2,2)$ dell'esempio, quindi non escludiamo $i$)
 
 Quindi, una soluzione sarebbe:
 ```python

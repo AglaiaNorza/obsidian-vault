@@ -1,3 +1,7 @@
+---
+created: 2024-09-12T14:48
+updated: 2025-04-09T21:03
+---
 
 per poter implementare la pipeline all'interno di una CPU MIPS, per permettere il **forwarding** è necessario inserire dei registri tra le unità funzionali, per poterci inserire dati e utilizzarli quando necessari.
 ![[registri pipeline.jpg|center|400]]
@@ -117,8 +121,8 @@ così, la jump anticipata non introduce stalli
 
 ##### control hazard
 l'istruzione `beq` usa la ALU per fare il confronto tra i registri, per cui:
-- il salto avviene dopo la fase EXE (nella fase MEM) --> in caso di salto, le istruzioni seguenti già caricate vanno annullate
-- necessita degli argomenti nella fase EXE --> può aver bisogno di uno stallo se preceduta da una `lw`
+- il salto avviene dopo la fase EXE (nella fase MEM) ⟶ in caso di salto, le istruzioni seguenti già caricate vanno annullate
+- necessita degli argomenti nella fase EXE ⟶ può aver bisogno di uno stallo se preceduta da una `lw`
 
 per **anticipare la decisione di salto** alla fase ID, occorre *non usare la ALU*
 - inserendo un *comparatore* tra i due argomenti letti dal blocco registri
