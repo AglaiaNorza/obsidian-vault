@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-04-08T22:26
+updated: 2025-04-09T20:01
 ---
 ## stop-and-wait
 Lo stop-and-wait è un meccanismo orientato alla connessione, che implementa controllo del flusso e controllo degli errori.
@@ -98,7 +98,6 @@ La finestra di invio può **scorrere** di una o più posizioni quando viene rice
 >
 >![[dim-finestra-gbn.png|center|400]]
 
-
 ---- 
 
 La <u>finestra di ricezione</u> ha **dimensione 1**, perché il destinatario è sempre in attesa di uno specifico pacchetto. Qualsiasi pacchetto arrivato fuori sequenza viene scartato.
@@ -119,13 +118,24 @@ La finestra può scorrere di una sola posizione: $R_{n}=(R_{n}+1)mod\; 2^m$
 >
 >![[gbn-FSM2.png|center|500]]
 
-**go-back-N in azione (ack cumulativo)**:
+>[!example]- go-back-N in azione (perso pacchetto dati):
+>
+>![[gbn-perso.png|center|400]]
 
-![[gbn-ackcum.png|center|400]]
+### ripetizione selettiva
+Il problema principale di go-back-n è che, se si perde un solo pacchetto, è necessario ritrasmettere tutti i successivi già inviati. Nella **ripetizione selettiva**, il mittente ritrasmette soltanto i **pacchetti per cui non ha ricevuto un ack**.
+- il mittente mantiene un timer per ogni pacchetto non riscontrato
 
-![[gbn-perso.png|center|400]]
+Il ricevente invia riscontri specifici per tutti i pacchetti ricevuti correttamente (in ordine o anche fuori sequenza) e, se necessario, mantiene un buffer dei pacchetti per eventuali consegne in sequenza al livello superiore.
 
-> [!info] schema generale
->  
-> ![[go-back-n.png|center|500]]
+>[!info] schema generale
+>
+>![[ripetizione-selettiva.png|center|500]]
+#### invio e ricezione
+Le finestre di invio e di ricezione hanno la stessa dimensione.
+- il destinatario conferma individualmente
+
+
+
+
 
