@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-04-09T20:01
+updated: 2025-04-09T20:59
 ---
 ## stop-and-wait
 Lo stop-and-wait è un meccanismo orientato alla connessione, che implementa controllo del flusso e controllo degli errori.
@@ -132,10 +132,48 @@ Il ricevente invia riscontri specifici per tutti i pacchetti ricevuti correttame
 >
 >![[ripetizione-selettiva.png|center|500]]
 #### invio e ricezione
-Le finestre di invio e di ricezione hanno la stessa dimensione.
-- il destinatario conferma individualmente
+Le finestre di invio e di ricezione hanno la **stessa dimensione**.
+
+![[sel-rep-finestrainvio.png|center|500]]
+ 
+- la finestra di invio può muoversi solo quando c'è una *sequenza in ordine di pacchetti confermati* (quindi, in questo esempio, aspetta almeno $0$ e $1$)
+- c'è un **timer per ogni pacchetto** in attesa di riscontro - quando scade, si rinvia solo quel pacchetto
+
+![[sel-rep-finestraric.png|center|500]]
+
+- l'ack non è cumulativo ma **individuale**: indica il numero di sequenza di un pacchetto ricevuto correttamente (e non il prossimo atteso: non avrebbe senso per questo modello)
+
+>[!info] FSM mittente
+>
+>![[FSM-selrep-mit.png|center|500]]
 
 
+>[!info] FSM destinatario
+>
+>![[FSM-selrep-dest.png|center|500]]
 
+#### dimensione delle finestre
+Per questo meccanismo, la dimensione delle finestre non può essere $2^m-1$, ma deve essere $2^{m-1}$.
 
+> [!example] esempio esplicativo
+> Infatti, se si usasse una finestra con dimensione $2^m-1$, potrebbe accadere una situazione come questa:
+> - il mittente spedisce i pacchetti $0,\,1,\,2$, che vengono ricevuti correttamente (quindi la finestra di accettazione scorre)
+> - gli ack vengono però persi, quindi il mittente pensa di doverli rispedire
+> - il mittente rispedisce quindi il pacchetto $0$, che viene erroneamente accettato come il primo della sequenza successiva
+>
+> ![[dim-fin1.png|center|400]]
+> 
+> Invece, con una finestra di dimensione $2^{m-1}$, anche se la finestra scorresse, il pacchetto verrebbe correttamente scartato:
+> 
+> ![[dim-fin2.png|center|350]]
 
+## protocolli bidirezionali: piggybacking
+In realtà, i pacchetti non viaggiano in maniera unidirezionale, ma in entrambe le direzioni. Per migliorare l'efficienza dei protocolli bidirezionali, viene usata la tecnica del **piggybacking**: quando un pacchetto trasporta dati da $A$ a $B$, può trasportare anche i riscontri relativi ai pacchetti ricevuti da $B$ e viceversa.
+
+## riassunto dei meccanismi
+| Meccanismo                      | Uso                               |
+| ------------------------------- | --------------------------------- |
+| checksum                        | per gestire errori nel canale     |
+| acknowledgement                 | per gestire errori nel canale     |
+| timeout                         | ack con errori, perdita pacchetti |
+| finestra scorrevole, pipelining | maggior utilizzo della rete       |
