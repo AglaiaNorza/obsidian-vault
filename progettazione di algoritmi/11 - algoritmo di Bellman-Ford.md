@@ -1,6 +1,6 @@
 ---
 created: 2025-03-29T16:36
-updated: 2025-04-08T17:20
+updated: 2025-04-10T14:47
 ---
 ### introduzione
 Dato un grafo diretto e pesato $G$ in cui i pesi degli archi possono essere *anche negativi* e fissato un suo nodo $s$, si vuole determinare il costo minimo dei cammini che conducono da $s$ a tutti gli altri nodi del grafo.
@@ -90,7 +90,7 @@ La complessità totale è quindi $O(n^2 +n \cdot m)$
 >[!tip] ottimizzazioni
 >1) Se la riga $k$ della tabella $T$ è *uguale* alla riga $k-1$, anche le righe successive non varieranno: in questo caso, conviene terminare l'algoritmo senza calcolare le righe restanti.
 >	- questo accorgimento non migliora il costo asintotico dell'algoritmo ma può fare differenza nella pratica
->1) Non serve memorizzare l'intera tabella $T$: bastano le *ultime due righe*. L'algoritmo può essere facilmente modificato per utilizzare memoria $O(n)$ e non $O(n^2)$
+>2) Non serve memorizzare l'intera tabella $T$: bastano le *ultime due righe*. L'algoritmo può essere facilmente modificato per utilizzare memoria $O(n)$ e non $O(n^2)$
 
 >[!error] trovare cicli negativi
 >Una piccola modifica all'algoritmo permette di scoprire se il grafo contiene **cicli negativi** raggiungibili da $s$.
