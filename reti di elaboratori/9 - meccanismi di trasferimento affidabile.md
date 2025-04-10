@@ -1,23 +1,23 @@
 ---
 created: 2025-04-01
-updated: 2025-04-09T20:59
+updated: 2025-04-10T09:57
 ---
 ## stop-and-wait
 Lo stop-and-wait è un meccanismo orientato alla connessione, che implementa controllo del flusso e controllo degli errori.
 - mittente e destinatario usano una **finestra di scorrimento di dimensione 1**
-- il mittente invia un pacchetto alla volta e ne **attende** l'ack prima di spedire il successivo
+- il mittente invia un pacchetto alla volta e ne **attende** l'ACK prima di spedire il successivo
 - quando il pacchetto arriva al destinatario, viene calcolato il checksum 
 	- se il pacchetto è corrotto, viene scartato *senza informare il mittente*
-- per capire se un pacchetto è andato perso, il mittente usa un **timer** (in quanto non può aspettare all'infinito di ricevere un ack)
-	- se il timer scade e non ha ricevuto un ack, il pacchetto viene rinviato
+- per capire se un pacchetto è andato perso, il mittente usa un **timer** (in quanto non può aspettare all'infinito di ricevere un ACK)
+	- se il timer scade e non ha ricevuto un ACK, il pacchetto viene rinviato
 	- il mittente deve quindi tenere una *copia* del pacchetto spedito fino a quando non riceve il riscontro
 
-Il **controllo degli errori** viene implementato quindi tramite il numero di sequenza e l'utilizzo di ack e timer. Il **controllo del flusso** è intrinseco, in quanto non si spedisce più di un pacchetto alla volta.
+Il **controllo degli errori** viene implementato quindi tramite il numero di sequenza e l'utilizzo di ACK e timer. Il **controllo del flusso** è intrinseco, in quanto non si spedisce più di un pacchetto alla volta.
 
 ### numeri di sequenza e riscontro
 Per gestire pacchetti duplicati, stop-and-wait utilizza i numeri di sequenza $0$ e $1$. 
-- Il numero di riscontro (ack) indica quindi, in *aritmetica modulo 2*, il numero di sequenza del prossimo pacchetto atteso dal destinatario.
-- (se il destinatario ha ricevuto correttamente il pacchetto $0$, invia un ack con valore $1$)
+- Il numero di riscontro (ACK) indica quindi, in *aritmetica modulo 2*, il numero di sequenza del prossimo pacchetto atteso dal destinatario.
+- (se il destinatario ha ricevuto correttamente il pacchetto $0$, invia un ACK con valore $1$)
 
 > [!example] situazioni possibili
 > Supponiamo che il mittente abbia inviato il pacchetto con numero di sequenza
@@ -31,7 +31,7 @@ Per gestire pacchetti duplicati, stop-and-wait utilizza i numeri di sequenza $0$
 >
 >![[snw-FSM-mit.png|center|500]]
 >
->- una volta inviato un pacchetto, il mittente si blocca e aspetta finché non riceve un ack
+>- una volta inviato un pacchetto, il mittente si blocca e aspetta finché non riceve un ACK
 >
 >**destinatario**:
 >
@@ -65,8 +65,8 @@ Ci sono due forme generiche di protocolli con pipeline: **go-back-N** e **ripeti
 
 ### go-back-N
 - I **numeri di sequenza** sono calcolati modulo $2^m$ con $m$ dimensione del campo "numero di sequenza" in bit.
-- L'ack indica il numero di sequenza del *prossimo pacchetto atteso*
-- L'ack è **cumulativo**: se si invia un ack, vuol dire che tutti i pacchetti fino al numero di sequenza indicato nell'ack sono stati ricevuti correttamente
+- L'ACK indica il numero di sequenza del *prossimo pacchetto atteso*
+- L'ACK è **cumulativo**: se si invia un ack, vuol dire che tutti i pacchetti fino al numero di sequenza indicato nell'ACK sono stati ricevuti correttamente
 	-  (esempio: ack# = 7 significa che i pacchetti fino al 6 sono stati ricevuti correttamente, e il destinatario attende il 7)
 
 #### finestre di invio e ricezione
@@ -78,7 +78,7 @@ La <u>finestra di invio</u> definisce una porzione immaginaria di dimensione mas
 ![[finestrai-gbn.png|center|550]]
 
 La finestra di invio può **scorrere** di una o più posizioni quando viene ricevuto un riscontro privo di errori con $S_{n}> \text{ack\#}\geq S_{f}$ (in aritmetica modulo $2^m$).
-- (ovvero si riceve un ack per un pacchetto con un numero minore di quelli ancora da inviare, e maggiore del primo inviato e non riscontrato (ovvero parte di quelli in sospeso))
+- (ovvero si riceve un ACK per un pacchetto con un numero minore di quelli ancora da inviare, e maggiore del primo inviato e non riscontrato (ovvero parte di quelli in sospeso))
 
 >[!example] esempio di scorrimento
 >
@@ -107,7 +107,7 @@ La <u>finestra di ricezione</u> ha **dimensione 1**, perché il destinatario è 
 La finestra può scorrere di una sola posizione: $R_{n}=(R_{n}+1)mod\; 2^m$
  
 > [!tip] timer e rispedizione
-> Il mittente mantiene un **timer** per il più vecchio pacchetto non riscontrato. Allo scadere del timer si ha il "go back N", ovvero **tutti i pacchetti in attesa di riscontro vengono rispediti** (poiché la finestra di ricezione ha dimensione 1, il destinatario non può bufferizzare i pacchetti fuori sequenza)
+> Il mittente mantiene un **timer** per il più vecchio pacchetto non riscontrato. Allo scadere del timer si ha il "go bACK N", ovvero **tutti i pacchetti in attesa di riscontro vengono rispediti** (poiché la finestra di ricezione ha dimensione 1, il destinatario non può bufferizzare i pacchetti fuori sequenza)
 
 #### schemi
 >[!info] FSM mittente
@@ -123,7 +123,7 @@ La finestra può scorrere di una sola posizione: $R_{n}=(R_{n}+1)mod\; 2^m$
 >![[gbn-perso.png|center|400]]
 
 ### ripetizione selettiva
-Il problema principale di go-back-n è che, se si perde un solo pacchetto, è necessario ritrasmettere tutti i successivi già inviati. Nella **ripetizione selettiva**, il mittente ritrasmette soltanto i **pacchetti per cui non ha ricevuto un ack**.
+Il problema principale di go-back-n è che, se si perde un solo pacchetto, è necessario ritrasmettere tutti i successivi già inviati. Nella **ripetizione selettiva**, il mittente ritrasmette soltanto i **pacchetti per cui non ha ricevuto un ACK**.
 - il mittente mantiene un timer per ogni pacchetto non riscontrato
 
 Il ricevente invia riscontri specifici per tutti i pacchetti ricevuti correttamente (in ordine o anche fuori sequenza) e, se necessario, mantiene un buffer dei pacchetti per eventuali consegne in sequenza al livello superiore.
@@ -141,7 +141,7 @@ Le finestre di invio e di ricezione hanno la **stessa dimensione**.
 
 ![[sel-rep-finestraric.png|center|500]]
 
-- l'ack non è cumulativo ma **individuale**: indica il numero di sequenza di un pacchetto ricevuto correttamente (e non il prossimo atteso: non avrebbe senso per questo modello)
+- l'ACK non è cumulativo ma **individuale**: indica il numero di sequenza di un pacchetto ricevuto correttamente (e non il prossimo atteso: non avrebbe senso per questo modello)
 
 >[!info] FSM mittente
 >
@@ -158,7 +158,7 @@ Per questo meccanismo, la dimensione delle finestre non può essere $2^m-1$, ma 
 > [!example] esempio esplicativo
 > Infatti, se si usasse una finestra con dimensione $2^m-1$, potrebbe accadere una situazione come questa:
 > - il mittente spedisce i pacchetti $0,\,1,\,2$, che vengono ricevuti correttamente (quindi la finestra di accettazione scorre)
-> - gli ack vengono però persi, quindi il mittente pensa di doverli rispedire
+> - gli ACK vengono però persi, quindi il mittente pensa di doverli rispedire
 > - il mittente rispedisce quindi il pacchetto $0$, che viene erroneamente accettato come il primo della sequenza successiva
 >
 > ![[dim-fin1.png|center|400]]
@@ -175,5 +175,5 @@ In realtà, i pacchetti non viaggiano in maniera unidirezionale, ma in entrambe 
 | ------------------------------- | --------------------------------- |
 | checksum                        | per gestire errori nel canale     |
 | acknowledgement                 | per gestire errori nel canale     |
-| timeout                         | ack con errori, perdita pacchetti |
+| timeout                         | ACK con errori, perdita pacchetti |
 | finestra scorrevole, pipelining | maggior utilizzo della rete       |
