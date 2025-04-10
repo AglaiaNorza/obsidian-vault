@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-04-10T14:16
+updated: 2025-04-10T18:10
 ---
 # introduzione
 >[!info] overview
@@ -132,25 +132,57 @@ Per il controllo degli errori, TCP utilizza tre tecniche:
 #### generazione di ack
 | evento                                                                                                                                         | azione                                                                                                                                                                        |
 | ---------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 2. arrivo **ordinato** di un segmento con numero di sequenza atteso; tutti i dati fino al numero di sequenza atteso sono già stati riscontrati | `ACK` viene ritardato (delayed). il destinatario attende fino a 500ms l’arrivo del prossimo segmento. se il segmento non arriva, invia un `ACK` (posticipato)<br>- `ACK` post |
+| 2. arrivo **ordinato** di un segmento con numero di sequenza atteso; tutti i dati fino al numero di sequenza atteso sono già stati riscontrati | `ACK` viene ritardato (delayed). il destinatario attende fino a 500ms l’arrivo del prossimo segmento. se il segmento non arriva, invia un `ACK` (posticipato)<br>- `ACK post` |
 | 3. arrivo ordinato di un segmento con numero di sequenza atteso; un altro segmento è in attesa di trasmissione dell’`ACK`                      | invia immediatamente un singolo `ACK` cumulativo, riscontrando entrambi i segmenti ordinati<br>- `ACK cum`                                                                    |
 | 4. arrivo non ordinato di un segmento con numero di sequenza superiore a quello atteso; **viene rilevato un buco**                             | invia immediatamente un `ACK` duplicato, indicando il numero di sequenza del prossimo byte atteso (per indurre a **ritrasmissione rapida**)<br>- `ACK dup`                    |
 | 5. arrivo di un segmento mancante (uno o più dei successivi è stato ricevuto)                                                                  | invia immediatamente un `ACK` (cumulativo)<br>- `ACK cum`                                                                                                                     |
 | 6. arrivo di un segmento duplicato                                                                                                             | invia immediatamente un riscontro con numero di sequenza atteso<br>- `ACK dup`                                                                                                |
+## ritrasmissione dei segmenti
+Quando un segmento viene inviato, in attesa del suo riscontro, ne viene **memorizzata una copia** in una coda di attesa.
+Se il segmento non viene riscontrato, può accadere che:
+- *scada il timer* (quindi è il primo segmento all'inizio della coda) ⟶ il segmento viene **ritrasmesso** e il timer viene riavviato
+- vengano *ricevuti 3 ACK duplicati* ⟶ **ritrasmissione veloce** del segmento (senza attendere il timeout)
 
-## demultiplexing orientato alla connessione
-La **socket TCP** è identificata da 4 parametri, utilizzati dall'host per inviare il segmento alla socket appropriata
-1) indirizzo IP di origine
-2) numero di porta di origine
-3) indirizzo IP di destinazione
-4) numero di porta di destinazione
+>[!info] FSM mittente
+>
+> ![[ritr-FMS-mit.png|center|450]]
 
-Un host server può supportare più socket TCP contemporaneamente: ogni socket sarà identificata dai suoi 4 parametri.
+>[!info] FSM destinatario
+>
+>![[ritr-FSM-dest.png|center|450]]
 
->[!tip] i server web hanno **socket differenti** per ogni connessione client
->- con HTTP non-persistente si avrà una socket differente anche per ogni richiesta dello stesso client
 
-![[demux-connessione.png|center|500]]
+>[!example] esempi di funzionamento
+> **normale operatività**:
+> 
+> ![[ritr-normale.png|center|450]]
+> 
+> **segmento smarrito**:
+> 
+> ![[segm-smarrito.png|center|450]]
+> 
+> **ritrasmissione rapida**:
+> 
+> ![[ritr-rapida.png|center|450]]
+> 
+>**riscontro smarrito senza ritrasmissione**:
+>
+>![[smar-no-tras.png|center|450]]
+>
+>**riscontro smarrito con ritrasmissione**:
+>
+>![[smar-tras.png|center|450]]
+
+## riassunto meccanismi TCP
+- **pipeline** ⟶ approcco ibrido tra go-back-n e ripetizione selettiva
+- **numero di sequenza** ⟶ primo byte del segmento
+- **ACK cumulativo** ⟶ conferma tutti i byte precedenti a quello indicato 
+- **ACK delayed** ⟶ l'ACK è posticipato nel caso di arrivo di un pacchetto in sequenza con precedenti già riscontrati
+- **timeout basato su RTT** ⟶ c'è un unico timer di ritrasmissione, associato al più vecchio segmento non riscontrato
+	- quando arriva una notifica intermedia, si riavvia il timer sul più vecchio segmeno non riscontrato
+- **ritrasmissione**:
+	- **singla** ⟶ solo il segmento non riscontrato
+	- **rapida** ⟶ al terzo ACK duplicato prima del timeout si ritrasmette
 
 ## controllo del flusso
 Per evitare la perdita di dati, quando un'entità produce dati che un'altra entità deve consumare, deve esistere un *equilibrio* tra la velocità di produzione e la velocità di consumo.
@@ -166,7 +198,16 @@ Il controllo del flusso viene realizzato tramite:
 	- il livello trasporto del mittente segnala al livello applicazione di sospendere l'invio di messaggi quando il buffer è pieno, e segnala di riprendere quando si libera spazio
 	- il livello trasporto del destinatario fa la stessa cosa con il livello trasporto del mittente
 
+### implementazione
+L'obiettivo è quindi bilanciare velocità di invio con velocità di ricezione. Viene implementato tramite **feedback esplicito** del destinatario, che comunica al mittente lo spazio disponibile includendo il valore `rwnd` nell'header dei segmenti.
 
+![[finestra-invio.png|center|450]]
+
+- l'apertura, chiusura e riduzione della finestra di invio sono controllate dal destinatario
+
+>[!example] esempio
+> 
+>![[FTP-es.png|center|400]]
 
 ## integrazione di controllo di errori e controllo di flusso
 Si combinano i buffer del controllo di flusso e il numero di sequenza e ACK del controllo degli errori. 
@@ -189,4 +230,45 @@ Oppure, può essere rappresentato in maniera lineare:
 ![[sliding-window.png|center|500]]
 
 ## controllo della congestione
-La congestione avviene se il **carico** della rete è superiore alla sua **capacità**. Il controllo della congestione fa sì che questo non avvenga.
+La congestione avviene se il **carico** della rete è superiore alla sua **capacità**. Quando la rete è congestionata, c'è il rischio di:
+- pacchetti smarriti
+- lunghi ritardi
+
+>[!question] controllo del flusso vs controllo della congestione
+>Con il controllo del flusso, la dimensione della finestra di invio è controllata dal destinatario tramite il valore `rwnd` (contenuto in ogni segmento trasmesso nella direzione opposta). In questo modo, la finestra del ricevnte non viene mai sovraccariccata.
+>
+>Ma i buffer intermedi (nei router) possono comunque congestionarsi: un router riceve infatti dati da più mittenti. Quindi, nonostante non ci sia congestione agli estremi, non vuol dire che non ce ne sia nei nodi intermedi.
+
+Ci sono due principali approcci al controllo della congestione:
+- **controllo di congestion end-to-end**:
+	- non c'è nessun supporto esplicito dalla rete
+	- la congestione è dedotta osservando le perdite e i ritardi nei sistemi terminali
+	- è il metodo adottato da TCP
+- **controllo di congestione assistito dalla rete**:
+	- i router forniscono un feedback ai sistemi terminali (un singolo bit per indicare la congestione)
+	- c'è quindi una comunicazione esplicita al mittente della frequenza trasmissiva
+
+### problematiche e soluzioni
+1) **come può il mittente limitare la **
+
+
+
+
+## demultiplexing orientato alla connessione
+La **socket TCP** è identificata da 4 parametri, utilizzati dall'host per inviare il segmento alla socket appropriata
+1) indirizzo IP di origine
+2) numero di porta di origine
+3) indirizzo IP di destinazione
+4) numero di porta di destinazione
+
+Un host server può supportare più socket TCP contemporaneamente: ogni socket sarà identificata dai suoi 4 parametri.
+
+>[!tip] i server web hanno **socket differenti** per ogni connessione client
+>- con HTTP non-persistente si avrà una socket differente anche per ogni richiesta dello stesso client
+
+![[demux-connessione.png|center|500]]
+
+
+
+
+
