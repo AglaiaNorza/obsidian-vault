@@ -1,6 +1,6 @@
 ---
-created: 2025-03-29T16:36
-updated: 2025-04-08T17:20
+created: 2025-04-10T14:16
+updated: 2025-04-10T14:18
 ---
 > [!info] ponte
 > Un **ponte** è un arco la cui eliminazione disconnette un grafo (ovvero aumenta il numero di componenti connesse). Equivalentemente, un arco è un ponte se e solo se *non è contenuto in nessun ciclo*. 
@@ -46,8 +46,8 @@ Per ogni arco padre-figlio $(u,v)$ presente nell'albero DFS, il nodo $u$ è in g
 Il nodo $u$ confronta la sua altezza con quella ricevuta: perché sia ponte, l'altezza di $u$ deve essere *minore* di quella restituita dal figlio.
 
 >[!summary] quindi
->- nodo $v$ --> esplora il proprio sottoalbero e restituisce $b$: il minimo livello da sé raggiungibile (utilizzando anche archi all'indietro)
->- nodo $u$ --> confronta $b$ con la propria altezza - se $b>\text{altezza}$, l'arco $(u,\,v)$ è un ponte (è l'unico collegamento); altrimenti, un c'è un percorso alternativo e l'arco non è un ponte
+>- nodo $v$ ⟶ esplora il proprio sottoalbero e restituisce $b$: il minimo livello da sé raggiungibile (utilizzando anche archi all'indietro)
+>- nodo $u$ ⟶ confronta $b$ con la propria altezza - se $b>\text{altezza}$, l'arco $(u,\,v)$ è un ponte (è l'unico collegamento); altrimenti, un c'è un percorso alternativo e l'arco non è un ponte
 >
 >![[ponte-algo.png|center|400]]
 
