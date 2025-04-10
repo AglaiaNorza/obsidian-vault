@@ -1,6 +1,6 @@
 ---
 created: 2024-10-10T21:14
-updated: 2025-04-06T14:59
+updated: 2025-04-08T17:20
 ---
 - il modello relazionale è un modello basato sulla nozilone matematica di **relazione**.
 - le relazioni si traducono in maniera naturale in **tabelle** (quindi i termini tabella e relazione sono interscambiabili)
