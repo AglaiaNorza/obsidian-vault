@@ -1,6 +1,6 @@
 ---
 created: 2025-03-31T14:43
-updated: 2025-04-01T18:05
+updated: 2025-04-11T10:41
 ---
 Un problema di ottimizzazione è un tipo di problema in cui l'obiettivo è trovare la **migliore soluzione possibile** tra un insieme di soluzioni ammissibili.
 - ogni soluzione ammissibile (ovvero che soddisfa tutte le condizioni imposte dal problema) ha un valore associato chiamato *costo* o *beneficio*.
@@ -29,7 +29,3 @@ Dato un grafo indiretto $G$, una sua **copertura tramite nodi** è un sottoinsie
 > Si può dimostrare che questo algoritmo sbaglia di massimo $\log n$ nodi.
 > (non ottimale, si vuole trovare un'euristica che sbagli massimo di una costante)
 > 
-
-
-
-

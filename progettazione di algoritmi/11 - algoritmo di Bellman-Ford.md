@@ -1,6 +1,6 @@
 ---
 created: 2025-03-29T16:36
-updated: 2025-04-10T14:47
+updated: 2025-04-11T12:23
 ---
 ### introduzione
 Dato un grafo diretto e pesato $G$ in cui i pesi degli archi possono essere *anche negativi* e fissato un suo nodo $s$, si vuole determinare il costo minimo dei cammini che conducono da $s$ a tutti gli altri nodi del grafo.
@@ -36,7 +36,7 @@ $$\text{T[n-1][0], \, T[n-1][1], \, T[n-1][2], \, $\dots$  \,T[n-1][n-1]}$$
 
 Per definire la regola che permette di calcolare i valori delle celle $T[i][j]$ con $j\neq s$ della riga $i > 0$, bisogna distinguere due casi:
 1) il cammino di lunghezza al più $i$ da $s$ ha lunghezza **esattamente** $i$
-	- $T[i][j]=T[i][j-1]$
+	- $T[i][j]=T[i-1][j]$
 2) il cammino di lunghezza al più $i$ da $s$ ha lunghezza **inferiore** a $i$
 	- ci troviamo nel caso in cui esiste un cammino minimo di lunghezza al più $i-1$ ad un nodo $x$ e un arco $(x,j)$
 	- si prende, tra tutti gli archi che portano a $j$, quello che costa di meno, e si somma il suo costo al percorso che portava a $x$ (che si trova nella riga precedente)
