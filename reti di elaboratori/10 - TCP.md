@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-04-10T18:22
+updated: 2025-04-11T12:39
 ---
 # introduzione
 >[!info] overview
@@ -247,6 +247,13 @@ Ci sono due principali approcci al controllo della congestione:
 - **controllo di congestione assistito dalla rete**:
 	- i router forniscono un feedback ai sistemi terminali (un singolo bit per indicare la congestione)
 	- c'è quindi una comunicazione esplicita al mittente della frequenza trasmissiva
+### rilevare la congestione
+Per rilevare la congestione si possono utilizzare **ACK duplicati** e **timeout**, che possono essere interpretati come eventi di perdita, in quanto danno indicazioni sullo stato della rete.
+In particolare:
+- se gli ACK arrivano **in sequenza e con buona frequenza**, si può inviare e incrementare la quantità di segmenti inviati
+- se ci sono ACK **duplicati o timeout**, è necesario ridurre la finestra dei pacchetti
+
+>[!tip] TCP è **auto-temporizzante**: reagisce in base ai riscontri che ottiene
 ### controllare la finestra di congestione
 Per controllare la congestione, si usa la variabile `cwnd` (congestion) che, insieme a `rwnd`, definisce la dimensione della finestra di invio.
 - `cwnd` è relativa alla congestione della rete
@@ -254,8 +261,9 @@ Per controllare la congestione, si usa la variabile `cwnd` (congestion) che, ins
 
 $$\text{dim. finestra = min(rwnd, cwnd)}$$
 
-### rilevare la congestione
-Nell'evento 
+
+
+
 
 
 
