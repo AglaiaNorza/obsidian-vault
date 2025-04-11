@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-04-10T18:10
+updated: 2025-04-10T18:22
 ---
 # introduzione
 >[!info] overview
@@ -247,10 +247,15 @@ Ci sono due principali approcci al controllo della congestione:
 - **controllo di congestione assistito dalla rete**:
 	- i router forniscono un feedback ai sistemi terminali (un singolo bit per indicare la congestione)
 	- c'è quindi una comunicazione esplicita al mittente della frequenza trasmissiva
+### controllare la finestra di congestione
+Per controllare la congestione, si usa la variabile `cwnd` (congestion) che, insieme a `rwnd`, definisce la dimensione della finestra di invio.
+- `cwnd` è relativa alla congestione della rete
+- `rwnd` è relativa alla congestione del ricevente
 
-### problematiche e soluzioni
-1) **come può il mittente limitare la **
+$$\text{dim. finestra = min(rwnd, cwnd)}$$
 
+### rilevare la congestione
+Nell'evento 
 
 
 
