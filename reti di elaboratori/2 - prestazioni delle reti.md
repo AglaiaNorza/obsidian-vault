@@ -1,6 +1,6 @@
 ---
 created: 2025-03-26T18:31
-updated: 2025-04-08T17:20
+updated: 2025-04-12T17:30
 ---
 Internet è una rete di reti, composta da reti di accesso e dal backbone internet.
 ## rete di accesso
@@ -45,7 +45,7 @@ Il bit rate fornisce un'indicazione della **capacità** di una rete di trasferir
 Il throughput indica quanto velocemente una rete possa *effettivamente* (mentre il rate nominalmente) trasmettere dati.
 
 È il numero di bit al secondo che *passano attraverso un punto* della rete.
-- è quindi misurato, come il rate, in numero di bit al secondo, ma è quasi $\leq$ del bit rate (che èuna misura della *potenziale* velocità di un link)
+- è quindi misurato, come il rate, in numero di bit al secondo, ma è quasi $\leq$ del bit rate (che è una misura della *potenziale* velocità di un link)
 
 >[!example] esempio 
 >Una strada è progettata per far transitare 1000 auto al minuto. Se c'è traffico, questo numero scende a 100.
