@@ -1,6 +1,6 @@
 ---
 created: 2025-03-03T13:49
-updated: 2025-04-08T17:20
+updated: 2025-04-12T18:33
 ---
 Una **rete** è composta da dispositivi, chiamati **nodi** (collegati tra di loro da **link**), in grado di scambiarsi informazioni. I nodi possono essere sistemi terminali (end system), che utilizzano la rete per eseguire applicazioni e comunicare tra loro, oppure dispositivi di interconnessione, che si occupano di instradare e gestire il traffico dati all'interno della rete.
 
@@ -105,6 +105,16 @@ Anche se ci sono più percorsi, solo uno di questi verrà usato per l'intera com
 >
 >In questo esempio, la linea può gestire contemporeaneamente quattro canali voce: quindi, se tutte le otto persone comunicano, la capacità della linea viene sfruttata completamente. Ma, se avviene una comunicazione tra solo due dispositivi, viene utilizzato solo 1/4 della capacità della rete (inefficiente).
 
+>[!example]- esercizio
+>Si vuole inviare un file di $\text{160000bits}$ dall'host $A$ all'host $B$ su una rete a commutazione di circuito. 
+>- I link hanno rate pari a $\text{536kbps}$ e usano il TDM con $\text{48 slot/sec}$. 
+>- Il tempo per stabilire il circuito tra $A$ e $B$ è $\text{500ms}$. 
+> 
+>Quanto impiega l'host A a trasmettere il file?
+>
+>1) il link ha $1536\text{kbps}$, divisi in $48$ slots/sec. Quindi, ogni slot ha $\frac{1536}{48}=32\text{kbps}$.
+>2) il file è di $\frac{160000\text{bit}}{32 \cdot 10^3\text{bps}}=5\text{s}$
+>3) il tempo totale è quindi: $\text{500ms+5ms}=5,5\text{s}$
 #### suddivisione della rete
 Con la commutazione di circuito le risorse della rete vengono quindi suddivise in pezzi, che saranno poi allocati ai vari collegamenti.
 Se non utilizzate, le risorse rimangono inattive.
@@ -135,7 +145,6 @@ I pacchetti non sono tutti dello stesso nodo di origine (si mischiano, **viaggia
 È più flessibile: la banda viene sempre utilizzata al massimo (anche se non tutti gli host stanno comunicando).
 
 - se più dispositivi cominicano tra loro e la linea di comunicazione non ha la capacità necessaria per inviarli tutti, i pacchetti vanno memorizzati in una coda e possono incorrere in ritardi
-
 ## Internet
 Una internet (con la 'i' minuscola) è costituita da due o più reti interconnesse. L'internet più famosa è "Internet" (con la 'I' maiuscola), composta da migliaia di reti interconnesse.
 - Internet è a commutazione di pacchetto
