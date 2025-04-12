@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-04-12T14:59
+updated: 2025-04-12T15:24
 ---
 # introduzione
 >[!info] overview
@@ -331,7 +331,22 @@ Funziona così:
 >[!question] come impostare il valore del timeout di TCP?
 >Il timeout deve essere più grande dell’RTT (o finirà prima di dare il tempo ai pacchetti di arrivare), ma non deve essere né troppo piccolo (avverrebbero ritrasmissioni non necessarie) né troppo grande (la reazione alla perdita di segmenti sarebbe troppo lenta).
 
->[!question]
+>[!question] come stimare l'RTT?
+>Per stimare l'RTT, si può utilizzare il `SampleRTT`: il tempo misurato *dalla trasmissione del segmento alla ricezione dell'ACK*
+>-  ignora le ritrasmissioni, ed è un valore unico per più segmenti trasmessi insieme
+>
+>`SampleRTT` varia a causa di congestione nei router e carico nei sitemi terminali, quindi occorre fare degli accorgimenti per livellare la stima:
+>- invece di prendere il valore corrente, si fa una *media* delle misure più recenti 
+
+Per stimare l'RTT, si utlizza la **media mobile esponenziale ponderata**:
+$$\text{EstimatedRTT$_{t+1}$ = (1-$\alpha$)$\cdot$EstmatedRTT$_t + \alpha \cdot$SampleRTT$_{t+1}$} $$
+
+- l'influenza delle misure passate decresce esponenzialmente
+- valore tipico: $\alpha=0.125$ (con questo valore si assegna minore peso alle misure recenti rispetto a quelle più vecchie)
+
+>[!example] esempio 
+>
+>![[sample-rtt.png|center|500]]
 
 
 # versioni di TCP
@@ -363,4 +378,17 @@ TCP Reno si comporta quindi così:
 > 
 >![[TCPreno-es.png|center|500]]
 
+Il **timeout** è quindi $\text{EstimatedRTT}$ più un "margine di sicurezza", che cresce al crescere della variazione di $\text{EstimatedRTT}$.
 
+Bisogna innanzitutto stimare di quanto $\text{SampleRTT}$ si discosta da $\text{EstimatedRTT}$:
+
+$$\text{DevRTT}=(1-\beta) \cdot\text{DevRTT}+\beta \;\cdot \mid\text{SampleRTT}-\text{EstimatedRTT}\mid$$
+
+- tipicamente, $\beta=0,25$
+
+Per **impostare l'intervallo di timeout**:
+- si imposta un valore iniziale pari a 1 secondo
+- se avviene un timeout, si raddoppia
+- appena viene ricevuto un segmento ed aggiornato $\text{EstimatedRTT}$, si usa la formula:
+
+$$\text{TimeoutInterval}= \text{EstimatedRTT}+4 \cdot \text{DevRTT}$$
