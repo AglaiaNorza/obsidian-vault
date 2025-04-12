@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-04-11T12:39
+updated: 2025-04-12T14:59
 ---
 # introduzione
 >[!info] overview
@@ -101,6 +101,20 @@ Ciascuna delle due parti coinvolte nello scambio dei dati può chiedere la chius
 >![[TCP-halfclose.png|center|550]]
 >
 >- in questo caso, il client richiede la chiusura della connessione in uscita, e il server risponde solo con un `ACK` ⟶ potrà continuare a mandare dati al client
+
+## demultiplexing orientato alla connessione
+La **socket TCP** è identificata da 4 parametri, utilizzati dall'host per inviare il segmento alla socket appropriata
+1) indirizzo IP di origine
+2) numero di porta di origine
+3) indirizzo IP di destinazione
+4) numero di porta di destinazione
+
+Un host server può supportare più socket TCP contemporaneamente: ogni socket sarà identificata dai suoi 4 parametri.
+
+>[!tip] i server web hanno **socket differenti** per ogni connessione client
+>- con HTTP non-persistente si avrà una socket differente anche per ogni richiesta dello stesso client
+
+![[demux-connessione.png|center|500]]
 ## controllo degli errori
 L'affidabilità deve essere implementata a livello di trasporto, perché il livello di rete è inaffidabile. Per avere un servizio di trasporto affidabile, è necessario implementare un **controllo degli errori** sui pacchetti, che possa:
 - rilevare e scartare pacchetti corrotti
@@ -255,33 +269,98 @@ In particolare:
 
 >[!tip] TCP è **auto-temporizzante**: reagisce in base ai riscontri che ottiene
 ### controllare la finestra di congestione
-Per controllare la congestione, si usa la variabile `cwnd` (congestion) che, insieme a `rwnd`, definisce la dimensione della finestra di invio.
+Per controllare la congestione, si usa la variabile `cwnd` (congestion window) che, insieme a `rwnd`, definisce la dimensione della finestra di invio.
 - `cwnd` è relativa alla congestione della rete
 - `rwnd` è relativa alla congestione del ricevente
 
 $$\text{dim. finestra = min(rwnd, cwnd)}$$
 
+### controllo della congestione
+L'idea alla base della congestione è quella di incrementare il rate di trasmissione se non c'è congestione, e diminuirlo se ce n'è.
+
+L'algoritmo di controllo della congestione si basa su tre componenti:
+1) **slow start**
+2) **congestion avoidance**
+3) **fast recovery**
+
+#### slow start
+Nello **slow start** (incremento esponenziale), la variablile `cwnd` è inizializzata a $\text{1MSS}$ (Maximum Segment Size). Poiché però la banda disponibile può essere molto maggiore, slow start *incrementa* di $\text{1MSS}$ la `cwnd` *per ogni segmento riscontrato*.
+
+![[slowstart.png|center|400]]
+
+>[!example] esempio
+>Se arriva un riscontro, $cwnd=cwnd+1$.
+>
+>Si ha quindi:
+>- inizio ⟶ $cwnd=1\to 2^0$
+>- dopo 1 RTT ⟶ $cwnd=cwnd+1=1+1=2\to 2^1$
+>	- (`cwnd` diventa 2, quindi ora si possono inviare due pacchetti)
+>- dopo 2 RTT ⟶ $cwnd=cwnd+2=2+2=4\to 2^2$
+>	- (^ i due pacchetti vengono riconosciuti, quindi si ricevono 2 ACK)
+>- dopo 3 RTT ⟶ $cwnd=cwnd+4=4+4=8\to 2^3$
+
+>[!tip] la dimensione della finestra di congestione viene aumentata esponenzialmente **fino al raggiungimento della soglia `ssthresh`** oppure **finché non viene perso un pacchetto** (in tal caso, si pone $\text{ssthreshold}=\frac{\text{cwnd}}{2}$).
+
+#### congestion avoidance
+Al termine di slow start, inizia **congestion avoidance**:
+- l'incremento di `cwnd` è *lineare* ($+1$ ogni volta che viene riscontrata l'intera finestra di segmenti)
+
+Congestion avoidance continua finché non si **rileva congestione** (ovvero finché non si va in *timeout* o si ricevono *3 ACK duplicati*).
+- se si va in timeout, $\text{ssthreshold} =\frac{\text{cwnd}}{2}$ e $\text{cwnd}=1$
+
+![[cong-avoid.png|center|400]]
+
+>[!example] esempio
+>Se arriva un riscontro, $\text{cwnd = cwnd}+\frac{1}{\text{cwnd}}$ quindi:
+>- inizio ⟶ $\text{cwnd}=i$
+>- dopo 1 RTT ⟶ $\text{cwnd}=i+1$
+>- dopo 2 RTT ⟶ $\text{cwnd}=i+2$
+>- dopo 3 RTT ⟶ $\text{cwnd}=i+3$
+
+#### fast recovery
+**Fast recovery** è usata solo da alcune versioni di TCP (vedi sotto), come TCP Reno.
+
+Funziona così:
+- quando il mittente riceve **3 ACK duplicati**, entra in **fast retransmit** e **ritrasmette subito** il pacchetto mancante (senza aspettare il timeout).
+- entra quindi in **fast recovery**, e:
+	- `cwnd` viene dimezzata
+		- invece di tornare alla slow start, **incrementa gradualmente `cwnd`** per ogni ACK duplicato ricevuto
+- quando arriva un **ACK "nuovo"**, esce da fast recovery.
+
+## tempo di RTT e timeout
+>[!question] come impostare il valore del timeout di TCP?
+>Il timeout deve essere più grande dell’RTT (o finirà prima di dare il tempo ai pacchetti di arrivare), ma non deve essere né troppo piccolo (avverrebbero ritrasmissioni non necessarie) né troppo grande (la reazione alla perdita di segmenti sarebbe troppo lenta).
+
+>[!question]
 
 
+# versioni di TCP
+## TCP Tahoe
+
+- TCP Tahoe considera timeout e 3 ACK duplicati come congestione e riparte da 1 con $\text{ssthresh}=\frac{\text{cwnd}}{2}$
+
+>[!info] FSM
+>![[TCP-tahoe.png|center|500]]
+
+>[!example] esempio 
+>
+>![[tcptahoe-es.png|center|500]]
+
+## TCP Reno
+Il meccanismo di TCP Tahoe può essere però affinato: l'arrivo di 3 ACK duplicati non è strettamente negativo, in quanto indica la capacità della rete di consegnare qualche segmento (infatti sono arrivati 3 pacchetti oltre a quello perso). Invece, un timeout prima di 3 ACK duplicati è più allarmante, perché significa che non sono arrivati neanche i pacchetti seguenti.
+- si può quindi distinguere tra i due tipi di congestione e reagire in maniera più appropriata: TCP Reno implementa la "fast recovery"
+
+TCP Reno si comporta quindi così:
+ - se avviene un **timeout**, la congestione è "importante" ⟶ riparte da $1$
+ - se riceve **3 ACK duplicati**, la congestione è lieve ⟶ applica la **fast recovery** a partire da $\text{ssthreshold}+3$
+
+>[!info] FSM
+> 
+> ![[FSM-Reno.png|center|450]]
 
 
-
-
-## demultiplexing orientato alla connessione
-La **socket TCP** è identificata da 4 parametri, utilizzati dall'host per inviare il segmento alla socket appropriata
-1) indirizzo IP di origine
-2) numero di porta di origine
-3) indirizzo IP di destinazione
-4) numero di porta di destinazione
-
-Un host server può supportare più socket TCP contemporaneamente: ogni socket sarà identificata dai suoi 4 parametri.
-
->[!tip] i server web hanno **socket differenti** per ogni connessione client
->- con HTTP non-persistente si avrà una socket differente anche per ogni richiesta dello stesso client
-
-![[demux-connessione.png|center|500]]
-
-
-
+>[!example] esempio
+> 
+>![[TCPreno-es.png|center|500]]
 
 
