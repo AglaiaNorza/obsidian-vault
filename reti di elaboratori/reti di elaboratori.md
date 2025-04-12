@@ -1,6 +1,6 @@
 ---
 created: 2025-04-10T14:16
-updated: 2025-04-10T14:18
+updated: 2025-04-12T15:27
 ---
 >[!info] indice
 >- [[1 - introduzione alle reti]]
@@ -16,3 +16,8 @@ updated: 2025-04-10T14:18
 >- [[7 - livello trasporto]]
 >- [[8 - UDP]]
 >- [[9 - meccanismi di trasferimento affidabile]]
+>- [[10 - TCP]]
+
+>[!tip]- memino gentilmente fornito da [alessio](https://alem1105.github.io/Quartz/)
+>
+>![[meme-reti.png|center|390]]
