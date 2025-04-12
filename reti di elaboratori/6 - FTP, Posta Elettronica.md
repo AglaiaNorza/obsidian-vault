@@ -1,6 +1,6 @@
 ---
 created: 2025-03-21T15:06
-updated: 2025-04-10T14:16
+updated: 2025-04-12T16:32
 ---
 ## FTP
 L'FTP (File Transfer Protocol) è un programma di trasferimento di file da/a un host remoto.
@@ -30,7 +30,7 @@ L'FTP segue il modello **client/server**:
 
 La comunicazione avviene così:
 1) quando l'utente fornisce il nome dell'host remoto (con `ftp NomeHost`), il processo client FTP stabilisce una connessione TCP sulla **porta 21** con il processo server FTP
-2) tabilita la connessione, il client fornisce *nome utente* e *password*, che vengono inviate sulla connessione TCP come parte dei comandi
+2) stabilita la connessione, il client fornisce *nome utente* e *password*, che vengono inviate sulla connessione TCP come parte dei comandi
 3) una volta ottenuta l'*autorizzazione* del server, il client può inviare uno o più file memorizzati nel file system locale verso quello remoto (o viceversa)
 
 ### connessioni

@@ -1,6 +1,6 @@
 ---
 created: 2025-03-18T14:49
-updated: 2025-04-08T17:20
+updated: 2025-04-12T15:55
 ---
 > [!info] protocollo
 > Un **protocollo** definisce le regole che il mittente, il destinatario e tutti i sistemi intermedi coinvolti devono rispettare per essere in grado di comunicare.
@@ -76,7 +76,7 @@ Per creare un'applicazione di rete è necessario scrivere programmi che
 #### architettura dell'applicazione
 Esistono tre diversi paradigmi per la gestione dei servizi:
 - i due programmi devono essere entrambi in grado di richiedere e offrire servizi (**peer-to-peer**)
-- ciascuno dei due programmi deve occuparsi di uno dei due compiti(**client-server**)
+- ciascuno dei due programmi deve occuparsi di uno dei due compiti (**client-server**)
 - architetture ibride (**client-server E p2p**)
 
 ##### paradigma client-server

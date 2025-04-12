@@ -1,8 +1,7 @@
 ---
 created: 2025-03-29T16:36
-updated: 2025-04-08T17:20
+updated: 2025-04-12T15:43
 ---
-
 ## indirizzi ip
 Gli host internet hanno **hostname**, nomi facili da ricordare ma che forniscono poche informazioni sulla collocazione degli host all'interno di Internet.
 
@@ -65,6 +64,9 @@ Le informazioni sono organizzate in base al **dominio**, e ci sono tre classi di
 - (ci sono poi i server DNS *locali*, con cui interagiscono direttamente le applicazioni)
 
 ![[gerarchia-database.png|center|550]]
+
+>[!tip] root e TLD server non contengono informazioni applicative (come indirizzi IP e mail server), ma svolgono una funzione di **supporto alla risoluzione** fornendo indicazioni su quali server DNS siano autorevoli per ciascun dominio
+>- i server autorevoli **contengono i record effettivi** 
 
 >[!example] esempio
 >Il client vuole l’IP di `www.amazon.com`
