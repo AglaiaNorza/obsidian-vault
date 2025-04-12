@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-04-10T14:16
+updated: 2025-04-12T21:18
 ---
 ## stop-and-wait
 Lo stop-and-wait è un meccanismo orientato alla connessione, che implementa controllo del flusso e controllo degli errori.
@@ -167,6 +167,10 @@ Per questo meccanismo, la dimensione delle finestre non può essere $2^m-1$, ma 
 > 
 > ![[dim-fin2.png|center|350]]
 
+### go-back-n vs selective-repeat
+Se il prodotto banda-ritardo della rete è grande, l'affidabilità è buona e il ritardo è basso, conviene utilzzare il protocollo go-back-n, che permette di usare più della capacità della rete.
+
+Se invece il prodotto banda-ritardo è piccolo, la rete non è molto affidabile, o introduce lunghi ritardi, conviene usare il selective-repeat.
 ## protocolli bidirezionali: piggybacking
 In realtà, i pacchetti non viaggiano in maniera unidirezionale, ma in entrambe le direzioni. Per migliorare l'efficienza dei protocolli bidirezionali, viene usata la tecnica del **piggybacking**: quando un pacchetto trasporta dati da $A$ a $B$, può trasportare anche i riscontri relativi ai pacchetti ricevuti da $B$ e viceversa.
 
