@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-04-12T15:24
+updated: 2025-04-13T11:59
 ---
 # introduzione
 >[!info] overview
@@ -344,6 +344,21 @@ $$\text{EstimatedRTT$_{t+1}$ = (1-$\alpha$)$\cdot$EstmatedRTT$_t + \alpha \cdot$
 - l'influenza delle misure passate decresce esponenzialmente
 - valore tipico: $\alpha=0.125$ (con questo valore si assegna minore peso alle misure recenti rispetto a quelle più vecchie)
 
+Il **timeout** è quindi $\text{EstimatedRTT}$ più un "margine di sicurezza", che cresce al crescere della variazione di $\text{EstimatedRTT}$.
+
+Bisogna innanzitutto stimare di quanto $\text{SampleRTT}$ si discosta da $\text{EstimatedRTT}$:
+
+$$\text{DevRTT}=(1-\beta) \cdot\text{DevRTT}+\beta \;\cdot \mid\text{SampleRTT}-\text{EstimatedRTT}\mid$$
+
+- tipicamente, $\beta=0,25$
+
+Per **impostare l'intervallo di timeout**:
+- si imposta un valore iniziale pari a 1 secondo
+- se avviene un timeout, si raddoppia
+- appena viene ricevuto un segmento ed aggiornato $\text{EstimatedRTT}$, si usa la formula:
+
+$$\text{TimeoutInterval}= \text{EstimatedRTT}+4 \cdot \text{DevRTT}$$
+
 >[!example] esempio 
 >
 >![[sample-rtt.png|center|500]]
@@ -378,17 +393,3 @@ TCP Reno si comporta quindi così:
 > 
 >![[TCPreno-es.png|center|500]]
 
-Il **timeout** è quindi $\text{EstimatedRTT}$ più un "margine di sicurezza", che cresce al crescere della variazione di $\text{EstimatedRTT}$.
-
-Bisogna innanzitutto stimare di quanto $\text{SampleRTT}$ si discosta da $\text{EstimatedRTT}$:
-
-$$\text{DevRTT}=(1-\beta) \cdot\text{DevRTT}+\beta \;\cdot \mid\text{SampleRTT}-\text{EstimatedRTT}\mid$$
-
-- tipicamente, $\beta=0,25$
-
-Per **impostare l'intervallo di timeout**:
-- si imposta un valore iniziale pari a 1 secondo
-- se avviene un timeout, si raddoppia
-- appena viene ricevuto un segmento ed aggiornato $\text{EstimatedRTT}$, si usa la formula:
-
-$$\text{TimeoutInterval}= \text{EstimatedRTT}+4 \cdot \text{DevRTT}$$
