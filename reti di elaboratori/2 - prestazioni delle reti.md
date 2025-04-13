@@ -1,6 +1,6 @@
 ---
 created: 2025-03-26T18:31
-updated: 2025-04-12T17:30
+updated: 2025-04-13T09:43
 ---
 Internet è una rete di reti, composta da reti di accesso e dal backbone internet.
 ## rete di accesso
@@ -110,7 +110,7 @@ Se:
 È il tempo richiesto per trasmettere tutti i bit del pacchetto sul collegamento (dipende quindi dal canale).
 Se il primo bit viene trasmesso al tempo $t_{1}$ e l'ultimo al tempo $t_{2}$, il ritardo di trasmissione è $t_{2}-t_{1}$.
 
-Questo ritardo dipende quindi unicamente dal rate del collegamento e dalla lunghezza del pacchetto, quindi si può stimare con una formula.
+Questo ritardo dipende quindi unicamente dal rate del collegamento e dalla lunghezza del pacchetto, quindi si può stimare con una formula:
 
 $$\text{ritardo di trasmissione}=\frac{L}{R} =\frac{\text{lunghezza del pacchetto in bit}}{\text{bit rate del collegamento}}$$
 
@@ -118,7 +118,7 @@ $$\text{ritardo di trasmissione}=\frac{L}{R} =\frac{\text{lunghezza del pacchett
 È dato dal tempo che un bit impiega a propagarsi sul canale ("tempo di viaggio" lungo il canale).
 Dipende dalla lunghezza del collegamento, e dalla velocità di propagazione del collegamento.
 
-$$\text{Ritardo di propagazione}=\frac{d}{s}=\frac{\text{lunghezza collegamento}}{\text{velocita' di propagazione}}$$
+$$\text{Ritardo di propagazione}=\frac{d}{s}=\frac{\text{lunghezza collegamento}}{\text{velocità di propagazione}}$$
 
 >[!example] analogia del casello autostradale
 >- Le automobili viaggiano a 100km/h. 
