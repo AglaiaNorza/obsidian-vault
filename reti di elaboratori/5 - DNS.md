@@ -1,6 +1,6 @@
 ---
 created: 2025-03-29T16:36
-updated: 2025-04-13T11:39
+updated: 2025-04-13T12:49
 ---
 ## indirizzi ip
 Gli host internet hanno **hostname**, nomi facili da ricordare ma che forniscono poche informazioni sulla collocazione degli host all'interno di Internet.
@@ -160,7 +160,8 @@ Ogni mapping è mantenuto nei database sotto forma di **resource record**.
 >$$
 >- `name` è il nome dell’host
 >- `value` è l’indirizzo IP
-es: `<relay1.bar.foo.com, 45.37.93.126, A>`
+>```
+> < relay.bar.foo.com, 45.37.93.126, A >
 
 >[!info] type CNAME
 >$$
@@ -168,7 +169,9 @@ es: `<relay1.bar.foo.com, 45.37.93.126, A>`
 >$$
 >- `name` è il nome alias di qualche nome canonico
 >- `value` è il nome canonico
-es: `<foo.com, relay1.bar.foo.com, CNAME>`
+>```
+> < foo.com, relay1.bar.foo.com, CNAME >
+>```
 
 >[!info] type NS
 >$$
@@ -176,14 +179,19 @@ es: `<foo.com, relay1.bar.foo.com, CNAME>`
 >$$
 >- `name` è il dominio (es: `foo.com`)
 >- `value` è il nome dell’host del server di competenza di questo dominio
-es: `<foo.com, dns.foo.com, NS>`
+>```
+>< foo.com, dns.foo.com, NS >
+> ```
 
 >[!info] type MX
 >$$
 >\text{alias} \Rightarrow \text{\textcolor{red}{m}ail server canonical name}
 >$$
 >- `value` è il nome canonico del server di posta associato a `name`
-es: `<foo.com, mail.bar.foo.com, MX>`
+> ```
+> < foo.com, mail.bar.foo.com, MX >
+> ```
+
 
 >[!example] esempio
 >Un server di competenza conterrà un record di tipo `A` per l’hostname, mentre un server non di competenza conterrà un record di tipo `NS` per il dominio che include l’hostname, e un record di tipo `A` che fornisce l’indirizzo IP del server DNS di competenza nel campo `value` del record DNS.

@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-04-13T11:59
+updated: 2025-04-13T12:02
 ---
 # introduzione
 >[!info] overview
@@ -339,7 +339,7 @@ Funziona così:
 >- invece di prendere il valore corrente, si fa una *media* delle misure più recenti 
 
 Per stimare l'RTT, si utlizza la **media mobile esponenziale ponderata**:
-$$\text{EstimatedRTT$_{t+1}$ = (1-$\alpha$)$\cdot$EstmatedRTT$_t + \alpha \cdot$SampleRTT$_{t+1}$} $$
+$$\text{EstimatedRTT$_{t+1}$ = ($1 -\alpha$)\;$\cdot\;$EstmatedRTT$_t + \alpha \cdot\;$SampleRTT$_{t+1}$} $$
 
 - l'influenza delle misure passate decresce esponenzialmente
 - valore tipico: $\alpha=0.125$ (con questo valore si assegna minore peso alle misure recenti rispetto a quelle più vecchie)
