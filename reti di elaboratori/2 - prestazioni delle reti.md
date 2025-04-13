@@ -1,6 +1,6 @@
 ---
 created: 2025-03-26T18:31
-updated: 2025-04-13T09:43
+updated: 2025-04-13T17:07
 ---
 Internet è una rete di reti, composta da reti di accesso e dal backbone internet.
 ## rete di accesso
@@ -90,7 +90,6 @@ L'elaborazione prevede:
 Il pacchetto viene messo in coda sul buffer di uscita, dove ci sono altri pacchetti. 
 - si genera un'attesa di trasmissione (possibile sia nella coda di input che nella coda di output): dipende dalla congestione del router
 	- può variare da pacchetto a pacchetto (diverse code possono essere più o meno piene)
-- può variare da pacchetto a pacchetto (si fa infatti uso di misure statistiche)
 - dipende dal *tasso di arrivo*, dal *rate* e dalla *lunghezza dei pacchetti*
 
 Dati:
