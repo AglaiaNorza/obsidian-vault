@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-04-14T09:56
+updated: 2025-04-14T18:41
 ---
 # introduzione
 >[!info] overview
@@ -100,7 +100,7 @@ Ciascuna delle due parti coinvolte nello scambio dei dati può chiedere la chius
 >
 >![[TCP-halfclose.png|center|550]]
 >
->- in questo caso, il client richiede la chiusura della connessione in uscita, e il server risponde solo con un `ACK` ⟶ potrà continuare a mandare dati al client
+>- nel secondo caso (passive close), il client richiede la chiusura della connessione in uscita, e il server risponde solo con un `ACK` ⟶ potrà continuare a mandare dati al client
 
 ## demultiplexing orientato alla connessione
 La **socket TCP** è identificata da 4 parametri, utilizzati dall'host per inviare il segmento alla socket appropriata
@@ -321,7 +321,7 @@ Congestion avoidance continua finché non si **rileva congestione** (ovvero finc
 **Fast recovery** è usata solo da alcune versioni di TCP (vedi sotto), come TCP Reno.
 
 Funziona così:
-- quando il mittente riceve **3 ACK duplicati**, entra in **fast retransmit** e **ritrasmette subito** il pacchetto mancante (senza aspettare il timeout).
+- quando il mittente riceve **3 ACK duplicati**, entra in **fast retransmit** e ritrasmette subito il pacchetto mancante (senza aspettare il timeout).
 - entra quindi in **fast recovery**, e:
 	- `cwnd` viene dimezzata
 		- invece di tornare alla slow start, **incrementa gradualmente `cwnd`** per ogni ACK duplicato ricevuto
