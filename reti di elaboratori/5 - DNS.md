@@ -1,6 +1,6 @@
 ---
 created: 2025-03-29T16:36
-updated: 2025-04-14T09:56
+updated: 2025-04-14T12:24
 ---
 ## indirizzi ip
 Gli host internet hanno **hostname**, nomi facili da ricordare ma che forniscono poche informazioni sulla collocazione degli host all'interno di Internet.
@@ -20,7 +20,7 @@ Il Domain Name System ha il compito di associare un hostname al relativo  indiri
 - per l'accesso, si usa un *protocollo a livello applicazione* che consente agli host di interrogare il database distribuito per **risolvere** (tradurre) i nomi
 
 >[!tip] il DNS viene utilizzato dagli altri protocolli a livello applicazione per tradurre hostname in indirizzi IP
->- utilizza il trasporto UDP e indirizza la porta `53`
+>- utilizza il trasporto [[8 - UDP|UDP]] e indirizza la porta `53`
 >
 >>[!question]- perché usa UDP?
 >> L'utilizzo di UDP richiede meno overhead, in quanto (al contrario di TCP) il suo setup richiede poco tempo. In più, visto che vanno contattati diversi server per una risposta, mettere su una connessione (come richiesto da TCP) sarebbe uno spreco di tempo. Infine, i messaggi sono brevi e, se non hanno risposta entro un timeout, vengono semplicemente re-inviati.

@@ -1,6 +1,6 @@
 ---
 created: 2025-03-26T18:31
-updated: 2025-04-14T11:53
+updated: 2025-04-14T12:24
 ---
 ## World Wide Web
 Il World Wide Web (WWW) è un'applicazione internet nata dalla necessità di scambio e condivisione di ingormazioni tra ricercatori universitari di varie nazioni.
@@ -51,7 +51,7 @@ HTTP segue il modello **client/server**:
 
 Dal **lato client**:
 - il browser determina l'URL ed estrae *host* e *filename*
-- esegue *connessione TCP* alla porta `80` dell'host indicato nell'URL
+- esegue *connessione [[10 - TCP|TCP]]* alla porta `80` dell'host indicato nell'URL
 - invia una richiesta per il file
 - ricve il file dal server
 - chiude la connessione
@@ -331,7 +331,7 @@ Si introduce un server proxy (tipicamente installato da un ISP) che ha una **mem
 
 >[!example]- esempio in assenza di cache
 >
->![[es-cacheless.png|center|450e]]
+>![[es-cacheless.png|center|450]]
 stimiamo il tempo di risposta - valutiamo [[2 - prestazioni delle reti#ritardo di accodamento|l’intensità di traffico]]: 
 >$$\text{intensità di traffico su LAN= }\frac{L \cdot a}{R} = \frac{15req/s \cdot 1mb/req}{100Mbps}=15\%$$
 > 
@@ -343,7 +343,7 @@ stimiamo il tempo di risposta - valutiamo [[2 - prestazioni delle reti#ritardo d
 > 
 >Una soluzione potrebbe essere aumentare l’ampiezza di banda del collegamento d’accesso a 100mbps. In questo caso, l’utilizzo sul collegamento d’accesso sarebbe del 15% , e il ritardo totale sarebbe più che gestibile. Ciò non è però sempre attuabile, e aggiornare il collegamento risulta costoso.
 
->[!example] esempio in presenza di cache
+>[!example]- esempio in presenza di cache
 >
 >![[cache-esempio.png|center|300]]
 > 
