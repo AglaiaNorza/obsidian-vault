@@ -1,6 +1,6 @@
 ---
 created: 2025-04-10T14:16
-updated: 2025-04-12T15:27
+updated: 2025-04-14T10:07
 ---
 >[!info] indice
 >- [[1 - introduzione alle reti]]
@@ -21,3 +21,5 @@ updated: 2025-04-12T15:27
 >[!tip]- memino gentilmente fornito da [alessio](https://alem1105.github.io/Quartz/)
 >
 >![[meme-reti.png|center|390]]
+
+[playlist di accompagnamento allo studio](https://open.spotify.com/playlist/5j3tPFzDzBE6FuPyoPhR5m?si=79b8f0785f804691)

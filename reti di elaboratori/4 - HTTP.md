@@ -1,6 +1,6 @@
 ---
 created: 2025-03-26T18:31
-updated: 2025-04-08T17:20
+updated: 2025-04-14T11:53
 ---
 ## World Wide Web
 Il World Wide Web (WWW) è un'applicazione internet nata dalla necessità di scambio e condivisione di ingormazioni tra ricercatori universitari di varie nazioni.
@@ -35,9 +35,9 @@ protocol://host:porta/path # con specifica porta
 
 ### documenti web
 Esistono tre tipi di documenti web:
-1) documenti **statici** ⟶ contenuto predeterminato memorizzato sul server
+1) documenti **statici** ⟶ contenuti predeterminati memorizzati sul server
 2) documenti **dinamici** ⟶ creati dal web server alla ricezione della richiesta
-3) documenti **attivi** ⟶ contiene script o programmi che verranno eseguiti nel browser (lato client)
+3) documenti **attivi** ⟶ contengono script o programmi che verranno eseguiti nel browser (lato client)
 
 ## HTTP
 HTTP (HyperText Transfer Protocol) è un **protocollo a livello applicazione** del Web.
@@ -140,19 +140,20 @@ Esistono due tipi di connessioni HTTP:
 
 **intestazioni**:
 
-| intestazione        | descrizione                                                           |
-| ------------------- | --------------------------------------------------------------------- |
-| `User-Agent`        | indica il programma client utilizzato                                 |
-| `Accept`            | indica il formato dei contenuti che il client è in grado di accettare |
-| `Accept-charset`    | famiglia di caratteri che il client è in grado di gestire             |
-| `Accept-encoding`   | schema di codifica supportato dal client                              |
-| `Accept-language`   | linguaggio preferito dal client                                       |
-| `Authorization`     | indica le credenziali possedute dal client                            |
-| `Host`              | host e numero di porta del client                                     |
-| `Date`              | data e ora del messaggio                                              |
-| `Upgrade`           | specifica il protocollo di comunicazione preferito                    |
-| `Cookie`            | comunica il cookie al server                                          |
-| `If-Modified-Since` | invia il documento solo se è più recente della data specificata       |
+| intestazione        | descrizione                                                                                                  |
+| ------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `User-Agent`        | indica il programma client utilizzato                                                                        |
+| `Accept`            | indica il formato dei contenuti che il client è in grado di accettare                                        |
+| `Accept-charset`    | famiglia di caratteri che il client è in grado di gestire                                                    |
+| `Accept-encoding`   | schema di codifica supportato dal client                                                                     |
+| `Accept-language`   | linguaggio preferito dal client                                                                              |
+| `Authorization`     | indica le credenziali possedute dal client                                                                   |
+| `Connection`        | `close` - la connessione verrà chiusa dopo la transazione / <br>`keep-alive` - la connessione rimarrà aperta |
+| `Host`              | host e numero di porta del client                                                                            |
+| `Date`              | data e ora del messaggio                                                                                     |
+| `Upgrade`           | specifica il protocollo di comunicazione preferito                                                           |
+| `Cookie`            | comunica il cookie al server                                                                                 |
+| `If-Modified-Since` | invia il documento solo se è più recente della data specificata                                              |
 #### risposta HTTP
 
 > [!info] formato risposta
@@ -283,10 +284,9 @@ Il server chiude una sessione inviando al client un'intestazione `Set-Cookie` ne
 >[!info] attributo `Max-Age`
 >L'attributo `Max-Age` definisce il tempo di vita in secondi di un cookie. Dopo delta secondi, il client dovrebbe rimuovere il cookie.
 
-### altre soluzioni per mantenere lo stato
-Altri metodi per mantenere lo stato (e quindi creare una sessione) sono:
-- Attraverso il metodo POST
-- inserendole nell'URL
+### altra soluzione per mantenere lo stato
+Un altro metodo per mantenere lo stato (e quindi creare una sessione) è:
+- attraverso il metodo POST, inserendo le informazioni sullo stato della sessione nell'**URL**
 
 >[!bug] vantaggi e svantaggi
 >**pros**:

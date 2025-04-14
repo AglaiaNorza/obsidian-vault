@@ -1,1 +1,0 @@
-Progettare un algoritmo che, dato il vettore dei padri $P$ rappresentante l'albero $T$ e tre vertici $x,\,y,\,z$ trovi il leaast common ancestor in tempo $O(n+_{m })$

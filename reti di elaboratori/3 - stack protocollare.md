@@ -1,6 +1,6 @@
 ---
 created: 2025-03-18T14:49
-updated: 2025-04-12T15:55
+updated: 2025-04-14T10:53
 ---
 > [!info] protocollo
 > Un **protocollo** definisce le regole che il mittente, il destinatario e tutti i sistemi intermedi coinvolti devono rispettare per essere in grado di comunicare.
@@ -156,7 +156,7 @@ Dato che lo stack protocollare TCP/IP prevede più protocolli in uno stesso live
 >![[demux-header.png|center|500]]
 
 ## indirizzamento nel modello TCP/IP
-Poiché il modello TCP/OP prevede una comunicazione logica tra coppie di livelli, è necessario avere un indirizzo sorgente e un indirizzo destinazione ad ogni livello.
+Poiché il modello TCP/IP prevede una comunicazione logica tra coppie di livelli, è necessario avere un indirizzo sorgente e un indirizzo destinazione ad ogni livello.
 
 ![[indirizzamento-tcpip.png|center|500]]
 
