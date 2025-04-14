@@ -1,6 +1,6 @@
 ---
 created: 2025-03-29T16:36
-updated: 2025-04-14T12:24
+updated: 2025-04-14T12:37
 ---
 ## indirizzi ip
 Gli host internet hanno **hostname**, nomi facili da ricordare ma che forniscono poche informazioni sulla collocazione degli host all'interno di Internet.
@@ -152,7 +152,7 @@ Ogni mapping è mantenuto nei database sotto forma di **resource record**.
 | **SOA**   | specifica una serie di informazioni autoritative riguardo una zona                      |
 | **MX**    | indica il server di posta del dominio                                                   |
 | **AAAA**  | indirizzo IPv6                                                                          |
-
+Il formato di un Resource Record è: `< Name, Value, Type, TTL >`
 
 >[!info] type A
 >$$
