@@ -1,6 +1,6 @@
 ---
 created: 2025-03-29T16:36
-updated: 2025-04-14T12:37
+updated: 2025-04-14T12:40
 ---
 ## indirizzi ip
 Gli host internet hanno **hostname**, nomi facili da ricordare ma che forniscono poche informazioni sulla collocazione degli host all'interno di Internet.
@@ -153,6 +153,7 @@ Ogni mapping è mantenuto nei database sotto forma di **resource record**.
 | **MX**    | indica il server di posta del dominio                                                   |
 | **AAAA**  | indirizzo IPv6                                                                          |
 Il formato di un Resource Record è: `< Name, Value, Type, TTL >`
+ - (TTL = Time To Live: per quanto tempo il record può essere cachato)
 
 >[!info] type A
 >$$
@@ -187,6 +188,8 @@ Il formato di un Resource Record è: `< Name, Value, Type, TTL >`
 >$$
 >\text{alias} \Rightarrow \text{\textcolor{red}{m}ail server canonical name}
 >$$
+> 
+>- `name` è il dominio
 >- `value` è il nome canonico del server di posta associato a `name`
 > ```
 > < foo.com, mail.bar.foo.com, MX >
