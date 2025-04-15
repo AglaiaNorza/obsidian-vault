@@ -1,6 +1,6 @@
 ---
 created: 2025-03-03T13:49
-updated: 2025-04-14T09:56
+updated: 2025-04-14T22:54
 ---
 Una **rete** è composta da dispositivi, chiamati **nodi** (collegati tra di loro da **link**), in grado di scambiarsi informazioni. I nodi possono essere sistemi terminali (end system), che utilizzano la rete per eseguire applicazioni e comunicare tra loro, oppure dispositivi di interconnessione, che si occupano di instradare e gestire il traffico dati all'interno della rete.
 

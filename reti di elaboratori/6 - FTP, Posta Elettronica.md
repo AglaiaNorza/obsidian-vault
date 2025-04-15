@@ -1,6 +1,6 @@
 ---
 created: 2025-03-21T15:06
-updated: 2025-04-14T09:56
+updated: 2025-04-14T22:54
 ---
 ## FTP
 L'FTP (File Transfer Protocol) è un programma di trasferimento di file da/a un host remoto.
