@@ -1,6 +1,6 @@
 ---
 created: 2025-04-05T19:49
-updated: 2025-04-16T19:12
+updated: 2025-04-16T19:19
 ---
 # ambiente di sviluppo ed esecuzione
 Le fasi di *sviluppo* di un programma C sono quattro (ognuna svolta da un programma diverso):
@@ -335,15 +335,12 @@ char *strncat(char *dest, const char *src, size_t n);
 ```
 - concatena il contenuto della stringa `src` con quello di `dest`, e memorizza la nuova stringa in `dest`
 
-Per visualizzare una stringa su `stdout`, oltre al classico `printf` usando `%s` come placeholder, abbiamo altre opzioni più flessibili:
-- `int putchar(int c)` → stampa a schermo un singolo carattere (restituisce il carattere stampato o errore)
-- `int puts(const char *s)` → scrive su `stdout` una stringa, inoltre aggiunge il carattere di nuova riga `\n` e non mostra il carattere null `\0`
-- `int fputs(const char *s, FILE *stream)` → scrive la stringa `s` sullo stream indicato, non scrive il carattere di fine stringa `\0`
+Per l'**output** su `stdout`, esistono alternative a `printf`:
+- `int putchar(int c)` ⟶ stampa a schermo un carattere (restituisce il carattere scritto, oppure un errore)
+- `int puts(const char *s)` ⟶ scrive la stringa fornita su `stdout`, e aggiunge una newline (non stampa `\0`)
+- `int fputs(const char *s, FILE *stream)` ⟶ copia la stringa fornita nello stream indicato (non copia `\0`)
 
-
-
-
-Oltre al classico `scanf`, per prendere stringhe in input si usa:
+Anche per l'**input** esistono alternative a `scanf`:
 - `char *gets(char *s)` (deprecato) → legge una linea da `stdin` e la memorizza in `s`
 - `char *fgets(char *s, int size, FILE *stream)` → legge i caratteri dal flusso indicato posizionandosi fino al primo carattere di nuova riga incluso e ne salva il contenuto in `s`
 - `int getchar(void)` → legge un carattere da `stdin` e lo restituisce in output
