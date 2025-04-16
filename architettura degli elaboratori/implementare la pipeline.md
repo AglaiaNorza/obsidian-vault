@@ -1,6 +1,6 @@
 ---
 created: 2024-09-12T14:48
-updated: 2025-04-14T22:54
+updated: 2025-04-16T17:12
 ---
 
 per poter implementare la pipeline all'interno di una CPU MIPS, per permettere il **forwarding** è necessario inserire dei registri tra le unità funzionali, per poterci inserire dati e utilizzarli quando necessari.
