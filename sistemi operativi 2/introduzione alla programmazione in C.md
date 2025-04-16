@@ -1,10 +1,8 @@
 ---
 created: 2025-04-05T19:49
-updated: 2025-04-14T22:54
+updated: 2025-04-16T19:12
 ---
-# introduzione
-
-## ambiente di sviluppo ed esecuzione
+# ambiente di sviluppo ed esecuzione
 Le fasi di *sviluppo* di un programma C sono quattro (ognuna svolta da un programma diverso):
 1) il programmatore scrive un programma in un *editor di testo* e lo salva su disco
 2) il **pre-processore** processa il codice
@@ -22,9 +20,9 @@ Le fasi di *esecuzione* sono invece:
 >
 >Invece, la compilazione di un programma tramite gcc produce un file la cui esecuzione crea un processo indipendente da gcc (e quindi eseguibile su altri sistemi senza bisogno di ri-compilarlo)
 
-## il linguaggio C
+# il linguaggio C
 - è un linguaggio di *alto livello*: un programma è un insieme di istruzioni
-### struttura di un programma C
+## struttura di un programma C
 In C è *obbligatoria* la presenza di una **main function**.
 - main function e functions possono anche risiedere in diversi file `.c`
 
@@ -59,8 +57,8 @@ Ogni funzione è formata da un’**intestazione** (header), a sua volta composta
 > - `""` indicano che il file header è dell'utente e si trova nella directory corrente o in un path specificato
 > - `-I` permette di specificare le directory in cui cercare gli header file
 
-### compilare ed eseguire
-#### precompilazione, compilazione, linking
+## compilare ed eseguire
+### precompilazione, compilazione, linking
 Per eseguire solo la **precompilazione**:
 ```
 cpp helloworld.c > precompilato.c
@@ -100,7 +98,7 @@ Per fare **precompilazione, compilazione e linking**:
 gcc file1.c ... filen.c
 ```
 
-#### flag
+### flag
 ```
 gcc -Wall prog-name.c
 ```
@@ -110,7 +108,7 @@ gcc -Wall prog-name.c
 gcc -Wall prog-name.c -lm
 ```
 - il flag `-lm` va specificato se si includono le librerie matematiche `<math.h>` (per usare funzioni come `sin`, `cos`, `log`, `ln`, ecc.)
-### variabili
+## variabili
 >[!error]- identificatori validi
 >1) Il primo carattere in un identificatore deve essere una lettera o underscore e può essere seguito solo da qualsiasi lettera, numero o underscore
 >2) Non devono iniziare con una cifra
@@ -159,7 +157,7 @@ L'assegnazione di un valore ad una variabile può essere fatta:
 - in un momento successivo del codice
 	- è possibile fare assegnazioni del tipo `a = b = 0;`
 - leggendo un valore in input, per esempio con `scanf`
-#### numeri
+### numeri
 >[!info] tipi di dato per i numeri
 > 
 >![[numeri-C.png|center|400]]
@@ -186,7 +184,7 @@ L'assegnazione di un valore ad una variabile può essere fatta:
 
 - la dimensione di un tipo di dato può essere ottenuta anche con `sizeof(datatype)`
 - l tipo `char` può essere assegnato un carattere [ASCII](https://www.ascii-code.com/) attraverso le single quote: al posto di`char c = 97;`, si può scrivere `char c = 'a';`
-#### booleani
+### booleani
 Esistono due tipi di dati per rappresentare valori booleani:
 - `_Bool` ⟶ può memorizzare solo `0` e `1`
 	- qualsiasi valore diverso da `0` verrà memorizzato come `1`
@@ -195,11 +193,11 @@ Esistono due tipi di dati per rappresentare valori booleani:
 
 In ogni espressione logica, `0` significa `false` e `1` o <u>diverso da zero</u> significa `true`.
 
-### input e output
+## input e output
 Quando un programma viene eseguito, l'ambiente run-time del C apre due file: `stdin` e `stdout`.
 - (tutte le funzioni principali per l'I/O sono nel file `stdio.h`)
 
-#### output
+### output
 Con `printf`, possiamo scrivere su `stdout` il valore di una variabile
 ```C
 printf("format_string", value-list);
@@ -235,7 +233,7 @@ Possiamo controllare la spaziatura orizzontale e verticale della `printf` usando
 | `\ooo`          | Octal Number       | It is used to represent an octal number.                                               |
 | `\xhh`          | Hexadecimal Number | It represents the hexadecimal number.                                                  |
 | `\0`            | NULL               | It represents the NULL character.                                                      |
-#### input
+### input
 Per prendere input da terminale, si usa la funzione `scanf`. La sua sintassi è:
 ```C
 scanf(format-string, address-list)
@@ -250,7 +248,7 @@ scanf(format-string, address-list)
 >- `peso` è una variabile intera - `&` estrae il suo indirizzo di memoria e lo passa a `scanf`
 
 `scanf` restituisce il *numero di valori letti in input*.
-### operatori
+## operatori
 - aritmetici: `+, -, *, /, %`
 - relazionali: `==, !=, <, <=, >, >=`
 - logici: `!, &&, ||`
@@ -263,3 +261,89 @@ La precedenza degli operatori segue il PEMDAS (Parentheses, Exponents, Multiplic
 - esistono anche:
 	- il *post-incremento*: `x++` (usa prima il valore di `x` e poi lo incrementa) 
 	- il *pre-incremento*: `++x` (incrementa il valore di `x` prima di usarlo)
+
+## loop
+in C, ci sono tre tipi di costrutti iterativi:
+- `while` loop: non ha costrizioni
+- `do-while` loop: la condizione è testata *dopo* l'esecuzione del corpo del loop
+- `for` loop: il numero di iterazioni è noto a priori
+	- sintassi: `for (int i = 1; i<5; i++)`
+
+C implementa gli statement `break` (per uscire da cicli e da `switch`) e `continute` (per saltare un'iterazione).
+
+## stringhe
+Le stringhe sono **array di caratteri** con ultimo elemento `\0` (detto NULL), il carattere di fine stringa.
+
+Ci sono due modi di inizializzare una stringa:
+```C
+char r[10] = "L9 4apr"
+// qui, i valori da r[8] in poi sono indeterminati
+
+char r[] = "L9 4apr" // viene allocata una stringa di dimensione 8
+```
+- in questo caso, il carattere `\0` viene aggiunto automaticamente
+```C
+char r[10] = { 'L', '9', ' ', '4', 'a', 'p', 'r', '\0' }
+```
+
+> [!warning] attenzione
+> Se invece una stringa venisse inizializzata così:
+> ```C
+> char r[10] = { 'L', '9', ' ', '4', 'a', 'p', 'r' }
+> ```
+> 
+>  non sarebbe una stringa, in quanto `\0` non viene inserito automaticamente.
+
+### funzioni
+Molte funzioni per la gestione delle stringhe sono contenute in `string.h`.
+
+Calcolare la **lunghezza** di una stringa:
+```C
+size_t strlen(const char *s);
+```
+
+**Copia** di una stringa:
+```C
+char *strcpy(char *dest, const char *src);
+
+char *strncpy(char *dest, const char *src, size_t n);
+```
+- `strncpy` funziona come `strcpy`, ma al più `n` byte vengono copiati
+- si può utilizzare `strcpy` anche per assegnare un valore ad una variabile (previa inizializzazione): `strcpy(s, "Lezione 9");`
+
+**Confronto** di due stringhe:
+```C
+int strcmp(const char *s1, const char *s2);
+
+// confronta i primi n byte di s1 e s2:
+int strncmp(const char *s1, const char *s2, size_t n);
+```
+
+Le due funzioni restituiscono un valore che indica la relazione tra le due stringhe, in questo modo:
+
+| valore | significato |
+| ------ | ----------- |
+| $<0$   | `s1<s2`     |
+| $0$    | `s1==s2`    |
+| $>0$   | `s1>s2`     |
+**Concatenazione** di due stringhe:
+```C
+char *strcat(char *dest, const char *src);
+
+// concatenati al più i primi n byte:
+char *strncat(char *dest, const char *src, size_t n);
+```
+- concatena il contenuto della stringa `src` con quello di `dest`, e memorizza la nuova stringa in `dest`
+
+Per visualizzare una stringa su `stdout`, oltre al classico `printf` usando `%s` come placeholder, abbiamo altre opzioni più flessibili:
+- `int putchar(int c)` → stampa a schermo un singolo carattere (restituisce il carattere stampato o errore)
+- `int puts(const char *s)` → scrive su `stdout` una stringa, inoltre aggiunge il carattere di nuova riga `\n` e non mostra il carattere null `\0`
+- `int fputs(const char *s, FILE *stream)` → scrive la stringa `s` sullo stream indicato, non scrive il carattere di fine stringa `\0`
+
+
+
+
+Oltre al classico `scanf`, per prendere stringhe in input si usa:
+- `char *gets(char *s)` (deprecato) → legge una linea da `stdin` e la memorizza in `s`
+- `char *fgets(char *s, int size, FILE *stream)` → legge i caratteri dal flusso indicato posizionandosi fino al primo carattere di nuova riga incluso e ne salva il contenuto in `s`
+- `int getchar(void)` → legge un carattere da `stdin` e lo restituisce in output
