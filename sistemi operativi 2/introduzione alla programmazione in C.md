@@ -1,6 +1,6 @@
 ---
 created: 2025-04-05T19:49
-updated: 2025-04-16T19:19
+updated: 2025-04-17T10:00
 ---
 # ambiente di sviluppo ed esecuzione
 Le fasi di *sviluppo* di un programma C sono quattro (ognuna svolta da un programma diverso):
@@ -344,3 +344,34 @@ Anche per l'**input** esistono alternative a `scanf`:
 - `char *gets(char *s)` (deprecato) → legge una linea da `stdin` e la memorizza in `s`
 - `char *fgets(char *s, int size, FILE *stream)` → legge i caratteri dal flusso indicato posizionandosi fino al primo carattere di nuova riga incluso e ne salva il contenuto in `s`
 - `int getchar(void)` → legge un carattere da `stdin` e lo restituisce in output
+
+## allocazione dinamica della memoria
+I **puntatori** sono variabili che contengono l'indirizzo di una locazione di memoria.
+```C
+<type> *var_name;
+ 
+// o anche 
+<type>* var_name
+```
+
+Un puntatore ha *due valori* ad esso associati:
+- il **valore diretto**: indirizzo di una cella di memoria a cui si accede mediante il nome della variabile
+- il **valore indiretto**: il valore contenuto dalle celle di memoria a cui punta il valore diretto
+
+### operatori `&` e `*`
+L'operatore `*` è noto come **operatore di deferenziazione** (dereferencing), e permette di accedere al valore contenuto nell'indirizzo di memoria puntato.
+
+L'operatore `&` è noto come **operatore di referenziazione** (referencing), che permette di ottenere l'indirizzo di memoria di una variabile.
+
+> [!example] esempio
+> ```C
+> int num = 5;
+> int *numPtr;
+> 
+> numPtr = &num; // assegna a numPtr l'indirizzo di num
+> 
+> *numPtr = 10; // assegna alla locazione puntata da numPtr il valore 10
+> 
+> *numPtr = *numPtr+1 // assegna alla locazione di numPtr il valore numPtr+1
+> ```
+
