@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-04-16T17:12
+updated: 2025-04-17T12:01
 ---
 # introduzione
 >[!info] overview

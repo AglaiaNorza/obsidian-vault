@@ -1,6 +1,6 @@
 ---
 created: 2025-03-29T16:36
-updated: 2025-04-16T17:12
+updated: 2025-04-17T12:01
 ---
 ## colorazione di grafi
 

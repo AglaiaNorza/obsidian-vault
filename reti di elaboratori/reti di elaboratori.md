@@ -1,6 +1,6 @@
 ---
 created: 2025-04-10T14:16
-updated: 2025-04-16T17:12
+updated: 2025-04-17T12:01
 ---
 >[!info] indice
 >- [[1 - introduzione alle reti]]

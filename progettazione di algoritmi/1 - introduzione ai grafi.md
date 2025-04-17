@@ -1,6 +1,6 @@
 ---
 created: 2025-03-22T10:30
-updated: 2025-04-16T17:12
+updated: 2025-04-17T12:01
 ---
 ## grafi
 Un grafo è formato da:

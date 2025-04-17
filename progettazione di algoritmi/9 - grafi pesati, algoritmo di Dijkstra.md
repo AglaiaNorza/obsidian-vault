@@ -1,6 +1,6 @@
 ---
 created: 2025-03-29T16:36
-updated: 2025-04-16T17:12
+updated: 2025-04-17T12:01
 ---
 >[!info] grafo pesato
 >Un grafo $G$ è detto **pesato** se ad ogni arco $e\in E$ è associato un valore numerico (detto *peso*) <small>(funzione $w:E\to R$ associa ad ogni arco un peso)</small>.
