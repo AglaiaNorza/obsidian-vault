@@ -1,6 +1,6 @@
 ---
 created: 2025-03-24T09:30
-updated: 2025-04-17T12:01
+updated: 2025-04-18T16:55
 ---
 >[!info] index
 >- [[0 - introduzione]] 
@@ -15,3 +15,5 @@ updated: 2025-04-17T12:01
 >- [[9 - grafi pesati, algoritmo di Dijkstra]]
 >- [[10 - minimo albero di copertura]]
 >- [[11 - algoritmo di Bellman-Ford]]
+
+[playlist di accompagnamento allo studio](https://open.spotify.com/playlist/52f65aksG2pZCE5IRqrkLr?si=9b217e1fd5e344f4)
