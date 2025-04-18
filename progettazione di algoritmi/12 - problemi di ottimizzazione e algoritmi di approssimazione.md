@@ -1,6 +1,6 @@
 ---
 created: 2025-03-31T14:43
-updated: 2025-04-18T16:55
+updated: 2025-04-18T17:28
 ---
 Un problema di ottimizzazione è un tipo di problema in cui l'obiettivo è trovare la **migliore soluzione possibile** tra un insieme di soluzioni ammissibili.
 - ogni soluzione ammissibile (ovvero che soddisfa tutte le condizioni imposte dal problema) ha un valore associato chiamato *costo* o *beneficio*.
@@ -73,4 +73,24 @@ Dato un grafo indiretto $G$, una sua **copertura tramite nodi** è un sottoinsie
 >>
 >>Per come funziona l'algoritmo, deduciamo che $A(I)=2k$.
 >> 
->>I $k$ archi non coperti sono tra loro disgiunti (infatti i due estremi di ognuno di questi archi sono stati incontrati per la prima volta durante l'algoritmo, altrimenti sarebbero stati coperti), quindi, in qualunque delle soluzioni ottime deve essere presente almeno un estremo di ciascuno dei $k$ archi.2
+>>I $k$ archi non coperti sono tra loro disgiunti (infatti i due estremi di ognuno di questi archi sono stati incontrati per la prima volta durante l'algoritmo, altrimenti sarebbero stati coperti), quindi, in qualunque delle soluzioni ottime deve essere presente almeno un estremo di ciascuno dei $k$ archi. Deduciamo quindi che $k\leq OTT(I)$.
+>>
+>>Da quanto detto prima, ricaviamo quindi che $A(I)=2k\leq 2 \cdot OTT(I)$, da cui segue $\frac{A(I)}{OTT(I)}\leq 2$.
+>
+>Implementazione:
+> ``` python
+> def copertura1(G):
+> 	n = len(G)
+> 	E = [(x,y) for x in range(n) for y in G[x] if x<y]
+> 	presi = [0]*n # presi[i] == 1 se i è in S
+> 	sol = []
+> 	
+> 	for a, b in E:
+> 		if presi[a]==presi[b]==0:
+> 			sol.append(a)
+> 			sol.append(b)
+> 			presi[a] = presi[b] = 1
+> 	return sol
+> ```
+> 
+> - l'algoritmo ha complessità $O(n+m)$
