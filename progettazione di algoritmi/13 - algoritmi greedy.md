@@ -1,8 +1,7 @@
 ---
 created: 2025-04-01
-updated: 2025-04-18T17:45
+updated: 2025-04-18T18:41
 ---
-
 > [!info] greedy
 > Un algoritmo si dice **greedy** se, ad ogni passaggio, opta per la *soluzione ottimale a livello locale*.
 
@@ -65,4 +64,76 @@ Abbiamo una lista di attività, ciascuna caratterizzata da un tempo di inizio e 
 >
 >Ma non è una soluzione ottima. Per esempio, nel caso di `lista = [(1,4), (1,6), (7,8), (5,10)]`, propone una soluzione che utilizza tre aule, mentre la soluzione ottima ne utilizza 2:
 >
+>![[att-es-1.png|center|400]]
+
+La soluzione corretta consiste invece nel selezionare ogni volta l'attività che **inizia prima**: se può essere posizionata in un'aula già esistente, gliela si assegna, altrimenti si alloca una nuova aula.
+
+>[!note] dimostrazione di correttezza
+>Sia $k$ il numero di aule utilizzate dalla soluzione. Fremo vedere che nella lista ci sono $k$ attività incompatibili a coppie, ovvero che si sovrappongono nel tempo (il che implica che sono necessarie $k$ aule).
 >
+>- Sia $(a,b)$ l’attività che ha portato all’introduzione nella soluzione della $k$-esima aula. 
+>
+>In quel momento, tutte le $k-1$ aule precedentemente allocate erano occupate da attività che si sovrappongono temporalmente con $(a,b)$ (nessuna era ancora terminata all’istante $a$ in cui inizia l’attività $(a,b)$). Poiché l’algoritmo sceglie le attività in ordine di inizio e assegna aule solo se necessario, significa che al tempo $a$ le $k-1$ aule erano tutte occupate.
+>
+>Quindi, le $k$ attività (le $k+1$ e $a$) sono a due a due incompatibili, perché tutte risultano "attive" nello stesso istante. Quindi, qualsiasi soluzione valida deve usare almeno $k$ aule. La soluzione greedy ne usa esattamente $k$ ed è quindi ottima.
+
+#### implementazione
+- per individuare in maniera efficiente l'attività che inizia prima, si effettua un pre-processing in cui si ordinano le attività per tempo di inizio.
+- per individuare efficientemente (in $O(1)$) quale aula si liberi prima, si costruisce un *heap minimo* con le coppie $(\text{libera},\,i)$ dove $\text{libera}$ indica il tempo in cui si libera l'aula $i$ 
+- se l'attività può essere eseguita nell'aula che si libera prima, allora bisogna assegnargliela e aggiornare il valore $\text{libera}$ della coppia che rappresenta l'aula nella heap; se invece l'attività non può essere eseguita in quell'aula, allora non saraà possibile farlo in nessuna delle altre: bisognerà allocare una nuova aula ed inserirla nella heap.
+	- inserimenti, estrazioni e cancellazioni in una heap costano $O(\log n)$
+
+```python
+def assegnazioneAule(lista):
+	from heapq import heappop, heappush
+	f = [[]]
+	H = [(0,0)]
+	lista.sort()
+	
+	for inizio, fine in lista:
+		libera, aula = H[0]
+		if libera<inizio:
+			f[aula].append((inizio, fine))
+			heappop(H)
+			heappush(H, (fine, aula))
+		else:
+			f.append([(inizio, fine)])
+			heappush(H, (fine, len(f)-1))
+	return f
+```
+
+- ordinare la lista costa $\Theta(n \log n)$
+- il `for` viene eseguito $n$ volte e, al suo interno, nel caso peggiore può essere eseguita un'estrazione da heap seguita da un inserimento (entrambe di costo $O(\log n)$); il `for` costerà quindi $O(n \log n)$
+
+La complessità dell'algoritmo è $\Theta(n \log n)$.
+### file su disco
+Abbiamo $n$ file di dimensioni $d_{0},\,d_{1},\,\,\dots,\, d_{n-1}$ che vogliamo memorizzare su un disco di capacità $k$. Tuttavia, la somma delle dimensioni di questi file eccede la capacità del disco. Si vuole selezionare un sottoinsieme dei file che abbia *cardinalità massima* e che possa essere memorizzato sul disco.
+
+- un algoritmo greedy per questo problema è questo: si considerano i file per *dimensione crescente* e, se c'è spazio per memorizzare un file su disco, lo si memorizza.
+
+>[!note] dimostrazione di correttezza
+>Assumiamo per assurdo che la soluzione $sol$ prodotta dal greedy non sia ottima. Devono quindi esistere insiemi con più file di $sol$ che rispettano la capacità del disco.
+>
+>Tra questi insiemi, prendiamo quello con più elementi in comune con $sol$: chiamiamolo $sol^*$.
+>
+>- Esiste necessariamente un file $a$ che appartiene a $sol^*$ e non a $sol$ e occupa più spazio di qualunque file in $sol$ (per il criterio di scelta greedy, tutti gli elementi in $sol$ occupano meno spazio di quelli non presenti). 
+>- Esiste necessariamente anche un file $b$ che appartiene a $sol$ e non a $sol^*$ (perché $sol \not\subset sol^*$ - l'aggiunta di un qualsiasi elemento a $sol$ porterebbe a superare la capacità del disco)
+>
+>Possiamo quindi eliminare da $sol^*$ il file $a$ e inserire il file $b$ (che ha quindi dimensione $\leq a)$ ottenendo un nuovo insieme di file che rispetta ancora le capacità del disco ed ha un elemento in più in comune con sol, contraddicendo l'ipotesi per cui $sol^*$ è quello con più elementi in comune con $sol$.
+
+```python
+def file(D, k):
+	n = len(D)
+	lista = [(D[i], i) for i in range(n)]
+	lista.sort()
+	spazio, sol = []
+
+	for p, i in lista:
+		if spazio + p <= k:
+			sol.append(i)
+			spazio += d
+		else:
+			return sol 
+```
+
+Questo algoritmo ha complessità $O(n+m)$ (causata dal `sort()`).

@@ -1,6 +1,6 @@
 ---
 created: 2025-03-24T09:30
-updated: 2025-04-18T17:00
+updated: 2025-04-18T18:41
 ---
 >[!info] index
 >- [[0 - introduzione]] 
@@ -16,5 +16,6 @@ updated: 2025-04-18T17:00
 >- [[10 - minimo albero di copertura]]
 >- [[11 - algoritmo di Bellman-Ford]]
 >- [[12 - problemi di ottimizzazione e algoritmi di approssimazione]]
+>- [[13 - algoritmi greedy]]
 
 [playlist di accompagnamento allo studio](https://open.spotify.com/playlist/52f65aksG2pZCE5IRqrkLr?si=9b217e1fd5e344f4)
