@@ -1,6 +1,6 @@
 ---
 created: 2025-03-20T14:18
-updated: 2025-04-08T11:13
+updated: 2025-04-19T16:51
 ---
 I protocolli di trasporto forniscono la **comunicazione logica** tra processi applicativi di host differenti.
 - gli host eseguono processi *come se fossero direttamente connessi* 
@@ -61,7 +61,7 @@ Il **demultiplexing** viene effettuato dall'host ricevente, che consegna i segme
 >Nell'esempio precedente, i portieri effettuano un'operazione di multiplexing quando raccolgono le lettere dai condomini e le imbucano, e una di demultiplexing quando ricevono le lettere dal postino, leggono il nome del destinatario e gliele consegnano.
 
 ## API di comunicazione
-La **socket** API è un'interfaccia di comunicazione che permette la comunicazione tra tra livello di applicazione e livello di trasporto.
+La **socket** API (spiegata meglio [[11 - interfaccia socket|qui]]) è un'interfaccia di comunicazione che permette la comunicazione tra tra livello di applicazione e livello di trasporto.
 
 ![[socket.png|center|400]]
 

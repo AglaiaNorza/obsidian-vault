@@ -1,6 +1,6 @@
 ---
 created: 2025-04-10T14:16
-updated: 2025-04-17T12:01
+updated: 2025-04-19T17:07
 ---
 >[!info] indice
 >- [[1 - introduzione alle reti]]
@@ -17,8 +17,11 @@ updated: 2025-04-17T12:01
 >- [[8 - UDP]]
 >- [[9 - meccanismi di trasferimento affidabile]]
 >- [[10 - TCP]]
+>- [[11 - interfaccia socket]]
+>
+>livello rete:
 
->[!tip]- memino gentilmente fornito da [alessio](https://alem1105.github.io/Quartz/)
+>[!tip]- un memino gentilmente fornito da [alessio](https://alem1105.github.io/Quartz/) 
 >
 >![[meme-reti.png|center|390]]
 
