@@ -1,6 +1,6 @@
 ---
 created: 2025-04-10T14:17
-updated: 2025-04-20T11:56
+updated: 2025-04-20T13:41
 ---
 Come visto nell'[[3 - stack protocollare|introduzione allo stack protocollare]], il livello di rete si occupa dell'instradamento dei segmenti dall'origine alla destinazione.
 Nello specifico, svolge due compiti:
@@ -74,5 +74,35 @@ I pacchetti vengono inoltrati usando l'indirizzo dell'host destinatario. Essi pa
 >  `11001000 00010111 00011000 10101010` ⟶ $1$
 >
 >- se si verificano corrispondenze multiple, si prende la corrispondenza a prefisso più lungo
+>
+>La **ricerca nella tabella di inoltro** deve essere veloce per evitare accodamenti. 
+>La tabella è quindi implementata con una *struttura ad albero*, in cui ogni livello dell'albero corrisponde a un bit dell'indirizzo di destinazione.
+>- per cercare un indirizzo si comincia dalla radice (se il primo bit è `0`, si trova nel sottoalbero sinistro, altrimenti in quello destro)
+>- la ricerca richiede quindi $N$ passi (dove $N$ è il numero di bit dell'indirizzo)
 
-2
+>[!info] porte di ingresso e di uscita
+>##### porte d'ingresso
+>
+>![[porte-ingresso.png|center|400]]
+>
+>La **commutazione decentralizzata** determina la porta d’uscita dei pacchetti utilizzando le informazioni della tabella d’inoltro (ogni porta d’ingresso ha una copia della tabella)
+>- l’obiettivo è quello di completare l’elaborazione allo stesso tasso della linea (evitando bottlenecks). 
+>	- c'è accodamento di pacchetti se il tasso di arrivo dei datagrammi è superiore a quello di inoltro
+>- una volta determinata la porta di uscita, il pacchetto verrà inoltrato alla struttura di commutazione
+>
+>##### porte d'uscita
+>
+>![[porte-uscita.png|center|450]]
+>
+>Le porte di uscita gestiscono:
+>- **funzionalità di accodamento** ⟶ necessarie quando la struttura di commutazione consegna pacchetti alla porta d'uscita ad una frequenza che supera quella del collegamento uscente
+>- **schedulatore di pacchetti** ⟶ stabilisce in quale ordine trasmettere i pacchetti accodati
+
+### tecniche di commutazione
+Ci sono tre modi per far passare un pacchetto dalla porta di ingresso alla porta di uscita:
+- commutazione in memoria
+- commutazione tramite bus
+
+
+
+
