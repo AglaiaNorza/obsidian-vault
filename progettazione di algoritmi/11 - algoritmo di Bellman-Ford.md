@@ -1,6 +1,6 @@
 ---
 created: 2025-03-29T16:36
-updated: 2025-04-17T12:01
+updated: 2025-04-22T17:13
 ---
 ### introduzione
 Dato un grafo diretto e pesato $G$ in cui i pesi degli archi possono essere *anche negativi* e fissato un suo nodo $s$, si vuole determinare il costo minimo dei cammini che conducono da $s$ a tutti gli altri nodi del grafo.
