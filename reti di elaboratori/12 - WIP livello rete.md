@@ -1,6 +1,6 @@
 ---
 created: 2025-04-10T14:17
-updated: 2025-04-22T17:54
+updated: 2025-04-23T10:09
 ---
 Come visto nell'[[3 - stack protocollare|introduzione allo stack protocollare]], il livello di rete si occupa dell'instradamento dei segmenti dall'origine alla destinazione.
 Nello specifico, svolge due compiti:
@@ -132,3 +132,27 @@ L'accodamento si verifica sia nelle porte di ingresso che in quelle di uscita.
 >[!info] velocità di commutazione
 >La **velocità di commutazione** è la frequenza alla quale una struttura può trasferire i pacchetti dalle porte di ingresso a quelle di uscita.
 
+>[!question] capacità dei buffer
+>Per quanto riguarda la **capacità dei buffer**, per diversi anni si è seguita la regola definita in RFC 3439:  la quantità di buffering dovrebbe essere uguale a una media del tempo di andata e ritorno (RTT) per la capacità del collegamento $C$.
+>
+>Le attuali raccomandazioni dicono invece che la quantità di buffering necessaria per $N$ flussi TCP è:
+>
+>$$\frac{RTT \cdot C}{\sqrt{ N }}$$
+#### accodamento nelle porte di ingresso
+Si verifica:
+- quando la *velocità di commutazione è inferiore* a quella delle porte di ingresso
+	- per non avere accodamento, la velocità di commutazione dovrebbe essere $n \times\text{velocità della linea di ingresso}$
+- quando c'è un **blocco in testa alla fila** (HOL: Head-Of-the-Line blocking) ⟶ un pacchetto nella coda di ingresso deve attendere il trasferimento perché viene bloccato da un altro pacchetto in testa alla fila
+
+Se le code diventano troppo lunghe, i buffer si possono saturare e causare **perdita di pacchetti**.
+
+![[accod-ingr.png|center|450]]
+
+#### accodamento sulle porte di uscita
+Avviene:
+- quando la struttura di commutazione ha un *rate superiore* alla porta di uscita
+- quando troppi pacchetti vanno sulla stessa porta di usicita
+
+Anche in questo caso, se le code diventano troppo lunghe, i buffer si possono saturare e causare **perdita di pacchetti**.
+
+![[accod-usc.png|center|450]]
