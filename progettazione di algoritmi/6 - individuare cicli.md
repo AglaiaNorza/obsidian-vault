@@ -1,6 +1,6 @@
 ---
 created: 2025-03-29T16:36
-updated: 2025-04-17T12:01
+updated: 2025-04-22T17:13
 ---
 Dato un grafo $G$ (diretto o indiretto), vogliamo sapere se esso è ciclico
 

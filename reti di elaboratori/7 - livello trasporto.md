@@ -1,6 +1,6 @@
 ---
 created: 2025-03-20T14:18
-updated: 2025-04-19T16:51
+updated: 2025-04-22T17:13
 ---
 I protocolli di trasporto forniscono la **comunicazione logica** tra processi applicativi di host differenti.
 - gli host eseguono processi *come se fossero direttamente connessi* 

@@ -1,6 +1,6 @@
 ---
 created: 2024-10-23T11:20
-updated: 2025-04-17T12:01
+updated: 2025-04-22T17:13
 ---
 Il compito fondamentale di un sistema operativo è la **gestione dei processi** - computazioni di tipi diversi.
 Deve quindi: 

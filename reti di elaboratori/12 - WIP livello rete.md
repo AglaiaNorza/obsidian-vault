@@ -1,6 +1,6 @@
 ---
 created: 2025-04-10T14:17
-updated: 2025-04-20T13:41
+updated: 2025-04-22T17:54
 ---
 Come visto nell'[[3 - stack protocollare|introduzione allo stack protocollare]], il livello di rete si occupa dell'instradamento dei segmenti dall'origine alla destinazione.
 Nello specifico, svolge due compiti:
@@ -102,7 +102,33 @@ I pacchetti vengono inoltrati usando l'indirizzo dell'host destinatario. Essi pa
 Ci sono tre modi per far passare un pacchetto dalla porta di ingresso alla porta di uscita:
 - commutazione in memoria
 - commutazione tramite bus
+- commutazione tramite rete di interconnessione
+
+![[tecniche-commutaz.png|center|400]]
 
 
+#### commutazione in memoria
+Era utilizzata dalla prima generazione di router. Questi erano tradizionali calcolatori e la commutazione era effettuata sotto il *controllo diretto della CPU*.
+- il pacchetto veniva copiato nella memoria del processore e veniva trasferito dalle porte di ingresso a quelle di uscita
 
+![[comm-memoria.png|center|450]]
+
+
+#### commutazione tramite bus
+Le porte d'ingresso trasferiscono un pacchetto direttamente alle porte d'uscita su un *bus condiviso*, senza l'intervento del processore di instradamento.
+- si può trasferire *un solo pacchetto alla volta*
+- i pacchetti che arrivano e trovano il bus occupato vengono accodati alla porta d'ingresso - la larghezza di banda della commutazione è quindi limitata da quella del bus
+
+![[comm-bus.png|center|350]]
+#### commutazione tramite rete di interconnessione
+La commutazione tramite rete di interconnessione risolve il problema del limite di banda di un singolo bus condiviso.
+Usa un **crossbar switch**: una rete di interconnessione che formata da $2n$ bus che collegano $n$ porte d'ingresso a $n$ porte di uscita.
+
+(Attualmente, si tende a frammentare i pacchetti IP a lunghezza variabile in celle di lunghezza fissa).
+
+### accodamento
+L'accodamento si verifica sia nelle porte di ingresso che in quelle di uscita.
+
+>[!info] velocità di commutazione
+>La **velocità di commutazione** è la frequenza alla quale una struttura può trasferire i pacchetti dalle porte di ingresso a quelle di uscita.
 
