@@ -1,6 +1,6 @@
 ---
 created: 2024-11-24T17:06
-updated: 2025-04-22T17:13
+updated: 2025-04-24T12:40
 ---
 ## visione d'insieme
 I **file** sono l'elemento principale per la maggior parte delle applicazione (fanno spesso da input e output). 

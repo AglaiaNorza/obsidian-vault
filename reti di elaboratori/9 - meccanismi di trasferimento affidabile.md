@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-04-22T17:13
+updated: 2025-04-24T12:40
 ---
 ## stop-and-wait
 Lo stop-and-wait è un meccanismo orientato alla connessione, che implementa controllo del flusso e controllo degli errori.

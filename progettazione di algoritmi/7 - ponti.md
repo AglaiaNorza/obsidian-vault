@@ -1,6 +1,6 @@
 ---
 created: 2025-04-10T14:16
-updated: 2025-04-22T17:13
+updated: 2025-04-24T12:40
 ---
 > [!info] ponte
 > Un **ponte** è un arco la cui eliminazione disconnette un grafo (ovvero aumenta il numero di componenti connesse). Equivalentemente, un arco è un ponte se e solo se *non è contenuto in nessun ciclo*. 
