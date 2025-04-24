@@ -1,7 +1,8 @@
 ---
 created: 2025-04-18T18:43
-updated: 2025-04-24T23:06
+updated: 2025-04-24T23:50
 ---
+// c'è tutto ma vorrei spiegare un po' meglio alcuni passaggi
 > [!info] divide-et-impera
 > Il **divide et impera** è un approccio di risoluzione di problemi che si basa sulla divisione di un problema in sotto-problemi indipendenti, che vengono risolti ricorsivamente. In generale, è formato da 2+1 step:
 > 1) **divide**: il problema viene suddiviso in più sotto-problemi simili a quello originale, che vengono a loro volta suddivisi ricorsivamente finché possibile
@@ -161,4 +162,100 @@ Esiste un metodo chiamato **mediano dei mediani** che permette di selezionare un
 >>
 >>**prova per $A_{2}$**
 >> 
->>Consideriamo i $\left\lceil  \frac{n}{10}  \right\rceil-1$ mediani di valore inferiore a $p$. Ognuno di questi appartiene ad un gruppo di 5 elementi in $n$. Ci sono dunque in $A$ altri 2 elementi inferiori a $p$ per ogni mediano. In totale abbiamo quindi $$
+>>Consideriamo i $\left\lceil  \frac{n}{10}  \right\rceil-1$ mediani di valore inferiore a $p$. Ognuno di questi appartiene ad un gruppo di 5 elementi in $n$. Ci sono dunque in $A$ altri 2 elementi inferiori a $p$ per ogni mediano. In totale abbiamo quindi
+>>
+>>$$3\left( \left\lceil  \frac{n}{10}  \right\rceil -1 \right)\geq 3 \frac{n}{10}-3$$
+>>
+>>elementi di $A$ in $A_{1}$.
+>>
+>>Quindi, 
+>>
+>>$$|A_{2}|\leq n-\left( 3 \frac{n}{10} -3\right)=\frac{7}{10}n+3\leq \frac{3}{4}n$$
+>>
+>>(dove $\frac{7}{10}n+3\leq \frac{3}{4}n$ perché $n\geq 120$).
+>>
+>>**prova per $A_{1}$**
+>>
+>>Ci sono invece
+>> 
+>>$$\left\lfloor  \frac{n}{5}  \right\rfloor -\left\lceil  \frac{n}{10}  \right\rceil \geq\left( \frac{n}{5}-1 \right)-\left( \frac{n}{10}+1 \right)=\frac{n}{10}-2$$
+>>
+>>mediani di valore superiore a $p$. Ognuno di questi appartiene ad un gruppo di 5 elementi in $A$. Ci sono quindi in $A$ altri due elementi superiori a $p$ per ogni mediano. 
+>>In totale abbiamo quindi almeno $3 \frac{n}{10} -6$ elementi di $A$ che finiranno in $A_{2}$.
+>>
+>>Abbiamo quindi
+>>
+>>$$|A_{2}|\leq n-\left( 3 \frac{n}{10} -6\right)=\frac{7}{10}n+6\leq \frac{3}{4}n$$
+>>
+>>(dove $\frac{7}{10}n+6\leq \frac{3}{4}n$ perché $n\geq 120$)
+
+**implementazione**:
+```python
+from math import ceil
+
+def selezione(A,k):
+	if len(A)<=120: # costo costante 120 log 120
+		A.sort()
+		return A[k-1]
+	
+	# inizializza B con i mediani dei len(A)//5 gruppi di 5 elementi di A
+	# (sorta i gruppi di 5 e prende il terzo elemento)
+	B = [sorted(A[5*1 : 5*i+5])[2] for i in range(len(A)//5)] #
+	
+	# individua il pivot p con la regola del mediano dei mediani
+	pivot = selezione(B, ceil(len(A)/10))
+	A1, A2 = [], []
+	
+	for x in A:
+		if x<pivot:
+			A1.append(x)
+		elif x>pivot:
+			A2.append(x)
+			
+	if len(A1) >= k:
+		return selezione(A1,k)
+	elif len(A1) == k-1:
+		return pivot
+	return selezione(A2, k-len(A1)-1)
+```
+
+sappiamo che:
+- ordinare 120 elementi richiede $O(1)$
+- ordinare una lista di $n$ elementi in gruppi da 5 richiede $\Theta(n)$
+- selezionare i mediani dei mediani di gruppi da 5 da una lista in cui gli elementi sono stati ordinati in gruppi da 5 richiede $\Theta(n)$
+
+Sappiamo che per $n\geq 120$, si ha $|A_{1}|\leq \frac{3}{4}n$ e $|A_{2}|\leq \frac{3}{4}n$l quindi per la complessità $T(n)$ dell’algoritmo si ha:
+ 
+$$
+T(n)\leq
+\begin{cases}
+O(1)&\text{se }n\leq 120 \\
+T\left( \frac{n}{5} \right)+T\left( \frac{3}{4}n \right)+\Theta(n)&\text{altrimenti}
+\end{cases}
+$$
+
+>[!tip] equazione di ricorrenza
+>La ricorrenza è del tipo 
+>
+>$$T(n)=T(\alpha \cdot n)+T(\beta \cdot n)+\Theta(n)$$
+>
+>con $\alpha+\beta=\frac{1}{5}+\frac{3}{4}=\frac{19}{20}<1$, e questo tipo di ricorrenze hanno tutte come soluzione $T(n)=\Theta(n)$.
+
+>[!example] dimostriamolo (metodo dell'albero)
+>Il fatto che $\alpha+\beta<1$ gioca un ruolo fondamentale nella prova.
+>
+>Consideriamo l'albero delle chiamate ricorsive e analizziamone il costo per livelli:
+> 
+>![[albero-ricorr.png|center|450]]
+>
+>- al primo livello abbiamo un costo $(\alpha+\beta)\cdot n$, al secondo un costo $(\alpha+\beta)^2\cdot n$, al terzo un costo $(\alpha+\beta)^3\cdot n$ e così via
+>
+>Il tempo di esecuzione totale è la somma dei costi dei vari livelli:
+>
+>$$\begin{align}T(n)<c\cdot n+c\cdot(\alpha+\beta)\cdot n+c\cdot(\alpha+\beta)^2\cdot n+\dots=\\cn\cdot \sum^\infty_{i=0}(\alpha+\beta)^i= cn \frac{1}{1-(\alpha+\beta)}=\Theta (n)\end{align}$$
+>
+>(dove nel calcolare la serie si sfrutta il fatto che $\alpha+\beta<1$ e la serie geometrica $\sum^\infty_{i=0}x^i$ con $x<1$ converge a $\frac{1}{1-x}$)
+
+Abbiamo quindi dimostrato che il problema della selezione può essere risolto in
+tempo lineare., con un algoritmo che risolve il problema in $O(n)$ al caso pessimo.
+Tuttavia, a causa delle grandi costanti moltiplicative nascoste dall’$O(n)$, nella pratica l’algoritmo randomizzato che ha tempo $O(n)$ con alta probabilità si comporta molto meglio.
