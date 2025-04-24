@@ -1,6 +1,6 @@
 ---
 created: 2024-11-05T18:26
-updated: 2025-04-24T12:40
+updated: 2025-04-24T21:06
 ---
 (con memoria, si intende RAM)
 

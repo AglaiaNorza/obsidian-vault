@@ -1,6 +1,6 @@
 ---
 created: 2025-03-10T10:51
-updated: 2025-04-24T12:40
+updated: 2025-04-24T21:06
 ---
 ## verificare se un grafo diretto ha un pozzo universale
 In questo caso, è più comodo utilizzare la rappresentazione tramite matrice - essa ci permette infatti di risolvere il problema in $\Theta(n)$. 
