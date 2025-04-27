@@ -1,6 +1,6 @@
 ---
 created: 2025-04-23T20:07
-updated: 2025-04-27T11:05
+updated: 2025-04-27T11:28
 ---
 Una **logica** è una famiglia di linguaggi formali per rappresentare informazioni e derivare conseguenze.
 
@@ -21,6 +21,7 @@ Ogni logica è definita da:
 L'**alfabeto** della logica di primo ordine è composto da:
 - un insieme $V$ di **variabili**
 - un insieme $F$ di **simboli di funzione**, ognuno associato al suo numero di argomenti, detto *arità*
+	- i simboli di funzione di arità 0 sono detti simboli di *costante*
 	- (essenzialmente) i simboli di funzione ritornano valori che possono essere oggetti del dominio
 
 >[!example] esempi
@@ -29,6 +30,7 @@ L'**alfabeto** della logica di primo ordine è composto da:
 >- $\text{padre/1}$ ⟶ $\text{padre(x)}$ è il padre dell'individuo $\text{x}$
 
 - un insieme $P$ di **simboli di predicato**, ognuno associato al suo numero di argomenti, detto *arità*
+	- i simboli di predicato di arità 0 vengono denominati *lettere proposizionali* (richiamo alla logica proposizonale)
 	- (essenzialmente) i simboli di predicato assumono un valore di verità in base all'interpretazione
 
 >[!example] esempi
@@ -39,11 +41,9 @@ L'**alfabeto** della logica di primo ordine è composto da:
 - i **quantificatori** $\forall,\,\exists$ (quantificatore universale e quantificatore esistenziale)
 - i **simboli speciali**: parentesi "(", ")" e virgola ","
 
->[!tip] assunzioni e convenzioni
+>[!tip] assunzioni/convenzioni
 >- si assume che $P$ contenga il predicato di arità 2 "$=$" (uguaglianza)
 >- per riferirsi a un simbolo di funzione $f$ o di predicato $p$ di arità $k$, si scrive $f/k$ e $p / k$
->- i simboli di funzione di arità 0 vengono detti *simboli di costante*
->- i simboli di predicato di arità 0 vengono denominati *lettere proposizionali* (poiché sono quanto di più vicino alle lettere proposizionali della logica proposizonali)
 
 ### termini e formule
 A partire dall'alfabeto, si può definire il linguaggio della logica di primo ordine. La sua definizione induttiva deve essere effettuata in due passi:
@@ -83,4 +83,24 @@ A partire dall'alfabeto, si può definire il linguaggio della logica di primo or
 >>- $\text{mortale(socrate)}$
 
 ### semantica
-Nella logica proposizionale, la
+> [!summary] nella logica proposizionale
+> La semantica della logica proposizionale è formata da formule atomiche date dalle lettere proposizionali, un'interpretazione che assegna un valore di verità ad ogni lettera proposizionale, e una funzione di valutazione predefinita che calcola la verità di una formula rispetto a un'interpretazione delle sue lettere.
+> 
+> Senza fare riferimento a particolari interpretazioni, si può estendere il significato di ogni formula proposizionale categorizzandola come:
+> - **soddisfacibile** ⟶ esiste una interpretazione che è suo modello
+> - **valida** ⟶ ogni interpretazione è suo modello
+> - **insoddisfacibile** ⟶ nessuna interpretazione è suo modello
+
+Nella logica di primo ordine, si segue lo stesso itinerario concettuale:
+1) si definisce la nozione di **interpretazione** (valutazione delle formule atomiche)
+2) si definisce come viene valutata una formula data una particolare interpretazione
+3) si stabilisce il significato di ogni formula senza riferimento a particolari interpretazioni
+
+Poiché ci sono due livelli sintattici (termini e formule), ci sono due nozioni di valutazione:
+- la **valutazione dei termini**
+	- formata da valutazione dei termini atomici - pre-interpretazione (valutazione dei simboli di funzione) e assegnamento di variabili (valutazione delle variabili) - e valutazione dei termini "complessi" a partire da quelli atomici
+- la **valutazione delle formule**
+	- formata dall'interpretazione delle formule atomiche e dalla valutazione delle formule "complesse" a partire da quelle atomiche
+
+#### interpretazione
+
