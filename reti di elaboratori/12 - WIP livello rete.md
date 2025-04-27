@@ -1,6 +1,6 @@
 ---
 created: 2025-04-10T14:17
-updated: 2025-04-24T21:06
+updated: 2025-04-27T11:36
 ---
 Come visto nell'[[3 - stack protocollare|introduzione allo stack protocollare]], il livello di rete si occupa dell'instradamento dei segmenti dall'origine alla destinazione.
 Nello specifico, svolge due compiti:
@@ -113,7 +113,6 @@ Era utilizzata dalla prima generazione di router. Questi erano tradizionali calc
 
 ![[comm-memoria.png|center|450]]
 
-
 #### commutazione tramite bus
 Le porte d'ingresso trasferiscono un pacchetto direttamente alle porte d'uscita su un *bus condiviso*, senza l'intervento del processore di instradamento.
 - si può trasferire *un solo pacchetto alla volta*
@@ -125,7 +124,6 @@ La commutazione tramite rete di interconnessione risolve il problema del limite 
 Usa un **crossbar switch**: una rete di interconnessione che formata da $2n$ bus che collegano $n$ porte d'ingresso a $n$ porte di uscita.
 
 (Attualmente, si tende a frammentare i pacchetti IP a lunghezza variabile in celle di lunghezza fissa).
-
 ### accodamento
 L'accodamento si verifica sia nelle porte di ingresso che in quelle di uscita.
 
