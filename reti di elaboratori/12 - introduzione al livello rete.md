@@ -1,6 +1,6 @@
 ---
 created: 2025-04-10T14:17
-updated: 2025-04-27T11:36
+updated: 2025-04-27T12:13
 ---
 Come visto nell'[[3 - stack protocollare|introduzione allo stack protocollare]], il livello di rete si occupa dell'instradamento dei segmenti dall'origine alla destinazione.
 Nello specifico, svolge due compiti:
@@ -154,3 +154,11 @@ Avviene:
 Anche in questo caso, se le code diventano troppo lunghe, i buffer si possono saturare e causare **perdita di pacchetti**.
 
 ![[accod-usc.png|center|450]]
+
+## protocolli del livello rete
+>[!summary] protocolli del livello rete
+>- **DHCP**: Dynamic Host Configuration Protocol (implementa funzioni del livello di rete, ma viene implementato a livello applicazione)
+>- **IP**: Internet Protocol (v4 o v6)
+>- **IGMP**: Internet Group Management Protocol (multicasting)
+> - **ICMP**: Internet Control Message Protocol (gestione errori)
+>- **ARP**: Adress Resolution Protocol (mappatura tra l'indirizzo IP e l'indirizzo MAC)

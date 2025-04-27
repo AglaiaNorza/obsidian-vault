@@ -1,6 +1,6 @@
 ---
 created: 2025-04-10T14:16
-updated: 2025-04-27T11:34
+updated: 2025-04-27T12:13
 ---
 >[!info] indice
 >- [[1 - introduzione alle reti]]
@@ -20,6 +20,7 @@ updated: 2025-04-27T11:34
 >- [[11 - interfaccia socket]]
 >
 >livello rete:
+>- [[12 - introduzione al livello rete]]
 
 >[!tip]- un memino gentilmente fornito da [alessio](https://alem1105.github.io/Quartz/) 
 >
