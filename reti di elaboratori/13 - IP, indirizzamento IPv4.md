@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-04-28T12:23
+updated: 2025-04-28T12:34
 ---
 Il protocollo IP (Internet Protocol) è responsabile della **suddivisione in pacchetti**, del **forwarding** e della **consegna** dei datagrammi a livello rete (host to host).
 - è un protocollo *inaffidabile* e *connectionless*
@@ -75,4 +75,24 @@ Un indirizzo IPv4 si divide in **prefisso** e **suffisso**.
 	- può avere lunghezza fissa (nel caso di indirizzamento con classi) o variabile (indirizzamento senza classi)
 - il suffisso individua il collegamento al nodo
 
-#### indiri
+#### indirizzamento con classi
+L'indirizzamento con classi nasce dalla necessità di supportare sia reti piccole che grandi. Ci sono tre lunghezze di prefisso: 8, 16 e 24 bit.
+
+>[!info] prefissi e classi
+> 
+> ![[classi-ip.png|center|450]]
+> 
+>- negli indirizzi di classe A, il primo bit del primo ottetto è sempre 0
+>- negli indirizzi di classe b, i primi 2 bit del primo ottetto sono sempre 10
+>- negli indirizzi di classe C, i primi 3 bit del primo ottetto sono sempre 110
+
+>[!question] pros and cons
+>*pros*:
+>- il principale *vantaggio* è dato dal fatto che, una volta individuato un indirizzo, si può facilmente risalire alla classe e alla lunghezza del prefisso
+>- il principale *svantaggio* è invece il problema dell'esaurimento degli indirizzi:
+>	- la classe A può essere assegnata solo a 128 organizzazioni nel mondo, ognuna con 16.777.216 nodi: la maggior parte degli indirizzi verrebbe sprecata, e poche organizzazioni potrebbero usufruire di indirizzi di classe A
+>	- la classe B ha lo stesso problema
+>	- per la classe C, sono disponibili solo 256 host per ogni rete
+
+#### indirizzamento senza classi
+L'indirizzamento 
