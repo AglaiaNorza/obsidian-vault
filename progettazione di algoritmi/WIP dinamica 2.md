@@ -1,6 +1,6 @@
 ---
 created: 2025-04-28T14:09
-updated: 2025-04-28T14:17
+updated: 2025-04-28T14:30
 ---
 Dato un intero $n$, vogliamo contare il numero di diversi tassellamenti di una superfice di dimensione $n\times 2$ tramite tessere di dimensione $1 \times 2$.
 
@@ -10,7 +10,6 @@ Utilizziamo una tabella monodimensionale di dimensioni $n+1$ e definiamo il cont
 trovo la piastrella orizzontale?
 - sì ⟶ $T[i-1]$
 - no ⟶ $T[i-2]$
-
 
 ```python
 def tassellamento(n):
