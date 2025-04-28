@@ -1,6 +1,6 @@
 ---
 created: 2025-04-26T23:09
-updated: 2025-04-27T16:45
+updated: 2025-04-27T23:06
 ---
 ## specifica dei requisiti
 1) Giocatori
