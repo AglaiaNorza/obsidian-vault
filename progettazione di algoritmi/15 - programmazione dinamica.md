@@ -1,6 +1,6 @@
 ---
 created: 2025-04-28T17:21
-updated: 2025-04-28T18:46
+updated: 2025-04-28T22:20
 ---
 >[!info] programmazione dinamica
 >La programmazione dinamica è una tecnica di progettazione di algoritmi basata sulla divisione del problema in **sottoproblemi** e sull'utilizzo di **sottostrutture ottimali** (la soluzione ottimale al sottoproblema può essere usata per trovare la soluzione ottimale all'intero problema).
@@ -78,3 +78,31 @@ F = [-1]*(n+1)
 Abbiamo un disco di capacità $C$ e $n$ file di varie dimensioni (ciascuna inferiore a $C$). Vogliamo trovare il sottoinsieme di file che può essere memorizzato su disco che massimizzi lo spazio occupato.
 - per semplicità di esposizione, ci limiteremo a calcolare il valore della soluzione ottima, ovvero il massimo spazio del disco che può essere occupato grazie agli $n$ file
 
+>[!bug] implementazioni alternative
+
+
+Un algoritmo **divide et impera** può partire dalle seguenti informazioni:
+- se la lista è vuota o $C=0$, la soluzione ottima vale 0
+- in caso contrario, l'ultimo file della lista può appartenere o no alla soluzione ottima:
+	- se l'ultimo file non appartiene alla soluzione ottima, scegliendo tra i rimanenti $n-1$ file si trova una soluzione ottima per $A[:-1],\,C$  
+	- se l'ultimo file appartiene alla soluzione, scegliendo tra i rimanenti $n-1$ file si trova una soluzione ottima per $A[:-1],\,C-A[n-1]$
+- possiamo quindi ricondurci al calcolo della soluzione ottima di due sotto-problemi di dimensione inferiore e, una volta risolti questi due problemi e ottenuti i valori $v_{1},\,v_{2}$ delle loro soluzioni, la soluzione al problema di partenza (passo *combina*) sarà data da:
+	- $max(v_{1},\,\,v_{2}+A[-1])$
+
+**implementazione**:
+```python
+def es(A, i, C):
+	if i == 0 or C == 0:
+		return 0
+	lascio = es(A, i-1, C)
+	if A[i-1] > C: # sicuramente non posso prenderlo
+		return lascio
+	prendo = A[i-1] + es(A, i-1, C-A[i-1])
+	return max(lascio, prendo)
+```
+
+l'equazione di ricorrenza di questa implementazione è:
+
+$T(n,\,C)=T(n-1,\,C) + T(n-1,\,C-A[n-1])+\Theta(1)$
+
+che $\in\Omega (2^{n/2})$.
