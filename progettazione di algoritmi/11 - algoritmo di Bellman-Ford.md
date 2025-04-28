@@ -1,6 +1,6 @@
 ---
 created: 2025-03-29T16:36
-updated: 2025-04-24T21:06
+updated: 2025-04-28T17:11
 ---
 ### introduzione
 Dato un grafo diretto e pesato $G$ in cui i pesi degli archi possono essere *anche negativi* e fissato un suo nodo $s$, si vuole determinare il costo minimo dei cammini che conducono da $s$ a tutti gli altri nodi del grafo.
@@ -21,7 +21,7 @@ Dato un grafo diretto e pesato $G$ in cui i pesi degli archi possono essere *anc
 L'algoritmo di **Bellman-Ford** risolve il problema dei cammini di costo minimo in $O(n^2+m \cdot n)$.
 
 Esso definisce la seguente tabella di dimensione $n\times n$:
-- $T[i][j]=\text{costo di un cammino minimo da } s\text{ al nodo } j\text{ di lunghezza al più } i$
+- $T[i][j]=$ costo di un cammino minimo da $s$ al nodo $j$ di lunghezza al più $i$
 
 Si costruisce la soluzione al problema determinando i valori delle righe della tabella.
 - la soluzione sarà data dagli $n$ valori che si troveranno nell'ultima riga:

@@ -1,6 +1,6 @@
 ---
-created: 2025-04-10T14:16
-updated: 2025-04-27T23:06
+created: 2025-04-28T17:11
+updated: 2025-04-28T17:11
 ---
 >[!info] indice
 >- [[1 - introduzione alle reti]]
@@ -21,6 +21,7 @@ updated: 2025-04-27T23:06
 >
 >livello rete:
 >- [[12 - introduzione al livello rete]]
+>- [[13 - IP, indirizzamento IPv4]]
 
 >[!tip]- un memino gentilmente fornito da [alessio](https://alem1105.github.io/Quartz/) 
 >
