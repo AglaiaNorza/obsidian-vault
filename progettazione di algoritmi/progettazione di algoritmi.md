@@ -1,6 +1,6 @@
 ---
 created: 2025-03-24T09:30
-updated: 2025-04-24T12:40
+updated: 2025-04-28T17:11
 ---
 >[!info] index
 >- [[0 - introduzione]] 
@@ -17,5 +17,6 @@ updated: 2025-04-24T12:40
 >- [[11 - algoritmo di Bellman-Ford]]
 >- [[12 - problemi di ottimizzazione e algoritmi di approssimazione]]
 >- [[13 - algoritmi greedy]]
+>- [[14 - divide et impera]]
 
 [playlist di accompagnamento allo studio](https://open.spotify.com/playlist/52f65aksG2pZCE5IRqrkLr?si=9b217e1fd5e344f4)
