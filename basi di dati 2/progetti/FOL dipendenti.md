@@ -1,11 +1,11 @@
 ---
 created: 2025-04-28T08:23
-updated: 2025-04-28T14:28
+updated: 2025-04-29T14:23
 ---
 $P=\{ \text{persona/1, telefono/1, dipendente/1, lavora/2, diversitraloro/3, dipartimento/1} \}$
 $F=\{ \text{proprietario/1, nome/1, direttore/1} \}$
 
-(in cui diversitraloro(x, y, z) equivale a $x\neq y\land y\neq z\land x\neq z$)
+(in cui $\text{diversitraloro(x, y, z)}$ equivale a $x\neq y\land y\neq z\land x\neq z$)
 
 1) **tutte le persone hanno almeno un numero di telefono:**
 $$\forall  x\,(\text{persona(x)}\implies \exists y\;(\text{telefono(y)} \land\text{ proprietario(y)}=x))$$

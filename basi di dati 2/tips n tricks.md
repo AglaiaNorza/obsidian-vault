@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01T17:50
-updated: 2025-04-27T11:06
+updated: 2025-04-29T14:22
 ---
 - se vedo classi con 1..1 e 1..1 probabilmente era una classe sola
 - se vedo classi con 1..1 e 0..1, probabilmente era una generalizzazione
