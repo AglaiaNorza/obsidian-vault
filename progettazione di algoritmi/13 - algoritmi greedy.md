@@ -1,6 +1,6 @@
 ---
-created: 2025-04-01
-updated: 2025-04-30T17:08
+created: 2025-04-30T17:16
+updated: 2025-04-30T17:16
 ---
 > [!info] greedy
 > Un algoritmo si dice **greedy** se, ad ogni passaggio, opta per la *soluzione ottimale a livello locale*.
@@ -33,7 +33,7 @@ Ma la regola giusta in questo caso sta nel prendere sempre l'attività compatibi
 >
 >Siano $A_{1},\,A_{2},\,\dots$ le attività nell'ordine in cui sono state selezionate dal greedy. Sia $A_{i}$ la prima attività scelta dal greedy e non dall'ottimo (ce ne deve essere almeno una, perché tutte le attività scartate dal greedy erano incompatibili con quelle già prese e, se la soluzione avesse preso tutte le attività scelte dal greedy, non potrebbe averne prese di più). Nell'ottimo deve esserci un'altra attività $A'$ che va in conflitto con $A_{i}$ (altrimenti $SOL^*$ non sarebbe ottima).
 >
->Si può quindi sostituire in $SOL^*$ l'attività $A'$ con l'attività $A_{i}$ senza creare conflitti (perché in base alla regola del greedy, $A_{i}$ termina prima di $A'$, quindi se $A'$ non creava conflitti, neanche $A^i$ lo farà). Si ottiene così una soluzione ottima $SOL'$ (le attività in $SOL'$ sono tutte compatibili, e la sua cardinalità è uguale a quella di $SOL^*$). 
+>Si può quindi sostituire in $SOL^*$ l'attività $A'$ con l'attività $A_{i}$ senza creare conflitti (perché in base alla regola del greedy, $A_{i}$ termina prima di $A'$, quindi se $A'$ non creava conflitti, neanche $A_{i}$ lo farà). Si ottiene così una soluzione ottima $SOL'$ (le attività in $SOL'$ sono tutte compatibili, e la sua cardinalità è uguale a quella di $SOL^*$). 
 >
 >Ma $SOL'$ differisce da $SOL$ di un'attività in meno rispetto a $SOL^*$ (abbiamo sostituito un'attività con una di $SOL$)
 >
