@@ -1,6 +1,6 @@
 ---
 created: 2025-04-30T17:16
-updated: 2025-04-30T17:20
+updated: 2025-04-30T17:33
 ---
 // c'è tutto ma vorrei spiegare un po' meglio alcuni passaggi
 > [!info] divide-et-impera
@@ -252,8 +252,13 @@ $$
 >
 >Il tempo di esecuzione totale è la somma dei costi dei vari livelli:
 >
->$$\begin{align*} T(n)<c\cdot n+c\cdot(\alpha+\beta)\cdot n+c\cdot(\alpha+\beta)^2\cdot n+\dots=\\cn\cdot \sum^\infty_{i=0}  (\alpha+\beta)^i= cn \frac{1}{1-(\alpha+\beta)}=\Theta (n)\end{align*}$$
->
+>$$
+>\begin{align*}
+>T(n)<c\cdot n + c\cdot(\alpha+\beta)\cdot n + c\cdot(\alpha+\beta)^2\cdot n + \dots = \\
+>cn \cdot \sum^\infty_{i=0} (\alpha+\beta)^i = cn \frac{1}{1 (\alpha+\beta)} = \Theta(n)
+>\end{align*}
+>$$
+> 
 >(dove nel calcolare la serie si sfrutta il fatto che $\alpha+\beta<1$ e la serie geometrica $\sum^\infty_{i=0}x^i$ con $x<1$ converge a $\frac{1}{1-x}$)
 
 Abbiamo quindi dimostrato che il problema della selezione può essere risolto in
