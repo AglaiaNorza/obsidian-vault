@@ -1,6 +1,6 @@
 ---
 created: 2025-04-23T20:07
-updated: 2025-04-29T14:22
+updated: 2025-04-30T17:08
 ---
 Una **logica** è una famiglia di linguaggi formali per rappresentare informazioni e derivare conseguenze.
 

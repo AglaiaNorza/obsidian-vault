@@ -1,6 +1,6 @@
 ---
 created: 2025-04-28T14:09
-updated: 2025-04-28T14:30
+updated: 2025-04-30T17:08
 ---
 Dato un intero $n$, vogliamo contare il numero di diversi tassellamenti di una superfice di dimensione $n\times 2$ tramite tessere di dimensione $1 \times 2$.
 
