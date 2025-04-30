@@ -1,6 +1,6 @@
 ---
 created: 2025-04-28T17:21
-updated: 2025-04-30T17:29
+updated: 2025-04-30T18:44
 ---
 >[!info] programmazione dinamica
 >La programmazione dinamica è una tecnica di progettazione di algoritmi basata sulla divisione del problema in **sottoproblemi** e sull'utilizzo di **sottostrutture ottimali** (la soluzione ottimale al sottoproblema può essere usata per trovare la soluzione ottimale all'intero problema).
@@ -14,7 +14,12 @@ updated: 2025-04-30T17:29
 >- una funzione può essere "memoizzata" solo se non ha effetti collaterali e restituisce sempre lo stesso valore quando riceve in input gli stessi parametri 
 >	- (si dice che "soddisfa la trasparenza referenziale")
 
-(thx wikipedia)
+(definizioni da wikipedia, thx wikipedia)
+
+>[!summary] caratteristiche della programmazione dinamica
+>Gli algoritmi di programmazione dinamica si basano quindi spesso sulla costruzione di una tabella (lista o matrice) che memorizza soluzioni intermedie ai sottoproblemi, che verranno poi usate per arrivare a quella finale.
+>- in una prima fase, ci si può concentrare sul calcolo del valore ottimo della soluzione; successivamente, la stessa tabella può essere utilizzata per risalire alla soluzione vera e propria cui quel valore corrisponde.
+>- l’idea è partire dall’elemento che rappresenta la soluzione ottima e, seguendo a ritroso le decisioni registrate nella tabella, ricostruire il percorso che ha portato a quel risultato.
 
 ## numeri di Fibonacci
 La sequenza $f_{0},\,f_{1},\,f_{2}\dots$ dei numeri di Fibonacci è definita dall'equazione di ricorrenza:
@@ -107,5 +112,78 @@ Abbiamo un disco di capacità $C$ e $n$ file di varie dimensioni (ciascuna infer
 
 Attraverso la memoizzazione, possiamo ottenere una soluzione **pseudopolinomiale**.
 
-Creiamo infatti una tabella $T$ di dimensione $n \times (C+1)$, in cui $T[i][j]$ è il valore ottenuto dalla soluzione del sottoproblema in cui si hanno i primi $i$ file e la dimensione del disco è $j$ <small>(quindi il massimo spazio che si può occupare in un blocco grande $j$ con i primi $i$ file)</small>.
+>[!info] algoritmo pseudopolinomiale
+>In teoria della complessità computazionale, un algoritmo è detto **pseudopolinomiale** se la sua complessità temporale è polinomiale nel *valore numerico* del suo input e non necessariamente nella sua *dimensione* (risolve un problema in tempo polinomiale quando i numeri presenti nell'input sono codificati in unario).
 
+Creiamo una tabella $T$ di dimensione $n+1 \times (C+1)$, in cui $T[i][j]$ è il valore ottenuto dalla soluzione del sottoproblema in cui si hanno i primi $i$ file e la dimensione del disco è $j$ <small>(quindi il massimo spazio che si può occupare in un blocco grande $j$ con i primi $i$ file)</small>.
+
+Per compilarla, usiamo questo criterio:
+
+$$
+T[i][j]=\begin{cases} T[i-1,\,j] & \text{se non prendo i (lascio)} \\
+A[i]+T[i-1,\,j-A[i]] & \text{se prendo i}
+\end{cases}
+$$
+
+- (primo caso) se non aggiungo il file $i$, la capienza rimane quella calcolata per i primi $i-1$ file
+- (secondo caso) se invece aggiungo il file $i$, sto occupando $A[i]$ unità di spazio e mi resterà una capacità di $j-A[i]$
+	- quindi, il valore totale sarà dato dalla dimensione di $i$ sommata al massimo valore ottenibile con i file precedenti e lo spazio residuo (ovvero $T[i-1,\,j-A[i]]$)
+
+Ogni cella deve contenere il massimo spazio occupato con i dati delle coordinate, quindi l'equazione generale per una cella sarà:
+
+$$
+T[i][j]=\begin{cases} 0 & i = 0 \\
+T[i-1,\,j]& j<A[i-1]  \\
+max(\text{lascio, prendo}) & \text{altrimenti}
+\end{cases}
+$$
+con $max(\text{lascio, prendo})$ 
+ 
+$$\begin{align}=max(T[i-1,\,c],\;\;A[i-1]+T[i-1,\,c-A[i-1]]) \\
+\end{align}$$
+
+**implementazione top-down**
+```python
+def es(A, C):
+	T = [[-1]*(C+1) for i in range(len(A)+1)]
+	return disco(A, len(A), C, T)
+
+def disco(A, i, c, T):
+	if T[i][c] == -1:
+		if i == 0 or c == 0: T[i][c] = 0 
+		else:
+			lascio = disco(A, i-1, c, T) # opzione senza i
+			T[i][c] = lascio
+			if A[i-1] <= c: # se non c'entra devo sicuramente lasciare
+				prendo = A[i-1] + disco(A, i-1, c-A[i-1], T)
+				T[i][c] = max(lascio, prendo) # max spazio occupato
+	return T[i][c]
+```
+
+Il tempo di calcolo è limitato dalla *dimensione della tabella*: le operazioni di ogni chiamata di `disco()` costano infatti $O(1)$, e il numero totale di chiamate non può superare la dimensione della tabella.
+
+La complessità è quindi $O(nC)$ 
+- in realtà, $\Theta(nC)$ a causa dell'inizializzazione della tabella
+
+>[!question] questo algoritmo è quindi più efficiente della versione divide et impera?
+>- se $C$ è molto grande (ad esempio se supera $2^n$), la versione memoizzata si comporta peggio; altrimenti, può risultare anche molto più efficiente.
+
+Spesso però <small>(visto che si parla di capienza di dischi ed è comune che si lavori con numeri grandi)</small> la profondità dell'albero delle chiamate ricorsive è molto grande e può portare ad uno stack overflow. Per evitare questo problema, ci si può concentrare direttamente sul calcolo della tabella $T$ eliminando la ricorsione.
+
+**implementazione bottom-up**:
+```python
+def discoI(A, C):
+	n = len(A)
+	T = [ [0]*(C+1) for i in range(n+1) ]
+	for i in range(1, n+1):
+		for c in range(C+1):
+			if c < A[i-1]:
+				T[i][c] = T[i-1][c]
+			else:
+				T[i][c] = max(T[i-1][c], A[i-1]+T[i-1][c-A[i-1]])
+	return T[n][C]
+```
+- anche questa versione ha una complessità di $O(nC)$
+
+>[!tip] pseudopolinomiale
+>Questo algoritmo è pseudopolinomiale perché la capacità $C$ dell'input è codificata in $\log C$ bit. Considerando il numero di bit come misura, infatti, la complessità dell'algoritmo sarà $O(nC)=O(n \cdot 2^{\log C})$, ovvero esponenziale nella dimensione binaria dell'output.
