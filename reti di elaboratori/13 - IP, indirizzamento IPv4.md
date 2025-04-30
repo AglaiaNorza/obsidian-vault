@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-04-29T15:56
+updated: 2025-04-30T14:12
 ---
 Il protocollo IP (Internet Protocol) è responsabile della **suddivisione in pacchetti**, del **forwarding** e della **consegna** dei datagrammi a livello rete (host to host).
 - è un protocollo *inaffidabile* e *connectionless*
@@ -124,3 +124,25 @@ Essa può essere usata da un programma per calcolare in modo efficiente le infor
 - il **numero degli indirizzi del blocco** è $n=\neg(\text{maschera})+1$
 - il **primo indirizzo del blocco** è $\text{qualsiasi ind. del blocco}\land \text{maschera}$
 - l'**ultimo indirizzo del blocco** è $\text{qualsiasi ind. del blocco}\lor \neg\text{maschera}$ 
+
+>[!info] indirizzi IP speciali
+>
+>![[indirizzi-speciali.png|center|450]]
+>- `0.0.0.0` è utilizzato dagli host al momento del **boot**
+>- gli indirizzi IP che hanno `0` come numero di rete si riferiscono alla **rete corrente**
+>- `255.255.255.255` permette la trasmissione **broadcast** sulla rete locale
+>- gli indirizzi con tutti `1` nel campo host permettono l'invio di pacchetti **broadcast a LAN distanti** (se il numero di rete è opportuno)
+>- gli indirizzi `127.xx.yy.zz` sono riservati al **loopback** (i pacchetti non vengono immessi nel cavo, ma elaborati localmente e trattati come pacchetti in arrivo)
+
+>[!question] come si ottiene un blocco di indirizzi?
+>Per ottenere un blocco di indirizzi IP da usare in una sottorete, un amministratore di rete deve contattare il proprio ISP e ottenere un blocco di indirizzi contigui con un prefisso comune
+>- otterrà indirizzi della forma `a.b.c.d/x`, dove `x` bit indicano la *sottorete* e `32-x` bit indicano 
+>
+>>[!tip] nota bene: i `32-x` bit possono presentare un'aggiuntiva struttura di sottorete
+>
+>L'ISP, a sua volta, si rivolge all'Internet Corporation for Assigned Names and Numbers (**ICANN**), che: 
+>- gestisce i server radice DNS
+>- alloca i blocchi di indirizzi
+>- assegna e risolve dispute su nomi di dominio
+
+Per assegnare un indirizzo IP ad un host, si può decidere tra assegnazione temporanea o permanente, e tra configurazione manuale o con [[14 - DHCP, NAT, forwarding, ICMP|DHCP]]
