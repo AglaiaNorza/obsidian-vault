@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-04-28T12:34
+updated: 2025-04-29T15:56
 ---
 Il protocollo IP (Internet Protocol) è responsabile della **suddivisione in pacchetti**, del **forwarding** e della **consegna** dei datagrammi a livello rete (host to host).
 - è un protocollo *inaffidabile* e *connectionless*
@@ -58,7 +58,7 @@ Per farlo, usa:
 >- ...
 >- l'ultimo frammento ha il bit `M` impostato a 0
 
-## indirizzamento IPv4
+# indirizzamento IPv4
 Un indirizzo IP è formato da 32 bit (4 byte) in notazione decimale puntata.
 
 >[!info] interfaccia
@@ -69,13 +69,13 @@ Un indirizzo IP è formato da 32 bit (4 byte) in notazione decimale puntata.
 
 - gli indirizzi IPv4 sono in totale $2^{32}$ (più di 4 miliardi), e possono essere scritti in notazione binaria, decimale puntata, o esadecimale
 
-### gerarchia nell'indirizzamento
+## gerarchia nell'indirizzamento
 Un indirizzo IPv4 si divide in **prefisso** e **suffisso**.
 - il prefisso individua la rete
 	- può avere lunghezza fissa (nel caso di indirizzamento con classi) o variabile (indirizzamento senza classi)
 - il suffisso individua il collegamento al nodo
 
-#### indirizzamento con classi
+### indirizzamento con classi
 L'indirizzamento con classi nasce dalla necessità di supportare sia reti piccole che grandi. Ci sono tre lunghezze di prefisso: 8, 16 e 24 bit.
 
 >[!info] prefissi e classi
@@ -94,5 +94,33 @@ L'indirizzamento con classi nasce dalla necessità di supportare sia reti piccol
 >	- la classe B ha lo stesso problema
 >	- per la classe C, sono disponibili solo 256 host per ogni rete
 
-#### indirizzamento senza classi
-L'indirizzamento 
+### indirizzamento senza classi
+L'indirizzamento senza classi nasce dalla necessità di avere maggiore flessibilità nell'assegnamento degli indirizzi. Vengono usati blocchi di *lunghezza variabile* che non appartengono a nessuna classe.
+- un indirizzo non è quindi da solo in grado di definire la rete (o blocco) a cui appartiene
+
+La lunghezza del prefisso è **variabile** (da 0 a 32 bit) e viene aggiunta all'indirizzo separata da uno slash.
+#### notazione CIDR
+La **Classless InterDomain Routing** è la strategia di assegnazione degli indirizzi.
+
+> [!summary] struttura dell'indirizzo
+> L'indirizzo IP viene diviso in due parti e mantiene la forma decimale puntata `a.b.c.d/n`, dove `n` indica il numero di bit nel prefisso.
+> 
+>>[!example] esempio
+>> ![[ind-cidr.png|center|400]]
+
+In questo modo, se $n$ è la lunghezza del prefisso:
+- il numero di indirizzi nel blocco è dato da $N=2^{32-n}$
+- per trovare il *primo indirizzo*, si impostano a $0$ tutti i bit del suffisso ($32-n$ bit)
+- per trovare l'*ultimo indirizzo*, si impostano a $1$ tutti i bit del suffisso
+
+>[!info] struttura
+> 
+>![[struttura-ind-blocchi.png]]
+
+La **maschera dell'indirizzo** è un numero composto da 32bit in cui i primi $n$ bit a sinistra sono impostati a 1 e il resto a 0.
+- viene usata per ottenere l'*indirizzo* di rete usato nell'instradamento dei datagrammi verso la destinazione
+
+Essa può essere usata da un programma per calcolare in modo efficiente le informazioni di un blocco, usando solo tre operatori sui bit:
+- il **numero degli indirizzi del blocco** è $n=\neg(\text{maschera})+1$
+- il **primo indirizzo del blocco** è $\text{qualsiasi ind. del blocco}\land \text{maschera}$
+- l'**ultimo indirizzo del blocco** è $\text{qualsiasi ind. del blocco}\lor \neg\text{maschera}$ 
