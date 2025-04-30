@@ -1,6 +1,6 @@
 ---
 created: 2025-04-28T17:21
-updated: 2025-04-28T22:20
+updated: 2025-04-30T17:17
 ---
 >[!info] programmazione dinamica
 >La programmazione dinamica è una tecnica di progettazione di algoritmi basata sulla divisione del problema in **sottoproblemi** e sull'utilizzo di **sottostrutture ottimali** (la soluzione ottimale al sottoproblema può essere usata per trovare la soluzione ottimale all'intero problema).
@@ -106,3 +106,4 @@ l'equazione di ricorrenza di questa implementazione è:
 $T(n,\,C)=T(n-1,\,C) + T(n-1,\,C-A[n-1])+\Theta(1)$
 
 che $\in\Omega (2^{n/2})$.
+
