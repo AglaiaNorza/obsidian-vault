@@ -1,6 +1,6 @@
 ---
 created: 2025-04-28T17:21
-updated: 2025-05-01T09:55
+updated: 2025-05-01T11:14
 ---
 >[!info] programmazione dinamica
 >La programmazione dinamica è una tecnica di progettazione di algoritmi basata sulla divisione del problema in **sottoproblemi** e sull'utilizzo di **sottostrutture ottimali** (la soluzione ottimale al sottoproblema può essere usata per trovare la soluzione ottimale all'intero problema).
@@ -140,9 +140,9 @@ $$
 con $max(\text{lascio, prendo})$ 
  
 $$
-\begin{align} \\
+\begin{align*} \\
 =max(T[i-1,\,c],\;\;A[i-1]+T[i-1,\,c-A[i-1]]) \\
-\end{align}
+\end{align*}
 $$
 
 **implementazione top-down**
@@ -190,3 +190,113 @@ def discoI(A, C):
 
 >[!tip] pseudopolinomiale
 >Questo algoritmo è pseudopolinomiale perché la capacità $C$ dell'input è codificata in $\log C$ bit. Considerando il numero di bit come misura, infatti, la complessità dell'algoritmo sarà $O(nC)=O(n \cdot 2^{\log C})$, ovvero esponenziale nella dimensione binaria dell'output.
+
+Usiamo ora la tabella appena calcolata per ricavare la soluzione ottima.
+
+Prendiamo come esempio la tabella $T$ relativa all'istanza $C=10$ e con 6 file di dimensioni $A = [1,\,5,\,3,\,4,\,2,\,2]$.
+
+![[filedisco-es1.png|center|400]]
+
+- a partire da $T[n,\,c]$ possiamo disegnare, per ogni elemento toccato della tabella, una freccia verso l'elemento in base al quale è stato calcolato <small>(se l'elemento è $T[k][c]$, può essere o $T[k-1],\,c$ o $T[k-1,\,c-A[k]]$)</small>.
+- quindi, se la freccia è *verticale*, vuol dire che il $k$-esimo file non è stato scelto; se invece è *obliqua*, vuol dire che è stato scelto.
+
+![[filedisco-es2.png|center|400]]
+
+- seguendo le frecce, è possibile vedere che sono stati scelti i file di dimensioni $4,\,5$ e $1$
+- quindi, se $T[k,c]=T[k-1,\,c]$, il $k$-esimo file non è stato scelto; altrimenti, $T[k,c]>T[k-1,\,c]$ e il $k$-esimo file è stato scelto
+
+**implementazione**:
+```python
+def discoI(A, C):
+	n = len(A)
+	T = [ [0]*(C+1) for i in range(n+1) ]
+	for i in range(1, n+1):
+		for c in range(C+1):
+			if c < A[i-1]:
+				T[i][c] = T[i-1][c]
+			else:
+				T[i][c] = max(T[i-1][c], A[i-1]+T[i-1][c-A[i-1]])
+	
+	valore = T[n][C]
+	sol = []
+	i = n
+	while i > 0:
+		if T[i][valore]	 != T[i-1][valore]
+			sol.append(i-1)
+			valore -= A[i-1]
+		i -= 1
+	return T[n][C], sol
+```
+
+-  il calcolo della tabella costa $O(nC)$
+- nella ricerca dei file, la tabella viene visitata a partire dall'ultima cella $T[n,\,C]$, una riga per volta; il costo è $O(n)$
+
+La complessità di questo algoritmo è quindi $O(nC)$.
+
+## altri esercizi
+### contare il numero di stringhe binarie lunghe $n$ senza 2 zeri consecutivi
+- per questo tipo di esercizi, è utile calcolare i primi valori e utilizzarli per dedurre il pattern generale <small>(à la metodi matematici)</small>
+
+Qui abbiamo
+- $n=0$ ⟶ 1 stringa: stringa vuota ""
+- $n=1$ ⟶ 2 stringhe: 0 e 1
+- $n=2$ ⟶ 3 stringhe: 01, 10, 11
+- $n=3$ ⟶ 5 stringhe: 010, 011, 101, 111, 110
+
+Utilizzeremo una tabella monodimensionale di dimensione $n+1$, il cui contenuto è definito come segue:
+
+$T[i]=$ numero di stringhe binarie lunghe $i$ dove non compaiono 2 zeri consecutivi
+
+$T = \begin{array}{|c|c|c|c|c|c|c|} \hline 1 & 2 & 3 & 5 & & & & \\ \hline \end{array}$
+
+- una volta riempita la tabella, la soluzione si troverà nella locazione $T[n]$
+
+La ricorrenza si può dedurre separando il conteggio delle stringhe lunghe $i$ che terminano con 1 da quelle che terminano con 0:
+- le stringhe lunghe $i$ che terminano con 1 si ottengono dalle stringhe lunghe $i-1$ senza vincoli <small>(se in $T[i-1]$ ci sono solo stringhe senza due zeri consecutivi, sicuramente aggiungendo un 1 questa proprietà sarà mantenuta)</small> ⟶ esse sono quindi $T[i-1]$ 
+- le stringhe lunghe $i$ che terminano con uno 0 hanno invece un vincolo: il carattere precedente ($i-1$) deve necessariamente essere un 1
+	- quindi <small>(vista in modo "combinatorio")</small> visto che abbiamo "fissato" i caratteri $i-1$ e $i$, le stringhe sono tutte le stringhe lunghe $i-2$, a cui viene aggiunto "10"
+	- sono quindi $T[i-2]$
+
+La ricorrenza è quindi:
+
+$$
+T[i][j]=\begin{cases} 1 & i = 0 \\
+2  & i=1\\
+T[i-1]+T[i-2] & \text{altrimenti}
+\end{cases}
+$$
+
+>[!tip] notiamo che questo problema è analogo ai numeri di Fibonacci !
+
+**implementazione**:
+```python
+def duezeri(n):
+	T = [0]*(n+1)
+	T[0], T[1] = 1, 2
+	for i in range(2, n+1):
+		T[i] = T[i-1] + T[i-2]
+	return T[n]
+```
+
+#### contare il numero di stringhe binarie lunghe $n$ senza 3 zeri consecutivi
+Calcoliamo i primi valori:
+- $n=0$ ⟶ 1 stringa: stringa vuota ""
+- $n=1$ ⟶ 2 stringhe: 0 e 1
+- $n=2$ ⟶ 4 stringhe: 00, 01, 10, 11
+- $n=3$ ⟶ 7 stringhe: 001, 010, 011, 100, 101, 110, 111
+
+Il problema è quindi molto simile a quello precedente.
+Come prima, consideriamo i due casi: stringa lunga $i$ che termina con un 1 e stringa lunga $i$ che termina con uno 0.
+- le stringhe lunghe $i$ che terminano con un 1 non hanno vincoli rispetto alle stringhe del passo precedente e sono quindi $T[i-1]$
+- per le stringhe lunghe $i$ che terminano con uno 0, bisogna fare una distinzione
+	- se il carattere $i-1$ è uno 0, allora $i-2$ deve necessariamente essere un 1 ⟶ le stringhe sono quindi $T[i-3]$
+	- se $i-1$ è un 1, non ci sono vincoli su $i-2$ ⟶ sono $T[i-2]$
+
+La ricorrenza è quindi:
+$$
+T[i][j]=\begin{cases} 1 & i = 0 \\
+2  & i=1\\
+4 & i =2 \\
+T[i-1]+T[i-2]+T[i-3] & \text{altrimenti}
+\end{cases}
+$$
