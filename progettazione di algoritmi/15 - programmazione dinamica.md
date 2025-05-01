@@ -1,6 +1,6 @@
 ---
 created: 2025-04-28T17:21
-updated: 2025-05-01T09:54
+updated: 2025-05-01T09:55
 ---
 >[!info] programmazione dinamica
 >La programmazione dinamica è una tecnica di progettazione di algoritmi basata sulla divisione del problema in **sottoproblemi** e sull'utilizzo di **sottostrutture ottimali** (la soluzione ottimale al sottoproblema può essere usata per trovare la soluzione ottimale all'intero problema).
@@ -139,7 +139,11 @@ max(\text{lascio, prendo}) & \text{altrimenti}
 $$
 con $max(\text{lascio, prendo})$ 
  
-$$\begin{align} =max(T[i-1,\,c],\;\;A[i-1]+T[i-1,\,c-A[i-1]])\end{align}$$
+$$
+\begin{align} \\
+=max(T[i-1,\,c],\;\;A[i-1]+T[i-1,\,c-A[i-1]]) \\
+\end{align}
+$$
 
 **implementazione top-down**
 ```python
