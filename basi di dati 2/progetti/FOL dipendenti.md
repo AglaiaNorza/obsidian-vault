@@ -1,6 +1,6 @@
 ---
 created: 2025-04-28T08:23
-updated: 2025-04-30T17:08
+updated: 2025-05-01T11:36
 ---
 $P=\{ \text{persona/1, telefono/1, dipendente/1, lavora/2, diversitraloro/3, dipartimento/1} \}$
 $F=\{ \text{proprietario/1, nome/1, direttore/1} \}$

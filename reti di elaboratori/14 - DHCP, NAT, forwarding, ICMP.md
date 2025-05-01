@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-04-30T17:16
+updated: 2025-05-01T11:36
 ---
 # DHCP
 L'obiettivo del **Dynamic Host Configuration Protocol** (DHCP) è consentire all'host di ottenere ddinamicamente il suo indirizzo IP dal server di rete.

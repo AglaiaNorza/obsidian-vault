@@ -1,6 +1,6 @@
 ---
 created: 2025-04-30T17:16
-updated: 2025-04-30T17:17
+updated: 2025-05-01T11:36
 ---
 Il protocollo IP (Internet Protocol) è responsabile della **suddivisione in pacchetti**, del **forwarding** e della **consegna** dei datagrammi a livello rete (host to host).
 - è un protocollo *inaffidabile* e *connectionless*
