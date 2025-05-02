@@ -1,6 +1,6 @@
 ---
 created: 2025-04-30T17:16
-updated: 2025-05-02T11:55
+updated: 2025-05-02T16:20
 ---
 Il protocollo IP (Internet Protocol) è responsabile della **suddivisione in pacchetti**, del **forwarding** e della **consegna** dei datagrammi a livello rete (host to host).
 - è un protocollo *inaffidabile* e *connectionless*
@@ -136,9 +136,11 @@ Essa può essere usata da un programma per calcolare in modo efficiente le infor
 
 >[!question] come si ottiene un blocco di indirizzi?
 >Per ottenere un blocco di indirizzi IP da usare in una sottorete, un amministratore di rete deve contattare il proprio ISP e ottenere un blocco di indirizzi contigui con un prefisso comune
->- otterrà indirizzi della forma `a.b.c.d/x`, dove `x` bit indicano la *sottorete* e `32-x` bit indicano 
+>- otterrà indirizzi della forma `a.b.c.d/x`, dove `x` bit indicano la *sottorete* e `32-x` bit indicano i singoli dispositivi nell'organizzazione
 >
 >>[!tip] nota bene: i `32-x` bit possono presentare un'aggiuntiva struttura di sottorete
+>
+> [per più info sulle sottoreti, vedi [[13 - IP, indirizzamento IPv4, DHCP, NAT#sottoreti|sotto]]]
 >
 >L'ISP, a sua volta, si rivolge all'Internet Corporation for Assigned Names and Numbers (**ICANN**), che: 
 >- gestisce i server radice DNS
@@ -208,5 +210,14 @@ Quando un host vuole entrare a far parte di una rete, necessita di indirizzo IP,
 > [!info] sottorete
 > È detta **sottorete** una rete isolata i cui punti terminali sono collegati all'interfaccia di un host o di un router.
 
+>[!example] esempio
+>
+>![[sottoreti-es.png|center|300]]
+>- la maschera di sottorete `\24` indica che i 24 bit più a sinistra definiscono l'indirizzo della sottorete; ogni host connesso alla sottorete `223.1.1.0/24` deve avere un indirizzo della forma `223.1.1.xxx`
 
+Dato un indirizzo IP e la sua maschera di rete, per sapere a quale blocco appartiene (se il prefisso ha lunghezza variabile):
+- se il prefisso è multiplo di 8 bit ⟶ gli indirizzi vanno da `a.b.c.0` a `a.b.c.255`
+- se il prefisso non è multiplo di 8 bit ⟶ bisogna vedere la *rappresentazione binaria* di `d`:  per esempio, se si ha `a.b.c.d/26` con `d = 10xxxxxx`, gli indirizzi andranno da `10000000` a `10111111`.
+
+Può però capitare che un’entità che ha ricevuto un blocco abbia bisogno di un numero maggiore di indirizzi, ma che il blocco successivo sia assegnato ad un’altra entità - in questo caso si usano gli **indirizzi privati**, con la traduzione degli indirizzi di rete (NAT).
 
