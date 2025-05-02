@@ -1,6 +1,6 @@
 ---
 created: 2025-04-30T17:16
-updated: 2025-05-01T11:36
+updated: 2025-05-02T11:55
 ---
 Il protocollo IP (Internet Protocol) è responsabile della **suddivisione in pacchetti**, del **forwarding** e della **consegna** dei datagrammi a livello rete (host to host).
 - è un protocollo *inaffidabile* e *connectionless*
@@ -14,7 +14,7 @@ Il protocollo IP (Internet Protocol) è responsabile della **suddivisione in pac
 >- **lunghezza dell'intestazione** ⟶ indica dove inizia il campo dati (un datagramma IP può contenere un numero variabile di opzioni) (la lunghezza di un'intestazione senza opzioni è di 20 byte)
 >- **tipo di servizio** ⟶ permette di distinguere diversi datagrammi con requisiti di qualità del servizio diverse (per esempio alcuni pacchetti potrebbero richiedere una consegna rapida, mentre altri potrebbero essere meno sensibili al ritardo)
 >- **lunghezza del datagramma** ⟶ rappresenta la lunghezza totale del datagramma in byte (inclusa l'intestazione) - serve per capire se il pacchetto è arrivato per intero
->- **identificatore, flag, offset di frammentazione** ⟶ servono per gestire la frammentazione dei pacchetti [vedi [[13 - IP, indirizzamento IPv4#frammentazione|sotto]]] (IPv6 non prevede frammentazione)
+>- **identificatore, flag, offset di frammentazione** ⟶ servono per gestire la frammentazione dei pacchetti [vedi [[13 - IP, indirizzamento IPv4, DHCP, NAT#frammentazione|sotto]]] (IPv6 non prevede frammentazione)
 >- **tempo di vita** (Time To Live) ⟶ incluso per assicurare che i datagrammi non resitno in circolazione per sempre nella rete; viene decrementaton ad oni hop e il datagramma viene eliminato se TTL=0
 >- **protocollo** ⟶ indica il protocollo a livello di trasporto a cui va passato il datagramma (es: `6: TCP`, `17: UDP`)
 >	- utilizzato solo quando il datagramma raggiunge la destinazione finale
@@ -145,4 +145,68 @@ Essa può essere usata da un programma per calcolare in modo efficiente le infor
 >- alloca i blocchi di indirizzi
 >- assegna e risolve dispute su nomi di dominio
 
-Per assegnare un indirizzo IP ad un host, si può decidere tra assegnazione temporanea o permanente, e tra configurazione manuale o con [[14 - DHCP, NAT, forwarding, ICMP|DHCP]]
+Per assegnare un indirizzo IP ad un host, si può decidere tra assegnazione temporanea o permanente, e tra configurazione manuale o con DHCP.
+# DHCP
+L'obiettivo del **Dynamic Host Configuration Protocol** (DHCP) è consentire all'host di ottenere ddinamicamente il suo indirizzo IP dal server di rete.
+- è possibile *rinnovare la proprietà* dell'indirizzo in uso
+- è possibile il *riuso* degli indirizzi
+- supporta anche gli utenti mobili che si vogliono unire alla rete
+- è utilizzato nelle reti in cui gli host si aggiungono e rimuovono dalla rete con estrema frequenza
+
+L'assegnazione degli indirizzi ai singoli host o rouoter è **automatizzata**.
+
+>[!tip] nonostante sia un protocollo del livello di rete, DHCP è implementato come un programma **client/server** di livello **applicazione**
+>in particolare:
+>- il *client* è un host appena connesso che desidera ottenere informazioni sulla configurazione della rete (non solo un indirizzo IP)
+>- il *server* è ogni sottorete che dispone di un server DHCP, o altrimenti un router che fa da agente di appoggio DHCP
+
+Quando un host vuole entrare a far parte di una rete, necessita di indirizzo IP, maschera di rete, indirizzo del router e indirizzo DNS.
+
+>[!info] panoramica DHCP
+>- l'host invia un messaggio broadcast alla rete, cercando i server DHCP al suo interno - `DHCP discover`
+>- un server DHCP risponde (sempre con un messaggio broadcast) offrendo un possibile indirizzo IP - `DHCP offer`
+>- l'host risponde accetta l'indirizzo IP con `DHCP request`
+>- il server DHCP invia l'indirizzo con `DHCP ack`
+
+>[!tip] DHCP usa UDP
+### messaggi DHCP
+
+>[!summary] formato dei messaggi
+>
+>![[dhcp-format.png|center|350]]
+>
+>- `Opcode` ⟶ codice operazione: richiesta (`1`) o risposta (`2`)
+>- `Htype` ⟶ tipologia dell'hardware
+>- `Hlen` ⟶ lunghezza dell'indirizzo hardware
+>- `Hcount` ⟶ numero massimo di hop che il pacchetto può compiere
+>- `Transaction ID` ⟶ numero intero impostato dal client e ripetuto dal server
+>- `Time elapsed` ⟶ numero di secondi da quando il client ha inviato il primo messaggio di richiesta
+>- `Flags` ⟶ il primo bit definisce l'unicast (`1`) o il multicast (`0`), gli altri 15 non vengono utilizzati
+>- `Client IP address` ⟶ IP del client, impostato a `0` se il client non lo conosce
+>- `Your IP address` ⟶ IP del client, inviato dal server
+>- `Server IP address` ⟶ IP del server, impostato a un IP di broadcast se il client non lo conosce
+>- `Gateway IP address` ⟶ indirizzo del router di default
+>- `Server name` ⟶ nome di dominio del server (64 byte)
+>- `Boot file name` ⟶ nome di file usato per informazioni aggiuntive
+>- `Options` ⟶ nel pacchetto non è previsto un campo per il tipo di messaggio, quindi qui viene indicato un **magic cookie** pari a `99.130.83.99` segna l’inizio della parte del pacchetto che contiene le opzioni specifiche del protocollo DHCP, di questo tipo:
+>
+> ![[DHCP-magiccookie.png|center|300]]
+
+>[!example] esempio di completamento richiesta DHCP
+>
+>![[DHCP-es.png|center|400]]
+>
+>- vengono usate porte *well-known* (`68` dal client e `67` dal server), perché la risposta del server è broadcast (due client DHCP diversi su due host diversi potrebbero aver scelto la stessa porta effimera e due client diversi potrebbero pensare che la risposta sia per loro)
+>- in `DHCPDISCOVER`, il client usa come IP mittente `0.0.0.0`, e come IP destinatario `255.255.255.255` (broadcast on local network)
+>- in `DHCPOFFER`, il messaggio viene mandato in broadcast, ma l'host sa che è riferito a lui grazie al transaction ID
+>- anche `DHCPREQUEST` e `DHCPACK` vengono mandati in broadcast, pur sapendo IP mittente e destinatario
+>- ulteriori informazioni oltre all'IP (maschera, server DNS, router) sono fornite dal server al client attraverso il `DHCPACK`: il server inserisce il pathname di un file che contiene le info mancanti, e il client usa FTP per ottenerlo
+
+# NAT
+## sottoreti
+
+> [!info] sottorete
+> È detta **sottorete** una rete isolata i cui punti terminali sono collegati all'interfaccia di un host o di un router.
+
+
+
