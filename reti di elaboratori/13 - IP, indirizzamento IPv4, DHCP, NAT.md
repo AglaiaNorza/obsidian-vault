@@ -1,6 +1,6 @@
 ---
 created: 2025-04-30T17:16
-updated: 2025-05-02T16:20
+updated: 2025-05-02T17:19
 ---
 Il protocollo IP (Internet Protocol) è responsabile della **suddivisione in pacchetti**, del **forwarding** e della **consegna** dei datagrammi a livello rete (host to host).
 - è un protocollo *inaffidabile* e *connectionless*
@@ -204,7 +204,7 @@ Quando un host vuole entrare a far parte di una rete, necessita di indirizzo IP,
 >- anche `DHCPREQUEST` e `DHCPACK` vengono mandati in broadcast, pur sapendo IP mittente e destinatario
 >- ulteriori informazioni oltre all'IP (maschera, server DNS, router) sono fornite dal server al client attraverso il `DHCPACK`: il server inserisce il pathname di un file che contiene le info mancanti, e il client usa FTP per ottenerlo
 
-# NAT
+# sottoreti, NAT
 ## sottoreti
 
 > [!info] sottorete
@@ -219,5 +219,18 @@ Dato un indirizzo IP e la sua maschera di rete, per sapere a quale blocco appart
 - se il prefisso è multiplo di 8 bit ⟶ gli indirizzi vanno da `a.b.c.0` a `a.b.c.255`
 - se il prefisso non è multiplo di 8 bit ⟶ bisogna vedere la *rappresentazione binaria* di `d`:  per esempio, se si ha `a.b.c.d/26` con `d = 10xxxxxx`, gli indirizzi andranno da `10000000` a `10111111`.
 
-Può però capitare che un’entità che ha ricevuto un blocco abbia bisogno di un numero maggiore di indirizzi, ma che il blocco successivo sia assegnato ad un’altra entità - in questo caso si usano gli **indirizzi privati**, con la traduzione degli indirizzi di rete (NAT).
+
+Con la proliferazione di sottoreti *SOHO* (small office, home office), ogni volta che si vuole installare una rete locale per connettere più macchine, l’ISP deve allocare un intervallo di indirizzi per coprire la sottorete, e spesso ciò risulta impossibile per la mancanza di indirizzi aggiuntivi nella sottorete - in questo caso si usano gli **indirizzi privati**, con la traduzione degli indirizzi di rete (NAT).
+
+## NAT
+Il **Network Address Translation** (NAT) è una tecnica tramite la quale i router possono nascondere i dettagli della propria rete domestica al mondo esterno.
+- un **unico indirizzo IP** è sufficiente per tutte le macchine di una rete locale
+- è possibile cambiare gli indirizzi delle macchine di una rete privata senza doverlo comunicare all'Internet globale
+- è possibile cambiare ISP senza modificare gli indirizzi delle macchine della rete privata
+- i dispositivi interni alla rete non sono esplicitamente indirizzabili e visibili dal mondo esterno (il che garantisce maggiore sicurezza)
+
+>[!info] NAT
+>
+>![[NAT.png|center]]
+>- i router abilitati al NAT non appaiono al mondo esterno come router ma come un unico dispositivo con un unico indirizzo IP, e tutto il traffico verso Internet deve riportare lo stesso indirizzo
 
