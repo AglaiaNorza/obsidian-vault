@@ -1,6 +1,6 @@
 ---
 created: 2025-04-30T17:16
-updated: 2025-05-02T17:19
+updated: 2025-05-02T21:47
 ---
 Il protocollo IP (Internet Protocol) è responsabile della **suddivisione in pacchetti**, del **forwarding** e della **consegna** dei datagrammi a livello rete (host to host).
 - è un protocollo *inaffidabile* e *connectionless*
@@ -233,4 +233,14 @@ Il **Network Address Translation** (NAT) è una tecnica tramite la quale i route
 >
 >![[NAT.png|center]]
 >- i router abilitati al NAT non appaiono al mondo esterno come router ma come un unico dispositivo con un unico indirizzo IP, e tutto il traffico verso Internet deve riportare lo stesso indirizzo
+>
+>**implementazione**:
+>
+>- quando un router NAT riceve il datagramma, genera per esso un **nuovo numero di porta d'origine**, **sostituisce l'indirizzo IP** origine con il proprio indirizzo IP sul lato WAN e s**ostituisce il numero di porta** iniziale con il nuovo numero
+>
+>![[NAT-trad.png|center|500]]
+
+
+
+
 
