@@ -1,14 +1,13 @@
 ---
 created: 2025-05-03T12:54
-updated: 2025-05-03T13:20
+updated: 2025-05-03T17:27
 ---
 (use case: registrazione utenti, pubbl video, visualizz video, esprimere valutazioni)
-
 
 1) utenti
 	1) nome
 	2) data di iscrizione
-	3) prendere le sue playlist
+	3) prendere le sue playlist pubbliche
 2) video
 	1) titolo
 	2) durata
@@ -16,10 +15,17 @@ updated: 2025-05-03T13:20
 	4) nome del file (univoco)
 	5) categoria (unica) [vedi 3]
 	6) tag (almeno uno) [vedi 4]
-	7) può essere video risposta
-	8) numero di volte che è stato visionato 
+	7) può essere **video risposta**
+		1) non si può rispondere a un video pubblicato da se stessi
+	8) può essere **video censurato**
+		1) no visioni, no commenti, no voti, no playlist, no ricerca
+		2) motivo
+	9) numero di volte che è stato visionato
+	10) ricerca video per tag e valutazione
+	11) AGGIUNGO: data post? 
 3) categoria
 	1) nome
+	2) ottieni video con maggiore numero di risposte
 4) tag
 	1) nome
 5) visione video
@@ -38,9 +44,9 @@ updated: 2025-05-03T13:20
 	2) nome
 	3) data di creazione
 	4) pubbliche o private
-9) 
 
-
+### specifica dei tipi di dati
+- DurataVideo (minuti: Intero, secondi: Intero < 60)
 
 
 
