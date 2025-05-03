@@ -1,6 +1,6 @@
 ---
 created: 2025-04-30T17:16
-updated: 2025-05-02T21:47
+updated: 2025-05-03T09:20
 ---
 Il protocollo IP (Internet Protocol) è responsabile della **suddivisione in pacchetti**, del **forwarding** e della **consegna** dei datagrammi a livello rete (host to host).
 - è un protocollo *inaffidabile* e *connectionless*
@@ -236,11 +236,14 @@ Il **Network Address Translation** (NAT) è una tecnica tramite la quale i route
 >
 >**implementazione**:
 >
->- quando un router NAT riceve il datagramma, genera per esso un **nuovo numero di porta d'origine**, **sostituisce l'indirizzo IP** origine con il proprio indirizzo IP sul lato WAN e s**ostituisce il numero di porta** iniziale con il nuovo numero
+>- quando un router NAT riceve il datagramma, genera per esso un **nuovo numero di porta d'origine**, **sostituisce l'indirizzo IP** origine con il proprio indirizzo IP sul lato WAN e **sostituisce il numero di porta** iniziale con il nuovo numero
 >
 >![[NAT-trad.png|center|500]]
+>
+>il campo `numero di porta` è lungo 16 bit: NAT può supportare più di 60.000 connessioni simultanee con un solo indirizzo IP lato WAN
 
-
-
-
-
+>[!error] NAT è contestato perché:
+>- i router dovrebbero elaborare pacchetti *solo fino al livello di rete* (mentre, per NAT, un router deve spesso guardare anche il livello di trasporto)
+>- il numero di porta viene usato per *identificare host e non processi*
+>- viola l'*argomento punto-punto*: gli host dovrebbero comunicare tra di loro direttamente, senza intromissione di nodi né modifica di indirizzi IP e numeri di porta
+>- causa interferenza con le applicazioni P2P in cui ogni peer dovrebbe essere in grado di avviare una connessione TCP con qualsiasi altro peer (a meno che il NAT non sia specificamente configurato per quella applicazione P2P)
