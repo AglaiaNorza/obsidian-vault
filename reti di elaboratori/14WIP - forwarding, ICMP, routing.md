@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-03T10:03
+updated: 2025-05-03T20:31
 ---
 # forwarding di datagrammi IP
 >[!info] forwarding
@@ -36,3 +36,33 @@ In particolare, quando un host ha un datagramma da inviare, lo invia al router d
 ## aggregazione degli indirizzi
 Inserire nella tabella una riga per ogni bloco può portare alla creazione di tabelle molto lunghe (in cui la ricerca impiega molto tempo). Una possibile soluzione è l'**aggregazione degli indirizzi**: si combinano più reti specifiche in una rete più generale quando queste hanno lo stesso next hop, senza perdere le informazioni di routing.
 
+>[!example] esempio
+> 
+>![[aggreg-indirizzi.png|center|500]]
+> - in questo caso, gli indirizzi delle società 1, 2 e 3 (tutti indirizzi del tipo `140.24.7.xx/26`) vengono aggregati da $\text{R2}$ in una sola rete più ampia (`140.24.7.0/24`)
+
+# ICMP
+>[!summary]- overview del livello di rete
+>
+>![[rete-overview.png|center|450]]
+
+**Internet Control Message Protocol** è il protocollo che si occupa della **notifica degli errori**. Infatti, ci sono errori che IP non gestisce, come:
+- caso in cui un router deve scartare un datagramma perché non riesce a trovare un percorso per la destinazione finale
+- caso in cui un datagramma ha il campo `TTL == 0`
+- caso in cui un host di destinazione non ha ricevuto tutti i frammenti di un datagramma entro un limite di tempo
+
+ICMP viene quindi usato da host e router per *scambiarsi informazioni a livello di rete*.
+
+>[!tip] ICMP viene considerato parte di IP anche se usa IP per inviare i suoi messaggi
+
+>[!example] esempio
+>
+>![[ICMP.png|center|450]]
+>
+> Un tipico use-case di ICMP è fornire un meccanismo di **feedback per i messaggi IP** inviati. 
+> 
+> In questo esempio, $A$ sta cercando di mandare un datagramma IP a $B$. Tuttavia, quando arriva al router $\text{R3}$, viene rilevato un problema di qualche tipo e il datagramma viene scartato. Allora $\text{R3}$ invia un messaggio ICMP ad $A$ per avvisarlo, se possibile con abbastanza informazioni da permettergli di correggere il problema. 
+> - $\text{R3}$ può inviare il messaggio ICMP solo ad $A$ (non a $\text{R2}$ o $\text{R1}$)
+
+## messaggi ICMP
+I messaggi ICMP hanno un campo `tipo` e un campo `codice` e contengono l'intestazione e i primi 8 byte del datagramma IP che ha provocato la generazione del messaggio.

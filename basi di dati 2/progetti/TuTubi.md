@@ -1,6 +1,6 @@
 ---
 created: 2025-05-03T12:54
-updated: 2025-05-03T17:27
+updated: 2025-05-03T19:58
 ---
 (use case: registrazione utenti, pubbl video, visualizz video, esprimere valutazioni)
 
@@ -45,9 +45,18 @@ updated: 2025-05-03T17:27
 	3) data di creazione
 	4) pubbliche o private
 
-### specifica dei tipi di dati
+### specifica dei tipi di dato
 - DurataVideo (minuti: Intero, secondi: Intero < 60)
 
+### vincoli
+- visione, valutazione e commento SOLO SE NON CENSURATO
+- video risposta non pubblicato da se stesso
+- valutazione e commento solo se visione
+- entry della playlist in ordine
 
 
-vincolo: video risposta non pubblicato da se stesso
+
+
+
+
+
