@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-04T12:21
+updated: 2025-05-04T12:46
 ---
 >[!info] routing
 >Il **routing** si occupa di trovare il **miglior percorso** per un pacchetto e di inserirlo nella tabella di routing (o tabella di forwarding).
@@ -141,6 +141,7 @@ RIP si basa su una coppia di processi **client-server** e sul loro scambio di me
 Ogni messaggio contiene un elenco comprendente fino a 25 sottoreti di destinazione all’interno del sistema autonomo e la distanza del mittente rispetto a ciascuna di tali sottoreti.
 
 >[!summary] struttura dei messaggi RIP
+>ogni messaggio corrisponde a una entry nella tabella di routing
 >
 >![[messaggi-RIP.png|center|400]]
 >- `com` ⟶ comando: `1` = richiesta, `2` = risposta
@@ -151,3 +152,36 @@ Ogni messaggio contiene un elenco comprendente fino a 25 sottoreti di destinazio
 >- `subnet mask` ⟶ maschera di sottorete
 >- `next-hop address` ⟶ indirizzo del prossimo hop
 >- `distance` ⟶ numero di hop fino alla destinazione
+
+### caratteristiche di RIP
+- **split horizon with poisoned reverse**
+	- evita che un router invii rotte non valide al router da cui ha imparato una rotta (evitando cicli)
+	- si mette a 16 (infinito) il costo della rotta che passa attraverso il vicino a cui si manda advertisement
+- **triggered updates**
+	- riducono il problema della convergenza lenta
+	- quando una rotta cambia, si inviano immediatamente informazioni ai vicini senza attendere il timeout
+- **hold-down**
+	- fornisce robustezza
+	- quando si riceve un'informazione di una rotta non più valida, si avvia un timer e tutti gli advertisement riguardanti quella rotta che arrivano entro il timeout vengono tralasciati
+### timer RIP
+Il protocollo RIP utilizza 3 timer:
+- **timer periodico** ⟶ controlla l'invio di messaggi di aggiornamento (ogni 25-35 secondi)
+- **timer di scadenza** ⟶ regola la validità dei percorsi (ogni 180 secondi)
+	- se entro lo scadere del timer non si riceve un aggiornamento, il percorso viene considerato scaduto e il suo costo impostato a 16
+- **timer per garbage collection** ⟶ elimina percorsi dalla tabella (ogni 120 secondi)
+	- quando le informazioni non sono più valide, il router continua ad annunciare il percorso con costo pari a 16 e, allo scadere del timer, rimuove il percorso
+
+### guasto su collegamento e recupero
+(Come visto sopra) se un router non riceve notizie da un suo vicino per 180 secondi, il nodo o il collegamento vengono considerati spenti o guasti . Se accade:
+- RIP modifica la tabella di instradamento locale
+- propaga l'informazione mandando annunci ai router vicini
+- se la loro tabella di instradamento è cambiata, i vicini inviano nuovi messaggi
+- quindi, l'informazione sul fallimento del collegamento si *propaga* rapidamente su tutta la rete
+- l'utilizzo della **poisoned reverse** evita i loop
+
+### implementazione di RIP
+Il RIP viene implementato come **applicazione** sopra **UDP** sulla porta `520`.
+- un processo chiamato `routed` (route daemon) esegue RIP, ovvero mantiene le informazioni di instradamento e scambia messaggi con i processi `routed` nei router vicini
+- poiché RIP viene implementato come processo a livello applicazione, può inviare e ricevere messaggi su una socket standard e usare un protocollo di trasporto standard
+
+![[RIP-rappr.png|center|500]]
