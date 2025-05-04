@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-04T11:21
+updated: 2025-05-04T12:21
 ---
 >[!info] routing
 >Il **routing** si occupa di trovare il **miglior percorso** per un pacchetto e di inserirlo nella tabella di routing (o tabella di forwarding).
@@ -140,3 +140,14 @@ RIP si basa su una coppia di processi **client-server** e sul loro scambio di me
 
 Ogni messaggio contiene un elenco comprendente fino a 25 sottoreti di destinazione all’interno del sistema autonomo e la distanza del mittente rispetto a ciascuna di tali sottoreti.
 
+>[!summary] struttura dei messaggi RIP
+>
+>![[messaggi-RIP.png|center|400]]
+>- `com` ⟶ comando: `1` = richiesta, `2` = risposta
+>- `vers` ⟶ versione (la versione corrente è 2)
+>- `family` ⟶  famiglia del protocollo (per il TCP/IP il valore è `2`)
+>- `tag` ⟶ informazioni sul sistema autonomo
+>- `network address` --> indirizzo di destinazione
+>- `subnet mask` ⟶ maschera di sottorete
+>- `next-hop address` ⟶ indirizzo del prossimo hop
+>- `distance` ⟶ numero di hop fino alla destinazione
