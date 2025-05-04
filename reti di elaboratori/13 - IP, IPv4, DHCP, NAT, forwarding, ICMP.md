@@ -1,6 +1,6 @@
 ---
 created: 2025-04-30T17:16
-updated: 2025-05-03T20:58
+updated: 2025-05-04T08:52
 ---
 Il protocollo IP (Internet Protocol) è responsabile della **suddivisione in pacchetti**, del **forwarding** e della **consegna** dei datagrammi a livello rete (host to host).
 - è un protocollo *inaffidabile* e *connectionless*
@@ -50,7 +50,7 @@ Per farlo, usa:
 > 
 >![[frammentazione-es.png|center|400]]
 >
->![[frammentazione-es2.png]]
+>![[frammentazione-es2.png|center|500]]
 >
 >- Il primo frammento ha un valore del campo offset pari a 0
 >- l'offset del secondo si ottiene dividendo per 8 la lunghezza del primo frammento (esclusa l'intestazione)
