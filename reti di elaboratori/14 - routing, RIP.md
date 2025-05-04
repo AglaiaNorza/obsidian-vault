@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-04T10:21
+updated: 2025-05-04T10:37
 ---
 >[!info] routing
 >Il **routing** si occupa di trovare il **miglior percorso** per un pacchetto e di inserirlo nella tabella di routing (o tabella di forwarding).
@@ -100,9 +100,31 @@ Quando viene inizializzato un nodo, si crea un vettore distanza iniziale con le 
 > - ricezione da un vicino di un vettore di distanza aggiornato
 > 
 > (è *distribuito* perché):
-> - ogni nodo aggiorna i suoi vicini soo quando il suo vettore della distanza cambia (quindi i vicini sono avvisati solo se necessario)
+> - ogni nodo aggiorna i suoi vicini soo quando il suo vettore della distanza cambia (i vicini sono avvisati solo se necessario)
 
-**implementazione** (per ciascun nodo $x$):
-```
+### problema della modifica dei costi
+con le modalità di aggiornamento definite nell’algoritmo, si può verificare il *problema del conteggio all’infinito* (le buone notizie viaggiano in fretta, e le notizie cattive si propagano lentamente <small>(life lesson)</small>).
 
-```
+>[!example] esempio 
+>si guasta il collegamento tra $A$ e $X$
+>
+>![[conteggio-infinito.png|center|500]]
+>
+>il router $A$ si aggiorna male a causa del guasto di $X$, quindi invia l’aggiornamento a $B$, che incrementa il vettore delle distanze; la richiesta di aggiornamento continuerà a rimbalzare tra $A$ e $B$ (e di conseguenza il costo aumenterà) finché il costo non sarà $\infty$
+
+Ci sono due possibili *soluzioni* a questo problema:
+- **split horizon** ⟶ invece di inviare la tabella attraverso ogni interfaccia, ciascun nodo invia *solo una parte* della sua tabella tramite le interfacce: se per esempio il nodo $B$ ritiene che il percorso ottimale per arrivare a $X$ passi attraverso $A$, non fornisce questa informazione ad $A$ (in quanto gli è arrivata da $A$, che quindi la conosce già)
+	- nell'esempio di sopra, $B$ elimina la riga di $X$ prima di inviarla ad $A$
+- **poisoned reverse** ⟶ si pone a $\infty$ il valore del costo del percorso che passa attraverso il vicino a cui si sta inviando il vettore
+	- nell'esempio di sopra, $B$ pone a $\infty$ il costo verso $X$ quando invia il vettore ad $A$
+
+## protocollo RIP
+Il **Routing Information Protocol** (RIP) è un protocollo a vettore distanza, <small>ed è incluso in UNIX BSD dal 1982 </small>.
+- la *metrica di costo* è la distanza misurata in **hop**
+	- 15 è il massimo di hop, e 16 indica $\infty$
+	- ogni link ha un costo unitario
+
+>[!example] esempio 
+>
+>![[RIP-es.png|center|450]]
+
