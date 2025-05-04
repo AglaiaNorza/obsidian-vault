@@ -1,6 +1,6 @@
 ---
 created: 2025-03-24T09:30
-updated: 2025-05-01T11:36
+updated: 2025-05-04T12:47
 ---
 >[!info] index
 >- [[0 - introduzione]] 
@@ -20,4 +20,4 @@ updated: 2025-05-01T11:36
 >- [[14 - divide et impera]]
 >- [[15 - programmazione dinamica]]
 
-[playlist di accompagnamento allo studio](https://open.spotify.com/playlist/52f65aksG2pZCE5IRqrkLr?si=9b217e1fd5e344f4)
+[playlist](https://open.spotify.com/playlist/52f65aksG2pZCE5IRqrkLr?si=9b217e1fd5e344f4)

@@ -1,6 +1,6 @@
 ---
 created: 2025-04-28T17:11
-updated: 2025-05-04T12:46
+updated: 2025-05-04T12:47
 ---
 >[!info] indice
 >- [[1 - introduzione alle reti]]
@@ -28,4 +28,4 @@ updated: 2025-05-04T12:46
 >
 >![[meme-reti.png|center|390]]
 
-[playlist di accompagnamento allo studio](https://open.spotify.com/playlist/5j3tPFzDzBE6FuPyoPhR5m?si=79b8f0785f804691)
+[playlist](https://open.spotify.com/playlist/5j3tPFzDzBE6FuPyoPhR5m?si=79b8f0785f804691)
