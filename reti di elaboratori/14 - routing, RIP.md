@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-04T09:52
+updated: 2025-05-04T10:21
 ---
 >[!info] routing
 >Il **routing** si occupa di trovare il **miglior percorso** per un pacchetto e di inserirlo nella tabella di routing (o tabella di forwarding).
@@ -64,7 +64,7 @@ D_{x}(y)=min_{v}\{ c(x,v) + D_{v}(y) \}
 ### vettore distanza, minimum spanning tree
  
 >[!info] albero a costo minimo
->Un **albero a costo minimo** (minimum spanning tree) è una combinazione di percorsi a costo minimo dalla radice dell'albero verso tutte le destinazioni [ analogo al [[10 - minimo albero di copertura|minimo albero di copertura (prog. di algo)]] ]
+>Un **albero a costo minimo** (minimum spanning tree) è una combinazione di percorsi a costo minimo dalla radice dell'albero verso tutte le destinazioni [ praticamente analogo al [[10 - minimo albero di copertura|minimo albero di copertura (prog. di algo)]] ]
 >- il **vettore di distanza** è un array monodimensionale che rappresenta l'albero
 >	- non fornisce il percorso da seguire per giungere alle destinazioni, ma solo i costi minimi
 >
@@ -72,3 +72,37 @@ D_{x}(y)=min_{v}\{ c(x,v) + D_{v}(y) \}
 >>
 >>![[alberominimoRETI.png|center|400]]
 
+Quando viene inizializzato un nodo, si crea un vettore distanza iniziale con le informazioni che il nodo ottiene dai suoi vicini 
+- per crearlo, il nodo invia messaggi di `hello` attraverso le sue interfacce (e i vicini fanno lo stesso), e scopre l'identità dei suoi vicini e la distanza da ognuno di essi
+- dopo che ogni nodo ha creato il suo vettore, ne invia una copia ai suoi vicini
+- quando un nodo riceve un vettore distanza da un suo vicino, *aggiorna* il suo vettore distanza applicando l'equazione di Bellman-Ford
+
+>[!example]- esempio 
+>
+>![[DV-ese1.png|center|300]]
+>
+>1) $B$ riceve una copia del vettore di $A$
+>
+>![[DV-ese2.png|center|300]]
+>
+>2) $B$ riceve una copia del vettore di $E$
+>
+>![[DV-ese3.png|center|300]]
+
+> [!summary] passi dell'algoritmo
+> Quindi, l'idea di base dell'algoritmo è questa:
+> - ogni nodo **invia una copia** del proprio vettore distanza a ciascuno dei suoi vicini
+> - quando un nodo $x$ riceve un nuovo vettore di distanza da un suo vicino, lo salva e usa la formula di Bellman-Ford per **aggiornare** il proprio vettore distanza 
+> - se il vettore distanza del nodo $x$ è cambiato, $x$ **manderà** il proprio vettore distanza aggiornato a ciascuno dei suoi vicini, che a loro volta aggiorneranno i propri
+> 
+> (è *asincrono* perché) ogni iterazione locale è causata da:
+> - cambio del costo di uno dei collegamenti locali
+> - ricezione da un vicino di un vettore di distanza aggiornato
+> 
+> (è *distribuito* perché):
+> - ogni nodo aggiorna i suoi vicini soo quando il suo vettore della distanza cambia (quindi i vicini sono avvisati solo se necessario)
+
+**implementazione** (per ciascun nodo $x$):
+```
+
+```
