@@ -1,6 +1,6 @@
 ---
 created: 2025-05-05T14:14
-updated: 2025-05-05T14:43
+updated: 2025-05-05T15:14
 ---
 Dato un vettore $V$ di interi e un suo sottovettore $v[i,j)$ definisco **spessore** di $v[i,j)$ come $max(v[i,j)) - min(v[i,j))$.
 
@@ -36,8 +36,48 @@ while j < n:
 	
 	else:
 		i = i+1
-		maxS = max(v[i, j])
-		minS = min(v[i, j]) 
-		spess 
+		maxS = max(v[i:j]) # Theta(n)
+		minS = min(v[i:j]) 
+		spess = maxS - minS
+```
 
+questo algoritmo ha complessità $O(n^2)$
+
+Utilizzando maxheap e minheap, si potrebbero estrarre massimi e minimi in log n. 
+
+Ma noi vogliamo usare il divide et impera !
+Dato un segmento da $inf$ a $sup$,, lo divido a metà e risolvo i sottoproblemi dati dalle due metà
+- il caso base è quello con un sottosegmento di lunghezza 1: lo spessore è 0
+
+ci saranno $spess(v[l_{1},\,r_{1}))<c$ e [ stessa cosa con l2 r2 ]
+
+- in questo caso, basterebbe prendere il massimo tra gli spessori dei segmenti destro e sinistro
+- ma se il più grande segmento si trova a cavallo ? (ovvero, se include l'indice $m$ (punto medio))
+
+Per ottenere una ricorrenza in n log n, il tempo di combinazione deve essere $n$
+T(n) = 2T(n/2) + ?
+con ? = Theta(n)
+
+Questo problema è semplificato dal fatto che il segmento deve passare per $m$
+
+- è quindi un segmento della forma $v[l,m)\cup v[m,\,r)]$
+- se conosco i massimi e minimi dei due intervalli, lo spessore è dato dalla differenza tra il massimo tra i massimi e il minimo tra i due minimi
+- in n, posso calcolarmi tutti gli spessori di tutti gli intervalli del tipo $l,m$ 
+- mi conviene calcolare (e tenere da parte) non lo spessore, ma il vettore dei massimi e dei minimi a partire da 
+
+il candidato deve avere un estremo a sinistra di $m$ e uno a destra
+
+quindi fisso  r = m e l = inf
+
+
+- parto dall'ultimo ad essere più piccolo di c per ottimizzare
+- parte da m ?? m+1 da destra e inf a sinistra, e sposta la finestra
+
+
+
+```python
+l = inf; r = m; spess = max((maxL(inf), maxR(m))) - min(minL(inf), minL(sup)))
+while l < m and r < sup:
+	if spess < c:
+		r = r+1
 ```
