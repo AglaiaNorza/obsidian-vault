@@ -1,6 +1,6 @@
 ---
 created: 2025-05-05T20:03
-updated: 2025-05-05T20:38
+updated: 2025-05-05T22:03
 ---
 Il protocollo OSPF è un algoritmo di routing basato su **link state**.
 ## link state
@@ -21,4 +21,10 @@ Il **link state database** è unico per tutta la rete, e ogni nodo ne possiede u
 > - ogni nodo invia quindi un messaggio di `hello` a tutti i suoi vicini
 > - ogni nodo riceve gli `hello` dei vicini e crea una lista, chiamata **LS packet** (LSP), con vicini e costi dei collegamenti 
 > - ogni nodo esegue un **flooding** degli LSP, ovvero invia a tutti i vicini il proprio LSP
-> 	- quando riceve l'LS packet di un vicino
+> 	- quando riceve l'LSP di un vicino, se è nuovo lo inoltra a tutti i suoi vicini eccetto quello da cui lo ha ricevuto
+> 
+> ![[LSP-LSDB.png|center|450]]
+
+
+## algoritmo di instradamento a link state
+Si utilizza l'**algoritmo di Dijkstra** <small>[ trattato anche [[9 - grafi pesati, algoritmo di Dijkstra|qui]] (progettazione di algoritmi) ]</small> per calcolare il cammino di costo minimo da un nodo a tutti gli altri 
