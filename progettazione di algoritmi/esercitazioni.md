@@ -1,13 +1,18 @@
 ---
 created: 2025-05-05T19:22
-updated: 2025-05-05T19:22
+updated: 2025-05-05T19:35
 ---
-Dato un vettore $V$ di interi e un suo sottovettore $v[i,j)$ definisco **spessore** di $v[i,j)$ come $max(v[i,j)) - min(v[i,j))$.
+### spessore di un sottovettore
+> [!example] spessore di un sottovettore (es. 6 pdf divide et impera)
+> In un vettore $V$ di interi, si dice **spessore** del vettore la differenza tra il massimo e il minimo del vettore. Progettare un algoritmo che, preso un vettore $V$ di $n$ interi ed un intero $C$, trovi un sottovettore (una sequenza di elementi consecutivi del vettore) di lunghezza massima tra quelli di spessore al più $C$. La complessità dell’algoritmo deve essere $O(n \log n)$.
+> 
 
-Data una costante $c$, trovare, in $\Theta(n \log n)$, il più lungo sottovettore $v[i,j)$ di spessore al più $c$
+- quindi, dato un sottovettore $v[i,j)$, definiamo $\text{spessore}(v[i,j)=max(v[i,j)) - min(v[i,j))$
 
-- se ho due sottovettori $v[i,\,j)$ e $v[i,\,j+1)$, non mi serve ricalcolare il massimo e il minimo elemento ⟶ mi basta fare $max(max(v[i,\,j), j+1)$
-	- questo porta il nostro algoritmo naïf da $O(n^3)$ a $O(n^2)$
+>[!bug] soluzione in $O(n^2)$
+> Una soluzione naïf consiste nel controllare tutti i sottovettori (il che richiederebbe $O(n^3)$), ma può essere ottimizzata se si considera una proprietà:
+> - se ho due sottovettori $v[i,\,j)$ e $v[i,\,j+1)$ e conosco il massimo del primo, non mi serve ricontrollare tutto il secondo vettore ⟶ il massimo sarà dato da $max(max(v[i,\,j), v[j+1])$  <small>(tra il massimo che conosciamo già e il nuovo elemento)</small>
+
 
 Lo spessore segue il principio di monotonia: $[i,j) \subseteq[i',\,j']\implies spess(v[i,j))\leq spess(v[i',\,j'))$
 
