@@ -1,6 +1,6 @@
 ---
 created: 2025-05-05T19:22
-updated: 2025-05-05T19:35
+updated: 2025-05-05T19:49
 ---
 ### spessore di un sottovettore
 > [!example] spessore di un sottovettore (es. 6 pdf divide et impera)
@@ -12,11 +12,19 @@ updated: 2025-05-05T19:35
 >[!bug] soluzione in $O(n^2)$
 > Una soluzione naïf consiste nel controllare tutti i sottovettori (il che richiederebbe $O(n^3)$), ma può essere ottimizzata se si considera una proprietà:
 > - se ho due sottovettori $v[i,\,j)$ e $v[i,\,j+1)$ e conosco il massimo del primo, non mi serve ricontrollare tutto il secondo vettore ⟶ il massimo sarà dato da $max(max(v[i,\,j), v[j+1])$  <small>(tra il massimo che conosciamo già e il nuovo elemento)</small>
-
-
-Lo spessore segue il principio di monotonia: $[i,j) \subseteq[i',\,j']\implies spess(v[i,j))\leq spess(v[i',\,j'))$
-
-infatti, $max(v[i,j))-min(v[i,j))\leq max(v[i',j'))-min(v[i,j))\leq max(v[i',j'))-min(v[i',j))=spess(v[i',j'))$
+> 
+> In più, so anche che lo spessore segue il *principio di monotonia*, ovvero che:
+> 
+> $$\begin{align*}
+> [i,j) \subseteq[i',\,j']\implies spess(v[i,j))\leq spess(v[i',\,j'))
+> \end{align*}$$
+> 
+> Infatti, si ha 
+>  
+ > $$\begin{align*}
+ > max(v[i,j))-min(v[i,j)) \leq max(v[i',j'))-min(v[i,j)) \leq max(v[i',j'))-min(v[i',j'))=spess(v[i',j'))
+\end{align*}$$
+> - $max(v[i,j))-min(v[i,j)) \leq max(v[i',j'))-min(v[i,j))$ perché, 
 
 - un sottovettore di lunghezza 1 ha spessore 0
 - $i=0,\,j=1$ ⟶ $spess=0$
