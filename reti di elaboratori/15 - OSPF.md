@@ -1,8 +1,7 @@
 ---
 created: 2025-05-05T20:03
-updated: 2025-05-05T22:35
+updated: 2025-05-05T22:59
 ---
-Il protocollo OSPF è un algoritmo di routing basato su **link state**.
 ## link state
 Lo stato di un link indica il **costo** associato al link. 
 - quando un collegamento non esiste o è stato interrotto, il costo viene settato a $\infty$
@@ -85,3 +84,26 @@ ciclo (while $N'\neq N$):
 > | $z$          | $(u,y)$      |
 > 
 
+## confronto tra link state e distance vector
+
+
+|                              | **link state**                                                                                                                                                                                                                     | **distance vector**                                                                                                                                                                                                         |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **complessità dei messaggi** | con $n$ nodi, $E$ collegamenti, implica l’invio di $O(nE)$ messaggi (ogni nodo deve conoscere il costo degli $E$ link)                                                                                                             | richiede scambi tra nodi adiacenti (il tempo di convergenza può variare)                                                                                                                                                    |
+| **velocità di convergenza**  | l’algoritmo ha complessità $O(n^2)$ <small>(prima $n$ nodi, poi $n-1$, poi $n-2$... (gauss))</small>                                                                                                                               | può convergere lentamente; può presentare cicli di instradamento e il problema del conteggio infinito                                                                                                                       |
+| **robustezza**               | OSPF è *più robusto* di RIP:<br>se un router funziona male, può comunicare via broadcast un costo sbagliato per uno dei suoi collegamenti connessi (ma non per altri); i nodi si occupano di calcolare soltanto le proprie tabelle | RIP è *meno robusto* di OSPF:<br>un nodo può comunicare cammini a costo minimo errati a tutte le destinazioni; la tabella di ciascun nodo può essere usata da altri (un calcolo errato si può diffondere per l’intera rete) |
+## protocollo OSPF
+ **Open Shortest Path First** è un protocollo di routing basato sull'algoritmo link state.
+ - è *open* perché le specifiche del protocollo sono pubblicamente disponibili
+ - utilizza il *flooding* e l'algoritmo di *Dijkstra* per determinare il percorso a costo minimo
+	 - ogni volta che si verifica un **cambiamento nello stato** di un collegamento, il router manda informazioni d’instradamento a **tutti** gli altri router
+	 - invia periodicamente (ogni 30 minuti) messaggi OSPF all’intero sistema autonomo, utilizzando il flooding
+
+>[!tip] I messaggi OSPF vengono trasportati direttamente in datagrammi IP usando il numero di protocollo `89` nel campo `IP protocol`
+
+### messaggi OSPF
+- `hello`: usato da un router per annunciare la propria esistenza ai i vicini che conosce
+- `database description`: risposta ad `hello`, consente a chi si è appena connessodi ottenere il LSDB 
+- `link-state request`: usato per richiedere specifiche informazioni su un collegamento
+- `link-state update`: messsaggio principale, usato da OSPF per la costruzione del LSDB
+- `link-state ack`: riscontro ai link-state update (per fornire affidabilità)

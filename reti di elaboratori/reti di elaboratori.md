@@ -1,6 +1,6 @@
 ---
 created: 2025-04-28T17:11
-updated: 2025-05-05T19:05
+updated: 2025-05-05T22:59
 ---
 >[!info] indice
 >- [[1 - introduzione alle reti]]
@@ -23,6 +23,7 @@ updated: 2025-05-05T19:05
 >- [[12 - introduzione al livello rete]]
 >- [[13 - IP, IPv4, DHCP, NAT, forwarding, ICMP]]
 >- [[14 - routing, RIP]]
+>- [[15 - OSPF]]
 
 >[!tip]- un memino gentilmente fornito da [alessio](https://alem1105.github.io/Quartz/) 
 >
