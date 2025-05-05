@@ -1,6 +1,6 @@
 ---
 created: 2025-03-29T16:36
-updated: 2025-05-05T14:14
+updated: 2025-05-05T19:05
 ---
 ## concetti base
 

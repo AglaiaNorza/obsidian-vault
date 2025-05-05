@@ -1,6 +1,6 @@
 ---
 created: 2025-05-05T14:14
-updated: 2025-05-05T15:42
+updated: 2025-05-05T19:22
 ---
 Dato un vettore $V$ di interi e un suo sottovettore $v[i,j)$ definisco **spessore** di $v[i,j)$ come $max(v[i,j)) - min(v[i,j))$.
 
