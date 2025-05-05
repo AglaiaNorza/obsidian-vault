@@ -1,6 +1,6 @@
 ---
 created: 2025-05-05T20:03
-updated: 2025-05-05T22:03
+updated: 2025-05-05T22:35
 ---
 Il protocollo OSPF è un algoritmo di routing basato su **link state**.
 ## link state
@@ -27,4 +27,61 @@ Il **link state database** è unico per tutta la rete, e ogni nodo ne possiede u
 
 
 ## algoritmo di instradamento a link state
-Si utilizza l'**algoritmo di Dijkstra** <small>[ trattato anche [[9 - grafi pesati, algoritmo di Dijkstra|qui]] (progettazione di algoritmi) ]</small> per calcolare il cammino di costo minimo da un nodo a tutti gli altri 
+Si utilizza l'**algoritmo di Dijkstra** <small>[ trattato anche [[9 - grafi pesati, algoritmo di Dijkstra|qui]] (progettazione di algoritmi) ]</small> per calcolare il cammino di costo minimo da un nodo a tutti gli altri, creando una *tabella di inoltro* per quel nodo.
+- è iterativo: dopo la $k$-esima iterazione, i cammini a costo minimo sono noti a $k$ nodi di destinazione
+- ogni nodo applica l'algoritmo indipendentemente
+
+>[!summary] notazione
+>- $N$ ⟶ insieme dei nodi della rete
+>- $c(x,\,y)$ ⟶ costo del collegamento dal nodo $x$ al nodo $y$
+>- $D(y)$ ⟶ costo del cammino minimo dal nodo origine alla destinazione $v$ (all'iterazione corrente)
+>- $p(v)$ ⟶ immediato predecessore di $v$ lungo il cammino
+>- $N'$ ⟶ sottoinsieme di nodi per cui il cammino a costo minimo dall'origine è defnitivamente noto
+
+**implementazione**:
+
+inizializzazione:
+- $N' = {r}$ (il nodo che esegue l'algoritmo)
+- per tutti i nodi $n$:
+	- se $n$ è adiacente a $r$, allora $D(n) = c(r, n)$
+	- altrimenti $D(n) = \infty$
+
+ciclo (while $N'\neq N$):
+- determina un $n$ non in $N'$ tale che $D(n)$ sia minimo
+- aggiungi $n$ a $N'$
+- per ogni nodo $a$ adiacente a $n$ e non in $N'$, aggiorna $D(a)$:
+	- $D(a) = min(D(a), D(n) + c(n,a))$
+
+>[!example]- esempio 
+>Dato il seguente grafo:
+>
+>![[D0.png|center|300]]
+>
+>l'algoritmo si comporta così:
+>
+>![[D1.png|center|400]]
+>![[D2.png|center|400]]
+>![[D3.png|center|400]]
+>![[D4.png|center|400]]
+>![[D5.png|center|400]]
+>![[D6.png|center|400]]
+>![[D7.png|center|400]]
+>![[D8.png|center|400]]
+>![[D9.png|center|400]]
+>![[D10.png|center|400]]
+>
+>e produce quindi questo grafo a costo minimo:
+>
+>![[D11.png|center|400]]
+>
+>La tabella di inoltro (che contiene, per ogni destinazione, la coppia $(\text{dest, predecessore})$) di $u$ è:
+>
+> | destinazione | collegamento |
+> | ------------ | ------------ |
+> | $v$          | $(u,v)$      |
+> | $x$          | $(u,x)$      |
+> | $y$          | $(u,x)$      |
+> | $w$          | $(u,x)$      |
+> | $z$          | $(u,y)$      |
+> 
+
