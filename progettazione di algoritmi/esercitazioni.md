@@ -1,5 +1,5 @@
 ---
-created: 2025-05-05T14:14
+created: 2025-05-05T19:22
 updated: 2025-05-05T19:22
 ---
 Dato un vettore $V$ di interi e un suo sottovettore $v[i,j)$ definisco **spessore** di $v[i,j)$ come $max(v[i,j)) - min(v[i,j))$.
@@ -99,4 +99,9 @@ algoritmo greedy
 
 Dimostrazione:
 - ha cardinalità massima
+
+è l'unione tra indipendenti di V1 e V2 
+v1 è indipendente da v2 per costruzione (non avrà elementi adiacenti alle fogli)
+
+V* è V1* + V2* 
 
