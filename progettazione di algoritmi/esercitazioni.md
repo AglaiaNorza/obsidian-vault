@@ -1,6 +1,6 @@
 ---
 created: 2025-05-05T14:14
-updated: 2025-05-05T15:14
+updated: 2025-05-05T15:42
 ---
 Dato un vettore $V$ di interi e un suo sottovettore $v[i,j)$ definisco **spessore** di $v[i,j)$ come $max(v[i,j)) - min(v[i,j))$.
 
@@ -35,7 +35,7 @@ while j < n:
 			maxi, maxj = i, j
 	
 	else:
-		i = i+1
+		i += 1
 		maxS = max(v[i:j]) # Theta(n)
 		minS = min(v[i:j]) 
 		spess = maxS - minS
@@ -79,5 +79,24 @@ quindi fisso  r = m e l = inf
 l = inf; r = m; spess = max((maxL(inf), maxR(m))) - min(minL(inf), minL(sup)))
 while l < m and r < sup:
 	if spess < c:
-		r = r+1
+		r += 1
+	else :
+		l+=1
+	spess = riaggiorna_spessore()
 ```
+
+### massimo insieme indipendente
+dato un grafo $G=(V,E)$, un insieme $U\subseteq V$ è indipendente se, $\forall u,\,v\in U,\,(u,v)\not\in E$
+
+NP completo !
+
+vediamo il caso particolare in cui $G$ è un albero (connesso e aciclico)
+
+algoritmo greedy
+- prendiamo tutte le foglie (sicuramente indipendenti tra loro)
+- poto l'albero (dai padri delle foglie)
+- prendo le foglie
+
+Dimostrazione:
+- ha cardinalità massima
+
