@@ -1,6 +1,6 @@
 ---
 created: 2025-05-03T12:54
-updated: 2025-05-06T09:38
+updated: 2025-05-06T10:15
 ---
 (use case: registrazione utenti, pubbl video, visualizz video, esprimere valutazioni)
 
@@ -98,10 +98,3 @@ Ogni istanza di questa classe rappresenta una playlist.
 
 ### vincoli
 - entry della playlist in ordine
-
-
-
-
-
-
-
