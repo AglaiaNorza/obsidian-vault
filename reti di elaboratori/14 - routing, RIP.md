@@ -41,9 +41,7 @@ $$\begin{align*} D_{x}(y) := \text{costo del percorso a costo minimo dal nodo $x
 
 in cui:
 
-$$\begin{align*}\\
-D_{x}(y)=min_{v}\{ c(x,v) + D_{v}(y) \}\\
-\end{align*}$$
+$$\begin{align*}D_{x}(y)=min_{v}\{ c(x,v) + D_{v}(y) \}\end{align*}$$
 
 - (dove $min_{v}$ riguarda tutti i vicini di $x$) 
 - ovvero: si considera quanto costano gli archi da $x$ a ciascun vicino $v$, e si sceglie il percorso che, passando per $v$, ha il costo totale (fino a $y$) che sia minimo
