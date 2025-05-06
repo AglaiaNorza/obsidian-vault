@@ -1,6 +1,6 @@
 ---
 created: 2025-04-28T17:21
-updated: 2025-05-06T10:32
+updated: 2025-05-06T10:33
 ---
 >[!info] programmazione dinamica
 >La programmazione dinamica è una tecnica di progettazione di algoritmi basata sulla divisione del problema in **sottoproblemi** e sull'utilizzo di **sottostrutture ottimali** (la soluzione ottimale al sottoproblema può essere usata per trovare la soluzione ottimale all'intero problema).
@@ -304,4 +304,10 @@ $$
 ### sistemare $n$ persone in un albergo con stanze singole e doppie
 Dato un intero $n$, vogliamo contare quanti modi diversi ci sono di sistemare $n$ persone in un albergo che dispone di camere singole e camere doppie.
 
-- possiamo usare una tabella monodimensionale di dimensioni $n+1$, definita così: $T[i]$
+- possiamo usare una tabella monodimensionale di dimensioni $n+1$, definita così: 
+
+$T[i]=$ numero di modi in cui è possibile sistemare $i$ persone nell'albergo
+
+- una volta riempita la tabella, la soluzione si troverà in $T[n]$
+
+Abbiamo due 
