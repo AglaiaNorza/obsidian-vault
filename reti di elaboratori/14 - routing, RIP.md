@@ -1,11 +1,12 @@
 ---
 created: 2025-04-01
-updated: 2025-05-04T12:46
+updated: 2025-05-06T08:33
 ---
 >[!info] routing
 >Il **routing** si occupa di trovare il **miglior percorso** per un pacchetto e di inserirlo nella tabella di routing (o tabella di forwarding).
 >
 >>[!question] routing vs forwarding
+>> 
 >>Quindi, il routing costruisce le tabelle che vengono poi usate dal [[13 - IP, IPv4, DHCP, NAT, forwarding, ICMP#forwarding di datagrammi IP|forwarding]] (che colloca fisicamente il datagramma sulla giusta porta di uscita del router)
  
 Una rete di calcolatori si può rappresentare tramite **grafo pesato**.
