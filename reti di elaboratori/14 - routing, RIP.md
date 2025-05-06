@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-06T08:34
+updated: 2025-05-06T08:36
 ---
 >[!info] routing
 >Il **routing** si occupa di trovare il **miglior percorso** per un pacchetto e di inserirlo nella tabella di routing (o tabella di forwarding).
@@ -37,9 +37,7 @@ In un grafo di una rete di calcolatori, il **cammino a costo minimo** tra due no
 
 L'algoritmo DV si basa sull'**equazione di Bellman-Ford** [ [[11 - algoritmo di Bellman-Ford|lezione di progettazione di algoritmi su Bellman-Ford]] ]. Essa definisce:
 
-$$\begin{align*}\\
-D_{x}(y) := \text{costo del percorso a costo minimo dal nodo $x$ al nodo $y$}\\
-\end{align*}$$
+$$\begin{align*} D_{x}(y) := \text{costo del percorso a costo minimo dal nodo $x$ al nodo $y$}\end{align*}$$
 
 in cui:
 
