@@ -1,6 +1,6 @@
 ---
 created: 2025-05-03T12:54
-updated: 2025-05-06T09:32
+updated: 2025-05-06T09:38
 ---
 (use case: registrazione utenti, pubbl video, visualizz video, esprimere valutazioni)
 
@@ -89,7 +89,12 @@ Per ogni `v:Visione`, `u:Utente`, `i_vis`, `i_iscr`, si ha
 - se `(u,v):utente_visione` e `(u,v):utente_visione.istante = i_vis` e `u.istante_iscrizione = i_iscr`
 - allora, `i_vis > i_iscr`
 
-### specifica della
+### specifica della classe Playlist
+Ogni istanza di questa classe rappresenta una playlist.
+
+`V.Playlist.creazione.solo.registrati`
+
+
 
 ### vincoli
 - entry della playlist in ordine
