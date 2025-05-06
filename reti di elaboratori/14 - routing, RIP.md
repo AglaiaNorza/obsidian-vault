@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-06T08:36
+updated: 2025-05-06T08:38
 ---
 >[!info] routing
 >Il **routing** si occupa di trovare il **miglior percorso** per un pacchetto e di inserirlo nella tabella di routing (o tabella di forwarding).
@@ -37,11 +37,15 @@ In un grafo di una rete di calcolatori, il **cammino a costo minimo** tra due no
 
 L'algoritmo DV si basa sull'**equazione di Bellman-Ford** [ [[11 - algoritmo di Bellman-Ford|lezione di progettazione di algoritmi su Bellman-Ford]] ]. Essa definisce:
 
-$$\begin{align*} D_{x}(y) := \text{costo del percorso a costo minimo dal nodo $x$ al nodo $y$}\end{align*}$$
+$$
+D_{x}(y) := \text{costo del percorso a costo minimo dal nodo $x$ al nodo $y$}
+$$
 
 in cui:
 
-$$\begin{align*}D_{x}(y)=min_{v}\{ c(x,v) + D_{v}(y) \}\end{align*}$$
+$$
+D_{x}(y)=min_{v}\{ c(x,v) + D_{v}(y) \}
+$$
 
 - (dove $min_{v}$ riguarda tutti i vicini di $x$) 
 - ovvero: si considera quanto costano gli archi da $x$ a ciascun vicino $v$, e si sceglie il percorso che, passando per $v$, ha il costo totale (fino a $y$) che sia minimo
@@ -52,9 +56,9 @@ $$\begin{align*}D_{x}(y)=min_{v}\{ c(x,v) + D_{v}(y) \}\end{align*}$$
 >
 >Si ha: 
 >
->$$\begin{align*}
+>$$
 >D_{xy} = min\{(c_{xa} + D_{ay}), (c_{xb} + D_{by}), (c_{xc} + D_{cy})\}
->\end{align*}$$
+>$$
 >
 >- (in cui $a \to y$, $b \to y$, $c\to y$ sono percorsi a costo minimo precedentemente calcolati)
 
