@@ -1,6 +1,6 @@
 ---
 created: 2025-05-03T12:54
-updated: 2025-05-05T19:22
+updated: 2025-05-06T08:59
 ---
 (use case: registrazione utenti, pubbl video, visualizz video, esprimere valutazioni)
 
@@ -48,9 +48,25 @@ updated: 2025-05-05T19:22
 ### specifica dei tipi di dato
 - DurataVideo (minuti: Intero, secondi: Intero < 60)
 
+### specifica della classe Video
+Ogni istanza di questa classe rappresenta un video della piattaforma.
+
+`V.Video.no_risposta_autoreferenziale`
+
+Per ogni istanza `v1: Video`, `v2: Video`, `u1: Utente`, `u2: Utente`, se esistono i link
+- `(u1, v1):pubblicazione`
+- `(u2, v2):pubblicazione`
+- `(v1:originale, v2:risposta):vid_risp`
+
+allora `u1 != u2`
+
+`V.Video.censura`
+
+Per ogni istanza `v:Video`, se `v:VideoCensurato`
+
 ### vincoli
 - visione, valutazione e commento SOLO SE NON CENSURATO
-- video risposta non pubblicato da se stesso
+- visione
 - valutazione e commento solo se visione
 - entry della playlist in ordine
 
