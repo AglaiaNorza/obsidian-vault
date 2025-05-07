@@ -1,3 +1,7 @@
+---
+created: 2025-04-26T23:09
+updated: 2025-05-07T17:52
+---
 # password
 ## password in Linux
 Linux utilizza due file per gestire gli utenti e le relative password: `/etc/passwd` e `/etc/shadow`.
