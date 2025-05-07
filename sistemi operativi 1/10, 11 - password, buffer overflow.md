@@ -1,6 +1,6 @@
 ---
 created: 2025-04-26T23:09
-updated: 2025-05-07T17:52
+updated: 2025-05-07T21:25
 ---
 # password
 ## password in Linux
