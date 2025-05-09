@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-09T11:44
+updated: 2025-05-09T15:02
 ---
 ## struttura di Internet
 
@@ -53,3 +53,68 @@ Esso mette a disposizione di ciascun AS un modo per:
 
 BGP consente a ciascuna sottorete di comunicare la propria esistenza al resto di Internet.
 
+### path-vector routing
+Il path-vector routing consente alla sorgente di controllare il percorso scelto in base a criteri "personalizzati" (minimizzare il numero di hop, evitare alcuni nodi...).
+
+Vengono inviati, invece che solo destinazioni,  *percorsi*. Ogni nodo riceve quindi un path vector da un vicino e aggiorna il proprio path vector applicando la propria politica.
+
+>[!example] esempio 
+>
+>![[pathvector-es1.png|center|400]]
+>
+>se $C$ riceve una copia del vettore di $B$:
+>
+>![[pathvector-es2.png|center|400]]
+
+**algoritmo**:
+```
+Path_Vector_Routing() {
+	// Inizializzazione
+	for (y=1 to N) {
+		if (y è me_stesso)
+			Path[y] = me_stesso
+		else if (y è un vicino)
+			Path[y] = me_stesso+il_nodo_vicino
+		else
+			Path[y] = vuoto
+	}
+	Spedisci il vettore {Path[1], Path[2], ..., Path[y]} a tutti i vicini
+	
+	// Aggiornamento
+	repeat (sempre) {
+		wait (un vettore Path_w da un vicino w)
+		for (y=1 to N) {
+			if (Path_w comprende me_stesso)
+				scarta il percorso
+			else
+				Path[y] = il_migliore_tra{Path[y], (me_stesso+Path_w[y])}
+		}
+		if (c'è un cambiamento nel vettore)
+			Spedicsci il vettore {Path[1], Path[2], ..., Path[y]} a tutti i vicini
+	}
+}
+```
+
+qundi, ogni nodo:
+- inizializza i percorsi verso ogni nodo
+- spedisce il vettore a tutti i vicini
+- aspetta di ricevere un vettore da un vicino, e:
+	- se il vettore comprende se stesso, lo scarta (per evitare cicli)
+	- altrimenti, modifica il suo vettore in base al criterio scelto
+- se c'è stato un cambiamento nel vettore, lo invia a tutti i vicini
+
+### eBGP e iBGP
+Tutti i router devono usare una variante di BGP chiamata **BGP interno** (iBGP).
+
+In più, per permettere ad ogni router di instradare correttamente i pacchetti, è necessario installare su tutti i router di confine dell'AS il **BGP esterno** (eBGP).
+
+>[!tip] quindi, i **router di confine** devono eseguire tre protocolli di routing (intra-dominio, eBGP, iBGP), mentre **tutti gli altri** ne eseguono due (intra-dominio e iBGP)
+
+BGP permette a coppie di router di scambiarsi informazioni di instradamento su connessioni **TCP** usando la porta `179`.
+- i router ai capi di una connessione TCP sono chiamati **peer BGP**, e la connessione TCP con tutti i messaggi BGP che vi vengono inviati è detta **sessione BGP**
+
+>[!warning] le linee di sessione BGP non corrispondono sempre a collegamenti fisici
+
+>[!tip] eBGP
+> Nel protocollo eBGP, due router di confine che si trovano in due diversi AS formano una coppia di peer b=
+>
