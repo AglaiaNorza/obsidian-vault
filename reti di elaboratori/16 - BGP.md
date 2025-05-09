@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-09T10:41
+updated: 2025-05-09T11:05
 ---
 ## struttura di Internet
 
@@ -22,5 +22,18 @@ Ogni ISP è un **sistema autonomo** (Autonomous System) e può eseguire un proto
 
 Tutti i router di uno stesso autonomous system eseguono lo stesso algoritmo di routing, chiamato protocollo di routing interno al sistema autonomo o intradominio (*intra-AS*), o Interior Gateway Protocol (*IGP*).
 
-Deve invece esserci un unico protocollo inter-dominio che gestisce il routing tra i vari sistemi autonomi, chiamato inter-dominio (*inter-AS*) o Exterior Gateway Protocol (*EGP*)
+Deve invece esserci un unico protocollo inter-dominio che gestisce il routing tra i vari sistemi autonomi, chiamato inter-dominio (*inter-AS*) o Exterior Gateway Protocol (*EGP*).
 
+I protocolli inter-dominio sono eseguiti su **router gateway**, che connettono i sistemi autonomi e inoltrano pacchetti a destinazioni esterne.
+
+### sistemi autonomi
+Ad ogni sistema autonomo viene assegnato un **numero identificativo univoco** di 16bit dall'ICANN.
+
+Gli Autonomous Systems possono avere diverse dimensioni, e sono classificati in base al modo in cui sono connessi ad altri AS, in:
+- **AS stub** ⟶ ha un solo collegamento verso un altro AS. Il traffico è generato o destinato allo stub ma non transita attraverso di esso (esempio: grande azienda)
+- **AS multihomed** ⟶ ha più di una connessione con altri AS, ma non consente transito di traffico (esempio: azienda che usa servizi di più  network provider, ma non fornisce connettività agli altri AS)
+- **AS di transito** ⟶ è collegato a più AS e consente il traffico (esempi: network provider e dorsali)
+
+>[!example] esempio
+>
+>![[sist-autonomi.png|center|300]]
