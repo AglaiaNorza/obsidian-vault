@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-09T15:02
+updated: 2025-05-09T15:26
 ---
 ## struttura di Internet
 
@@ -115,6 +115,20 @@ BGP permette a coppie di router di scambiarsi informazioni di instradamento su c
 
 >[!warning] le linee di sessione BGP non corrispondono sempre a collegamenti fisici
 
->[!tip] eBGP
-> Nel protocollo eBGP, due router di confine che si trovano in due diversi AS formano una coppia di peer b=
+>[!info] eBGP
+> Nel protocollo eBGP, due router di confine che si trovano in due diversi AS formano una coppia di peer BGP e si scambiano messaggi.
+> 
+> ![[eBGP.png|center|400]]
 >
+>Da solo, eBGP non basta per fornire tutte le informazioni su come instradare pacchetti: infatti, i router di confine sanno come instradare pacchetti *solo ad AS vicini*, e nessuno dei *router non di confine* sa come instradare un pacchetto destinato alle reti che si trovano in altri AS.
+>
+>Per questo, è necessario usare anche iBGP.
+
+>[!info] iBGP
+> iBGP crea una sessione tra **ogni possibile coppia di router all'interno di un AS**.
+> - non tutti i nodi hanno messaggi da ricevere, ma tutti ricevono
+> 
+> ![[iBGP.png|center|400]]
+> 
+> - il processo di aggiornamento non termina dopo il primo scambio di messaggi, ma quando non ci sono più aggiornamenti
+
