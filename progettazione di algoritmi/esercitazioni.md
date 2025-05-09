@@ -1,6 +1,6 @@
 ---
 created: 2025-05-05T19:22
-updated: 2025-05-08T15:23
+updated: 2025-05-09T16:35
 ---
 ### spessore di un sottovettore
 > [!example] spessore di un sottovettore (es. 6 pdf divide et impera)
@@ -117,4 +117,29 @@ Dimostrazione:
 v1 è indipendente da v2 per costruzione (non avrà elementi adiacenti alle fogli)
 
 V* è V1* + V2* 
+
+--- 
+
+Dato un vettore non ordinato $V$ di lunghezza non nota, cercare un valore $x$ in $V$.
+
+Esiste una funzione `sub(V, x, i)` che, in $\Theta(1)$, ritorna:
+$$
+\begin{cases}-1 & i>len(v) \\
+1 & v[i] = x \\
+0 & v[i] \neq x \\
+\end{cases}
+$$
+
+Data una funzione $f:\mathbb{N}\to \mathbb{Z}$ strettamente decrescente e calcolabile in $\Theta(1)$, trovare il primo valore negativo di $f$.
+
+Per calcolare l'upper bound in tempo logaritmico, posso usare 
+
+```python
+while f(n) >= 0:
+	n = n*2 # in log n, ottengo l'upper bound
+```
+
+ma so sempre che $m<2n$ (perché, se ho raddoppiato l'ultima volta, sicuramente il valore era positivo)
+
+- a questo punto, posso fare una ricerca binaria
 
