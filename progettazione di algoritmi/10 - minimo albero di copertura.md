@@ -1,6 +1,6 @@
 ---
 created: 2025-03-29T16:36
-updated: 2025-04-01T18:05
+updated: 2025-05-09T10:20
 ---
 >[!info] spanning tree
 >Dato un grafo $G$, un **albero di copertura** (o ricoprente/di connessione/di supporto) è un qualsiasi sottografo $G'=(V',E')$ con $V'=V$, $E'\subseteq E$ che sia un albero (quindi che sia connesso e aciclico).
@@ -107,7 +107,7 @@ La complessità totale è $O(m\cdot n)$.
 ### implementazione con union-find in $O(m\log n)$
 Union-Find (o Disjoint Set Union) è una struttura dati per gestire **insiemi disgiunti** che permette operazioni di unione e ricerca efficienti.
 
-In questo caso, gli insiemi disgiunti rappresentano le componenti connesse del grago.
+In questo caso, gli insiemi disgiunti rappresentano le componenti connesse del grafo.
 
 > [!info] operazioni fondamentali
 > Le tre operazioni fondamentali di Union-Find sono:
