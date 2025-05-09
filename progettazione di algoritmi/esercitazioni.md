@@ -1,6 +1,6 @@
 ---
 created: 2025-05-05T19:22
-updated: 2025-05-09T16:35
+updated: 2025-05-09T17:13
 ---
 ### spessore di un sottovettore
 > [!example] spessore di un sottovettore (es. 6 pdf divide et impera)
@@ -118,28 +118,63 @@ v1 è indipendente da v2 per costruzione (non avrà elementi adiacenti alle fogl
 
 V* è V1* + V2* 
 
---- 
+---
+Date due sequenze $X=x_{1},\,x_{2}\dots,\,x_{n}$, $Y=y_{1},\,y_{2},\,\dots,\,y_{m}$, trovare la minima sequenza $Z$ che ha come sottosequenze $Y$ e $X$.
 
-Dato un vettore non ordinato $V$ di lunghezza non nota, cercare un valore $x$ in $V$.
+alberi
+libri
 
-Esiste una funzione `sub(V, x, i)` che, in $\Theta(1)$, ritorna:
-$$
-\begin{cases}-1 & i>len(v) \\
-1 & v[i] = x \\
-0 & v[i] \neq x \\
-\end{cases}
-$$
+alberilibri
+allibberrii
 
-Data una funzione $f:\mathbb{N}\to \mathbb{Z}$ strettamente decrescente e calcolabile in $\Theta(1)$, trovare il primo valore negativo di $f$.
+aliberi
 
-Per calcolare l'upper bound in tempo logaritmico, posso usare 
+(stesso ordine ma non consecutive)
+
+Osserviamo prima la versione ricorsiva e successivamente deriviamo da essa la versione iterativa.
+
+
+Per ottimizzare la soluzione
 
 ```python
-while f(n) >= 0:
-	n = n*2 # in log n, ottengo l'upper bound
+def superSeqR(X, i, Y, j):
+	if i == len(X): return len(Y)-j-1, y[j:] 
+	if j == len(Y): return len(X)-i-1, x[i:]
+
+	if X[i] == Y[j]:
+		l, s = superSeqR(X, i+1, Y, j+1)
+		return l+1, x[i] + s
+		
+	lx, sx = superSeqR(X, i+1, Y, j)
+	ly, sy = superSeqR(X, i, Y, j+1)
+
+	if lx < ly:
+		return lx + 1, x[i]+sx
+	return ly + 1, y[j]+sy
 ```
 
-ma so sempre che $m<2n$ (perché, se ho raddoppiato l'ultima volta, sicuramente il valore era positivo)
 
-- a questo punto, posso fare una ricerca binaria
+in cui 
+- $L[i][j]$ = lunghezza massima tra $x[i:]$ e $y[j:]$
 
+Con casi base:
+- $L[m-1][n-1]=0$
+- $L[i][m-1]=m-i-1$
+- $L[m-1][j]=n-j-1$
+
+```python
+def superSeqR(X, i, Y, j):
+	if T[i][j] == -1:
+		
+
+	if X[i] == Y[j]:
+		l, s = superSeqR(X, i+1, Y, j+1)
+		return l+1, x[i] + s
+		
+	lx, sx = superSeqR(X, i+1, Y, j)
+	ly, sy = superSeqR(X, i, Y, j+1)
+
+	if lx < ly:
+		return lx + 1, x[i]+sx
+	return ly + 1, y[j]+sy
+```
