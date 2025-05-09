@@ -1,6 +1,6 @@
 ---
 created: 2025-05-05T19:22
-updated: 2025-05-09T17:13
+updated: 2025-05-09T17:25
 ---
 ### spessore di un sottovettore
 > [!example] spessore di un sottovettore (es. 6 pdf divide et impera)
@@ -134,6 +134,10 @@ aliberi
 Osserviamo prima la versione ricorsiva e successivamente deriviamo da essa la versione iterativa.
 
 
+
+
+
+
 Per ottimizzare la soluzione
 
 ```python
@@ -155,7 +159,7 @@ def superSeqR(X, i, Y, j):
 
 
 in cui 
-- $L[i][j]$ = lunghezza massima tra $x[i:]$ e $y[j:]$
+- $L[i][j]$ = lunghezza della supersequenza minima tra $x[i:]$ e $y[j:]$
 
 Con casi base:
 - $L[m-1][n-1]=0$
@@ -163,18 +167,15 @@ Con casi base:
 - $L[m-1][j]=n-j-1$
 
 ```python
-def superSeqR(X, i, Y, j):
-	if T[i][j] == -1:
-		
-
-	if X[i] == Y[j]:
-		l, s = superSeqR(X, i+1, Y, j+1)
-		return l+1, x[i] + s
-		
-	lx, sx = superSeqR(X, i+1, Y, j)
-	ly, sy = superSeqR(X, i, Y, j+1)
-
-	if lx < ly:
-		return lx + 1, x[i]+sx
-	return ly + 1, y[j]+sy
+def superSeqR(X, i, Y, j, T):
+	if L[i][j] == -1:
+		if X[i] == Y[j]:
+			T[i][j] = superSeqR(X, i+1, Y, j+;1, T) + 1
+		else:
+			T[i][j] = 1 
+				+ min(superSeqR(X, i+1, Y, j, T), superSeqR(X, i, Y, j+1, T))
+	return T[i][j]
 ```
+
+- il risultato si troverà in $T[0][0]$
+
