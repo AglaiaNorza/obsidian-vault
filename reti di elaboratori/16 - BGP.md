@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-09T11:05
+updated: 2025-05-09T11:40
 ---
 ## struttura di Internet
 
@@ -36,4 +36,20 @@ Gli Autonomous Systems possono avere diverse dimensioni, e sono classificati in 
 
 >[!example] esempio
 >
->![[sist-autonomi.png|center|300]]
+>![[sist-trasporto.png|center|400]]
+>
+> Ogni router all'interno degli AS sa come raggiungere tutte le reti che si trovano nel suo AS, ma non come raggiungere una rete che si trova in un altro AS.
+>
+>Per il routing **intra-dominio**, si usano i protocolli **RIP** e **OSPF**. Per il routing **inter-dominio**, si usa **BGP**.
+
+## Border Gateway Protocol
+BGP è un protocollo **path-vector** (come distance-vector, ma al posto delle distanze si mantengono i percorsi). Viene usato per determinare percorsi per le coppie origine-destinazione che interessano più AS.
+
+Esso mette a disposizione di ciascun AS un modo per:
+- ottenere informazioni sulla **raggiungibilità delle sottoreti** da parte di AS confinanti
+- propagare le informazioni di raggiungibilità a tutti i roter interni di un AS
+- determinare percorsi buoni* verso le sottoreti sulla base delle informazioni di raggiungibilità e delle politiche dell'AS
+	- * un percorso "buono" non è necessariamente quello più breve: le ragioni dietro la sccelta di percorsi sono principalmente politico-economiche
+
+BGP consente a ciascuna sottorete di comunicare la propria esistenza al resto di Internet.
+
