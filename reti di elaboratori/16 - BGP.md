@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-10T11:52
+updated: 2025-05-10T12:35
 ---
 ## struttura di Internet
 
@@ -169,4 +169,18 @@ Le regole di eliminazione sono:
 3) si seleziona la rotta il cui `NEXT-HOP` ha costo minore (*hot-potato routing*)
 4) se rimane ancora più di una rotta, il router si basa sugli identificatori BGP
 
+
+>[!example] advertising ristretto
+>Gli ISP vogliono instradare solo il traffico delle loro customer network, e non quello di altre reti.
+>
+>![[adv-ristretto.png]]
+> 
+>- $A$ annuncia il percorso $Aw$ a $B$ e a $C$
+>- $B$ sceglie di non annunciare $BAw$ a $C$
+>	- $B$ non ha vantaggio a instradare $CBAw$, poiché nessuno tra $C$, $A$, $w$ è cliente di $B$
+>	- $C$ non scopre il percorso $CBAw$
+>- $C$ instraderà solo $CAw$ (senza usare $B$) per raggiungere $w$
+
+### messaggi BGP
+I messaggi BGP vengono scambiati attraverso **TCP**.
 
