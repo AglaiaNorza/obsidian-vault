@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-09T15:26
+updated: 2025-05-10T11:35
 ---
 ## struttura di Internet
 
@@ -132,3 +132,22 @@ BGP permette a coppie di router di scambiarsi informazioni di instradamento su c
 > 
 > - il processo di aggiornamento non termina dopo il primo scambio di messaggi, ma quando non ci sono più aggiornamenti
 
+Le informazioni ottenute da eBGP e iBGP vengono combinate per creare le tabelle dei percorsi.
+
+### tabelle di routing
+Le tabelle di percorso ottenute da BGP non vengono usate di per sé per l'instradamento dei pacchetti, ma vengono inserite nelle **tabelle di routing intra-dominio**, generate da RIP o OSPF.
+
+- nel caso di **stub**, l'unico router di confine dell'area aggiunge una regola di default alla fine della sua tabella di routing e definisce come prossimo router quello che si trova dall'altro lato della connessione eBGP
+
+>[!example]- stub
+>
+>![[tabella-stub.png|center|400]]
+
+- nel caso di **AS di transito**, il contenuto dellla tabella di percorso deve essere inserito nella tabella di routing, ma bisogna impostare il costo (si imposta costo pari a quello per raggiungere il primo AS nel percorso)A
+
+>[!example]- di transito
+>
+>![[tabella-astransito.png|center|400]]
+
+### attributi del percorso e rotte BGP
+Quando un router annuncia una rotta per una sessione BGP, include anche un certo numero di **attributi BGP**.
