@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-10T13:05
+updated: 2025-05-10T13:12
 ---
 # routing unicast, broadcast, multicast
 
@@ -11,4 +11,12 @@ updated: 2025-05-10T13:05
 > 
 
 >[!info] broadcast
->Il routing **broadcast** prevede l'invio di un pacchetto da un nodo sorgente **a tutti i nodi della rete** (IP so)
+>Il routing **broadcast** prevede l'invio di un pacchetto da un nodo sorgente **a tutti i nodi della rete** (IP sorgente ⟶ indirizzo broadcast).
+
+Il broadcast può essere eseguito in due modi: attraverso *uncontrolled* o *controlled* flooding.
+
+## uncontrolled flooding
+Nell'uncontrolled flooding, quando un nodo riceve un pacchetto broadcast, lo duplica e lo **invia a tutti i nodi vicini** eccetto quello da cui lo ha ricevuto.
+- se il grafo ha cicli, una o più copie del pacchetto cicleranno all'infinito nella rete
+
+
