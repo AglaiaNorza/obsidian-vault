@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-10T12:35
+updated: 2025-05-10T12:38
 ---
 ## struttura di Internet
 
@@ -26,6 +26,14 @@ Deve invece esserci un unico protocollo inter-dominio che gestisce il routing tr
 
 I protocolli inter-dominio sono eseguiti su **router gateway**, che connettono i sistemi autonomi e inoltrano pacchetti a destinazioni esterne.
 
+>[!question]- perché i protocolli d’instradamento inter-AS sono diversi da quelli intra-AS?
+>politiche:
+>- **inter-AS** ⟶ il controllo amministrativo desidera avere il controllo su come il traffico viene instradato e su chi instrada attraverso le sue reti
+>- **intra-AS** ⟶ c'è un unico controllo amministrativo, le questioni politiche hanno un ruolo molto meno importante nello scegliere le rotte interne al sistema
+>
+>prestazioni:
+>- **inter-AS** ⟶ le politiche possono prevalere sulle prestazioni
+>- **intra-AS** ⟶ orientato alle prestazioni
 ### sistemi autonomi
 Ad ogni sistema autonomo viene assegnato un **numero identificativo univoco** di 16bit dall'ICANN.
 
@@ -182,5 +190,8 @@ Le regole di eliminazione sono:
 >- $C$ instraderà solo $CAw$ (senza usare $B$) per raggiungere $w$
 
 ### messaggi BGP
-I messaggi BGP vengono scambiati attraverso **TCP**.
-
+I messaggi BGP vengono scambiati attraverso **TCP**, e sono:
+- `OPEN` ⟶ **apre** la connessione TCP e **autentica** il mittente
+- `UPDATE` ⟶ annuncia il **nuovo percorso** (o cancella quello vecchio)
+- `KEEPALIVE` ⟶ **mantiene la connessione attiva** in mancanza di `UPDATE`
+- `NOTIFICATION` ⟶ **riporta gli errori** del precedente messaggio; usato anche per chiudere il collegamento
