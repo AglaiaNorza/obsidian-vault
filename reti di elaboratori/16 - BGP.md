@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-10T11:35
+updated: 2025-05-10T11:52
 ---
 ## struttura di Internet
 
@@ -151,3 +151,22 @@ Le tabelle di percorso ottenute da BGP non vengono usate di per sé per l'instra
 
 ### attributi del percorso e rotte BGP
 Quando un router annuncia una rotta per una sessione BGP, include anche un certo numero di **attributi BGP**.
+- prefisso + attributi = rotta
+
+Due attributi molto importanti sono:
+- `AS-PATH`, che serve per **selezionare i percorsi** 
+	- elenca i sistemi autonomi attraverso cui è passato l'annuncio del prefisso (ogni sistea autonomo ha un identificativo univoco), permettendo di evitare cicli
+- `NEXT-HOP`: l'**IP dell'interfaccia** su cui viene inviato il pacchetto
+
+Quando un router gateway riceve un annuncio di rotta, utilizza le *proprie politiche di importazione* per decidere se accettare o filtrare la rotta.
+
+### selezione dei percorsi BGP
+Un router può ricavare più di una rotta verso una destinazione, e deve quindi sceglierne una.
+
+Le regole di eliminazione sono:
+1) alle rotte viene assegnato come attributo un valore di **preferenza locale**, e si selezionano lle rotte con i valori più alti
+2) si seleziona la rotta con il valore `AS-PATH` più breve
+3) si seleziona la rotta il cui `NEXT-HOP` ha costo minore (*hot-potato routing*)
+4) se rimane ancora più di una rotta, il router si basa sugli identificatori BGP
+
+
