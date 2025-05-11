@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-11T17:50
+updated: 2025-05-11T20:02
 ---
 # unicast
 
@@ -58,13 +58,23 @@ Si differenzia dall'**unicast multiplo** per i fatto che viene inviato un solo d
 
 Per poter comunicare con host che partecipano a un gruppo pur appartenendo a reti diverse, si assegna un unico **indirizzo multicast** a tutto il gruppo.
 - esiste un blocco di indirizzi riservati per il multicast
-	- in IPv4, 
+	- in IPv4, è `224.0.0.0/4` (ovvero comprende gli indirizzi da `224.0.0.0` a `239.255.255.255`), per un totale di $2^{28}$ gruppi
 
 >[!example]- esempio di gruppo multicast
 >  
 >![[gruppo-multicast.png|center|400]]
 
+>[!warning] L’appartenenza ad un gruppo non ha alcuna relazione con il prefisso associato alla rete
+>Un host che appartiene ad un gruppo ha un indirizzo multicast **separato** e aggiuntivo rispetto all primario (l’appartenenza non è un attributo fisso dell’host, in quanto il periodo di appartenenza può essere limitato).
 
+Un router deve scoprire quali gruppi sono presenti in ciascuna delle sue interfacce, per poter propagare le informazioni agli altri router.
 
+Per il multicast sono necessari *due protocolli*:
+- uno per raccogliere le informazioni di appartenenza ai gruppi
+- uno per diffonderle
+### Internet Group Management Protocol (IGMP)
+Il protocollo IGMP lavora **tra un host e il router** che gli è **direttamente connesso**. Esso offre agli host un modo di *informare i router* ad esso connessi del fatto che un'applicazione in esecuzione vuole aderire ad uno specifico gruppo multicast.
 
+![[IGMP.png|center|400]]
 
+#### messaggi IGMP
