@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-11T15:40
+updated: 2025-05-11T17:50
 ---
 # unicast
 
@@ -56,7 +56,15 @@ Quindi i pacchetti vengono inoltrati **solo sui link dell'albero**, e ogni nodo 
 Si differenzia dall'**unicast multiplo** per i fatto che viene inviato un solo datagramma, che verrà poi duplicato dai router.
 - il multicast, quindi, elimina i ritardi causati dall'invio di multipli pacchetti dell'unicast multiplo
 
-Per poter comunicare con host che partecipano a un gruppo pur appartenendo a reti diverse 
+Per poter comunicare con host che partecipano a un gruppo pur appartenendo a reti diverse, si assegna un unico **indirizzo multicast** a tutto il gruppo.
+- esiste un blocco di indirizzi riservati per il multicast
+	- in IPv4, 
+
+>[!example]- esempio di gruppo multicast
+>  
+>![[gruppo-multicast.png|center|400]]
+
+
 
 
 
