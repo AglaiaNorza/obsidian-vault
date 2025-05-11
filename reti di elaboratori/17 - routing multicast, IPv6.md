@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-11T20:02
+updated: 2025-05-11T20:35
 ---
 # unicast
 
@@ -78,3 +78,4 @@ Il protocollo IGMP lavora **tra un host e il router** che gli è **direttamente 
 ![[IGMP.png|center|400]]
 
 #### messaggi IGMP
+I messaggi IGMP sono incapsulati in datagrammi IP con `IP protocol number === 2`
