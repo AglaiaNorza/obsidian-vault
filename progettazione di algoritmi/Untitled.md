@@ -1,6 +1,6 @@
 ---
 created: 2025-05-12T14:20
-updated: 2025-05-12T14:54
+updated: 2025-05-12T15:40
 ---
 
 > [!example] stringhe binarie
@@ -41,11 +41,17 @@ $$
 $\sum_{i=0}^k \binom{n}{i} \approx n^{k+1}$
 
 ```python
-def strbink(n, tot1 = 0, sol = []):
+def strbink(n, k, tot1 = 0, sol = []):
 	if len(sol) == n:
 		print(''.join(sol))
 	return
-	sol.append()
-		
-
+	sol.append('0')
+	strbink(n, k, tot1, sol)
+	sol.pop()
+	if tot1<k:
+		sol.append('1')
+		bk2(n, k, tot1+1, sol)
+		sol.pop()
 ```
+
+es. esame sett. 2020
