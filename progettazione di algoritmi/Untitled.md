@@ -1,6 +1,6 @@
 ---
 created: 2025-05-12T14:20
-updated: 2025-05-12T14:48
+updated: 2025-05-12T14:54
 ---
 
 > [!example] stringhe binarie
@@ -38,6 +38,14 @@ $$
 > [!example] vincolo sugli zeri
 > Si vogliono stampare solo le stringhe che contengono massimo $k$ zeri, con $k\leq n$.
 
+$\sum_{i=0}^k \binom{n}{i} \approx n^{k+1}$
+
 ```python
-def strbink(n, k, sol = []):
+def strbink(n, tot1 = 0, sol = []):
+	if len(sol) == n:
+		print(''.join(sol))
+	return
+	sol.append()
+		
+
 ```
