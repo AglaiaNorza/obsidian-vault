@@ -1,6 +1,6 @@
 ---
 created: 2025-05-05T19:22
-updated: 2025-05-09T17:25
+updated: 2025-05-12T09:26
 ---
 ### spessore di un sottovettore
 > [!example] spessore di un sottovettore (es. 6 pdf divide et impera)
