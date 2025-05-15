@@ -1,6 +1,6 @@
 ---
 created: 2025-04-28T17:21
-updated: 2025-05-15T21:17
+updated: 2025-05-15T21:21
 ---
 >[!info] programmazione dinamica
 >La programmazione dinamica è una tecnica di progettazione di algoritmi basata sulla divisione del problema in **sottoproblemi** e sull'utilizzo di **sottostrutture ottimali** (la soluzione ottimale al sottoproblema può essere usata per trovare la soluzione ottimale all'intero problema).
@@ -115,10 +115,10 @@ Attraverso la memoizzazione, possiamo ottenere una soluzione **pseudopolinomiale
 >[!info] algoritmo pseudopolinomiale
 >In teoria della complessità computazionale, un algoritmo è detto **pseudopolinomiale** se la sua complessità temporale è polinomiale nel *valore numerico* del suo input e non necessariamente nella sua *dimensione* (risolve un problema in tempo polinomiale quando i numeri presenti nell'input sono codificati in unario).
 
->[!tip] problema NP-completo
+>[!tip]- problema NP-completo
 > Il problema del disco (che è un caso particolare del problema dello zaino <small>(analizzato sotto)</small> ) è un problema **NP-completo**. 
 > - NP = "nondeterministic polynomial time", è la classe dei problemi risolvibili non-deterministicamente in tempo polinomiale, ovvero i problemi per cui, data una soluzione, si può verificare in tempo polinomiale la sua correttezza (ma non si sa se si possano invece risolvere in tempo polinomiale ! <small>[wikipedia on P vs NP](https://en.wikipedia.org/wiki/P_versus_NP_problem)</small>)
-> - NP-completo ⟶ se si trovasse un algoritmo in grado di risolvere in tempo polinomiale un qualsiasi problema NP-completo, allora si potrebbe usarlo per risolvere in tempo polinomiale ogni problema in NP (tutti i problemi in NP possono)
+> - NP-completo ⟶ classe dei più difficili problemi in NP: se si trovasse un algoritmo in grado di risolvere in tempo polinomiale un qualsiasi problema NP-completo, allora si potrebbe usarlo per risolvere in tempo polinomiale ogni problema in NP (ogni problema in NP può essere ridotto in tempo polinomiale a un problema NP-completo)
 
 
 
