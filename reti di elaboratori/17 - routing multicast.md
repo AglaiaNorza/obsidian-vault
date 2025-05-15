@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-15T14:54
+updated: 2025-05-15T15:31
 ---
 # unicast
 
@@ -92,4 +92,30 @@ I tipi di messaggio sono:
 >Un router multicast tiene una **lista per ciascuna sottorete** dei gruppi multicast con un **timer** per membership. La membership deve essere aggiornata tramite report inviati prima della scadenza del timer, o tramite messaggi di leave espliciti.
 
 ### problema del routing multicast
-Solo i router collegati a host del gruppo multicast devono ricevere traffico multicast
+Tra tutti i router, solo quelli collegati a host del gruppo multicast devono ricevere traffico multicast
+- è quindi necessario un protocollo che coordini i router multicast in Internet, instradando i pacchetti multicast dalla sorgente alla destinazione
+
+>[!example] esempio
+>[ esempio ]
+
+Ci sono diversi approcci per **determinare l'albero d'instradamento multicast**:
+1) <u>**albero condiviso dal gruppo**</u>
+
+Viene costruito un **singolo albero** di instradamento condiviso da tutto il gruppo multicast, e un router agisce da **rappresentante** del gruppo. 
+
+Se il mittente del traffico multicast non è il centro, invierà il traffico in unicast al centro, che lo invierà al gruppo.
+
+[ foto ]
+
+2) <u>**albero basato sull'origine**</u>
+
+Viene creato **un albero per ciascun'origine** nel gruppo multicast (con un algoritmo basato su reverse path forwarding con potatura). Ci sono quindi tanti alberi quanti mittenti del gruppo multicast.
+
+### instradamento multicast in Internet
+Per l'instradamento **intra-dominio** (interno a un sistema autonomo) si usano:
+- **DVMRP** (Distance-Vector Multicast Routing Protocol)
+- **MOSPF** (Multicast Open Shortest Path First)
+- **PIF** (Protocol Independent Multicast)
+
+Per l'instradamento **inter-dominio** (tra sistemi autonomi), si usa:
+- **MBGP**: Multicast Border Gateway Protocol
