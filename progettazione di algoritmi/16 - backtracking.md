@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-15T21:47
+updated: 2025-05-15T21:49
 ---
 >[!info] backtracking
 >Il **backtracking** è una tecnica algoritmica utilizzata tipicamente per risolvere problemi in cui devono essere soddisfatti dei vincoli. Costruisce progressivamente una soluzione, scartando i percorsi che violano i vincoli e tornando indietro quando una scelta porta a un vicolo cieco o quando una soluzione parziale è stata completata.
@@ -50,19 +50,20 @@ $$
 >[!error] soluzione ottimizzabile
 >Una soluzione in $\Theta(2^n \cdot n)$ è quella per cui si creano tutte le stringhe, ma si stampano solo quelle ammissibili:
 > ```python
-> def strbink(n, k, tot1 = 0, sol = []):
+> def strbinkLame(n, k, tot1 = 0, sol = []):
 > 	if len(sol) == n:
-> 		print(''.join(sol))
+> 		if sol.count('1') <= k:
+> 			print(''.join(sol))
 > 	return
+> 	
 > 	sol.append('0')
-> 	strbink(n, k, tot1, sol)
+> 	strbinkLame(n, k, tot1, sol)
 > 	sol.pop()
-> 	if tot1<k:
-> 		sol.append('1')
-> 		bk2(n, k, tot1+1, sol)
-> 		sol.pop()
+> 	sol.append('1')
+> 	bk2(n, k, tot1+1, sol)
+> 	sol.pop()
 > ```
-> 
+> - questo algoritmo non è però ottimale: infatti, genera
 
 $\sum_{i=0}^k \binom{n}{i} \approx n^{k+1}$
 
@@ -71,6 +72,7 @@ def strbink(n, k, tot1 = 0, sol = []):
 	if len(sol) == n:
 		print(''.join(sol))
 	return
+	
 	sol.append('0')
 	strbink(n, k, tot1, sol)
 	sol.pop()
