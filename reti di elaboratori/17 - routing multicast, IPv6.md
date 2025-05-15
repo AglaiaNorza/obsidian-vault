@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-11T20:35
+updated: 2025-05-15T14:54
 ---
 # unicast
 
@@ -78,4 +78,18 @@ Il protocollo IGMP lavora **tra un host e il router** che gli è **direttamente 
 ![[IGMP.png|center|400]]
 
 #### messaggi IGMP
-I messaggi IGMP sono incapsulati in datagrammi IP con `IP protocol number === 2`
+I messaggi IGMP sono incapsulati in datagrammi IP con `IP protocol number === 2`, e vengono mandati con `TTL == 1`.
+
+I tipi di messaggio sono:
+- `Membership query`: è un messaggio router $\to$ host, che permette di determinare **a quali gruppi hanno aderito gli host** su ogni interfaccia 
+	- viene inviato periodicamente
+- `Membership report`: è un messaggio host $\to$ router, che **informa** il router su un'**adesione**
+	- eseguito, oltre che su query, anche al momento dell'adesione
+- `Leave group`: è un messaggio host $\to$ router, inviato **quando si lascia un gruppo**
+	- è opzionale: un router può capire che non ci sono più host associati a un gruppo quando non riceve più `Membership report`
+
+>[!summary] liste di sottoreti
+>Un router multicast tiene una **lista per ciascuna sottorete** dei gruppi multicast con un **timer** per membership. La membership deve essere aggiornata tramite report inviati prima della scadenza del timer, o tramite messaggi di leave espliciti.
+
+### problema del routing multicast
+Solo i router collegati a host del gruppo multicast devono ricevere traffico multicast
