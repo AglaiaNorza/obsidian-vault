@@ -1,6 +1,6 @@
 ---
 created: 2025-05-14T10:21
-updated: 2025-05-14T10:42
+updated: 2025-05-14T22:01
 ---
 I DBMS seguono un'architettura a **3 livelli**:
 - livello interno ⟶ strutture interne di memorizzazione
@@ -40,27 +40,31 @@ create table [nome schema.]nome_tabella (
 ```
 
 ### domini SQL predefiniti
-#### domini numerici
-- **interi**: `integer`, `smallint` e altri
-- **approssimati**: `float(prec)`, `real`, `double precision`
-- (non credo li utilizzerò mai) **decimali**: `numeric(prec, scala)`, `decimal(prec, scala)`
-	- `prec` rappresenta il numero totale di cifre
-	- `scale` rappresenta il numero di cifre a destra del punto decimale
+**domini numerici**:
+- *interi*: `integer`, `smallint` e altri
+- *approssimati*: `float(prec)`, `real`, `double precision`
 
-#### stringhe
+**stringhe**:
 - `character [varying] (lung_max)` o `char`/`varchar`
 - `text`
 
-#### istanti temporali
+**istanti temporali**:
 - `date` (anno, mese, giorno)
 - `time` (ora, min, sec)
 - `timestamp` (anno, ..., sec)
 
-#### vari
+**vari**:
 - `interval`: intervalli temporali
 - `Boolean`: booleani
 - `CLOB`, `BLOB`: non strutturati, di grande dimensione
 
-```sql
-create table Corso 
-```
+> [!example]
+> ```sql
+> create table Corso (
+> 	codice integer not null,
+> 	nome character varying (100) not null,
+> 	aula varchar(10) not null,
+> )
+> ```
+
+

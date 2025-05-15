@@ -1,6 +1,6 @@
 ---
 created: 2025-04-05T19:49
-updated: 2025-05-08T15:23
+updated: 2025-05-12T09:26
 ---
 # ambiente di sviluppo ed esecuzione
 Le fasi di *sviluppo* di un programma C sono quattro (ognuna svolta da un programma diverso):
