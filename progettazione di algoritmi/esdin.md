@@ -1,10 +1,9 @@
 ---
 created: 2025-05-08T16:11
-updated: 2025-05-08T17:58
+updated: 2025-05-16T21:20
 ---
-
 > [!example] cifre decimali decrescenti
-> Dato un intero $n$, vogliamo sapere quante sono le sequenze di cifre decimali non decrescenti lunghe $n$.
+> Dato un intero $n$, vogliamo sapere, in $O(n)$, quante sono le sequenze di cifre decimali non decrescenti lunghe $n$.
 
 - per $n=1$, le cifre sono $10$
 - per $n=2$ ⟶ $55$ cifre
@@ -13,14 +12,18 @@ Infatti, alla prima cifra $x$ possono seguire $10-x$ cifre diverse. Si ha quindi
 $$
 \sum_{x=0}^9(10-x) = \sum_{i=1}^{10} i = \frac{10 \cdot 11}{2}=55
 $$
+> [!tip] ragionamento
+> Visto che dobbiamo considerare il constraint della non-decrescenza, dobbiamo tenere a mente non solo la lunghezza delle sequenze, ma anche con che numero terminano (per poter determinare se un numero possa essere aggiunto alla sequenza o no).
+>
+> Sappiamo infatti che le stringhe lunghe $i$ che terminano con $j$ saranno formate da stringhe lunghe $i-1$ che terminano con qualunque cifra $k\leq j$ (a cui verrà aggiunto $j$).
+> 
 
-Per risolvere questo problema con la programmazione dinamica non basta una tabella monodimensionale - serve una matrice definita così:
+ Utilizziamo quindi una matrice definita così:
 - $T[i][j]=$ numero di sequenze decimali non decrescenti lunghe $i$ che terminano con la cifra $j$
 
-Quindi, la soluzione al problema sarà data dalla somma degli elementi dell'ultima riga.
+La soluzione al problema sarà data quindi dalla somma degli elementi dell'ultima riga <small>(sequenze non decrescenti lunghe $n$ che terminano con tutte le cifre possibili)</small>
 
-> [!tip] ragionamento
-> Le stringhe lunghe $i$ che terminano con $j$ saranno formate da stringhe lunghe $i-1$ che terminano con qualunque cifra $k\leq j$.
+- il caso base è dato dalle sequenze lunghe $1$ - ogni sequenza lunga $1$ è infatti decrescente
 
 La regola ricorsiva è quindi:
 

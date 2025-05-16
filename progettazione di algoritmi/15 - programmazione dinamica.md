@@ -1,6 +1,6 @@
 ---
 created: 2025-04-28T17:21
-updated: 2025-05-16T19:22
+updated: 2025-05-16T21:31
 ---
 >[!info] programmazione dinamica
 >La programmazione dinamica è una tecnica di progettazione di algoritmi basata sulla divisione del problema in **sottoproblemi** e sull'utilizzo di **sottostrutture ottimali** (la soluzione ottimale al sottoproblema può essere usata per trovare la soluzione ottimale all'intero problema).
@@ -318,3 +318,104 @@ $T[i]=$ numero di modi in cui è possibile sistemare $i$ persone nell'albergo
 - una volta riempita la tabella, la soluzione si troverà in $T[n]$
 
 Abbiamo due 
+
+### numero di sequenze decimali non decrescenti
+> [!example] testo
+> Dato un intero $n$, vogliamo sapere, in $O(n)$, quante sono le sequenze di cifre decimali non decrescenti lunghe $n$.
+
+- per $n=1$, le cifre sono $10$
+- per $n=2$ ⟶ $55$ cifre
+
+Infatti, alla prima cifra $x$ possono seguire $10-x$ cifre diverse. Si ha quindi 
+$$
+\sum_{x=0}^9(10-x) = \sum_{i=1}^{10} i = \frac{10 \cdot 11}{2}=55
+$$
+> [!tip] ragionamento
+> Visto che dobbiamo considerare il constraint della non-decrescenza, dobbiamo tenere a mente non solo la lunghezza delle sequenze, ma anche con che numero terminano (per poter determinare se un numero possa essere aggiunto alla sequenza o no).
+>
+> Sappiamo infatti che le stringhe lunghe $i$ che terminano con $j$ saranno formate da stringhe lunghe $i-1$ che terminano con qualunque cifra $k\leq j$ (a cui verrà aggiunto $j$).
+> 
+
+ Utilizziamo quindi una matrice definita così:
+- $T[i][j]=$ numero di sequenze decimali non decrescenti lunghe $i$ che terminano con la cifra $j$
+
+La soluzione al problema sarà data quindi dalla somma degli elementi dell'ultima riga <small>(sequenze non decrescenti lunghe $n$ che terminano con tutte le cifre possibili)</small>
+
+- il caso base è dato dalle sequenze lunghe $1$ - ogni sequenza lunga $1$ è infatti decrescente
+
+La regola ricorsiva è quindi:
+
+$$
+T[i][j] = \begin{cases} 1 & i=1 \\
+\sum_{k=0}^j T[i-1][k]& \text{altrimenti}
+\end{cases} 
+$$
+
+**implementazione**:
+```python
+def es(n):
+	T = [[0]*10 for _ in range(n+1)]
+	for j in range(10):
+		T[1][j] = 1
+	for i in range(2, n+1):
+		for j in range(10):
+			for k in range(j+1):
+				T[i][j] += T[i-1][k]
+	return sum(T[n])
+```
+
+- inizializzare la tabella costa $\Theta(n)$ (ha $n+1$ righe e $10$ colonne)
+- dei 3 `for` annidati:
+	- il primo viene iterato $n$ volte
+	- il secondo viene iterato $10$ volte
+	- il terzo viene iterato al più $10$ volte
+- il costo totale dei for è $\Theta(n)$
+
+### raggiungibilità in una matrice
+
+> [!example] testo
+> Data una matrice $M$ binaria $n \times n$, si vuole verificare, in $\Theta(n)$, se è possibile raggiungere la cella in basso a destra partendo da quella in alto a sinistra senza mai toccare celle che contengono il numero $1$.
+> - ad ogni passo ci si può spostare solo di un passo verso destra o un passo verso il basso
+
+>[!tip] ragionamento
+>- la cella $M[0][0]$ è raggiungibile
+>- se $M[i][j]=1$, non è raggiungibile
+>
+>Assumendo che $M[i][j]=0$,
+>- una cella della prima riga può essere raggiunta solo dalla cella che la precede (non ha una cella sopra di sé)
+>- una cella della prima colonna può essere raggiunta solo dalla cella che sopra di sé sulla colonna (non ha una cella alla sua sinistra)
+>- una cella "interna" è raggiungibile se può essere raggiunta dalla cella che la precede o dalla cella sopra di sé
+
+Possiamo quindi utilizzare una matrice $T$ di booleani, in cui $T[i][j]==1\iff M[i][j]$ è raggiungibile.
+
+La ricorrenza sarà quindi:
+
+$$
+T[i][j] = \begin{cases} False & M[i][j] = 1 \\
+True & i=j=0 \\
+T[i][j-1] & i =  0 \\
+T[i-1][j] & j=0 \\
+T[i][j-1] \;\;or\;\; T[i-1][j] & \text{altrimenti}
+\end{cases}
+$$
+
+**implementazione**:
+```python
+def perc(M):
+	n = len(M)
+	T = [[0]*n for _ in range(n)]
+	
+	for i in range(n):
+		for j in range(n):
+			if i == j == 0: 
+				T[i][j] = 1
+				continue
+				
+			sopra = T[i-1][j] if i != 0 else 0
+			sx = T[i][j-1] if j != 0 else 0
+			T[i][j] = sopra or sx
+			 
+	return T[n][n]
+```
+
+
