@@ -1,6 +1,6 @@
 ---
 created: 2025-03-29T16:36
-updated: 2025-05-16T12:23
+updated: 2025-05-16T19:22
 ---
 >[!info] spanning tree
 >Dato un grafo $G$, un **albero di copertura** (o ricoprente/di connessione/di supporto) è un qualsiasi sottografo $G'=(V',E')$ con $V'=V$, $E'\subseteq E$ che sia un albero (quindi che sia connesso e aciclico).
