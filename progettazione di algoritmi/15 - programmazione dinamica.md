@@ -1,6 +1,6 @@
 ---
 created: 2025-04-28T17:21
-updated: 2025-05-17T08:28
+updated: 2025-05-17T08:38
 ---
 >[!info] programmazione dinamica
 >La programmazione dinamica è una tecnica di progettazione di algoritmi basata sulla divisione del problema in **sottoproblemi** e sull'utilizzo di **sottostrutture ottimali** (la soluzione ottimale al sottoproblema può essere usata per trovare la soluzione ottimale all'intero problema).
@@ -80,8 +80,10 @@ F = [-1]*(n+1)
 >>- nella versione *iterativa*, si comincia dai sottoproblemi di dimensione piccola per poi passare a quelli di dimensione via via crescente fino ad arrivare alla soluzione del problema originario ⟶ si parla di approccio **bottom-up**
 
 ## problema dei file su disco
-Abbiamo un disco di capacità $C$ e $n$ file di varie dimensioni (ciascuna inferiore a $C$). Vogliamo trovare il sottoinsieme di file che può essere memorizzato su disco che massimizzi lo spazio occupato.
-- per semplicità di esposizione, ci limiteremo a calcolare il valore della soluzione ottima, ovvero il massimo spazio del disco che può essere occupato grazie agli $n$ file
+
+> [!example] testo
+> Abbiamo un disco di capacità $C$ e $n$ file di varie dimensioni (ciascuna inferiore a $C$). Vogliamo trovare il sottoinsieme di file che può essere memorizzato su disco che massimizzi lo spazio occupato.
+> - per semplicità di esposizione, ci limiteremo a calcolare il valore della soluzione ottima, ovvero il massimo spazio del disco che può essere occupato grazie agli $n$ file
 
 >[!bug]- implementazione divide et impera
 > Un algoritmo **divide et impera** può partire dalle seguenti informazioni:
@@ -119,8 +121,6 @@ Attraverso la memoizzazione, possiamo ottenere una soluzione **pseudopolinomiale
 > Il problema del disco (che è un caso particolare del problema dello zaino <small>(analizzato sotto)</small> ) è un problema **NP-completo**. 
 > - NP = "nondeterministic polynomial time", è la classe dei problemi risolvibili non-deterministicamente in tempo polinomiale, ovvero i problemi per cui, data una soluzione, si può verificare in tempo polinomiale la sua correttezza (ma non si sa se si possano invece risolvere in tempo polinomiale ! <small>[wikipedia on P vs NP](https://en.wikipedia.org/wiki/P_versus_NP_problem)</small>)
 > - NP-completo ⟶ classe dei più difficili problemi in NP: se si trovasse un algoritmo in grado di risolvere in tempo polinomiale un qualsiasi problema NP-completo, allora si potrebbe usarlo per risolvere in tempo polinomiale ogni problema in NP (ogni problema in NP può essere ridotto in tempo polinomiale a un problema NP-completo)
-
-
 
 Creiamo una tabella $T$ di dimensione $n+1 \times (C+1)$, in cui $T[i][j]$ è il valore ottenuto dalla soluzione del sottoproblema in cui si hanno i primi $i$ file e la dimensione del disco è $j$ <small>(quindi il massimo spazio che si può occupare in un blocco grande $j$ con i primi $i$ file)</small>.
 
@@ -239,6 +239,19 @@ def discoI(A, C):
 - nella ricerca dei file, la tabella viene visitata a partire dall'ultima cella $T[n,\,C]$, una riga per volta; il costo è $O(n)$
 
 La complessità di questo algoritmo è quindi $O(nC)$.
+
+## problema dello zaino (knapsack problem)
+
+>[!example] traccia
+>Abbiamo uno zaino di capacità $C$ e $n$ oggetti, ognuno con peso $p_{i}$ e valore $v_{i}$. Vogliamo sapere, dati la capacità $C$, i vettori $P$ dei pesi e $V$ dei valori, in $\Theta(nC)$ il valore massimo che si può inserire nello zaino.
+
+Il problema del disco (visto sopra) è considerabile un caso particolare del **problema dello zaino** in cui $\text{peso = valore (= ``dimensione")}$. È un noto problema NP-completo.
+
+>[!example] esempio 
+>
+>![[probl-zaino-es.png|center|400]]
+
+
 
 ## altri esercizi
 ### contare il numero di stringhe binarie lunghe $n$ senza 2 zeri consecutivi
