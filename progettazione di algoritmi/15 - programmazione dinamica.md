@@ -1,6 +1,6 @@
 ---
 created: 2025-04-28T17:21
-updated: 2025-05-17T10:22
+updated: 2025-05-17T10:25
 ---
 >[!info] programmazione dinamica
 >La programmazione dinamica è una tecnica di progettazione di algoritmi basata sulla divisione del problema in **sottoproblemi** e sull'utilizzo di **sottostrutture ottimali** (la soluzione ottimale al sottoproblema può essere usata per trovare la soluzione ottimale all'intero problema).
@@ -479,9 +479,9 @@ Si può utilizzare una tabella bidimensionale $n \times n$ dove:
 >
 > $$
 > \begin{array}{ccccc}
-> \textcolor{Goldenrod}{1} & \textcolor{Goldenrod}{1} & \textcolor{red}{1} & 1 & 1 \\
-> \textcolor{Goldenrod}{1} & \textcolor{orange}{1} & \textcolor{red}{1} & 1 & 1 \\
-> \textcolor{red}{1} & \textcolor{red}{1} & \textcolor{Peach}{1} & 0 & 1 \\
+> \textcolor{yellow}{1} & \textcolor{yellow}{1} & \textcolor{red}{1} & 1 & 1 \\
+> \textcolor{yellow}{1} & \textcolor{orange}{1} & \textcolor{red}{1} & 1 & 1 \\
+> \textcolor{red}{1} & \textcolor{red}{1} & \textcolor{pink}{1} & 0 & 1 \\
 > 1 & 1 & 1 & 1 & 1 \\
 > 1 & 1 & 0 & 1 & 1 \\
 > \end{array}
