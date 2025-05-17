@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-17T15:45
+updated: 2025-05-17T15:53
 ---
 La comunicazione a livello di collegamento è **hop-to-hop** o nodo-to-nodo.
 - host e router sono chiamati **nodi** o **stazioni**
@@ -32,9 +32,11 @@ Un datagramma può essere gestito da diversi protocolli quando si trova su colle
 ## servizi offerti dal livello di collegamento
 - **framing** ⟶ i protocolli **incapsulano** i datagrammi del livello di rete all'interno di un frame a livello link per separare i vari messaggi durante la trasmissione
 	- per identificare origine e destinatario vengono usati MAC addresses
-- **consegna affidabile** ⟶ è basata su ACK, e non viene utilizzata se un collegamento presenta un basso numero di error
-
-
+- **consegna affidabile** ⟶ è basata su **ACK** 
+	- non viene utilizzata se un collegamento presenta un basso numero di errori sui bit (es. fibra ottica, cavo coassiale), mentre è usata nei collegamenti soggetti ad elevati tassi di errore (es. wireless)
+- **controllo del flusso** ⟶ evita che il nodo trasmittente saturi quello ricevente
+- **rilevazione degli errori** ⟶ il nodo ricevente individua la presenza di errori (causati dalle interferenze) grazie all'inserimento da parte del nodo trasmittente di **bit di controllo** di errore 
+- **correzione degli errori** ⟶ il nodo ricevente determina il punto in cui si è verificato un errore e lo corregge
 
 >[!summary] adattatori
 >
@@ -47,5 +49,23 @@ Un datagramma può essere gestito da diversi protocolli quando si trova su colle
 >- il lato ricevente:
 >	- individua errori, trasferimento dati affidabile, controllo di flusso, etc.
 >	- estrae i datagrammi e li passa al nodo ricevente
+
+>[!info] sottolivelli
+>Il livello di collegamento ha due ulteriori sottolivelli:
+>- **Data-Link Control** (DLC)
+>
+>Si occupa delle questioni *comuni* ai collegamenti punto-punto e a quelli broadcast:
+>- framing
+>- controllo di errori e di flusso
+>- rilevamento e correzione degli errori
+>
+>e delle procedure di comunicazione nodo-a-nodo (indipendentemente dal fatto che il collegamento sia dedicato o broadcast).
+>
+>- **Media Access Control** (MAC)
+>
+>Si occupa degli aspetti specifici dei *canali broadcast*, come il controllo dell'accesso al mezzo condiviso
+
+### errori 
+Gli errori sono dovuti a **interferenze** che possono cambiare la forma del segnale.
 
 
