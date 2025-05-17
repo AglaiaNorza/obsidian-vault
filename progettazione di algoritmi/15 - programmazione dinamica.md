@@ -1,6 +1,6 @@
 ---
 created: 2025-04-28T17:21
-updated: 2025-05-17T09:55
+updated: 2025-05-17T10:18
 ---
 >[!info] programmazione dinamica
 >La programmazione dinamica è una tecnica di progettazione di algoritmi basata sulla divisione del problema in **sottoproblemi** e sull'utilizzo di **sottostrutture ottimali** (la soluzione ottimale al sottoproblema può essere usata per trovare la soluzione ottimale all'intero problema).
@@ -313,8 +313,8 @@ $T = \begin{array}{|c|c|c|c|c|c|c|} \hline 1 & 2 & 3 & 5 & & &  \\ \hline \end{a
 - una volta riempita la tabella, la soluzione si troverà nella locazione $T[n]$
 
 La ricorrenza si può dedurre separando il conteggio delle stringhe lunghe $i$ che terminano con 1 da quelle che terminano con 0:
-- le stringhe lunghe $i$ che terminano con 1 si ottengono dalle stringhe lunghe $i-1$ senza vincoli <small>(se in $T[i-1]$ ci sono solo stringhe senza due zeri consecutivi, sicuramente aggiungendo un 1 questa proprietà sarà mantenuta)</small> ⟶ esse sono quindi $T[i-1]$ 
-- le stringhe lunghe $i$ che terminano con uno 0 hanno invece un vincolo: il carattere precedente ($i-1$) deve necessariamente essere un 1
+- le stringhe lunghe $i$ che terminano con 1 si ottengono dalle stringhe lunghe $i-1$ **senza vincoli** <small>(se in $T[i-1]$ ci sono solo stringhe senza due zeri consecutivi, sicuramente aggiungendo un 1 questa proprietà sarà mantenuta)</small> ⟶ esse sono quindi $T[i-1]$ 
+- le stringhe lunghe $i$ che terminano con uno 0 hanno invece un vincolo: il **carattere precedente ($i-1$) deve necessariamente essere un 1**
 	- quindi <small>(vista in modo "combinatorio")</small> visto che abbiamo "fissato" i caratteri $i-1$ e $i$, le stringhe sono tutte le stringhe lunghe $i-2$, a cui viene aggiunto "10"
 	- sono quindi $T[i-2]$
 
@@ -376,7 +376,7 @@ $$
 > [!tip] ragionamento
 > Visto che dobbiamo considerare il constraint della non-decrescenza, dobbiamo tenere a mente non solo la lunghezza delle sequenze, ma anche con che numero terminano (per poter determinare se un numero possa essere aggiunto alla sequenza o no).
 >
-> Sappiamo infatti che le stringhe lunghe $i$ che terminano con $j$ saranno formate da stringhe lunghe $i-1$ che terminano con qualunque cifra $k\leq j$ (a cui verrà aggiunto $j$).
+> Sappiamo infatti che le stringhe lunghe $i$ che terminano con $j$ saranno formate da **stringhe lunghe $i-1$ che terminano con qualunque cifra $k\leq j$** (a cui verrà aggiunto $j$).
 > 
 
  Utilizziamo quindi una matrice definita così:
@@ -425,9 +425,9 @@ def es(n):
 >- se $M[i][j]=1$, non è raggiungibile
 >
 >Assumendo che $M[i][j]=0$,
->- una cella della prima riga può essere raggiunta solo dalla cella che la precede (non ha una cella sopra di sé)
->- una cella della prima colonna può essere raggiunta solo dalla cella che sopra di sé sulla colonna (non ha una cella alla sua sinistra)
->- una cella "interna" è raggiungibile se può essere raggiunta dalla cella che la precede o dalla cella sopra di sé
+>- una cella della prima riga può essere raggiunta solo dalla **cella che la precede** (non ha una cella sopra di sé)
+>- una cella della prima colonna può essere raggiunta solo dalla **cella che sopra di sé** sulla colonna (non ha una cella alla sua sinistra)
+>- una cella "interna" è raggiungibile se può essere raggiunta dalla **cella che la precede** o dalla **cella sopra di sé**
 
 Possiamo quindi utilizzare una matrice $T$ di booleani, in cui $T[i][j]==1\iff M[i][j]$ è raggiungibile.
 
@@ -472,7 +472,7 @@ Si può utilizzare una tabella bidimensionale $n \times n$ dove:
 >[!tip] ragionamento
 >Il ragionamento è questo:
 >- se $M[i][j]=0$, $T[i][j]=0$
->- altrimenti, per avere un quadrato di dimensione $k$, gli elementi della matrice $T[i-1][j]$, $T[i-1][j-1]$ e $T[i][j-1]$ <small>(sopra, diagonale, sinistra)</small> dovranno a loro volta essere gli angoli di un quadrato di dimensione almeno $k-1$
+>- altrimenti, per avere un quadrato di dimensione $k$, gli elementi della matrice $T[i-1][j]$, $T[i-1][j-1]$ e $T[i][j-1]$ <small>(sopra, diagonale, sinistra)</small> **dovranno a loro volta essere gli angoli di un quadrato** di dimensione almeno $k-1$
 >
 >Si può osservare in questo caso:
 >
@@ -529,6 +529,32 @@ def sottomatrice(M):
 > - $T[0][0]=1$
 > - non c'è modo di partizionare $i>0$ elementi in $0$ parti oppure $0$ elementi in $j>0$ parti, quindi si ha $T[i][0]=T[0][j]=0$
 > - negli altri casi, si possono contare i modi di partizionare pensando all'$i$-esimo elemento:
-> 	- se si sceglie di tenere l'$i$-esimo elemento da solo, si avranno $T[i-1][j-1]$ modi (i modi di creare i sottoinsiemi considerando tutti gli altri elementi e un sottoinsieme in meno)
-> 	- se si sceglie di inserire l'$i-$
+> 	- se si sceglie di tenere l'$i$-esimo elemento **da solo**, si avranno $T[i-1][j-1]$ modi (i modi di creare i sottoinsiemi considerando tutti gli altri elementi e un sottoinsieme in meno)
+> 	- se si sceglie di inserire l'$i$-esimo elemento **in un sottoinsieme con almeno un altro elemento**, si avranno $j \cdot T[i-1][j]$ modi di farlo
+> 		- $T[i-1][j]$ sono i modi per partizionare $i-1$ elementi in $j$ sottoinsiemi
+> 		- il nuovo elemento ($i$) può essere messo in uno qualsiasi dei sottoinsiemi creati, quindi bisogna moltiplicare i modi per il numero di sottoinsiemi creati, ovvero $j$
+> 	
+>>[!example] esempio
+>>
+>>![[partizioni-es.png|center|400]]
 
+L'equazione di ricorrenza sarà quindi:
+
+$$
+T[i][j] = \begin{cases}
+1 & i=0 \land j=0 \\
+0 & i=0 \lor j=0 \\
+T[i-1][j-1]+j \cdot T[i-1][j] & \text{altrimenti}
+\end{cases}
+$$
+
+**implementazione**:
+```python
+def es(n, k):
+	T = [[0]*(k+1) for _ in range(n+1)]
+	T[0][0] = 1
+	for i in range(1, n+1);
+		for j in range(1, k+1):
+			T[i][j] = T[i-1][j-1] + j*T[i-1][j]
+	return T[n][k]
+```
