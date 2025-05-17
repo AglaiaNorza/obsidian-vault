@@ -1,6 +1,6 @@
 ---
 created: 2025-04-28T17:21
-updated: 2025-05-17T10:18
+updated: 2025-05-17T10:22
 ---
 >[!info] programmazione dinamica
 >La programmazione dinamica è una tecnica di progettazione di algoritmi basata sulla divisione del problema in **sottoproblemi** e sull'utilizzo di **sottostrutture ottimali** (la soluzione ottimale al sottoproblema può essere usata per trovare la soluzione ottimale all'intero problema).
@@ -256,6 +256,7 @@ Il problema del disco (visto sopra) è considerabile un caso particolare del **p
 >- $T[i][j]=$ massimo valore ottenibile dai primi $i$ oggetti per uno zaino di capacità $j$
 >
 >>[!warning] indici di tabella e vettori
+>> 
 >>(teniamo a mente che peso e valore di un oggetto sono "sfasati" di $1$ rispetto agli indici della tabella: infatti, nella tabella, $T[i][j]$ rappresenta l'uso dei primi $i$ oggetti, ma, poiché questi si indicizzano da $0$, l'oggetto $i$-esimo è rappresentato da $P[i-1]$ e $V[i-1]$
 >>- $i=1$ vuol dire "sto considerando il primo oggetto", ovvero quello con peso $P[0]$ e valore $V[0]$)
 >
