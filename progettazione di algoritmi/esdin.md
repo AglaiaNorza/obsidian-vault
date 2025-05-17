@@ -1,6 +1,6 @@
 ---
 created: 2025-05-08T16:11
-updated: 2025-05-16T21:20
+updated: 2025-05-17T08:25
 ---
 > [!example] cifre decimali decrescenti
 > Dato un intero $n$, vogliamo sapere, in $O(n)$, quante sono le sequenze di cifre decimali non decrescenti lunghe $n$.
@@ -78,21 +78,57 @@ T[i][j-1] \;\;or\;\; T[i-1][j] & \text{altrimenti}
 $$
 
 ### sottomatrici di soli uni
-Data una matrice quadrata binaria $M$ di dimensione $n\times n$, si vuole sapere, in $O(n^2)$, qual è la dimensione massima per le sottomatrici quadrate di soli uni contenute in $M$.
+
+> [!example] testo
+> Data una matrice quadrata binaria $M$ di dimensione $n\times n$, si vuole sapere, in $O(n^2)$, qual è la dimensione massima per le sottomatrici quadrate di soli uni contenute in $M$.
 
 Si può utilizzare una tabella bidimensionale $n \times n$ dove:
 - $T[i][j]=$ il lato della matrice quadrata più grande contenente tutti uni e con cella in basso a destra $M[i][j]$
 
 >[!tip] ragionamento
 >Il ragionamento è questo:
->- se $M[i][j]=0$ 
+>- se $M[i][j]=0$, $T[i][j]=0$
+>- altrimenti, per avere un quadrato di dimensione $k$, gli elementi della matrice $T[i-1][j]$, $T[i-1][j-1]$ e $T[i][j-1]$ <small>(sopra, diagonale, sinistra)</small> dovranno a loro volta essere gli angoli di un quadrato di dimensione almeno $k-1$
+>
+>Si può osservare in questo caso:
+>
+> $$
+> \begin{array}{ccccc}
+> \textcolor{Goldenrod}{1} & \textcolor{Goldenrod}{1} & \textcolor{red}{1} & 1 & 1 \\
+> \textcolor{Goldenrod}{1} & \textcolor{orange}{1} & \textcolor{red}{1} & 1 & 1 \\
+> \textcolor{red}{1} & \textcolor{red}{1} & \textcolor{Peach}{1} & 0 & 1 \\
+> 1 & 1 & 1 & 1 & 1 \\
+> 1 & 1 & 0 & 1 & 1 \\
+> \end{array}
+> $$
+> 
+> - per il primo quadrato (giallo, che termina in $[1][1]$), è abbastanza evidente: le celle che lo circondano formano quadrati $1 \times 1$
+> - ma si nota anche per $[2][2]$ (rosso): infatti, ai tre quadrati $2\times 2$ formati dalle celle circostanti manca esattamente l'ultima cella per diventare un unico quadrato $3 \times 3$
 
+La ricorrenza è quindi:
 $$
 T[i][j] = \begin{cases} 0 & M[i][j]=0 \\
-min( T[i][j-1],\,T[i-1][j-1],\,T[i-1][j])+1 & \text{altrimenti}
+1 & i  = 0 \lor j=0 \\
+min( T[i][j-1],\,T[i-1][j-1],\,T[i-1][j])+1 & \text{altrimenti} 
 
 \end{cases}
 $$
+
+(si prende il minimo lato perché, per poter "fondere" i tre quadrati che terminano in quelle tre celle, essi devono essere della stessa dimensione: se si prendesse il massimo, uno degli altri due quadrati potrebbe essere più piccolo e la figura risultante non sarebbe un quadrato - il minimo, invece, li "copre" sicuramente tutti e tre)
+
+**implementazione**:
+```python
+def sottomatrice(M):
+	T = [[0]*n for _ in range(n)]
+	T[0][0] = M[0][0]
+	for i in range(1,n):
+		for j in range(1, n):
+			if M[i][j] == 0:
+				T[i][j] = 0
+			
+
+```
+
 ### knapsack problem
 Dato uno zaino di capacità $c$ ed $n$ oggetti, ognuno con un peso $p_{i}$ e un valore $v_{i}$. Si vuole sapere il valore massimo che si può inserire nello zaino.
 - questo problema 
