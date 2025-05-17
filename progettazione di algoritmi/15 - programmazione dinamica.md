@@ -1,6 +1,6 @@
 ---
 created: 2025-04-28T17:21
-updated: 2025-05-17T08:38
+updated: 2025-05-17T09:23
 ---
 >[!info] programmazione dinamica
 >La programmazione dinamica è una tecnica di progettazione di algoritmi basata sulla divisione del problema in **sottoproblemi** e sull'utilizzo di **sottostrutture ottimali** (la soluzione ottimale al sottoproblema può essere usata per trovare la soluzione ottimale all'intero problema).
@@ -243,7 +243,7 @@ La complessità di questo algoritmo è quindi $O(nC)$.
 ## problema dello zaino (knapsack problem)
 
 >[!example] traccia
->Abbiamo uno zaino di capacità $C$ e $n$ oggetti, ognuno con peso $p_{i}$ e valore $v_{i}$. Vogliamo sapere, dati la capacità $C$, i vettori $P$ dei pesi e $V$ dei valori, in $\Theta(nC)$ il valore massimo che si può inserire nello zaino.
+>Abbiamo uno zaino di capacità $C$ e $n$ oggetti, ognuno con peso $p_{i}$ e valore $v_{i}$. Vogliamo sapere, dati la capacità $C$, i vettori $P$ dei pesi e $V$ dei valori, in $\Theta(nC)$ il **valore massimo** che si può inserire nello zaino.
 
 Il problema del disco (visto sopra) è considerabile un caso particolare del **problema dello zaino** in cui $\text{peso = valore (= ``dimensione")}$. È un noto problema NP-completo.
 
@@ -251,8 +251,49 @@ Il problema del disco (visto sopra) è considerabile un caso particolare del **p
 >
 >![[probl-zaino-es.png|center|400]]
 
+>[!tip] ragionamento
+>Si utilizza una matrice di dimensione $(n+1) \times (C+1)$ in cui:
+>- $T[i][j]=$ massimo valore ottenibile dai primi $i$ oggetti per uno zaino di capacità $j$
+>
+>>[!warning] indici di tabella e vettori
+>>(teniamo a mente che peso e valore di un oggetto sono "sfasati" di $1$ rispetto agli indici della tabella: infatti, nella tabella, $T[i][j]$ rappresenta l'uso dei primi $i$ oggetti, ma, poiché questi si indicizzano da $0$, l'oggetto $i$-esimo è rappresentato da $P[i-1]$ e $V[i-1]$
+>>- $i=1$ vuol dire "sto considerando il primo oggetto", ovvero quello con peso $P[0]$ e valore $V[0]$)
+>
+>Per compilare la tabella, sappiamo che:
+>- se non si hanno oggetti o la capacità dello zaino è nulla, la soluzione varrà $0$
+>- se l'$i$-esimo oggetto ha peso superiore alla capacità dello zaino, non potrà essere inserito e il valore sarà dato dagli altri $i-1$ oggetti (con la stessa capacità), ovvero da $T[i-1][j]$
+>- per ogni oggetto $i$ da inserire nello zaino, ci sono due possibilità:
+>	- *"lascio"* ⟶ non inserisco l'oggetto nello zaino: il valore della soluzione è dato da $T[i-1][j]$, ovvero il valore massimo ottenibile dai primi $i-1$ oggetti con la stessa capacità
+>	- *"prendo"* ⟶ inserisco l'oggetto nello zaino: in questo caso si guadagna $V[i]$ in valore e bisogna sottrarre la capacità dell'oggetto inserito - rimane, per gli altri oggetti, una capacità di $j-P[i]$. Quindi, il valore della soluzione sarà dato da $V[i-1]+T[i-1][j-P[i-1]]$
+>
+>Il valore da scegliere è quindi il massimo tra "prendo" e "lascio":
+>$$
+>max(T[i-1][j],\,V[i-1]+T[i-1][j-P[i-1]])
+>$$
 
+L'equazione di ricorrenza è quindi:
 
+$$
+T[i][j] = \begin{cases} 0 & i=0 \lor j=0 \\
+T[i-1][j] & p_{i}>j \\
+max\left( T[i-1][j],\,v_{i}+T[i-1][j-p_{i}]\right) & \text{altrimenti}
+
+\end{cases}
+$$
+
+**implementazione**:
+```python
+def knapsack(P, V, c):
+	n = len(P)
+	T = [[0]*(c+1) for _ in range(n+1)]
+	for i in range(1, n+1):
+		for j in range(1, c+1):
+			if j < P[i-1]
+				T[i][j] = T[i-1][j]
+			else:
+				T[i][j] = max(T[i-1][j], V[i-1]+T[i-1][j-P[i-1]])
+	return T, T[n][c]
+```
 ## altri esercizi
 ### contare il numero di stringhe binarie lunghe $n$ senza 2 zeri consecutivi
 - per questo tipo di esercizi, è utile calcolare i primi valori e utilizzarli per dedurre il pattern generale <small>(à la metodi matematici)</small>
