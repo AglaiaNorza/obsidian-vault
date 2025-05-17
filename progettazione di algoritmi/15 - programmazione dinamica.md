@@ -1,6 +1,6 @@
 ---
 created: 2025-04-28T17:21
-updated: 2025-05-16T21:31
+updated: 2025-05-17T08:28
 ---
 >[!info] programmazione dinamica
 >La programmazione dinamica è una tecnica di progettazione di algoritmi basata sulla divisione del problema in **sottoproblemi** e sull'utilizzo di **sottostrutture ottimali** (la soluzione ottimale al sottoproblema può essere usata per trovare la soluzione ottimale all'intero problema).
@@ -254,7 +254,7 @@ Utilizzeremo una tabella monodimensionale di dimensione $n+1$, il cui contenuto 
 
 $T[i]=$ numero di stringhe binarie lunghe $i$ dove non compaiono 2 zeri consecutivi
 
-$T = \begin{array}{|c|c|c|c|c|c|c|} \hline 1 & 2 & 3 & 5 & & & & \\ \hline \end{array}$
+$T = \begin{array}{|c|c|c|c|c|c|c|} \hline 1 & 2 & 3 & 5 & & &  \\ \hline \end{array}$
 
 - una volta riempita la tabella, la soluzione si troverà nella locazione $T[n]$
 
@@ -307,17 +307,6 @@ T[i][j]=\begin{cases} 1 & i = 0 \\
 T[i-1]+T[i-2]+T[i-3] & \text{altrimenti}
 \end{cases}
 $$
-
-### sistemare $n$ persone in un albergo con stanze singole e doppie [wip]
-Dato un intero $n$, vogliamo contare quanti modi diversi ci sono di sistemare $n$ persone in un albergo che dispone di camere singole e camere doppie.
-
-- possiamo usare una tabella monodimensionale di dimensioni $n+1$, definita così: 
-
-$T[i]=$ numero di modi in cui è possibile sistemare $i$ persone nell'albergo
-
-- una volta riempita la tabella, la soluzione si troverà in $T[n]$
-
-Abbiamo due 
 
 ### numero di sequenze decimali non decrescenti
 > [!example] testo
@@ -418,4 +407,58 @@ def perc(M):
 	return T[n][n]
 ```
 
+### sottomatrici di soli uni
 
+> [!example] testo
+> Data una matrice quadrata binaria $M$ di dimensione $n\times n$, si vuole sapere, in $O(n^2)$, qual è la dimensione massima per le sottomatrici quadrate di soli uni contenute in $M$.
+
+Si può utilizzare una tabella bidimensionale $n \times n$ dove:
+- $T[i][j]=$ il lato della matrice quadrata più grande contenente tutti uni e con cella in basso a destra $M[i][j]$
+
+>[!tip] ragionamento
+>Il ragionamento è questo:
+>- se $M[i][j]=0$, $T[i][j]=0$
+>- altrimenti, per avere un quadrato di dimensione $k$, gli elementi della matrice $T[i-1][j]$, $T[i-1][j-1]$ e $T[i][j-1]$ <small>(sopra, diagonale, sinistra)</small> dovranno a loro volta essere gli angoli di un quadrato di dimensione almeno $k-1$
+>
+>Si può osservare in questo caso:
+>
+> $$
+> \begin{array}{ccccc}
+> \textcolor{Goldenrod}{1} & \textcolor{Goldenrod}{1} & \textcolor{red}{1} & 1 & 1 \\
+> \textcolor{Goldenrod}{1} & \textcolor{orange}{1} & \textcolor{red}{1} & 1 & 1 \\
+> \textcolor{red}{1} & \textcolor{red}{1} & \textcolor{Peach}{1} & 0 & 1 \\
+> 1 & 1 & 1 & 1 & 1 \\
+> 1 & 1 & 0 & 1 & 1 \\
+> \end{array}
+> $$
+> 
+> - per il primo quadrato (giallo, che termina in $[1][1]$), è abbastanza evidente: le celle che lo circondano formano quadrati $1 \times 1$
+> - ma si nota anche per $[2][2]$ (rosso): infatti, ai tre quadrati $2\times 2$ formati dalle celle circostanti manca esattamente l'ultima cella per diventare un unico quadrato $3 \times 3$
+
+La ricorrenza è quindi:
+$$
+T[i][j] = \begin{cases} 0 & M[i][j]=0 \\
+1 & i  = 0 \lor j=0 \\
+min( T[i][j-1],\,T[i-1][j-1],\,T[i-1][j])+1 & \text{altrimenti} 
+
+\end{cases}
+$$
+
+(si prende il minimo lato perché, per poter "fondere" i tre quadrati che terminano in quelle tre celle, essi devono essere della stessa dimensione: se si prendesse il massimo, uno degli altri due quadrati potrebbe essere più piccolo e la figura risultante non sarebbe un quadrato - il minimo, invece, li "copre" sicuramente tutti e tre)
+
+**implementazione**:
+```python
+def sottomatrice(M):
+	T = [[0]*n for _ in range(n)]
+	T[0][0] = M[0][0]
+	for i in range(n):
+		for j in range(n):
+			if M[i][j] == 0:
+				T[i][j] = 0
+			else:
+				if i == 0 or j == 0:
+					T[i][j] = 1
+				else:
+					T[i][j] = min(T[i][j-1], T[i-1][j-1], T[i-1][j]) + 1
+	return max(T)
+```

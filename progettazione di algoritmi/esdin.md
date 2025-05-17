@@ -1,6 +1,6 @@
 ---
 created: 2025-05-08T16:11
-updated: 2025-05-17T08:25
+updated: 2025-05-17T08:26
 ---
 > [!example] cifre decimali decrescenti
 > Dato un intero $n$, vogliamo sapere, in $O(n)$, quante sono le sequenze di cifre decimali non decrescenti lunghe $n$.
@@ -121,12 +121,16 @@ $$
 def sottomatrice(M):
 	T = [[0]*n for _ in range(n)]
 	T[0][0] = M[0][0]
-	for i in range(1,n):
-		for j in range(1, n):
+	for i in range(n):
+		for j in range(n):
 			if M[i][j] == 0:
 				T[i][j] = 0
-			
-
+			else:
+				if i == 0 or j == 0:
+					T[i][j] = 1
+				else:
+					T[i][j] = min(T[i][j-1], T[i-1][j-1], T[i-1][j]) + 1
+	return max(T)
 ```
 
 ### knapsack problem
