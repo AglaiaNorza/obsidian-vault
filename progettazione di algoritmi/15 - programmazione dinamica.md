@@ -1,6 +1,6 @@
 ---
 created: 2025-04-28T17:21
-updated: 2025-05-17T09:23
+updated: 2025-05-17T09:55
 ---
 >[!info] programmazione dinamica
 >La programmazione dinamica è una tecnica di progettazione di algoritmi basata sulla divisione del problema in **sottoproblemi** e sull'utilizzo di **sottostrutture ottimali** (la soluzione ottimale al sottoproblema può essere usata per trovare la soluzione ottimale all'intero problema).
@@ -489,7 +489,7 @@ Si può utilizzare una tabella bidimensionale $n \times n$ dove:
 > - per il primo quadrato (giallo, che termina in $[1][1]$), è abbastanza evidente: le celle che lo circondano formano quadrati $1 \times 1$
 > - ma si nota anche per $[2][2]$ (rosso): infatti, ai tre quadrati $2\times 2$ formati dalle celle circostanti manca esattamente l'ultima cella per diventare un unico quadrato $3 \times 3$
 
-La ricorrenza è quindi:
+La ricorrenza è quindi:### others
 $$
 T[i][j] = \begin{cases} 0 & M[i][j]=0 \\
 1 & i  = 0 \lor j=0 \\
@@ -516,3 +516,19 @@ def sottomatrice(M):
 					T[i][j] = min(T[i][j-1], T[i-1][j-1], T[i-1][j]) + 1
 	return max(T)
 ```
+
+### numeri di Strirling di seconda specie
+>[!example] testo
+>Dati due interi non negativi $n$ e $k$, vogliamo sapere, in $\Theta(n \cdot k)$ in quanti modi è possibile partizionare l’insieme dei numeri da da $1$ a $n$ in $k$ sottoinsiemi non vuoti.
+
+>[!tip] ragionamento
+>Possiamo usare una tabella bidimensionale di dimensioni $(n+1)(k+1)$, in cui:
+>- $T[i][j]=$ numero di modi di partizionare $i$ elementi in $j$ sottoinsiemi non vuoti
+>
+> Sappiamo che:
+> - $T[0][0]=1$
+> - non c'è modo di partizionare $i>0$ elementi in $0$ parti oppure $0$ elementi in $j>0$ parti, quindi si ha $T[i][0]=T[0][j]=0$
+> - negli altri casi, si possono contare i modi di partizionare pensando all'$i$-esimo elemento:
+> 	- se si sceglie di tenere l'$i$-esimo elemento da solo, si avranno $T[i-1][j-1]$ modi (i modi di creare i sottoinsiemi considerando tutti gli altri elementi e un sottoinsieme in meno)
+> 	- se si sceglie di inserire l'$i-$
+
