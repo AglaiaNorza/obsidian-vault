@@ -1,6 +1,6 @@
 ---
 created: 2025-04-28T17:11
-updated: 2025-05-16T19:22
+updated: 2025-05-17T15:10
 ---
 >[!info] indice
 >- [[1 - introduzione alle reti]]
@@ -25,6 +25,7 @@ updated: 2025-05-16T19:22
 >- [[14 - routing, RIP]]
 >- [[15 - OSPF]]
 >- [[16 - BGP]]
+>- [[18 - IPv6]]
 
 >[!tip]- un memino gentilmente fornito da [alessio](https://alem1105.github.io/Quartz/) 
 >
