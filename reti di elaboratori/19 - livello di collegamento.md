@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-18T19:18
+updated: 2025-05-18T19:28
 ---
 La comunicazione a livello di collegamento è **hop-to-hop** o nodo-to-nodo.
 - host e router sono chiamati **nodi** o **stazioni**
@@ -88,3 +88,7 @@ La rilevazione degli errori si basa sull'aggiunta di alcuni **bit EDC** (Error D
 Viene utilizzato anche un controllo sulla **parità**: si inserisce un bit aggiuntivo, il cui valore viene selezionato in modo da rendere pari il numero totale di $1$ all'interno ella codeword.
 - con un unico bit di parità si può solo controllare se si è verificato almeno un errore in un bit
 - tramite la **parità bidimensionale**, si può individuare e correggere il bit alterato
+
+>[!example] parità bidimensionale
+>
+>![[parita-bidimensionale.png|center|400]]
