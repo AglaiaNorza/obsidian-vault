@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-18T18:44
+updated: 2025-05-18T19:18
 ---
 La comunicazione a livello di collegamento è **hop-to-hop** o nodo-to-nodo.
 - host e router sono chiamati **nodi** o **stazioni**
@@ -65,5 +65,26 @@ Un datagramma può essere gestito da diversi protocolli quando si trova su colle
 >
 >Si occupa degli aspetti specifici dei *canali broadcast*, come il controllo dell'accesso al mezzo condiviso
 
-### errori 
-Gli errori sono dovuti a **interferenze** che possono cambiare la forma del segnale.
+## errori 
+Gli errori sono dovuti a **interferenze** (o "rumori") che possono cambiare la forma del segnale, e si dividono in due categorie:
+- **errori sul singolo bit**
+- **errori a burst** (raffica)
+
+La durata di un'interferenza è tipicamente più lunga di quella di un singolo bit, quindi la probabilità che avvenga un errore di tipo burst è più elevata.
+- Il numero di bit coinvolti dipende dalla *velocità di trasferimento* dati e dalla *durata* del rumore
+
+>[!example]- esempi
+>
+>![[errore-bit.png|center|400]]
+>
+>![[errore-burst.png|center|400]]
+
+### tecniche di rilevazioni degli errori
+La rilevazione degli errori si basa sull'aggiunta di alcuni **bit EDC** (Error Detection and Correction), e non è attendibile al 100%. Per questo, le tecniche più sofisticate prevedono un'elevata ridondanza.
+
+![[EDC.png|center|400]]
+
+#### controllo di parità
+Viene utilizzato anche un controllo sulla **parità**: si inserisce un bit aggiuntivo, il cui valore viene selezionato in modo da rendere pari il numero totale di $1$ all'interno ella codeword.
+- con un unico bit di parità si può solo controllare se si è verificato almeno un errore in un bit
+- tramite la **parità bidimensionale**, si può individuare e correggere il bit alterato
