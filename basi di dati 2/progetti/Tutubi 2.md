@@ -1,6 +1,6 @@
 ---
 created: 2025-05-18T11:51
-updated: 2025-05-18T15:08
+updated: 2025-05-18T15:38
 ---
 ## raffinamento dei requisiti
 1) Utenti
@@ -132,8 +132,28 @@ Ogni istanza di questa classe rappresenta un commento lasciato da un utente ad u
 `V.Commento.commento_dopo_visione`
 
 $$\begin{align*}&
-\forall u,\,c,\,icom,\,vid(\text{utente\_commento} (u,\,c)\land\text{commento\_vid}(c,vid)\land\text{istante\_comm}(c,\,icom) \\&
-\implies \exists vis,\,ivi (\text{utente\_visione}(u,v)\land \text{istante\_vis}(vis,\,ivi) \land ivi<icom)\\&
+\forall ut,\,com,\,icom,\,vid(\text{utente\_commento} (ut,\,com)\land\text{commento\_vid}(com,vid)\land\text{istante\_comm}(com,\,icom) \\&
+\implies \exists vis,\,ivi (\text{utente\_visione}(ut,vis)\land \text{visione\_vid}(vis,\,vid) \land\text{istante\_vis}(vis,\,ivi) \land ivi<icom)\\&
 )
 \end{align*}
+$$
+
+### specifica della classe Utente
+Ogni istanza di questa classe rappresenta un utente della piattaforma.
+
+`V.Utente.valutazione_dopo_visione`
+
+$$
+\begin{align*}&
+\forall ut,\,vid,\,ival(\text{valutazione}(ut,\,vid) \land\text{istante\_val}(ut,\,vid,\,ival) \implies \\&
+\exists vis,\,ivis(\text{utente\_visione}(ut,\,vis)\land\text{visione\_vid}(vis,\,vid)\land\text{istante\_vis}(ut,\,vid,\,ivis)\land ivis < ival)\\&
+) \\&
+
+\end{align*}
+$$
+
+`V.Utente.no_valutazione_autoreferenziale`
+
+$$
+\forall ut,\,vid \ (\text{pubbl\_video}(ut,\,vid)\implies \neg(\text{valutazione}(ut,\,vid)))
 $$
