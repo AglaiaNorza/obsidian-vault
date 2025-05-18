@@ -1,6 +1,6 @@
 ---
 created: 2025-05-18T11:51
-updated: 2025-05-18T13:01
+updated: 2025-05-18T13:18
 ---
 ## raffinamento dei requisiti
 1) Utenti
@@ -62,39 +62,39 @@ $$
 `V.Video.censura_no_commenti`
 
 $$
-\begin{flalign}&
+\begin{align*}&
 \forall v,\,c,\,\,ice,\,ico \ \\&
 ( \\&
 \text{VideoCensurato}(v)\land\text{ist\_cens}(v,\,ice)  \\&
 \land \;\text{commento\_vid}(c,\,v)\land \text{istante\_comm}(c,ico)\\&
 \implies ico < ice\\&
 )
-\end{flalign}
+\end{align*}
 $$
 
 `V.Video.censura_no_rating`
 
 $$
-\begin{flalign}&
+\begin{align*}&
 \forall v,\,u,\,\,ice,\,iva \ \\&
 ( \\&
 \text{VideoCensurato}(v)\land\text{ist\_cens}(v,\,iv)  \\&
 \land \;\text{valutazione}(u,\,v)\land \text{istante\_val}(u,\,v,\,iva)\\&
 \implies iva < ice\\&
 )
-\end{flalign}
+\end{align*}
 $$
 
 `V.Video.censura_no_visione`
 $$
-\begin{flalign}&
+\begin{align}&
 \forall v,\,vis,\,\,ice,\,ivi \ \\&
 ( \\&
 \text{VideoCensurato}(v)\land\text{ist\_cens}(v,\,ice)  \\&
 \land \;\text{visione\_vid}(vis,\,v)\land \text{istante\_vis}(vis,ivi)\\&
 \implies ivi < ice\\&
 )
-\end{flalign}
+\end{align}
 $$
 
 
@@ -102,4 +102,15 @@ alternativamente:
 
 `V.Video.censura_no_interazioni`
 
-
+$$\begin{align}&
+\forall v,\,ice \\& 
+( \\&
+ \text{VideoCensurato}(v) \land \text{ist\_cens}(v,\,ice) \implies\\&
+ (\\&
+(\forall vis,\,ivi \ (\text{visione\_vid}(v,\,vis)\land\text{istante\_vis}(vis,\,ivi)\implies ivi< ice) )\ \land \\&
+(\forall com,\,ico\ (\text{commento\_vid}(v,\,com)\land\text{istante\_comm}(com,\,ico)\implies ico< ice))\  \land\\&
+(\forall ute,\,iva \ (\text{valutazione\_vid}(v,\,ute)\land\text{istante\_val}(v,\,ute,\,iva)\implies iva < ice)\\&
+)) \\&
+)
+\end{align}
+$$
