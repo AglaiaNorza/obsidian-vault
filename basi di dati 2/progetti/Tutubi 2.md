@@ -1,6 +1,6 @@
 ---
 created: 2025-05-18T11:51
-updated: 2025-05-18T13:18
+updated: 2025-05-18T15:08
 ---
 ## raffinamento dei requisiti
 1) Utenti
@@ -59,6 +59,8 @@ $$
 \forall v_{1},v_{2}(v_{1}=v_{2} \implies \neg\text{videorisp}(v_{1},v_{2}))
 $$
 
+---
+
 `V.Video.censura_no_commenti`
 
 $$
@@ -113,4 +115,25 @@ $$\begin{align}&
 )) \\&
 )
 \end{align}
+$$
+
+### specifica della classe Visione
+Ogni istanza di questa classe rappresenta una visione di un video effettuata da un utente.
+
+`V.Visione.visione_dopo_iscrizione`
+
+$$
+\forall u,\,v,\,iscr,\,ivi(\text{utente\_visione}(u,v)\land\text{ist\_iscr}(u,iscr)\land\text{istante\_vis}(v,ivi)\implies iscr < ivi)
+$$
+
+### specifica della classe Commento
+Ogni istanza di questa classe rappresenta un commento lasciato da un utente ad un video.
+
+`V.Commento.commento_dopo_visione`
+
+$$\begin{align*}&
+\forall u,\,c,\,icom,\,vid(\text{utente\_commento} (u,\,c)\land\text{commento\_vid}(c,vid)\land\text{istante\_comm}(c,\,icom) \\&
+\implies \exists vis,\,ivi (\text{utente\_visione}(u,v)\land \text{istante\_vis}(vis,\,ivi) \land ivi<icom)\\&
+)
+\end{align*}
 $$
