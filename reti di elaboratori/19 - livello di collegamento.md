@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-17T15:53
+updated: 2025-05-18T18:44
 ---
 La comunicazione a livello di collegamento è **hop-to-hop** o nodo-to-nodo.
 - host e router sono chiamati **nodi** o **stazioni**
@@ -67,5 +67,3 @@ Un datagramma può essere gestito da diversi protocolli quando si trova su colle
 
 ### errori 
 Gli errori sono dovuti a **interferenze** che possono cambiare la forma del segnale.
-
-
