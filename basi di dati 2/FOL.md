@@ -1,6 +1,6 @@
 ---
 created: 2025-04-30T17:16
-updated: 2025-05-01T11:36
+updated: 2025-05-18T11:25
 ---
 Una **logica** è una famiglia di linguaggi formali per rappresentare informazioni e derivare conseguenze.
 
@@ -104,3 +104,28 @@ Poiché ci sono due livelli sintattici (termini e formule), ci sono due nozioni 
 
 #### interpretazione
 
+
+
+## FOL e UML
+- simboli di predicato sono definiti dai nomi dei moduli e costrutti dell'UML
+- le funzioni sono definite dalle operazioni necessarie per operare sui valori dei domini
+
+- **ogni classe** definisce il simbolo di predicto unario `C/1` ⟶ le istanze di C hanno $C(x)=\text{true}$
+- **ogni dominio** definisce il simbolo `dom/1`(es. Intero/1 true se intero)
+	- ogni *dominio specializzato* definisce due simboli:
+	- `dom` e `dom_spec`
+	- es. Intero/1 e Intero>=0/1 (devono essere entrambi veri)\
+	- ogni *dominio composto* definisce:
+	- un simbolo unario `dom/1`
+	- un simbolo di predicato unario per ogni dominio di ogni campo
+	- un simbolo di predicato binario per ogni campo
+- **ogni attributo di una classe** definisce il simbolo binario `attr/2` in cui i valori dell'attributo attr per l'istanza c di C sono rappresentati dagli elementi $v$ tali che $attr(c,v)=\text{true}$
+- **ogni associazione** tra C1 e C2 definisce il simbolo binario `assoc/2` le coppie (ruolo1: c1, ruolo2: c2) del dominio tali che $assoc(c1, c2)=true$
+	- ORDINE DEGLI ARGOMENTI DEFINITO DALL'ORDINE LESSICOGRAFICO DEI NOMI DEI RUOLI
+- **ogni attributo di una associazione** definisce il simbolo di predicato ternario `attr/3` (c1, c2, v) = true se v valore....
+- **ogni operazione** avente n argomenti definisce un simbolo di predicato (n+2)-ario (classe, argomenti..., valore di ritorno)
+	- nel caso dell'overloading, in logica dobbiamo cambiare il nome di una delle due operazioni (es. op_classe1 e op_classe2)
+
+Estendiamo la logica con
+- relazioni matematiche
+- somme tra date
