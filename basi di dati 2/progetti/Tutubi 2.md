@@ -1,6 +1,6 @@
 ---
 created: 2025-05-18T11:51
-updated: 2025-05-18T15:38
+updated: 2025-05-18T16:05
 ---
 ## raffinamento dei requisiti
 1) Utenti
@@ -42,7 +42,7 @@ updated: 2025-05-18T15:38
 ![[TuTubi2.png]]
 
 ### specifica dei tipi di dato
-- DurataVideo: (minuti: Intero >= 0, secondi: Intero [0..59])
+- DurataVideo: (ore: Intero >=0, minuti: Intero [0..59], secondi: Intero [0..59])
 
 ### specifica della classe Video
 Ogni istanza di questa classe rappresenta un video pubblicato sulla piattaforma
@@ -138,6 +138,7 @@ $$\begin{align*}&
 \end{align*}
 $$
 
+(per transitività tra `V.Commento.commento_dopo_visione` e `V.Visione.visione_dopo_iscrizione`, non devo specificare un eventuale `V.Commento.commento_dopo_iscrizione`)
 ### specifica della classe Utente
 Ogni istanza di questa classe rappresenta un utente della piattaforma.
 
@@ -152,8 +153,50 @@ $$
 \end{align*}
 $$
 
+(per transitività tra `V.Utente.valutazione_dopo_visione` e `V.Visione.visione_dopo_iscrizione`, non devo specificare un eventuale `V.Utente.valutazione_dopo_iscrizione`)
+
+---
+
 `V.Utente.no_valutazione_autoreferenziale`
 
 $$
 \forall ut,\,vid \ (\text{pubbl\_video}(ut,\,vid)\implies \neg(\text{valutazione}(ut,\,vid)))
+$$
+
+### specifica della classe Entry
+Ogni istanza di questa classe rappresenta una entry di una playlist.
+
+`V.Entry.no_entries_censurate`
+
+$$
+\begin{align*}&
+\forall ent,\,vid,\,ient,\,icen(\text{video\_entry}(ent,\,vid)\land\text{istante\_entry}(ent,\,ient) \\&
+\land\text{VideoCensurato}(vid)\land \text{ist\_cens}(vid,icen) \implies \\&
+ient < icen\\&
+) 
+\end{align*}
+$$
+
+`V.Entry.entry_dopo_creazione`
+
+$$\begin{align*}&
+\forall ent,\,pl,\,ient,\,ipl \\&
+(\text{entry\_playlist}(ent,\,pl) \land \text{istante\_entry}(ient,\,ent) \land \text{ist\_creazione}(pl,\,ipl) \implies \\&
+ient \geq ipl\\&
+)
+\end{align*}
+$$
+
+(per transitività tra `V.Entry.entry_dopo_creazione` e `V.Playlist.playlist_dopo_iscrizione` non ho bisogno di scrivere un ipotetico `V.Entry.entry_dopo_iscrizione`)
+### specifica della classe Playlist
+Ogni istanza di questa classe rappresenta una playlist.
+
+`V.Playlist.playlist_dopo_iscrizione`
+
+$$
+\begin{align*}&
+\forall play,\,ut,\,ipl,\,iscr \\&
+(\text{creaz\_playlist}(ut,\,play)\land \text{ist\_creazione}(play,\,ipl)\land \text{ist\_iscr}(ut,\,iscr)\\&
+\implies ipl > iscr)
+\end{align*}
 $$
