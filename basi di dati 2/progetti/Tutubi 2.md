@@ -1,6 +1,6 @@
 ---
 created: 2025-05-18T11:51
-updated: 2025-05-18T16:05
+updated: 2025-05-18T16:38
 ---
 ## raffinamento dei requisiti
 1) Utenti
@@ -39,7 +39,7 @@ updated: 2025-05-18T16:05
 
 ## UML
 
-![[TuTubi2.png]]
+![[TuTubi2.png|center]]
 
 ### specifica dei tipi di dato
 - DurataVideo: (ore: Intero >=0, minuti: Intero [0..59], secondi: Intero [0..59])
@@ -200,3 +200,14 @@ $$
 \implies ipl > iscr)
 \end{align*}
 $$
+
+## Use-Case
+
+![[TuTubiUseCase.png|center]]
+
+## specifica degli Use-Case
+
+### specifica dello Use-Case iscrizione
+
+**pre-condizioni**:
+- $$
