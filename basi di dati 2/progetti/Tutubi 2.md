@@ -1,6 +1,6 @@
 ---
 created: 2025-05-18T11:51
-updated: 2025-05-18T16:38
+updated: 2025-05-18T16:53
 ---
 ## raffinamento dei requisiti
 1) Utenti
@@ -39,8 +39,7 @@ updated: 2025-05-18T16:38
 
 ## UML
 
-![[TuTubi2.png|center]]
-
+![[TuTubi2.png]]
 ### specifica dei tipi di dato
 - DurataVideo: (ore: Intero >=0, minuti: Intero [0..59], secondi: Intero [0..59])
 
@@ -207,7 +206,20 @@ $$
 
 ## specifica degli Use-Case
 
-### specifica dello Use-Case iscrizione
+Use-Case da finire così da capire quali operazioni di classe implementare
+
+### specifica dello Use-Case Iscrizione
+
+`iscriviUtente(n: Stringa): Utente`
 
 **pre-condizioni**:
-- $$
+- $\forall u \ (\neg\text{nome\_utente}(u,\,n))$
+
+**post-condizioni**:
+- *Modifica del livello estensionale dei dati*:
+	- nuovi elementi del dominio di interpretazione: $u$
+	- nuove ennuple di predicati:
+		- $\text{Utente}(u)$
+		- $\text{nome\_utente}(u,\,n)$
+		- $\text{ist\_iscr}(u,\,\text{adesso})$
+- *Valore di ritorno*: $\text{result}= u$
