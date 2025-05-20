@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-18T19:28
+updated: 2025-05-20T14:51
 ---
 La comunicazione a livello di collegamento è **hop-to-hop** o nodo-to-nodo.
 - host e router sono chiamati **nodi** o **stazioni**
@@ -92,3 +92,22 @@ Viene utilizzato anche un controllo sulla **parità**: si inserisce un bit aggiu
 >[!example] parità bidimensionale
 >
 >![[parita-bidimensionale.png|center|400]]
+
+## protocolli di accesso multiplo
+Quando si utilizza un canale broadcast condiviso, centinaia o migliaia di nodi possono comunicare direttamente su un canale broadcast. Non è quindi raro che i nodi ricevano *due o più frame contemporaneamente*, generando una **collisione**.
+
+I **protocolli di accesso multiplo** permettono di limitare il caos e realizzare una condivisione di canale, fissando le modalità con cui i nodi regolano le loro trasmissioni sul canale condiviso. 
+- la comunicazione relativa al canale condiviso avviene sul canale stesso (non ce n'è un altro "out of band")
+
+>[!info] protocolli di accesso multiplo ideali
+>
+>A livello ideale, se si ha un canale broadcast con velocità di $R$bps, si vuole che:
+>- se solo un nodo deve inviare dati, esso disponga di un tasso trasmissivo pari a $R$bps
+>- se $M$ nodi devono inviare dati, il canale sia *diviso equamente* tra questi (quindi che ognuno abbia un tasso trasmissivo di $\frac{R}{M}$bps)
+>
+>Un protocollo di accesso multiplo ideale è *decentralizzato*: non ci sono nodi master e non c'è sincronizzazione dei clock.
+>
+
+I protocolli di accesso multiplo si possono classificare in una di queste tre categorie:
+- **protocolli a suddivisione del canale** (channel partitioning)  ⟶ si suddivide un canale in parti più piccole (slot di tempo, frequenza ecc), che vengono allocate ad un nodo per utilizzo esclusivo
+- **protocolli ad accesso casuale** 
