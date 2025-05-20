@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-20T15:54
+updated: 2025-05-20T16:35
 ---
 La comunicazione a livello di collegamento è **hop-to-hop** o nodo-to-nodo.
 - host e router sono chiamati **nodi** o **stazioni**
@@ -11,7 +11,7 @@ La comunicazione a livello di collegamento è **hop-to-hop** o nodo-to-nodo.
 
 >[!tip] i **protocolli** a livello di collegamento si occupano del trasporto di datagrammi lungo un **singolo canale di comunicazione**
 
-## link
+# link
 I nodi all'interno di una rete sono fisicamente collegati da un mezzo trasmissivo come un cavo o l'aria.
 
 È possibile utilizzare:
@@ -65,7 +65,7 @@ Un datagramma può essere gestito da diversi protocolli quando si trova su colle
 >
 >Si occupa degli aspetti specifici dei *canali broadcast*, come il controllo dell'accesso al mezzo condiviso
 
-## errori 
+# errori 
 Gli errori sono dovuti a **interferenze** (o "rumori") che possono cambiare la forma del segnale, e si dividono in due categorie:
 - **errori sul singolo bit**
 - **errori a burst** (raffica)
@@ -93,7 +93,7 @@ Viene utilizzato anche un controllo sulla **parità**: si inserisce un bit aggiu
 >
 >![[parita-bidimensionale.png|center|400]]
 
-## protocolli di accesso multiplo
+# protocolli di accesso multiplo
 Quando si utilizza un canale broadcast condiviso, centinaia o migliaia di nodi possono comunicare direttamente su un canale broadcast. Non è quindi raro che i nodi ricevano *due o più frame contemporaneamente*, generando una **collisione**.
 
 I **protocolli di accesso multiplo** permettono di limitare il caos e realizzare una condivisione di canale, fissando le modalità con cui i nodi regolano le loro trasmissioni sul canale condiviso. 
@@ -117,21 +117,21 @@ I protocolli di accesso multiplo si possono classificare in una di queste tre ca
 
 ![[prot-acc-mul.png|center|450]]
 
-### protocolli a suddivisione del canale
-#### TDMA
+## protocolli a suddivisione del canale
+### TDMA
 Il protocollo TDMA (Time Division Multiple Access) [vedi anche [[1 - introduzione alle reti#suddivisione della rete|TDM]]] permette l'accesso multiplo a **divisione di tempo**.
 
 Ogni nodo ha un *turno* assegnato per accedere al canale, che è diviso in intervalli di tempo.
 - gli slot non usati *rimangono inattivi*
 
 Il difetto principale del TDMA è il fatto che **non è flessibile** rispetto a variazioni nel numero di nodi (quindi la banda non viene utilizzata appieno).
-#### FDMA
+### FDMA
 Il protocollo FDMA (Frequency Division Multiple Access) [vedi anche [[1 - introduzione alle reti#suddivisione della rete|FDM]]] suddivide il canale in **bande di frequenza**.
 
 A ciascuna stazione è assegnata una banda di frequenza prefissata.
 - il tasso trasmissivo per ognuno degli $N$ nodi è $\frac{R}{N}$bps
 
-### protocolli ad accesso casuale
+## protocolli ad accesso casuale
 Quando si utilizzano protocolli ad accesso casuale, **nessuna stazione ha il controllo** sulle altre. Ogni volta che una stazione ha dei dati da inviare, usa una procedura definita dal protocollo per decidere se spedire o meno. 
 - non c'è un tempo programmato nel quale la stazione deve trasmettere
 - non c'è una regola specifica che permette di sapere quale sarà la prossima stazione che trasmetterà
@@ -140,7 +140,7 @@ Le stazioni si **contendono il canale**, ovvero competono l'una con l'altra per 
 
 Poiché le collisioni sono possibili, un protocollo ad accesso casuale deve definire **come rilevarle** e **come ritrasmettere** nel caso si sia verificata una collisione.
 
-#### ALOHA
+### ALOHA
 Il protocollo **ALOHA** è il primo metodo di accesso casuale ad essere stato proposto in letteratura. È stato ideato <small> all'università delle Hawaii nei primi anni '70</small> per mettere in comunicazione diversi atolli mediante una LAN radio.
 
 Ogni stazione può inviare un frame tutte le volte che ha dati da inviare. Il ricevente invia un `ACK` per notificare la corretta ricezione del frame ⟶ se il mittente non riceve `ACK` entro un **timeout**, deve *ritrasmettere*.
@@ -177,3 +177,15 @@ Se due stazioni ritrasmettono di nuovo contemporaneamente e avviene un'altra col
 >TP = \frac{600 \times 10^3}{3 \times 10^8} = 2ms
 >$$
 >
+>per $K=2$, l'intervallo di $R$ è $\{ 0,\,1,\,2,\,3 \}$ - ciò significa che $T_{B}=R \times T_{\text{fr}}$ può essere 0, 2, 4 o 6 ms sulla base del risultato della variabile casuale $R$.
+
+#### ALOHA puro
+Il protocollo ALOHA puro ha elevate probabilità di collisione, in quanto il **tempo di vulnerabilità** (l'intervallo di tempo nel quale il frame è a rischio di collisioni) è $2T_{\text{fr}}$ (il frame trasmesso a tempo $t$ si sovrappone con la trasmissione di qualsiasi frame inviato in $[t-1,t+1]$)
+
+![[alohapuro-vul.png|center|450]]
+
+[ aggiungi studio dell'efficienza ]
+
+#### slotted ALOHA
+Un modo per aumentare l'efficienza di ALOHA consiste nel  **dividere il tempo in intervalli discreti**, ciascuno corrispondente ad un frame time ($T_{\text{fr}}$).
+
