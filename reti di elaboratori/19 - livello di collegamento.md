@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-20T14:51
+updated: 2025-05-20T15:37
 ---
 La comunicazione a livello di collegamento è **hop-to-hop** o nodo-to-nodo.
 - host e router sono chiamati **nodi** o **stazioni**
@@ -110,4 +110,35 @@ I **protocolli di accesso multiplo** permettono di limitare il caos e realizzare
 
 I protocolli di accesso multiplo si possono classificare in una di queste tre categorie:
 - **protocolli a suddivisione del canale** (channel partitioning)  ⟶ si suddivide un canale in parti più piccole (slot di tempo, frequenza ecc), che vengono allocate ad un nodo per utilizzo esclusivo
-- **protocolli ad accesso casuale** 
+	- si evitano sicuramente le collisioni
+- **protocolli ad accesso casuale** (random access)
+	- i canali non vengono divisi, quindi si può verificare una collisione ⟶ i nodi coinvolti ritrasmettono ripetutamente i pacchetti
+- **protocolli a rotazione** (taking-turn) ⟶ ciascun nodo ha il suo turno di trasmissione; i nodi che hanno molto da trasmettere possono avere turni più lunghi
+
+![[prot-acc-mul.png|center|450]]
+
+### protocolli a suddivisione del canale
+#### TDMA
+Il protocollo TDMA (Time Division Multiple Access) [vedi anche [[1 - introduzione alle reti#suddivisione della rete|TDM]]] permette l'accesso multiplo a **divisione di tempo**.
+
+Ogni nodo ha un *turno* assegnato per accedere al canale, che è diviso in intervalli di tempo.
+- gli slot non usati *rimangono inattivi*
+
+Il difetto principale del TDMA è il fatto che **non è flessibile** rispetto a variazioni nel numero di nodi (quindi la banda non viene utilizzata appieno).
+#### FDMA
+Il protocollo FDMA (Frequency Division Multiple Access) [vedi anche [[1 - introduzione alle reti#suddivisione della rete|FDM]]] suddivide il canale in **bande di frequenza**.
+
+A ciascuna stazione è assegnata una banda di frequenza prefissata.
+- il tasso trasmissivo per ognuno degli $N$ nodi è $\frac{R}{N}$bps
+
+### protocolli ad accesso casuale
+Quando si utilizzano protocolli ad accesso casuale, **nessuna stazione ha il controllo** sulle altre. Ogni volta che una stazione ha dei dati da inviare, usa una procedura definita dal protocollo per decidere se spedire o meno. 
+- non c'è un tempo programmato nel quale la stazione deve trasmettere
+- non c'è una regola specifica che permette di sapere quale sarà la prossima stazione che trasmetterà
+
+Le stazioni si **contendono il canale**, ovvero competono l'una con l'altra per accedere al mezzo trasmissivo. 
+
+Poiché le collisioni sono possibili, un protocollo ad accesso casuale deve definire **come rilevarle** e **come ritrasmettere** nel caso si sia verificata una collisione.
+
+#### ALOHA
+Il protocollo **ALOHA** è il primo metodo di accesso casuale ad essere stato proposto in letteratura. È stato ideato <small> all'università delle Hawaii nei primi anni ''
