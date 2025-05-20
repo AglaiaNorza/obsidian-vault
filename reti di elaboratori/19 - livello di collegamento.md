@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-20T15:37
+updated: 2025-05-20T15:54
 ---
 La comunicazione a livello di collegamento è **hop-to-hop** o nodo-to-nodo.
 - host e router sono chiamati **nodi** o **stazioni**
@@ -141,4 +141,39 @@ Le stazioni si **contendono il canale**, ovvero competono l'una con l'altra per 
 Poiché le collisioni sono possibili, un protocollo ad accesso casuale deve definire **come rilevarle** e **come ritrasmettere** nel caso si sia verificata una collisione.
 
 #### ALOHA
-Il protocollo **ALOHA** è il primo metodo di accesso casuale ad essere stato proposto in letteratura. È stato ideato <small> all'università delle Hawaii nei primi anni ''
+Il protocollo **ALOHA** è il primo metodo di accesso casuale ad essere stato proposto in letteratura. È stato ideato <small> all'università delle Hawaii nei primi anni '70</small> per mettere in comunicazione diversi atolli mediante una LAN radio.
+
+Ogni stazione può inviare un frame tutte le volte che ha dati da inviare. Il ricevente invia un `ACK` per notificare la corretta ricezione del frame ⟶ se il mittente non riceve `ACK` entro un **timeout**, deve *ritrasmettere*.
+
+Se due stazioni ritrasmettono di nuovo contemporaneamente e avviene un'altra collisione, si **attende un tempo random** (*back-off*) (la casualità aiuta ad evitare altre collisioni) prima di effettuare la ritrasmissione. Dopo un numero massimo di tentativi $K_{\text{max}}$, una stazione interrompe i suoi tentativi e riprova più tardi.
+
+>[!example] esempio 
+>
+>![[ALOHA-es.png|center|450]]
+
+>[!summary] timeout e backoff
+>Il periodo di **timeout** equivale al **massimo ritardo di propagazione di round-trip tra le due stazioni più lontane**.
+>
+>$$
+>\text{timeout}=2 \times T_p
+>$$
+>
+>Il **tempo di back-off** è un valore scelto casualmente che **dipende dal numero $K$ di trasmissioni fallite**.
+>
+>$$
+>\text{backoff}=R\cdot T_{\text{fr}}
+>$$
+>
+>dove:
+>- $R\in[0,\,2^k-1]$, 
+>- $K=\text{\#tentativi}$, 
+>- $T_{\text{fr}}=\text{tempo x inviare un frame}$,
+>- $K_{max}=15$
+
+>[!example] esempio: calcolo di backoff
+>
+>Le stazioni in una rete wireless ALOHA sono a una distanza massima di 600km. Supponendo che i segnali si propaghino a $3 \times 10^8\text{m/s}$, troviamo che
+>$$
+>TP = \frac{600 \times 10^3}{3 \times 10^8} = 2ms
+>$$
+>
