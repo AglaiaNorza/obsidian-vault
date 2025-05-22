@@ -1,6 +1,6 @@
 ---
 created: 2025-04-28T17:11
-updated: 2025-05-22T19:33
+updated: 2025-05-22T20:22
 ---
 >[!info] indice
 >- [[1 - introduzione alle reti]]
@@ -26,6 +26,9 @@ updated: 2025-05-22T19:33
 >- [[15 - OSPF]]
 >- [[16 - BGP]]
 >- [[18 - IPv6]]
+>
+>livello collegamento:
+>- [[19 - livello di collegamento]]
 
 >[!tip]- un memino gentilmente fornito da [alessio](https://alem1105.github.io/Quartz/) 
 >
