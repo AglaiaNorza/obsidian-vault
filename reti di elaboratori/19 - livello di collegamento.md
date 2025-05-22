@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-21T17:32
+updated: 2025-05-22T12:01
 ---
 La comunicazione a livello di collegamento è **hop-to-hop** o nodo-to-nodo.
 - host e router sono chiamati **nodi** o **stazioni**
@@ -190,4 +190,34 @@ Il protocollo ALOHA puro ha elevate probabilità di collisione, in quanto il **t
 Un modo per aumentare l'efficienza di ALOHA consiste nel  **dividere il tempo in intervalli discreti**, ciascuno corrispondente ad un frame time ($T_{\text{fr}}$).
 
 I nodi si mettono d'accordo nei confini tra gli intervalli facendo emettere da una attrezzatura speciale un breve segnale all'inizio di ogni intervallo.
+
+>[!tip] assunzioni
+>Si assume che:
+>- tutti i pacchetti abbiano la stessa dimensione
+>- il tempo sia diviso in **slot**, in cui ogni slot equivale al **tempo di trasmissione di un pacchetto**
+>- i nodi inizino la trasmissione dei pacchetti solo all'inizio degli slot
+>- i nodi siano **sincronizzati**
+>- se in uno slot due o più pacchetti collidono, i nodi coinvolti rilevino l'evento prima del termine dello slot
+
+Quando ad un nodo arriva un nuovo pacchetto da spedire, questo attende quindi l'inizio del prossimo slot. 
+- **Se non si verifica una collisione** ⟶ il nodo può trasmettere un nuovo pacchetto nello slot successivo
+- **Se si verifica una collisione** ⟶ il nodo ritrasmette con *probabilità p* il suo pacchetto durante gli slot successivi
+
+
+| **pros**                                                                                            | **cons**                                                         |
+| --------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| consente a un singolo nodo di trasmettere continuammente pacchetti alla massima velocità del canale | una frazione degli slot presenterà collisioni e andrà "sprecata" |
+| il tempo di vulnerabilità si riduce ad un solo slot ($T_{\text{fr}}$)                               | un'altra frazione degli slot rimarrà vuota e quindi inattiva     |
+
+>[!example] efficienza
+>Supponiamo ci siano $N$ nodi e che ognuno trasmetta i pacchetti in uno slot con probabilità $p$.
+>- la probabilità di successo di un dato nodo è $p(1-p)^{N-1}$
+>- poiché ci sono $N$ nodi, la probabilità che ogni nodo abbia successo è $Np(1-p)^{N-1}$
+>
+>L'efficienza chhe si ottiene per un elevato numero di nodi è data dal limite di $\lim_{ N \to \infty }Np^*(1-p^*)^{N-1}=\frac{1}{e}\approx 0,37$.
+>
+>Quindi, nel caso migliore, solo il 37% degli slot compie lavoro utile.
+
+### CSMA
+Il protocollo CSMA (Carrier Sense Multiple Access, accesso multiplo a rilevazione della portante).
 
