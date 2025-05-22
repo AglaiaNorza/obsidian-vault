@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-22T12:15
+updated: 2025-05-22T12:32
 ---
 La comunicazione a livello di collegamento è **hop-to-hop** o nodo-to-nodo.
 - host e router sono chiamati **nodi** o **stazioni**
@@ -221,4 +221,7 @@ Quando ad un nodo arriva un nuovo pacchetto da spedire, questo attende quindi l'
 ### CSMA
 Nel protocollo CSMA (Carrier Sense Multiple Access, accesso multiplo a rilevazione della portante), un  nodo **si pone in ascolto prima di trasmettere** (listen before talk/sense before transmit); se rileva che il canale è libero, trasmette l'intero pacchetto. Se invece sta già trasmettendo, **aspetta** un altro intervallo di tempo.
 
-Ma le collisioni possono ancora verificarsi: il **ritardo di propagazione** può far sì che due nodi non rilevino la reciproca trasmissione: esiste quindi un **tempo di vulnerabilità**
+Ma le collisioni possono ancora verificarsi: il **ritardo di propagazione** può far sì che due nodi non rilevino la reciproca trasmissione: esiste quindi un **tempo di vulnerabilità**, che corrisponde al tempo di propagazione.
+
+#### CSMA/CD
+CSMA/Collision Detection permette di **rilevare le collisioni** ascoltando il canale anche *durante la trasmissione*. Le collisioni vengono rilevate in poco tempo, e la trasmissione viene annullata non appena si accorge di un'altra trasmissione in corso.
