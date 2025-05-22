@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-22T20:03
+updated: 2025-05-22T20:21
 ---
 La comunicazione a livello di collegamento è **hop-to-hop** o nodo-to-nodo.
 - host e router sono chiamati **nodi** o **stazioni**
@@ -184,7 +184,13 @@ Il protocollo ALOHA puro ha elevate probabilità di collisione, in quanto il **t
 
 ![[alohapuro-vul.png|center|450]]
 
-[ aggiungi studio dell'efficienza ]
+>[!example] efficienza
+>Assumendo che tutti i frame abbiano la stessa dimensione e ogni nodo abbia sempre un frame da trasmettere:
+>- in ogni istante di tempo, $p$ è la probabilità che un nodo trasmetta un frame (e $(1-p)$ che non trasmetta)
+>- supponendo che un nodo inizi a trasmettere al tempo $t_{0}$, perché la trasmissione vada a buon fine, nessun altro nodo deve aver iniziato la trasmissione nel tempo $[t_{0}-1,\,t_{0}]$ (probabilità data da $(1-p)^{N-1}$), e allo stesso modo nessun nodo deve iniziare a trasmettere nel tempo $[t_{0},\,t_{0}+1]$ (evento che ha la stessa probabilità)
+>- la probabilità che trasmetta con successo è quindi $p(1-p)^{2(N-1)}$
+>
+>Studiando il valore di $p$ per $N$ che tende ad infinito, si ottiene che l'efficienza massima è $\frac{1}{2e}\approx 0,18$ (bassa)
 
 #### slotted ALOHA
 Un modo per aumentare l'efficienza di ALOHA consiste nel  **dividere il tempo in intervalli discreti**, ciascuno corrispondente ad un frame time ($T_{\text{fr}}$).
@@ -281,4 +287,17 @@ Ci sono diversi metodi di persistenza per i nodi.
 ## protocolli MAC a rotazione
 I protocolli a rotazione cercano un **compromesso** tra quelli a suddivisione del canale e quelli ad accesso casuale.
 #### polling
-Nel protocollo **polling**, un nodo principale sonda **a turno** gli altri, eliminando le collisioni, gli slot 
+Nel protocollo **polling**, un nodo principale (master) sonda **a turno** gli altri (slave) per eliminare le collisioni e gli slot vuoti, e decidere chi può trasmettere in quale momento
+- in particolare interroga uno alla volta ogni nodo: se il nodo ha dati da inviare, li invia, e il master passa al nodo successivo
+- può interrogare i nodi in modo equo (round robin) o rispettando delle prorità
+
+>[!warning] se il nodo principale si guasta, l'intero canale resta inattivo
+
+- il protocollo di polling genera overhead perché si interrogano anche stazioni che non hanno dati da inviare
+
+
+#### token-passing
+Nel protocollo **token-passing**, un **messaggio di controllo** (token) circola fra i nodi seguendo un ordine prefissato.
+- una stazione che riceve il token può inviare dati e passerà poi il token alla stazione successiva
+
+È un protocollo decentralizzato e altamente efficiente, ma il guasto di un nodo può mettere fuori uso l'intero canale.
