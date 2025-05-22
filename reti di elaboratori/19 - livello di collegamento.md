@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-22T12:32
+updated: 2025-05-22T13:00
 ---
 La comunicazione a livello di collegamento è **hop-to-hop** o nodo-to-nodo.
 - host e router sono chiamati **nodi** o **stazioni**
@@ -225,3 +225,44 @@ Ma le collisioni possono ancora verificarsi: il **ritardo di propagazione** può
 
 #### CSMA/CD
 CSMA/Collision Detection permette di **rilevare le collisioni** ascoltando il canale anche *durante la trasmissione*. Le collisioni vengono rilevate in poco tempo, e la trasmissione viene annullata non appena si accorge di un'altra trasmissione in corso.
+
+>[!tip] La rilevazione di collisioni è facile nelle lan cablate e difficile nelle LAN wireless.
+
+[ inserisci foto ]
+
+>[!info] dimensione minima del frame
+> Perché il Collision Detection funzioni, il mittente deve poter rilevare la trasmissione *prima di trasmettere l'ultimo bit del frame* (una volta inviato un frame, una stazione non ne tiene una copia né controlla il mezzo trasmissivo per rilevare collisioni). 
+> 
+> Il tempo di trasmissione di un frame deve quindi essere almeno due volte il tempo di propagazione $T_{p}$ (quindi la prima stazione deve essere ancora in trasmissione dopo $2T_{p}$).
+
+>[!example] esempio 
+>Una rete che utilizza CSMA/CD ha un rate di $10\text{mbps}$. Se il tempo di propagazione massimo è $25,6\mu s$, qual è la dimensione minima del frame?
+>
+>Il tempo di trasmissione minimo del frame è:
+>
+>$$
+>T_{\text{fr}}2 \times T_{p} = 51.2\mu s
+>$$
+>
+>quindi, nel peggiore dei casi, una stazione deve trasmettere per $51,2\mu s$ per poter rilevare la collisione.
+>
+>La dimensione minima del frame è quindi:
+>
+>$$
+>10\text{Mbps} \times 51,2\mu s = 512\text{bit} = 64 \text{byte}
+>$$
+
+#### metodi di persistenza
+Ci sono diversi metodi di persistenza per i nodi.
+
+
+|                                              | **non persistente**                                                   | **1-persistente**                                    | **p-persistente**                                    |
+| -------------------------------------------- | --------------------------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
+| cosa fa un nodo se trova il canale libero?   | trasmette subito                                                      | trasmette subito                                     | trasmette con probabilità p                          |
+| cosa fa un nodo se trova il canale occupato? | desiste e riascolta dopo un tempo random (carrier sense a intervalli) | rimane in ascolto finché il canale non si è liberato | rimane in ascolto finché il canale non si è liberato |
+| se c'è collisione                            | backoff                                                               | backoff                                              | backoff                                              |
+
+>[!example]  efficienza CSMA/CD
+>Quando un solo nodo trasmette, può trasmettere al massimo rate; quando più nodi trasmettono, il throughput è minore.
+>
+>Il throughput del CSMA/CD 
