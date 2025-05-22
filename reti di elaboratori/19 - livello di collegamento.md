@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-22T17:41
+updated: 2025-05-22T17:46
 ---
 La comunicazione a livello di collegamento è **hop-to-hop** o nodo-to-nodo.
 - host e router sono chiamati **nodi** o **stazioni**
@@ -265,4 +265,9 @@ Ci sono diversi metodi di persistenza per i nodi.
 >[!example]  efficienza CSMA/CD
 >Quando un solo nodo trasmette, può trasmettere al massimo rate; quando più nodi trasmettono, il throughput è minore.
 >
->Il throughput del CSMA/CD è maggiore sia di quello dell'ALOHA puro che di quello dello slotted ALOHA
+>Il throughput del CSMA/CD è maggiore di quello dell'ALOHA (sia puro che slotted).
+>
+>Per il metodo 1-persistente, il throughput massimo è del 50%.
+
+
+## protocolli MAC a rotazione
