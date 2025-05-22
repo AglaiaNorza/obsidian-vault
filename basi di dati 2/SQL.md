@@ -1,6 +1,6 @@
 ---
 created: 2025-05-14T10:21
-updated: 2025-05-19T10:54
+updated: 2025-05-22T19:33
 ---
 I DBMS seguono un'architettura a **3 livelli**:
 - livello interno ⟶ strutture interne di memorizzazione
