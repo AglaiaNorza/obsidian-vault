@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-22T17:46
+updated: 2025-05-22T20:03
 ---
 La comunicazione a livello di collegamento è **hop-to-hop** o nodo-to-nodo.
 - host e router sono chiamati **nodi** o **stazioni**
@@ -203,7 +203,6 @@ Quando ad un nodo arriva un nuovo pacchetto da spedire, questo attende quindi l'
 - **Se non si verifica una collisione** ⟶ il nodo può trasmettere un nuovo pacchetto nello slot successivo
 - **Se si verifica una collisione** ⟶ il nodo ritrasmette con *probabilità p* il suo pacchetto durante gli slot successivi
 
-
 | **pros**                                                                                            | **cons**                                                         |
 | --------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
 | consente a un singolo nodo di trasmettere continuammente pacchetti alla massima velocità del canale | una frazione degli slot presenterà collisioni e andrà "sprecata" |
@@ -228,7 +227,9 @@ CSMA/Collision Detection permette di **rilevare le collisioni** ascoltando il ca
 
 >[!tip] La rilevazione di collisioni è facile nelle lan cablate e difficile nelle LAN wireless.
 
-[ inserisci foto ]
+>[!example]- esempio
+>
+>![[csma-cd.png|center|500]]
 
 >[!info] dimensione minima del frame
 > Perché il Collision Detection funzioni, il mittente deve poter rilevare la trasmissione *prima di trasmettere l'ultimo bit del frame* (una volta inviato un frame, una stazione non ne tiene una copia né controlla il mezzo trasmissivo per rilevare collisioni). 
@@ -262,6 +263,14 @@ Ci sono diversi metodi di persistenza per i nodi.
 | cosa fa un nodo se trova il canale occupato? | desiste e riascolta dopo un tempo random (carrier sense a intervalli) | rimane in ascolto finché il canale non si è liberato | rimane in ascolto finché il canale non si è liberato |
 | se c'è collisione                            | backoff                                                               | backoff                                              | backoff                                              |
 
+![[non-pers.png|center|450]]
+
+![[1-pers.png|center|450]]
+
+
+![[p-pers.png|center|550]]
+
+
 >[!example]  efficienza CSMA/CD
 >Quando un solo nodo trasmette, può trasmettere al massimo rate; quando più nodi trasmettono, il throughput è minore.
 >
@@ -269,5 +278,7 @@ Ci sono diversi metodi di persistenza per i nodi.
 >
 >Per il metodo 1-persistente, il throughput massimo è del 50%.
 
-
 ## protocolli MAC a rotazione
+I protocolli a rotazione cercano un **compromesso** tra quelli a suddivisione del canale e quelli ad accesso casuale.
+#### polling
+Nel protocollo **polling**, un nodo principale sonda **a turno** gli altri, eliminando le collisioni, gli slot 
