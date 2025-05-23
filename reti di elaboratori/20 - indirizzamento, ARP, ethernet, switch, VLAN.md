@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-22T22:04
+updated: 2025-05-23T17:52
 ---
 
 >[!info] indirizzi MAC
@@ -11,4 +11,34 @@ updated: 2025-05-22T22:04
 >
 >![[MAC-es.png|center|450]]
 
-La IEEE sovrintende la gestione degli indirizzi MAC
+- La IEEE sovrintende la gestione degli indirizzi MAC.
+- La comunicazione tra MAC address è peer-to-peer (tra le stazioni)
+- Gli indirizzi MAC sono "orizzontali": non serve nessun server centralizzato, e non vanno aggiornati se spostati
+
+## protocollo ARP
+Il protocollo di **Address Resolution** permette di determinare l'indirizzo MAC di un nodo conoscendone solo l'indirizzo IP.
+- ogni nodo IP nella LAN ha una **tabella ARP** contenente record del tipo:
+
+$$
+<\text{indirizzo IP; indirizzo MAC; TTL}>
+$$
+
+in cui $\text{TTL}$ (Time To Live) indica quando bisognerà eliminare una voce nella tabella.
+
+>[!example] ARP nella stessa sottorete
+>$A$ vuole inviare un datagramma a $B$, ma non possiede il suo indirizzo MAC.
+>- $A$ trasmette in un *pacchetto broadcast* (ovvero con indirizzo MAC del destinatario = `FF-FF-FF-FF-FF-FF`) il messaggio di richiesta ARP contentente l'indirizzo IP di $B$
+>- solo il nodo con l'indirizzo IP corretto risponderà, fornendo il proprio indirizzo MAC (in *unicast*)
+>
+>![[ARP-es.png|center|450]]
+>
+>>[!tip] la tabella ARP di un nodo si costituisce automaticamente e non deve essere configurata dall'amministratore di sistema
+
+### formato dei pacchetti
+
+>[!info] pacchetto ARP
+>
+>![[ARP-pacchetto.png|center|450]]
+>
+>- `Hardware Type`  **protocollo del livello collegamento** 
+>- `Protocol Type` ⟶ **protocollo del livello di rete**

@@ -1,6 +1,6 @@
 ---
 created: 2025-05-03T12:54
-updated: 2025-05-22T19:33
+updated: 2025-05-23T17:22
 ---
 (use case: registrazione utenti, pubbl video, visualizz video, esprimere valutazioni)
 

@@ -1,6 +1,6 @@
 ---
 created: 2025-03-24T09:30
-updated: 2025-05-22T19:33
+updated: 2025-05-23T17:22
 ---
 >[!info] index
 >- [[0 - introduzione]] 

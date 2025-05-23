@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-22T19:33
+updated: 2025-05-23T17:36
 ---
 >[!info] routing
 >Il **routing** si occupa di trovare il **miglior percorso** per un pacchetto e di inserirlo nella tabella di routing (o tabella di forwarding).
@@ -101,7 +101,7 @@ Quando viene inizializzato un nodo, si crea un vettore distanza iniziale con le 
 > - ricezione da un vicino di un vettore di distanza aggiornato
 > 
 > (è *distribuito* perché):
-> - ogni nodo aggiorna i suoi vicini soo quando il suo vettore della distanza cambia (i vicini sono avvisati solo se necessario)
+> - ogni nodo aggiorna i suoi vicini solo quando il suo vettore della distanza cambia (i vicini sono avvisati solo se necessario)
 
 ### problema della modifica dei costi
 con le modalità di aggiornamento definite nell’algoritmo, si può verificare il *problema del conteggio all’infinito* (le buone notizie viaggiano in fretta, e le notizie cattive si propagano lentamente <small>(life lesson)</small>).
