@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-24T21:37
+updated: 2025-05-24T22:05
 ---
 >[!info]- standard IEEE 802
 >IEEE ha prodotto diversi standard per le LAN (collettivamente noti come IEEE 802), che includono:
@@ -106,3 +106,15 @@ Ethernet standard si è evoluta a **fast ethernet** (100Mbps), mantenendo la ret
 Il gigabit ethernet è la versione successiva al fast Ethernet. Ha una topologia a stella con switch (quindi non ci sono collisioni), e permette di arrivare fino a 10Gbps
 
 # VLAN
+Le LAN virtuali sono **reti locali** configurate per mezzo del **software** invece che del cablaggio fisico.
+- una LAN viene suddivisa in **segmenti logici** anziché fisici, e può essere suddivisa in più VLAN
+- il gruppo di appartenenza è definito dal software
+
+![[VLAN.png|center|450]]
+
+Il management software dello switch permette all’amministratore di rete di dichiarare quali porte appartengono a una data LAN (lo switch mantiene una tabella di associazioni porta-VLAN).
+
+### VLAN trunking
+Esiste una porta speciale su ogni switch che viene configurata come **porta trunk**, una porta che può interconnettere due switch (anche in due edifici diversi). La porta trunk appartiene ad **entrambe le VLAN** e riceve i frame indirizzati ad entrambe.
+
+![[VLAN-trunking.png|center|450]]

@@ -1,6 +1,6 @@
 ---
 created: 2025-04-28T17:11
-updated: 2025-05-23T17:22
+updated: 2025-05-24T22:07
 ---
 >[!info] indice
 >- [[1 - introduzione alle reti]]
@@ -29,6 +29,8 @@ updated: 2025-05-23T17:22
 >
 >livello collegamento:
 >- [[19 - livello di collegamento]]
+>- [[20 - ARP]]
+>- [[21 - switch, ethernet, VLAN]]
 
 >[!tip]- un memino gentilmente fornito da [alessio](https://alem1105.github.io/Quartz/) 
 >
