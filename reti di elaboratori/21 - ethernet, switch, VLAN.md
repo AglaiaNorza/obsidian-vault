@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-24T10:29
+updated: 2025-05-24T11:32
 ---
 >[!info]- standard IEEE 802
 >IEEE ha prodotto diversi standard per le LAN (collettivamente noti come IEEE 802), che includono:
@@ -19,4 +19,13 @@ Ethernet è la tecnologia di rete che consente la comunicazione tra dispositivi 
 ![[ethernet-standard.png|center|450]]
 
 ### formato dei frame
-![[frame-ethernet.png|center|500]]
+>[!info] frame
+
+
+
+
+>![[frame-ethernet.png|center|500]]
+
+> - `Preambolo` ⟶ 7 byte con valore `10101010`: servono per **attivare le NIC** (schede di rete) dei riceventi e **sincronizzare** i loro orologi con quello del trasmittente (fa parte dell'header a livello fisico)
+> - `SFD` (Start Frame Delimiter) ⟶ 1 byte con valore `10101011`: definisce l'**inizio del frame** (è l'ultima possibilità di sincronizzazione); gli ultimi due bit (`11`) indicano che inizia l'header MAC
+> -`Indirizzi sorgente e destinazione` ⟶ 6 byte; quando una NIC riceve
