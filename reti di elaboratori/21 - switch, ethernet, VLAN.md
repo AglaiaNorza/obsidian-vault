@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-24T18:58
+updated: 2025-05-24T21:37
 ---
 >[!info]- standard IEEE 802
 >IEEE ha prodotto diversi standard per le LAN (collettivamente noti come IEEE 802), che includono:
@@ -13,6 +13,32 @@ updated: 2025-05-24T18:58
 > - WLAN (802.11)
 > 
 > I vari standard differiscono a livello fisico e nel sottolivello MAC, ma sono **compatibili a livello data link**.
+
+## switch
+Uno switch è un dispositivo di livello collegamento che (al contrario dell'hub) svolge un **ruolo attivo**. Opera direttamente a livello di collegamento, filtrando e inoltrando i pacchetti Ethernet: esamina l'indirizzo di destinazione e lo invia all'interfaccia corrispondente.
+- gli switch sono **trasparenti** agli host (questi non sono consapevoli della loro presenza)
+
+![[switch.png|center|400]]
+
+Gli switch consentono **più trasmissioni simultanee**: gli host hanno collegamenti dedicati e diretti con lo switch, che bufferizza i pacchetti.
+- il protocollo Ethernet è usato su ciascun collegamento in entrata, ma non si verificano collisioni
+- è una connessione full duplex
+
+>[!summary] proprietà degli switch
+>- sono dispositivi **plug-and-play**: non richiedono intervento dell'amministratore di rete o dell'utente
+>- **elminano le collisioni**: bufferizzano i frame e non trasmettono più di un frame alla volta su ogni segmento di rete
+>- **interconnettono link eterogenei**: collegamenti che operano a diverse velocità possono essere collegati ad uno switch
+>- aumentano la **sicurezza** della rete e migliorano il **network management**: 
+>	- (inviano ogni pacchetto solo alla porta corrispondente al dispositivo destinatario, quindi non è possibile utilizzare un packet sniffer per intercettare il traffico degli altri dispositivi in modo passivo <small>(perché lo switch non inoltra i pacchetti a tutte le porte)</small>)
+>	- forniscono informazioni su uso di banda, collisioni, tipi di traffico ecc.
+### apprendimento
+Inizialmente gli switch venivano configurati staticamente, ma ora c'è un meccanismo dinamico di **auto-apprendimento**, basato su una tabella dinamica associa automaticamente gli indirizzi MAC alle porte.
+
+Lo switch apprende quali nodi possono essere raggiunti attraverso determinate interfacce
+- quando riceve un pacchetto, "impara" l'indirizzo del mittente e registra la coppia mittente/interfaccia nella sua tabella di commutazione
+-  quando deve inoltrare un frame, se la destinazione è ignota si usa il *flooding*, mentre se è nota il *selective send*
+
+
 # ethernet standard
 Ethernet è la tecnologia di rete che consente la comunicazione tra dispositivi in una LAN, e detiene una posizione dominante nel mercato delle LAN cablate (è stata la prima LAN cablata ad alta velocità con vasta diffusione).
 
@@ -68,7 +94,7 @@ Ethernet standard si è evoluta a **fast ethernet** (100Mbps), mantenendo la ret
 > 
 > ![[csma-ethernet-hub.png|center|350]]
 > 
-> 1) <u>**seconda soluzione**</u>
+> 2) <u>**seconda soluzione**</u>
 > 
 > Si utilizza uno **switch di collegamento dotato di buffer** per memorizzare i frame e **connessione full duplex** (permette la comunicazione simultanea in entrambe le direzioni) per ciascun host.
 > - il mezzo trasmissivo è privato per ciascun host e non c'è bisogno di usare CSMA/CD visto che *gli host non sono più in competizione*
@@ -76,10 +102,7 @@ Ethernet standard si è evoluta a **fast ethernet** (100Mbps), mantenendo la ret
 > - il singolo mezzo condiviso diventa molti mezzi punto-punto
 > 
 
-### switch
-Uno switch è un dispositivo di livello collegamento che (al contrario dell'hub) svolge un **ruolo attivo**. Opera direttamente a livello di collegamento, filtrando e inoltrando i pacchetti Ethernet: esamina l'indirizzo di destinazione e lo invia all'interfaccia corrispondente.
-- gli switch sono **trasparenti** agli host (questi non sono consapevoli della loro presenza)
+# gigabit ethernet
+Il gigabit ethernet è la versione successiva al fast Ethernet. Ha una topologia a stella con switch (quindi non ci sono collisioni), e permette di arrivare fino a 10Gbps
 
-![[switch.png|center|400]]
-
-Gli switch consentono
+# VLAN
