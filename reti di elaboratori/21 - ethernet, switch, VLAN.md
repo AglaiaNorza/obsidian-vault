@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-24T12:39
+updated: 2025-05-24T13:08
 ---
 >[!info]- standard IEEE 802
 >IEEE ha prodotto diversi standard per le LAN (collettivamente noti come IEEE 802), che includono:
@@ -52,4 +52,28 @@ Tutte le stazioni che fanno parte di una ethernet sono dotate di una **Network I
 	- la NIC prova a stimare quanti sono gli adattatori coinvolti (se sono numerosi, il tempo di attsa potrebbe essere lungo) (ad ogni collisione, il range da cui scegliere $k$ cresce)
 
 # fast ethernet
-Ethernet standard si è evoluta a **fast ethernet** (100Mbps), mantenendo la retrocompatibilità e mantenendo invariato il sottolivello MAC (compresi formato dei frame )
+Ethernet standard si è evoluta a **fast ethernet** (100Mbps), mantenendo la retrocompatibilità e mantenendo invariato il sottolivello MAC (compresi formato e dimensione dei frame).
+
+>[!question] CSMA/CD e fast ethernet
+> Il funzionamento corretto di CSMA/CD dipende dalla *velocità di trasmissione*, dalla *dimensione minima del frame* e dalla *lunghezza massima della rete*. Visto che con il fast ethernet la trasmissione è 10 volte più veloce mentre il frame rimane lungo 512 bit, le collisioni devono essere rilevate 10 volte più velocemente, quindi la rete deve essere **10 volte più corta**.
+> 
+> 1) <u>**prima soluzione**</u>
+> 
+> Una prima soluzione per integrare CSMA/CD e fast ethernet è quella di utilizzare un hub passivo con topologia a stella (tutti i dispositivi sono collegati a un punto centrale), ma con dimensione massima della rete fissata a 250 metri invece che 2500 della versione standard.
+> 
+> L'hub è un dispositivo che opera a livello fisico sui **singoli bit**.
+> - all'arrivo di un bit, l'hub lo riproduce incrementandone l'energia e lo trasmette attraverso tutte le sue altre interfacce
+> - ripete il bit entrante su tutte le interfacce uscenti anche se se c'è già un segnale
+> - trasmette in broadcast, quindi ciascuna NIC può sondare il canale per verificare se è libero e rilevare una collisione mentre trasmette
+> 
+> ![[csma-ethernet-hub.png|center|350]]
+> 
+> 1) <u>**seconda soluzione**</u>
+> 
+> Si utilizza uno **switch di collegamento dotato di buffer** per memorizzare i frame e **connessione full duplex** (permette la comunicazione simultanea in entrambe le direzioni) per ciascun host.
+> - il mezzo trasmissivo è privato per ciascun host e non c'è bisogno di usare CSMA/CD visto che *gli host non sono più in competizione*
+> - lo switch riceve un frame da un host, lo memorizza nel buffer, verifica l'indirizzo di destinazione e invia il frame attraverso l'interfaccia corrispondente
+> - il singolo mezzo condiviso diventa molti mezzi punto-punto
+> 
+
+### switch
