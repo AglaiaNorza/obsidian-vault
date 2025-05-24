@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-24T12:09
+updated: 2025-05-24T12:39
 ---
 >[!info]- standard IEEE 802
 >IEEE ha prodotto diversi standard per le LAN (collettivamente noti come IEEE 802), che includono:
@@ -13,7 +13,7 @@ updated: 2025-05-24T12:09
 > - WLAN (802.11)
 > 
 > I vari standard differiscono a livello fisico e nel sottolivello MAC, ma sono **compatibili a livello data link**.
-
+# ethernet standard
 Ethernet è la tecnologia di rete che consente la comunicazione tra dispositivi in una LAN, e detiene una posizione dominante nel mercato delle LAN cablate (è stata la prima LAN cablata ad alta velocità con vasta diffusione).
 
 ![[ethernet-standard.png|center|450]]
@@ -43,6 +43,13 @@ Tutte le stazioni che fanno parte di una ethernet sono dotate di una **Network I
 	- la NIC riceve un datagramma di rete dal nodo a cui è collegato e prepara un frame ethernet
 2) **carrier sense e trasmissione**
 	- misura il livello di energia sul mezzo trasmissivo per un periodo di tempo e, se il canale è inattivo, inizia la trasmissione; se il canale risulta occupato, resta in attesa fino a quando non rileva più il segnale (e trasmette)
-3) **collision detection**'
+3) **collision detection**
+	- verifica, durante la trasmissione, la presenza di eventuali segnali provenienti da altre NIC; se non ne rileva, considera il pacchetto spedito
 4) **jamming**
+	- se rileva segnali da altre NIC, interrompe immediatamente la trasmissione del pacchetto e invia un segnale di disturbo (jam) di 48 bit per avvisare della collisione tutte le altre NIC che sono in fase trasmissiva 
 5) **backoff esponenziale**
+	- la NIC rimane in attesa; quando rileva la $n$-esima collisione consecutiva, stabilisce un valore $k \in \{ 0,\,1,\,\dots,\,2^m-1 \}$ con $m=min(n,\,10)$, aspetta un tempo pari a $k$ volte 512 bit e ritorna al passo 2
+	- la NIC prova a stimare quanti sono gli adattatori coinvolti (se sono numerosi, il tempo di attsa potrebbe essere lungo) (ad ogni collisione, il range da cui scegliere $k$ cresce)
+
+# fast ethernet
+Ethernet standard si è evoluta a **fast ethernet** (100Mbps), mantenendo la retrocompatibilità e mantenendo invariato il sottolivello MAC (compresi formato dei frame )
