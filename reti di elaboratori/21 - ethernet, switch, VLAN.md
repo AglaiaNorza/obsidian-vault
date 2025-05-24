@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-24T13:08
+updated: 2025-05-24T18:58
 ---
 >[!info]- standard IEEE 802
 >IEEE ha prodotto diversi standard per le LAN (collettivamente noti come IEEE 802), che includono:
@@ -77,3 +77,9 @@ Ethernet standard si è evoluta a **fast ethernet** (100Mbps), mantenendo la ret
 > 
 
 ### switch
+Uno switch è un dispositivo di livello collegamento che (al contrario dell'hub) svolge un **ruolo attivo**. Opera direttamente a livello di collegamento, filtrando e inoltrando i pacchetti Ethernet: esamina l'indirizzo di destinazione e lo invia all'interfaccia corrispondente.
+- gli switch sono **trasparenti** agli host (questi non sono consapevoli della loro presenza)
+
+![[switch.png|center|400]]
+
+Gli switch consentono
