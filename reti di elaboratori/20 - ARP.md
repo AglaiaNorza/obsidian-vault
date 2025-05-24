@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-23T17:52
+updated: 2025-05-23T17:58
 ---
 
 >[!info] indirizzi MAC
@@ -34,11 +34,15 @@ in cui $\text{TTL}$ (Time To Live) indica quando bisognerà eliminare una voce n
 >
 >>[!tip] la tabella ARP di un nodo si costituisce automaticamente e non deve essere configurata dall'amministratore di sistema
 
-### formato dei pacchetti
+### pacchetti
+I pacchetti ARP vengono incapsulati direttamente all'interno di frame di livello di collegamento.
 
 >[!info] pacchetto ARP
 >
->![[ARP-pacchetto.png|center|450]]
+>![[ARP-pacchetto.png|center|350]]
 >
->- `Hardware Type`  **protocollo del livello collegamento** 
+>- `Hardware Type` ⟶ **protocollo del livello collegamento** 
 >- `Protocol Type` ⟶ **protocollo del livello di rete**
+>- `Hardware length` e `Protocol length` fanno riferimento rispettivamente a `Source hardware address` e `Source protocol address`
+>- `Destination hardware address` è **vuoto nelle richieste**
+>- `Protocoll address` ⟶ **indirizzo IP**
