@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-25T13:09
+updated: 2025-05-25T15:33
 ---
 Le reti wireless si dividono in:
 - LAN wireless, disponibili in campus, uffici, bar, aree pubbliche
@@ -60,5 +60,33 @@ Alcune delle caratteristiche più importanti dei link wireless sono:
 Le caratteristiche dei link wireless causano errori. Il tasso di errore è misurato con il **Signal to Noise Radio** (SNR o rapporto segnale-rumore), che misura il rapporto tra il segnale buono e il rumore esterno.
 - se è alto, il segnale è più forte del rumore e può quindi essere convertito in dati reali
 - se è basso, il segnale è stato danneggiato dal rumore e i dati non possono essere recuperati
+
+Per **evitare collisioni**, è necessario controllare l'accesso al mezzo (che è condiviso). 
+
+>[!question] per le reti wireless, non si può usare CSMA/CD
+>- **no collision detection**
+>
+>Per rilevare una collisione, un host deve poter trasmettere e ricevere (ascoltare il canale) contemporaneamente. Ma, poiché la potenza del segnale ricevuto è molto inferiore a quella del segnale trasmesso, sarebbe *troppo costoso* usare un adattatore di rete in grado di rilevare le collisioni (i dispositivi wireless  hanno un'energia limitata fornita dalla batteria che non consente loro di usare un dispositivo del genere).
+>
+>- **hidden terminal problem**
+>
+> Un host potrebbe non accorgersi che un altro host sta trasmettendo e non sarebbe in grado di rilevare la collisione.
+> 
+> ![[hidden-terminal.png|center|450]]
+> 
+
+## IEEE 802.11
+IEEE ha definito le **specifiche per le LAN wireless**, chiamate `802.11`, che coprono i livelli fisico e collegamento.
+
+### architettura BSS
+**Basic Service Set** (BSS) è costituita da uno o più host wireless e un access point.
+
+![[BSS.png|center|500]]
+
+### architettura ESS
+**Extended Service Set** è costituito da due o più BSS con infrastruttura.
+- i BSS sono collegati da una rete cablata o wireless
+- quando i BSS sono collegati, le stazioni in visibilità comunicano direttamente, mentre le altre comunicano tramite l'AP
+
 
 
