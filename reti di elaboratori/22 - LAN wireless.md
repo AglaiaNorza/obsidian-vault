@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-25T18:36
+updated: 2025-05-25T19:06
 ---
 Le reti wireless si dividono in:
 - LAN wireless, disponibili in campus, uffici, bar, aree pubbliche
@@ -117,19 +117,32 @@ Più stazioni possono voler comunicare nello stesso momento. Sono quindi state d
 ### CSMA/CA
 Poiché la collision detection non è possibile, si fa affidamento sulla **collision avoidance** (protocollo CSMA/CA), e si cerca di evitare che due o più nodi trasmettano contemporaneamente.
 
-Il protocollo CSMA/CA usa:
-- **ACK** come riscontro per capire se una trasmissione è andata a buon fine
-	- ci possono essere collisioni anche sugli ACK
-- **doppio carrier sense** (ascolto del canale prima di trasmettere) per dati e ack
-- **IFS** (spazio interframe) ⟶ tempo che una stazione aspetta prima di iniziare a trasmettere dopo aver rilevato che il canale è libero (si vuole evitare che le stazioni che hanno già iniziato a trasmettere collidano con la stazione che vuole trasmettere); può essere:
-	- **SIFS** ⟶ Short IFS: garantisce alta priorità alle trasmissioni (usato anche per ACK)
-	- **DIFS** ⟶ Distributed IFS: garantisce bassa priorità (usato per le trasmissioni normali)
-	- DIFS > SIFS, in modo da dare priorità alle comunicazioni già iniziate (agli ACK)
+> [!summary] caratteristiche
+> Il protocollo CSMA/CA usa:
+> - **ACK** come riscontro per capire se una trasmissione è andata a buon fine
+> 	- ci possono essere collisioni anche sugli ACK
+> - **doppio carrier sense** (ascolto del canale prima di trasmettere) per dati e ack
+> - **IFS** (spazio interframe) ⟶ tempo che una stazione aspetta prima di iniziare a trasmettere dopo aver rilevato che il canale è libero (si vuole evitare che le stazioni che hanno già iniziato a trasmettere collidano con la stazione che vuole trasmettere); può essere:
+> 	- **SIFS** ⟶ Short IFS: garantisce alta priorità alle trasmissioni (usato anche per ACK)
+> 	- **DIFS** ⟶ Distributed IFS: garantisce bassa priorità (usato per le trasmissioni normali)
+> 	- DIFS > SIFS, in modo da dare priorità alle comunicazioni già iniziate (agli ACK)
 
-Se durante l'intervallo DIFS il canale diventa occupato:
-- il nodo interrompe il conteggio del DIFS
-- aspetta che il canale torni completamente libero
-- quando il canale torna libero, riavvia da zero il conteggio del DIFS completo
+Quindi:
+- il mittente **ascolta** il canale: se lo trova libero, aspetta un DIFS e poi **trasmette**
+	- se durante l’intervallo DIFS, il canale diventa occupato, il nodo interrompe il conteggio del DIFS, **aspetta** che il canale torni libero, e **riavvia da zero** il conteggio del DIFS completo
+- se il ricevente **riceve** correttamente un frame, aspetta un SIFS e invia un `ACK`
 
-#### finestra di contesa
-Dopo aver at
+In realtà, dopo aver atteso un tempo IFS, se il canale è ancora inattivo, l’host attende un ulteriore tempo di tempo di contesa: la **contention window**, il lasso di tempo per cui deve sentire il canale libero prima di trasmettere
+- il tempo è diviso in slot, e ad ogni slot si esegue il **sensing** del canale
+- l’host sceglie `R` random in `[0, CW]`
+- `while R > 0:`
+	- ascolta il canale per uno slot
+	- se il canale è libero per la durata dello slot: `R -= 1`; altrimenti, se il canale è occupato durante il sensing, interrompe il timer e aspetta che il canale si liberi (e riavvia il timer)
+
+### RTS/CTS
+Il problema dell'**hidden terminal** non viene risolto con IFS e finestra di contesa: è necessario un meccanismo di **prenotazione del canale**: Request-to-Send (RTS) Clear-To-Send (CTS). 
+
+![[RTS-CTS.png|center|450]]
+
+- quando una stazione invia un frame RTS, include la durata di tempo in cui occuperà il canale per trasmettere il frame e ricevere l’`ACK`
+- questo tempo viene incluso anche nel CTS. in questo modo, le stazioni che sono influenzate da tale trasmissione avviano un timer chiamato **NAV** che indica quanto tempo devono attendere prima di eseguire il sensing del canale
