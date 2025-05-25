@@ -1,6 +1,6 @@
 ---
 created: 2025-04-10T14:17
-updated: 2025-04-27T12:13
+updated: 2025-05-26T00:02
 ---
 Come visto nell'[[3 - stack protocollare|introduzione allo stack protocollare]], il livello di rete si occupa dell'instradamento dei segmenti dall'origine alla destinazione.
 Nello specifico, svolge due compiti:
@@ -21,7 +21,7 @@ Il **packet switch** è il dispositivo che si occupa del trasferimento dall'inte
 
 Il **link-layer switch** instrada pacchetti a livello di collegamento, ed è utilizzato per collegare singoli computer all'interno di una rete LAN. 
 
-Il **router** instrada pacchetti a livello rete, inoltrandolo ad un altro dei suoi collegamenti di comunicazione (*next hop*).
+Il **router** instrada pacchetti a livello rete, inoltrandoli ad un altro dei suoi collegamenti di comunicazione (*next hop*).
 
 >[!info] architettura del router
 >
