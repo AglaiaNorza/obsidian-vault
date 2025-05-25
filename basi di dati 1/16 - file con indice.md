@@ -1,3 +1,7 @@
+---
+created: 2025-05-13T21:40
+updated: 2025-05-25T13:10
+---
 Quando le chiavi ammettono un **ordinamento significativo**, è conveniente usare un'organizzazione fisica dei dati che ne tenga conto.
 > es: interi e stringhe
 
@@ -18,7 +22,7 @@ Ogni record del file indice ha due campi:
 >[!info] proprietà di copertura
 >Questa struttura per le chiavi si chiama **proprietà di copertura** - ogni chiave dell'indice *ricopre* il blocco puntato
 
-![[file-con-indice.jpeg|center|400]]
+![[file-con-indice.jpeg|center|450]]
 ### ricerca
 Se si vuole effettuare una ricerca di una chiave `x`:
 - si parte dal file indice, e si cerca il primo valore $>$ `x`, e si prende *il precedente* - così facendo, si seleziona il valore che ricopre `x`.
@@ -42,6 +46,7 @@ Visto che il file indice è ordinato in base al valore della chiave, la ricerca 
 >	- sicuramente perché? perché, se per esempio l'ultima chiave del blocco è `< x`, non so se `x` sarà coperta da una chiave successiva - devo dividere di nuovo e procedere con la ricerca binaria
 >
 >>[!warning] ultima chiave del blocco
+>> 
 >>Seguendo questo metodo, quindi, se si controlla l'ultima chiave di un blocco e si vede che `x > kn`, si ha un'"incertezza" - `x` potrebbe essere coperta da essa o da una chiave successiva.
 >>Istintivamente, si potrebbe pensare di controllare la prima chiave del blocco successivo, per vedere se è `> x` (e quindi non la ricopre, e la chiave corretta è l'ultima del blocco precedente) - ma questo sarebbe un errore.
 >>Infatti, accedere al blocco successivo costa (è, appunto, un accesso), e lo si farebbe ogni volta - il costo aumenterebbe quindi di molto (e inutilmente: in ogni caso, proseguendo con la ricerca binaria, si arriverà al blocco corretto).

@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-25T12:48
+updated: 2025-05-25T13:09
 ---
 Le reti wireless si dividono in:
 - LAN wireless, disponibili in campus, uffici, bar, aree pubbliche
@@ -33,5 +33,32 @@ Una LAN wireless è composta da:
 - **wireless links** ⟶ tipicamente usati per connettere gli host alle base station, ma possono anche essere usati come collegamenti per il backbone; variano in data rate e distanza di trasmissione
 	- i [[19 - livello di collegamento#protocolli di accesso multiplo|protocolli di accesso multiplo]] regolano l'accesso ai lnink
 
-## caratteristiche
-Il mezzo trasmissivo delle LAN wireless è l'**aria**
+
+> [!summary] caratteristiche
+> - Il mezzo trasmissivo delle LAN wireless è l'**aria** (mezzo condiviso dagli host della rete), e il segnale è **broadcast**. 
+> - Un **host wireless** non è fisicamente connesso alla rete e può muoversi liberamente.
+> - La **connessione ad altre reti** avviene mediante una stazione base detta **Access Point** (AP), che collega l'ambiente wireless a quello cablato.
+
+
+> [!error] migrazione da ambiente cablato a wireless
+> Il funzionamento di una rete cablata o wireless dipende dai livelli di collegamento e fisico. Per migrare da rete cablata a wireless basta *cambiare le schede di rete* e *sostituire lo switch di collegamento con un AP* (gli indirizzi MAC cambieranno, ma gli IP resteranno gli stessi).
+
+## reti ad hoc
+Le reti ad hoc sono insieme di host che si **auto-organizzano** per formare una rete e **comunicano liberamente** tra di loro.
+- Ogni host deve eseguire le funzionalità di rete (network setup, routing, forwarding ecc)
+
+##  link wireless
+### caratteristiche
+Alcune delle caratteristiche più importanti dei link wireless sono:
+- **attenuazione del segnale** ⟶ la forza dei segnali elettromagnetici diminuisce rapidamente all'aumentare della distanza dal trasmettitore (il segnale si disperde in tutte le direzioni)
+- **propagazione multi-path** ⟶ quando un'onda radio trova un ostacolo, viene riflessa (completamente o in parte) con una perdita di potenza - un segnale può quindi arrivare ad una stazione, tramite riflessi successivi, attraverso percorsi multipli 
+- **interferenze** ⟶ le interferenze possono arrivare:
+	- dalla **stessa sorgente**: un destinatario può ricevere più segnali dal mittente desiderato a causa del multipath
+	- da **altre sorgenti**: se altri trasmettitori stanno usando la stessa banda di frequenza per comunicare con altri destinatari
+
+### errori 
+Le caratteristiche dei link wireless causano errori. Il tasso di errore è misurato con il **Signal to Noise Radio** (SNR o rapporto segnale-rumore), che misura il rapporto tra il segnale buono e il rumore esterno.
+- se è alto, il segnale è più forte del rumore e può quindi essere convertito in dati reali
+- se è basso, il segnale è stato danneggiato dal rumore e i dati non possono essere recuperati
+
+
