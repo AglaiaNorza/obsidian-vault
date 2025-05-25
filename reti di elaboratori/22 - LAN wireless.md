@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-25T15:33
+updated: 2025-05-25T16:03
 ---
 Le reti wireless si dividono in:
 - LAN wireless, disponibili in campus, uffici, bar, aree pubbliche
@@ -88,5 +88,21 @@ IEEE ha definito le **specifiche per le LAN wireless**, chiamate `802.11`, che c
 - i BSS sono collegati da una rete cablata o wireless
 - quando i BSS sono collegati, le stazioni in visibilità comunicano direttamente, mentre le altre comunicano tramite l'AP
 
+![[ESS.png|center|500]]
 
+### architettura generale
+Le architetture BSS corrispondono alle celle delle **reti cellulari**, mentre ESS è molto  comune nelle reti WiFi moderne, soprattutto in aree dove è necessario coprire aree estese con accesso continuo alla rete wireless.
 
+![[architettura-E-BSS.png|center|350]]
+
+### canali e associazione
+Lo spettro 2.4GHz-2.485GHz è diviso in **11 canali** parzialmente sovrapposti. L'amministratore dell'AP sceglie una frequenza, ma sono possibili interferenze (per esempio se viene usato lo stesso canale per AP vicini). Il numero massimo di frequenze utilizzabili da diversi AP per evitare interferenze è 3 (canali 1, 6, 11).
+
+L'architettura IEEE 802.11 prevede che una stazione wireless si **associ ad un AP** per accedere a Internet.
+
+>[!info] associazione di una stazione ad un AP
+>
+>Per associare una stazione (host) ad un AP è necessario conoscere gli AP disponibili in un BSS, e avere un protocollo di associazione.
+>- l'AP invia segnali periodici (beacon) che includono l'identificatore dell'AP (SSID) e il suo indirizzo MAC
+>- la stazione wireless che vuole entrare in un BSS scandisce gli 11 canali trasmissivi alla ricerca di frame beacon (*passive scanning*)
+>- alla fine della scansione
