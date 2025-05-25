@@ -1,3 +1,7 @@
+---
+created: 2025-05-13T21:40
+updated: 2025-05-25T13:11
+---
 Il **timestamp** identifica una transazione.
 È assegnato alla transazione al suo inizio dallo scheduler.
 Può essere: 
@@ -88,6 +92,7 @@ Notiamo che lo schedule delle transazioni superstiti è equivalente allo schedul
 >- se la transazione voleva *scrivere* --> trovare un'altra transazione più giovane che ha già letto i dati
 >
 >>[!tip] ricorda
+>> 
 >>Se invece una transazione vuole scrivere e trova una transazione più giovane che ha già *scritto* i dati, non è necessario il rollback (basta non eseguire la scrittura).
 
 >[!bug] ignorare l'atomicità

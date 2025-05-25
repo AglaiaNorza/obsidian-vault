@@ -1,3 +1,7 @@
+---
+created: 2025-05-13T21:40
+updated: 2025-05-25T13:14
+---
 Supponiamo di voler creare una base di dati contenente i seguenti dati di studenti universitari:
 - dati anagrafico-identificativi (nome, cognome, data, comune, provincia, matricola, CF)
 - dati curricolari (per ogni esame: voto, data, codice, titolo e docente)
@@ -7,7 +11,8 @@ la base di dati consiste di una sola relazione con schema:
  
 questa ipotesi non funziona bene a causa della sua ridondanza: 
 >[!warning] ridondanza in una base di dati 
-La ridondanza dà luogo a:
+> 
+> La ridondanza dà luogo a:
 > - spreco di spazio in memoria
 > - anomalie di aggiornamento - se cambia il docente del corso, il dato deve essere modificato *per ogni esame*
 > - di inserimento - non posso inserire i dati anagrafici di uno studente *finché non ha sostenuto un esame*

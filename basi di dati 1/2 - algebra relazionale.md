@@ -1,3 +1,7 @@
+---
+created: 2025-05-13T21:40
+updated: 2025-05-25T13:13
+---
 L'algebra relazionale è un *linguaggio formale* che ci permette di interrogare una base di dati relazionale. Consiste di:
 - un insieme di **operatori** che possono essere applicati a una (unari) o due (binari) istanze di relazione, e forniscono come risultato:
 - una nuova istanza di relazione (che si può salvare in una variabile)
@@ -10,9 +14,11 @@ Si denota con il pi greco:
 $$\pi_{A_1, A_2, \ldots, A_K}(r)$$
 - seleziona le colonne di r che corrispondono agli attributi A1, A2,...,AK
 
-> [!example]
+> [!example] esempio
 > ![[query1.png|400]]
->  N.B.: nell'algebra relazionale si seguono le regole insiemistiche, quindi nel risultato *non ci sono duplicati*
+>  
+>  N.B.: nell'algebra relazionale si seguono le regole insiemistiche, quindi nel risultato *non ci sono duplicati*.
+>   
 >  Se per esempio si volessero tenere i duplicati (es. per conservare i clienti omonimi), si può aggiungere una chiave alla query: il codice.
 
 ### selezione
@@ -35,7 +41,7 @@ $$ r_{1} \cup r_{2} $$
 >- gli attributi corrispondenti sono ordinatamente definiti sullo **stesso dominio** e hanno lo stesso significato
 
 >[!example] esempio di unione
-![[es-unione.png|250]] ![[es-unione-2.png|300]]
+> ![[es-unione.png|250]] ![[es-unione-2.png|300]]
 
 - spesso, per applicare un'unione, è necessario applicare prima un'altra operazione (es. usare una proiezione per filtrare gli attributi in più
 

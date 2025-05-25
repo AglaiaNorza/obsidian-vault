@@ -1,3 +1,7 @@
+---
+created: 2025-05-13T21:40
+updated: 2025-05-25T13:11
+---
 - Un **database** è un insieme di file mutualmente connessi, organizzati in strutture di dati che ne facilitano la gestione.
 - I **Database Management Systems** sono strumenti software per la gestione di grandi masse di dati.
 
@@ -42,7 +46,7 @@ questi elementi sono intesi come tuple, e vengono raccolti in una tabella (**ist
 	e decidere: regolamento di accesso ed effetti di una violazione 
 
 >[!info] transazione
-una **transazione** è una sequenza di operazioni che costituiscono un'unica operazione logica - deve essere eseguita completamente (*committed*) o non deve essere eseguita affatto (*rolled back*)
+>Una **transazione** è una sequenza di operazioni che costituiscono un'unica operazione logica - deve essere eseguita completamente (*committed*) o non deve essere eseguita affatto (*rolled back*)
 
 per ripristinare un valore corretto della base di dati si usano:
 - transaction log (con dettagli delle operazioni, valori precedenti e seguenti alla modifica)
