@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-25T16:03
+updated: 2025-05-25T16:17
 ---
 Le reti wireless si dividono in:
 - LAN wireless, disponibili in campus, uffici, bar, aree pubbliche
@@ -103,6 +103,16 @@ L'architettura IEEE 802.11 prevede che una stazione wireless si **associ ad un A
 >[!info] associazione di una stazione ad un AP
 >
 >Per associare una stazione (host) ad un AP è necessario conoscere gli AP disponibili in un BSS, e avere un protocollo di associazione.
->- l'AP invia segnali periodici (beacon) che includono l'identificatore dell'AP (SSID) e il suo indirizzo MAC
+>- l'AP invia segnali periodici (*beacon*) che includono l'identificatore dell'AP (SSID) e il suo indirizzo MAC
 >- la stazione wireless che vuole entrare in un BSS scandisce gli 11 canali trasmissivi alla ricerca di frame beacon (*passive scanning*)
->- alla fine della scansione
+>- alla fine della scansione, la stazione sceglie l'AP da cui ha ricevuto il beacon con la maggiore potenza di segnale e gli invia un frame con la *richiesta di associazione*
+>- l'AP accetta la richiesta con un *frame di risposta associazione* che permetterà all'host entrante di inviare una richiesta DHCP per ottenere l'indirizzo IP
+>- può essere prevista un'*autenticazione* per eseguire l'associazione
+
+### protocollo MAC 802.11
+Più stazioni possono voler comunicare nello stesso momento. Sono quindi state definite due tecniche di accesso al mezzo:
+- **Distributed Coordination Function** (DCF) ⟶ i nodi si contendono l'accesso al canale
+- **Point Coordination Function** (PCF) ⟶ non c'è contesa, l'AP coordina l'accesso ai nodi del canale
+
+### CSMA/CA
+Poiché la collision detection non è possibile, si fa affidamento sulla **collision avoidance** (protocollo CSMA/CA), e si cerca di evitare che due o più nodi trasmettano contemporaneamente.
