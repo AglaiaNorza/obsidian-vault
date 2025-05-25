@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-25T16:50
+updated: 2025-05-25T18:36
 ---
 Le reti wireless si dividono in:
 - LAN wireless, disponibili in campus, uffici, bar, aree pubbliche
@@ -126,3 +126,10 @@ Il protocollo CSMA/CA usa:
 	- **DIFS** ⟶ Distributed IFS: garantisce bassa priorità (usato per le trasmissioni normali)
 	- DIFS > SIFS, in modo da dare priorità alle comunicazioni già iniziate (agli ACK)
 
+Se durante l'intervallo DIFS il canale diventa occupato:
+- il nodo interrompe il conteggio del DIFS
+- aspetta che il canale torni completamente libero
+- quando il canale torna libero, riavvia da zero il conteggio del DIFS completo
+
+#### finestra di contesa
+Dopo aver at
