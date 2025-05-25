@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-25T19:06
+updated: 2025-05-25T19:36
 ---
 Le reti wireless si dividono in:
 - LAN wireless, disponibili in campus, uffici, bar, aree pubbliche
@@ -144,5 +144,30 @@ Il problema dell'**hidden terminal** non viene risolto con IFS e finestra di con
 
 ![[RTS-CTS.png|center|450]]
 
-- quando una stazione invia un frame RTS, include la durata di tempo in cui occuperà il canale per trasmettere il frame e ricevere l’`ACK`
-- questo tempo viene incluso anche nel CTS. in questo modo, le stazioni che sono influenzate da tale trasmissione avviano un timer chiamato **NAV** che indica quanto tempo devono attendere prima di eseguire il sensing del canale
+- quando una stazione invia un frame RTS, include la durata di tempo in cui occuperà il canale per trasmettere il frame e ricevere l’`ACK` - questo tempo viene incluso anche nel CTS
+- in questo modo, le stazioni che sono influenzate da tale trasmissione avviano un timer chiamato **NAV**, che indica quanto tempo devono attendere prima di eseguire il sensing del canale
+
+>[!error] se il mittente non riceve CTS, assume che c’è stata  una collisione e riprova dopo un tempo di backoff
+
+>[!warning] problema della stazione esposta
+>
+>Il problema della stazione esposta si verifica  quando una stazione si astiene dall'usare il canale anche se potrebbe trasmettere
+>
+>![[stazione-esposta.png|center|450]]
+>
+>In questo esempio, C è la stazione esposta
+### ACK e timer
+È necessario utilizzare riscontri positivi e timer per capire se una trasmissione è andata a buon fine.
+
+Il mittente non può aspettare un ACK all'infinito, quindi imposta un timer (**ACK timeout**) e, se esso scade prima che abbia ricevuto l'ACK, il nodo suppone che la trasmissione sia fallita e tenta una **ritrasmissione**.
+
+### formato del frame
+
+>[!info] formato del frame
+>
+>![[frame-LAN.png|center|500]]
+>
+>- `Frame Control` (FC) ⟶ tipo di frame e alcune informazioni di controllo
+>- `D` ⟶ durata della trasmissione, usata per impostare il NAV
+>- `Indirizzi` ⟶ indirizzi MAC
+>- `SC` ⟶ informazioni sui frammenti (numero di frammento e numero di sequenza); il numero di sequenza
