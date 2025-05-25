@@ -1,6 +1,6 @@
 ---
 created: 2025-04-30T17:16
-updated: 2025-05-23T17:22
+updated: 2025-05-25T23:13
 ---
 // c'è tutto ma vorrei spiegare un po' meglio alcuni passaggi
 > [!info] divide-et-impera
