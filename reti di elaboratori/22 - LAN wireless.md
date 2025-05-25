@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-25T20:06
+updated: 2025-05-25T20:17
 ---
 Le reti wireless si dividono in:
 - LAN wireless, disponibili in campus, uffici, bar, aree pubbliche
@@ -178,4 +178,28 @@ Il mittente non può aspettare un ACK all'infinito, quindi imposta un timer (**A
 >
 >![[frame-FC.png|center|500]]
 >
-> Una LAN wireles 
+> Una LAN wireless ha 3 categorie di frame: gestione, controllo e dati. Si distinguono in base ai bit del campo FC:
+> - `00` ⟶ frame di **gestione** (usati per le comunicazioni iniziali tra stazioni e punti di accesso)
+> - `01` ⟶ frame di **controllo** (usati per accedere al canale e dare riscontri) (`1011` = RTS, `1100` = CTS, `1101` = ACK)
+> - `10` ⟶ frame di **dati** (usati per trasportare i dati)
+>> [!summary] indirizzamento
+>> 
+> >In base ai campi `To DS` e `From DS` del campo FC, si ha un diverso formato per i campi degli indirizzi
+> >
+>> | Significato                    | To DS | From DS | Address 1    | Address 2   | Address 3    | Address 4 |
+>> | ------------------------------ | ----- | ------- | ------------ | ----------- | ------------ | --------- |
+>> | comunicazione diretta (ad-hoc) | 0     | 0       | destinazione | sorgente    | BSS ID       | N/A       |
+>> | da AP a host                   | 0     | 1       | destinazione | AP mittente | sorgente     | N/A       |
+> >| da host ad AP                  | 1     | 0       | AP ricevente | sorgente    | destinazione | N/A       |
+>> | da AP ad AP                    | 1     | 1       | AP ricevente | AP mittente | destinazione | sorgente  |
+>> 
+>> Essenzialmente, in `address 1` viene memorizzato l’indirizzo del dispositivo successivo a cui viene trasmesso in frame, mentre in `address 2` l’indirizzo del dispositivo che il frame ha lasciato.
+
+## mobillità all'interno della stessa sottorete IP
+La mobilità all'interno della stessa sottorete IP è semplice, e l'IP rimane lo stesso.
+
+![[mobilita-sottorete.png|center|400]]
+
+- $H_{1}$ sente che il segnale da $AP_{1}$ si affievolisce, e avvia una scansione per un segnale più forte
+- $H_{1}$ rileva $AP_{2}$, si disassocia da $AP_{1}$ e si associa a $AP_{2}$, mantenendo lo stesso IP e sessioni TC
+- $AP_{2}$ si occupa di inviare un frame di broadcast allo switch con indirizzo mittente $H_{1}$, e lo switch capisce che $H_{1}$ ora è nel $BSS_{2}$
