@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-25T16:17
+updated: 2025-05-25T16:50
 ---
 Le reti wireless si dividono in:
 - LAN wireless, disponibili in campus, uffici, bar, aree pubbliche
@@ -116,3 +116,13 @@ Più stazioni possono voler comunicare nello stesso momento. Sono quindi state d
 
 ### CSMA/CA
 Poiché la collision detection non è possibile, si fa affidamento sulla **collision avoidance** (protocollo CSMA/CA), e si cerca di evitare che due o più nodi trasmettano contemporaneamente.
+
+Il protocollo CSMA/CA usa:
+- **ACK** come riscontro per capire se una trasmissione è andata a buon fine
+	- ci possono essere collisioni anche sugli ACK
+- **doppio carrier sense** (ascolto del canale prima di trasmettere) per dati e ack
+- **IFS** (spazio interframe) ⟶ tempo che una stazione aspetta prima di iniziare a trasmettere dopo aver rilevato che il canale è libero (si vuole evitare che le stazioni che hanno già iniziato a trasmettere collidano con la stazione che vuole trasmettere); può essere:
+	- **SIFS** ⟶ Short IFS: garantisce alta priorità alle trasmissioni (usato anche per ACK)
+	- **DIFS** ⟶ Distributed IFS: garantisce bassa priorità (usato per le trasmissioni normali)
+	- DIFS > SIFS, in modo da dare priorità alle comunicazioni già iniziate (agli ACK)
+
