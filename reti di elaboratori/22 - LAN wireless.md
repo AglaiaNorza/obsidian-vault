@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-25T19:36
+updated: 2025-05-25T20:06
 ---
 Le reti wireless si dividono in:
 - LAN wireless, disponibili in campus, uffici, bar, aree pubbliche
@@ -170,4 +170,12 @@ Il mittente non può aspettare un ACK all'infinito, quindi imposta un timer (**A
 >- `Frame Control` (FC) ⟶ tipo di frame e alcune informazioni di controllo
 >- `D` ⟶ durata della trasmissione, usata per impostare il NAV
 >- `Indirizzi` ⟶ indirizzi MAC
->- `SC` ⟶ informazioni sui frammenti (numero di frammento e numero di sequenza); il numero di sequenza
+>- `SC` ⟶ informazioni sui frammenti (numero di frammento e numero di sequenza); il numero di sequenza serve per distinguere frame ritrasmessi 
+>- `Frame Body` ⟶ payload
+>- `FCS` ⟶ codice CRC a 32 bit
+
+>[!tip] Frame Control
+>
+>![[frame-FC.png|center|500]]
+>
+> Una LAN wireles 
