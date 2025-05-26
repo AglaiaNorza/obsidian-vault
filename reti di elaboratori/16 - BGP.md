@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-25T23:13
+updated: 2025-05-26T14:57
 ---
 ## struttura di Internet
 
@@ -57,7 +57,7 @@ Esso mette a disposizione di ciascun AS un modo per:
 - ottenere informazioni sulla **raggiungibilità delle sottoreti** da parte di AS confinanti
 - propagare le informazioni di raggiungibilità a tutti i roter interni di un AS
 - **determinare percorsi buoni** * verso le sottoreti sulla base delle informazioni di raggiungibilità e delle politiche dell'AS
-	- * un percorso "buono" non è necessariamente quello più breve: le ragioni dietro la sccelta di percorsi sono principalmente politico-economiche
+	- \* un percorso "buono" non è necessariamente quello più breve: le ragioni dietro la sccelta di percorsi sono principalmente politico-economiche
 
 BGP consente a ciascuna sottorete di comunicare la propria esistenza al resto di Internet.
 
