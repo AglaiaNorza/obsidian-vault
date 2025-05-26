@@ -1,6 +1,6 @@
 ---
 created: 2025-04-30T17:16
-updated: 2025-05-26T09:45
+updated: 2025-05-26T11:22
 ---
 Il protocollo IP (Internet Protocol) è responsabile della **suddivisione in pacchetti**, del **forwarding** e della **consegna** dei datagrammi a livello rete (host to host).
 - è un protocollo *inaffidabile* e *connectionless*
@@ -334,7 +334,7 @@ ICMP viene quindi usato da host e router per *scambiarsi informazioni a livello 
 - `ping` si basa sui messaggi di richiesta e risposta `echo` di ICMP
 
 >[!tip] traceroute e ICMP
->Traceroute invia una serie di datagrammi IP alla destinazione, ciascuno contenente un segmento UDP con un numero di porta inutilizzata (il primo pari con `TTL=1`, il secondo con `TTL=2`, ecc.) e avvia un timer per ogni datagramma.
+>Traceroute invia una serie di datagrammi IP alla destinazione, ciascuno contenente un segmento UDP con un numero di porta inutilizzata (il primo con `TTL=1`, il secondo con `TTL=2`, ecc.) e avvia un timer per ogni datagramma.
 >
 >Quando l’$n$-esimo datagramma arriva all’$n$-esimo router:
 >- il router scarta il datagramma

@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-25T23:13
+updated: 2025-05-26T11:25
 ---
 >[!info] routing
 >Il **routing** si occupa di trovare il **miglior percorso** per un pacchetto e di inserirlo nella tabella di routing (o tabella di forwarding).
@@ -44,7 +44,7 @@ $$
 in cui:
 
 $$
-D_{x}(y)=min_{v}\{ c(x,v) + D_{v}(y) \}
+D_{x}(y)=min_{v}\left\{  c(x,v) + D_{v}(y)  \right\}
 $$
 
 - (dove $min_{v}$ riguarda tutti i vicini di $x$) 
