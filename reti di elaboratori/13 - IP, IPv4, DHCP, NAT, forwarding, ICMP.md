@@ -1,6 +1,6 @@
 ---
 created: 2025-04-30T17:16
-updated: 2025-05-04T08:52
+updated: 2025-05-26T09:45
 ---
 Il protocollo IP (Internet Protocol) è responsabile della **suddivisione in pacchetti**, del **forwarding** e della **consegna** dei datagrammi a livello rete (host to host).
 - è un protocollo *inaffidabile* e *connectionless*
@@ -149,13 +149,13 @@ Essa può essere usata da un programma per calcolare in modo efficiente le infor
 
 Per assegnare un indirizzo IP ad un host, si può decidere tra assegnazione temporanea o permanente, e tra configurazione manuale o con DHCP.
 # DHCP
-L'obiettivo del **Dynamic Host Configuration Protocol** (DHCP) è consentire all'host di ottenere ddinamicamente il suo indirizzo IP dal server di rete.
+L'obiettivo del **Dynamic Host Configuration Protocol** (DHCP) è consentire all'host di ottenere dinamicamente il suo indirizzo IP dal server di rete.
 - è possibile *rinnovare la proprietà* dell'indirizzo in uso
 - è possibile il *riuso* degli indirizzi
 - supporta anche gli utenti mobili che si vogliono unire alla rete
 - è utilizzato nelle reti in cui gli host si aggiungono e rimuovono dalla rete con estrema frequenza
 
-L'assegnazione degli indirizzi ai singoli host o rouoter è **automatizzata**.
+L'assegnazione degli indirizzi ai singoli host o router è **automatizzata**.
 
 >[!tip] nonostante sia un protocollo del livello di rete, DHCP è implementato come un programma **client/server** di livello **applicazione**
 >in particolare:
