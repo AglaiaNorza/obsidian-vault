@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-26T14:57
+updated: 2025-05-26T15:23
 ---
 ## struttura di Internet
 
@@ -151,7 +151,7 @@ Le tabelle di percorso ottenute da BGP non vengono usate di per sé per l'instra
 >
 >![[tabella-stub.png|center|400]]
 
-- nel caso di **AS di transito**, il contenuto dellla tabella di percorso deve essere inserito nella tabella di routing, ma bisogna impostare il costo (si imposta costo pari a quello per raggiungere il primo AS nel percorso)A
+- nel caso di **AS di transito**, il contenuto dellla tabella di percorso deve essere inserito nella tabella di routing, ma bisogna impostare il costo (si imposta costo pari a quello per raggiungere il primo AS nel percorso)
 
 >[!example]- di transito
 >
