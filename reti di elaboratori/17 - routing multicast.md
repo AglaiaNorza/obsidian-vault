@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-15T15:31
+updated: 2025-05-26T15:54
 ---
 # unicast
 
@@ -65,7 +65,7 @@ Per poter comunicare con host che partecipano a un gruppo pur appartenendo a ret
 >![[gruppo-multicast.png|center|400]]
 
 >[!warning] L’appartenenza ad un gruppo non ha alcuna relazione con il prefisso associato alla rete
->Un host che appartiene ad un gruppo ha un indirizzo multicast **separato** e aggiuntivo rispetto all primario (l’appartenenza non è un attributo fisso dell’host, in quanto il periodo di appartenenza può essere limitato).
+>Un host che appartiene ad un gruppo ha un indirizzo multicast **separato** e aggiuntivo rispetto al primario (l’appartenenza non è un attributo fisso dell’host, in quanto il periodo di appartenenza può essere limitato).
 
 Un router deve scoprire quali gruppi sono presenti in ciascuna delle sue interfacce, per poter propagare le informazioni agli altri router.
 
