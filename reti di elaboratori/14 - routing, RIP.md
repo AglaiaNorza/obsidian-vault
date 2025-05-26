@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-26T11:25
+updated: 2025-05-26T12:46
 ---
 >[!info] routing
 >Il **routing** si occupa di trovare il **miglior percorso** per un pacchetto e di inserirlo nella tabella di routing (o tabella di forwarding).
@@ -133,6 +133,10 @@ Nel protocollo RIP, ogni router manda **periodicamente** la sua routing table ag
 - ogni router che riceve un messaggio da un altro router (nello stesso network) che dice di poter raggiungere il network $X$ a costo $N$ sa che potrà a sua volta raggiungerlo a costo $X+1$ (attraverso il router da cui ha ricevuto il messaggio)
 
 >[!tip] invece di inviare solo i vettori di distanza, i router inviano l'intero contenuto della tabella di routing
+
+>[!example] IP sorgente e destinazione
+> 
+>Se un router $A$ invia due messaggi RIP a due router vicini $B$ e $C$, i due datagrammi che incapsulano i messaggi avranno entrambi **indirizzo IP sorgente e destinazione diversi**: per ogni datagramma, l'indirizzo IP di origine sarà l'indirizzo dell'interfaccia da cui viene inviato (un router può avere solo un vicino immediato per ogni interfaccia), e l'IP di destinazione sarà l'indirizzo IP dell'interfaccia del router a cui arriva.
 
 ### messaggi RIP
 RIP si basa su una coppia di processi **client-server** e sul loro scambio di messaggi.
