@@ -1,6 +1,6 @@
 ---
 created: 2025-05-13T21:40
-updated: 2025-05-25T23:13
+updated: 2025-05-27T18:44
 ---
 Quando le chiavi ammettono un **ordinamento significativo**, è conveniente usare un'organizzazione fisica dei dati che ne tenga conto.
 > es: interi e stringhe
