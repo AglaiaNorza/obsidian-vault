@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-24T22:05
+updated: 2025-05-27T17:28
 ---
 >[!info]- standard IEEE 802
 >IEEE ha prodotto diversi standard per le LAN (collettivamente noti come IEEE 802), che includono:
@@ -52,7 +52,7 @@ L'ethernet standard è **connectionless** (non è prevista nessuna forma di hand
 >![[frame-ethernet.png|center|550]]
 > - `Preambolo` ⟶ 7 byte con valore `10101010`: servono per **attivare le NIC** dei riceventi e **sincronizzare** i loro orologi con quello del trasmittente (fa parte dell'header a livello fisico)
 > - `SFD` (Start Frame Delimiter) ⟶ 1 byte con valore `10101011`: definisce l'**inizio del frame** (è l'ultima possibilità di sincronizzazione); gli ultimi due bit (`11`) indicano che inizia l'header MAC
-> - `Indirizzi sorgente e destinazione` ⟶ 6 byte; quando una NIC riceve un pacchetto contenente il proprio indirizzo di destinazione o l'indiriizo broadcast, **trasferisce il contenuto** del campo dati del pacchetto a **livello di rete** (i pacchetti con altri indirizzi MAC vengono ignorati)
+> - `Indirizzi sorgente e destinazione` ⟶ 6 byte; quando una NIC riceve un pacchetto contenente il proprio indirizzo di destinazione o l'indirizzo broadcast, **trasferisce il contenuto** del campo dati del pacchetto a **livello di rete** (i pacchetti con altri indirizzi MAC vengono ignorati)
 > - `Tipo` ⟶ 2 byte usati per **multiplexing e demultiplexing**: indicano il protocollo di livello superiore del pacchetto incapsulato nel frame
 > - `Dati`  ⟶ da 46 a 1500 byte; contiene il **datagramma di rete**; se è inferiore alla dimensione minima, viene riempito di zeri fino a raggiungere 46 byte
 > - `CRC` ⟶ consente alla NIC ricevente di **rilevare la presenza di un errore** nei bit sui campi indirizzo, tipo e dati
