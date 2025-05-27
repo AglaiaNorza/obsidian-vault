@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-27T15:17
+updated: 2025-05-27T15:19
 ---
 La comunicazione a livello di collegamento è **hop-to-hop** o nodo-to-nodo.
 - host e router sono chiamati **nodi** o **stazioni**
@@ -174,7 +174,7 @@ Se due stazioni ritrasmettono di nuovo contemporaneamente e avviene un'altra col
 >
 >Le stazioni in una rete wireless ALOHA sono a una distanza massima di 600km. Supponendo che i segnali si propaghino a $3 \times 10^8\text{m/s}$, troviamo che
 >$$
->TP = \frac{600 \times 10^3}{3 \times 10^8} = 2ms
+>T_{\text{fr}} = \frac{600 \times 10^3}{3 \times 10^8} = 2ms
 >$$
 >
 >per $K=2$, l'intervallo di $R$ è $\{ 0,\,1,\,2,\,3 \}$ - ciò significa che $T_{B}=R \times T_{\text{fr}}$ può essere 0, 2, 4 o 6 ms sulla base del risultato della variabile casuale $R$.
