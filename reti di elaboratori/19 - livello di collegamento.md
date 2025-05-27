@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-25T23:13
+updated: 2025-05-27T15:17
 ---
 La comunicazione a livello di collegamento è **hop-to-hop** o nodo-to-nodo.
 - host e router sono chiamati **nodi** o **stazioni**
@@ -166,9 +166,9 @@ Se due stazioni ritrasmettono di nuovo contemporaneamente e avviene un'altra col
 >
 >dove:
 >- $R\in[0,\,2^k-1]$, 
->- $K=\text{\#tentativi}$, 
->- $T_{\text{fr}}=\text{tempo x inviare un frame}$,
->- $K_{max}=15$
+>- $T_{\text{fr}}=\text{tempo x inviare un frame}$
+> 
+> e con massimo di tentativi $K_{max}=15$
 
 >[!example] esempio: calcolo di backoff
 >
