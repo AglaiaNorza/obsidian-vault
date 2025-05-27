@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-25T20:17
+updated: 2025-05-27T19:08
 ---
 Le reti wireless si dividono in:
 - LAN wireless, disponibili in campus, uffici, bar, aree pubbliche
@@ -31,7 +31,7 @@ Una LAN wireless è composta da:
 - **wireless hosts** ⟶ usati per eseguire applicazioni; possono essere fissi o mobili
 - **base stations** ⟶ sono dei *relay* (ripetitori) tipicamente connessi a reti cablate, che si occupano di mandare pacchetti tra reti cablate e host wireless nella loro area
 - **wireless links** ⟶ tipicamente usati per connettere gli host alle base station, ma possono anche essere usati come collegamenti per il backbone; variano in data rate e distanza di trasmissione
-	- i [[19 - livello di collegamento#protocolli di accesso multiplo|protocolli di accesso multiplo]] regolano l'accesso ai lnink
+	- i [[19 - livello di collegamento#protocolli di accesso multiplo|protocolli di accesso multiplo]] regolano l'accesso ai link
 
 
 > [!summary] caratteristiche
@@ -57,7 +57,7 @@ Alcune delle caratteristiche più importanti dei link wireless sono:
 	- da **altre sorgenti**: se altri trasmettitori stanno usando la stessa banda di frequenza per comunicare con altri destinatari
 
 ### errori 
-Le caratteristiche dei link wireless causano errori. Il tasso di errore è misurato con il **Signal to Noise Radio** (SNR o rapporto segnale-rumore), che misura il rapporto tra il segnale buono e il rumore esterno.
+Le caratteristiche dei link wireless causano errori. Il tasso di errore è misurato con il **Signal to Noise Ratio** (SNR o rapporto segnale-rumore), che misura il rapporto tra il segnale buono e il rumore esterno.
 - se è alto, il segnale è più forte del rumore e può quindi essere convertito in dati reali
 - se è basso, il segnale è stato danneggiato dal rumore e i dati non possono essere recuperati
 

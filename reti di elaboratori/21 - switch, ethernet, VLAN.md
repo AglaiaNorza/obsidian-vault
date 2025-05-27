@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-27T17:28
+updated: 2025-05-27T18:44
 ---
 >[!info]- standard IEEE 802
 >IEEE ha prodotto diversi standard per le LAN (collettivamente noti come IEEE 802), che includono:

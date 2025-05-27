@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-27T15:56
+updated: 2025-05-27T18:44
 ---
 La comunicazione a livello di collegamento è **hop-to-hop** o nodo-to-nodo.
 - host e router sono chiamati **nodi** o **stazioni**
