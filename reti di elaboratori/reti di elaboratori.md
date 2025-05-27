@@ -1,6 +1,6 @@
 ---
 created: 2025-04-28T17:11
-updated: 2025-05-26T22:17
+updated: 2025-05-27T16:14
 ---
 >[!info] indice
 >- [[1 - introduzione alle reti]]
@@ -29,7 +29,7 @@ updated: 2025-05-26T22:17
 >
 >livello collegamento:
 >- [[19 - livello di collegamento]]
->- [[20 - ARP]]
+>- [[20 - indirizzi MAC, ARP]]
 >- [[21 - switch, ethernet, VLAN]]
 >- [[22 - LAN wireless]]
 
