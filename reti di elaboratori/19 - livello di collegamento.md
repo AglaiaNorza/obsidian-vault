@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-27T15:19
+updated: 2025-05-27T15:56
 ---
 La comunicazione a livello di collegamento è **hop-to-hop** o nodo-to-nodo.
 - host e router sono chiamati **nodi** o **stazioni**
@@ -231,7 +231,7 @@ Ma le collisioni possono ancora verificarsi: il **ritardo di propagazione** può
 #### CSMA/CD
 CSMA/Collision Detection permette di **rilevare le collisioni** ascoltando il canale anche *durante la trasmissione*. Le collisioni vengono rilevate in poco tempo, e la trasmissione viene annullata non appena si accorge di un'altra trasmissione in corso.
 
->[!tip] La rilevazione di collisioni è facile nelle lan cablate e difficile nelle LAN wireless.
+>[!tip] La rilevazione di collisioni è facile nelle LAN cablate e difficile nelle LAN wireless.
 
 >[!example]- esempio
 >
@@ -248,7 +248,7 @@ CSMA/Collision Detection permette di **rilevare le collisioni** ascoltando il ca
 >Il tempo di trasmissione minimo del frame è:
 >
 >$$
->T_{\text{fr}}2 \times T_{p} = 51.2\mu s
+>T_{\text{fr}}=2 \times T_{p} = 51.2\mu s
 >$$
 >
 >quindi, nel peggiore dei casi, una stazione deve trasmettere per $51,2\mu s$ per poter rilevare la collisione.
