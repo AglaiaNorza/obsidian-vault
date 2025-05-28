@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-27T18:44
+updated: 2025-05-28T21:36
 ---
 La comunicazione a livello di collegamento è **hop-to-hop** o nodo-to-nodo.
 - host e router sono chiamati **nodi** o **stazioni**
@@ -263,11 +263,11 @@ CSMA/Collision Detection permette di **rilevare le collisioni** ascoltando il ca
 Ci sono diversi metodi di persistenza per i nodi.
 
 
-|                                              | **non persistente**                                                   | **1-persistente**                                    | **p-persistente**                                    |
-| -------------------------------------------- | --------------------------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| cosa fa un nodo se trova il canale libero?   | trasmette subito                                                      | trasmette subito                                     | trasmette con probabilità p                          |
-| cosa fa un nodo se trova il canale occupato? | desiste e riascolta dopo un tempo random (carrier sense a intervalli) | rimane in ascolto finché il canale non si è liberato | rimane in ascolto finché il canale non si è liberato |
-| se c'è collisione                            | backoff                                                               | backoff                                              | backoff                                              |
+|                                              | **non persistente**                                                   | **1-persistente**                                    | **p-persistente**                                             |
+| -------------------------------------------- | --------------------------------------------------------------------- | ---------------------------------------------------- | ------------------------------------------------------------- |
+| cosa fa un nodo se trova il canale libero?   | trasmette subito                                                      | trasmette subito                                     | trasmette con probabilità p                                   |
+| cosa fa un nodo se trova il canale occupato? | desiste e riascolta dopo un tempo random (carrier sense a intervalli) | rimane in ascolto finché il canale non si è liberato | backoff: attesa di un tempo random e nuovo ascolto del canale |
+| se c'è collisione                            | backoff                                                               | backoff                                              | backoff                                                       |
 
 ![[non-pers.png|center|450]]
 
