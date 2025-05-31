@@ -476,3 +476,46 @@ where i.nome = j.cognome
 
 ## query annidate
 
+- persone che hanno almeno un figlio
+```sql
+select *
+from Persona p
+where exists (select *
+		from Paternita 
+		where padre = p.nome)
+	or exists (select *
+		from Maternita
+		where madre = p.nome)
+```
+
+- le sotto-query non possono contenere operatori insiemistici
+- non è possibile, in una query, fare riferimento a variabili definite in blocchi più interni
+
+```sql
+select *
+from Persona
+where reddito = (select max(reddito) from Persona)
+
+select *
+from Persona
+where reddito >= all (select reddito from Persona)
+```
+
+```sql
+select *
+from Persona p
+where (eta, reddito)
+	not in (select eta, reddito
+		from Persona
+		where nome <> p.nome)
+```
+
+## join naturale
+
+```sql
+select mat.figlio as persona,
+	mat.madre as madre, pat.padre as padre
+from Maternita mat natural join Paternita pat
+```
+
+
