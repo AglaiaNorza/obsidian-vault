@@ -1,6 +1,6 @@
 ---
 created: 2025-05-13T21:40
-updated: 2025-05-27T18:44
+updated: 2025-05-31T22:15
 ---
 Il **timestamp** identifica una transazione.
 È assegnato alla transazione al suo inizio dallo scheduler.

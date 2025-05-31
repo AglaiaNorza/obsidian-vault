@@ -1,12 +1,20 @@
 ---
 created: 2025-05-14T10:21
-updated: 2025-05-27T18:44
+updated: 2025-05-31T22:29
 ---
+# DBMS
+**chiave** ⟶ non esistono due ennuple della stessa tabella che coincidono sul valore di 1+ attributi
+- ogni tabella ha una **chiave primaria** - non può essere NULL
+
+**foreign key** ⟶ dati in tabelle diverse sono correlati attraverso valori comuni, in particolare, attraverso valori delle chiavi (di solito primarie)
+- foreign key da un insieme di attributi A di T1 verso tutti gli attributi di una chiave K di T2: 
+	- `T1(A) references T2(K)` significa che tutti i valori di T1(A) devono occorrere come valori della chiave K in una ennupla di T2
+	- `foreign key: Modulo(aula) references Aula(codice)`
+
 I DBMS seguono un'architettura a **3 livelli**:
 - livello interno ⟶ strutture interne di memorizzazione
 - livello logico ⟶ modello relazionale dei dati
 - livello esterno ⟶ viste sui dati (viste diverse per utenti diversi)
-
 # creazione database, schemi, tabelle
 ```sql
 create database nome_database [opzioni]
@@ -66,5 +74,3 @@ create table [nome schema.]nome_tabella (
 > 	aula varchar(10) not null,
 > )
 > ```
-
-

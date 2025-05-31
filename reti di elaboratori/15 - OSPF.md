@@ -1,6 +1,6 @@
 ---
 created: 2025-05-05T20:03
-updated: 2025-05-27T18:44
+updated: 2025-05-31T22:15
 ---
 ## link state
 Lo stato di un link indica il **costo** associato al link. 

@@ -1,6 +1,6 @@
 ---
 created: 2025-05-13T21:40
-updated: 2025-05-27T18:44
+updated: 2025-05-31T22:15
 ---
 Supponiamo di voler creare una base di dati contenente i seguenti dati di studenti universitari:
 - dati anagrafico-identificativi (nome, cognome, data, comune, provincia, matricola, CF)
