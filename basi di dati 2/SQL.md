@@ -444,3 +444,35 @@ group by g.id, g.nome
 having count(f.nome) >= 2
 ```
 
+## operatori insiemistici
+### union
+```sql
+queryA
+union [all |  distinct]
+queryB
+```
+
+### differenza
+```sql
+queryA
+except / minus
+queryB
+```
+
+### intersezione
+```sql
+queryA
+intersect
+queryB
+```
+
+-  più efficiente con join
+
+```sql
+select distinct i.nome
+from Impiegato i, Impiegato j
+where i.nome = j.cognome
+```
+
+## query annidate
+
