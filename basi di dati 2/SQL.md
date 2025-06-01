@@ -1,6 +1,6 @@
 ---
 created: 2025-05-14T10:21
-updated: 2025-06-01T09:35
+updated: 2025-06-01T15:58
 ---
 # DBMS
 **chiave** ⟶ non esistono due ennuple della stessa tabella che coincidono sul valore di 1+ attributi
@@ -94,6 +94,31 @@ create table Impiegato (
 ```
 - ogni ennupla deve soddisfare `stipendio >= 0`
 - il vincolo viene controllato prima dell'inserimento o modifica di ennuple (in caso di errore, l'inserimento/modifica non ha luogo e viene generato un errore)
+### vincoli deferrable
+Un vincolo di integrità può essere dichiarato `deferrable` ⟶ è possibile per l'utente decidere se valutarlo solo al termine della transazione corrente.
+
+### trigger: vincoli generici
+Alcuni vincoli non sono traducibili con le tecniche viste fino ad ora (es. vincoli inter-tabelle). Si possono usare asserzioni (non usate) o trigger.
+
+```sql
+create [constraint] trigger <nome>
+	{ before | after | instead of } {<operaz. intercettata> [ or ... ]}
+	on <tabella>
+	[ from referenced_table_name ]
+	{ not deferrable | [deferrable] 
+		{initially immediate | initially deferred }}
+	[ for [each] { row | statement } ]
+	[ when ( <condizione> ) ]
+	execute procedure <nome funzione> ( <argomenti> )
+```
+
+- l'`operazione intercettata` può essere `insert`, `update`, `delete`
+- l'istante dell'invocazione: prima, dopo o invece dell'operazione (instead vale solo per le viste)
+- `deferrable` solo se di tipo `constraint` e `after`
+- `when:` se falsa, la funzione non viene eseguita
+- `for each row` ⟶ invocata una volta per ogni ennupla impattata dall'operazione
+- `for statement` ⟶ invocata una volta per comando
+
 ### domini SQL definiti dagli utenti
 esistono `create type` e `create domain`
 
@@ -181,7 +206,11 @@ create table Prenotazione (
 Alternativamente, esiste una scorciatoia:
 
 ```sql
+create table Prenotazione (
+	id serial not null,
+)
 ```
+
 ## modifica e cancellazione di tabelle/schemi/database
 **modifica**:
 - `alter table`
