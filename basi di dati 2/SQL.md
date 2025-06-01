@@ -1,6 +1,6 @@
 ---
 created: 2025-05-14T10:21
-updated: 2025-05-31T22:29
+updated: 2025-06-01T09:30
 ---
 # DBMS
 **chiave** ⟶ non esistono due ennuple della stessa tabella che coincidono sul valore di 1+ attributi
@@ -74,3 +74,104 @@ create table [nome schema.]nome_tabella (
 > 	aula varchar(10) not null,
 > )
 > ```
+
+### domini SQL definiti dagli utenti
+esistono `create type` e `create domain`
+
+Un **dominio specializzato** definisce un sottoinsieme di valori di un dominio esistente:
+```sql
+create domain nome_dominio as tipo_base
+	[valore di default]
+	[vincolo]
+```
+
+- si usano `check` e `value`
+
+> [!example]
+> ```sql
+> create domain voto as integer
+> 	default 0
+> 	check (value >= 18 and value <= 30)
+> ```
+
+Un **dominio enumerativo** definisce un insieme finito, piccolo e stabile di valori, ognuno identificato da un'etichetta.
+
+```sql
+create type nome_dominnio as 
+	enum ("valore 1", ..., "valore N")
+```
+
+I valori di un **dominio di tipo record** sono record di valori, uno per ogni *campo* del record. Il valore di ogni campo del record è del rispettivo dominio.
+
+```sql
+create type nome_dominio as (
+	campo1 dom1, ..., campoN domN
+)
+```
+
+> [!example]
+> ```sql
+> create type indirizzo as (
+> 	via varchar(200), città varchar(100)
+> )
+> ```
+
+I domini creati dall'utente possono essere modificati o rimossi
+- `al`
+### valori di default
+```sql
+create table Impiegato (
+	nome ...,
+	cognome ...,
+	stipendio integer default 0
+)
+```
+
+### vincoli di dominio
+```sql
+create table Impiegato (
+	nome varchar(100) not null,
+	cognome varchar(100) not null,
+	stipendio integer default 0
+			check (stipendio >= 0)
+)
+```
+- ogni ennupla deve soddisfare `stipendio >= 0`
+- il vincolo viene controllato prima dell'inserimento o modifica di ennuple (in caso di errore, l'inserimento/modifica non ha luogo e viene generato un errore)
+
+### vincoli di chiave
+- `primary key` ⟶ chiave primaria
+- `unique` ⟶ altre chiavi
+
+```sql
+create table Studente (
+	matricola integer not null,
+	nome varchar(100) not null,
+	cognome varchar(100) not null,
+	nascita date,
+	cf character(16) not null
+	
+	primary key (matricola), //chiave primaria
+	unique (cf), //altre chiavi
+	unique (cognome, nome, nascita)
+)
+```
+
+si può scrivere anche
+
+```sql
+create table Studente (
+	matricola integer primary key,
+)
+```
+
+## modifica e cancellazione di tabelle/schemi/database
+**modifica**:
+- `alter table`
+
+**cancellazione**:
+- `drop table`
+- `drop schema`
+- `drop database`
+
+
