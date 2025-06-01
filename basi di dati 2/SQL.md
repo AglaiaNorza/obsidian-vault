@@ -1,6 +1,6 @@
 ---
 created: 2025-05-14T10:21
-updated: 2025-06-01T09:30
+updated: 2025-06-01T09:35
 ---
 # DBMS
 **chiave** ⟶ non esistono due ennuple della stessa tabella che coincidono sul valore di 1+ attributi
@@ -74,7 +74,26 @@ create table [nome schema.]nome_tabella (
 > 	aula varchar(10) not null,
 > )
 > ```
+### valori di default
+```sql
+create table Impiegato (
+	nome ...,
+	cognome ...,
+	stipendio integer default 0
+)
+```
 
+### vincoli di dominio
+```sql
+create table Impiegato (
+	nome varchar(100) not null,
+	cognome varchar(100) not null,
+	stipendio integer default 0
+			check (stipendio >= 0)
+)
+```
+- ogni ennupla deve soddisfare `stipendio >= 0`
+- il vincolo viene controllato prima dell'inserimento o modifica di ennuple (in caso di errore, l'inserimento/modifica non ha luogo e viene generato un errore)
 ### domini SQL definiti dagli utenti
 esistono `create type` e `create domain`
 
@@ -117,27 +136,7 @@ create type nome_dominio as (
 > ```
 
 I domini creati dall'utente possono essere modificati o rimossi
-- `al`
-### valori di default
-```sql
-create table Impiegato (
-	nome ...,
-	cognome ...,
-	stipendio integer default 0
-)
-```
-
-### vincoli di dominio
-```sql
-create table Impiegato (
-	nome varchar(100) not null,
-	cognome varchar(100) not null,
-	stipendio integer default 0
-			check (stipendio >= 0)
-)
-```
-- ogni ennupla deve soddisfare `stipendio >= 0`
-- il vincolo viene controllato prima dell'inserimento o modifica di ennuple (in caso di errore, l'inserimento/modifica non ha luogo e viene generato un errore)
+- `alter domain`, `alter type`, `drop domain`, `drop type`
 
 ### vincoli di chiave
 - `primary key` ⟶ chiave primaria
@@ -165,6 +164,24 @@ create table Studente (
 )
 ```
 
+### valori progressivi
+A volte è necessario aggiungere un identificatore artificiale in un'entità (es. ristrutturazione classi che non hanno chiave primaria).
+
+PostrgreSQL fornisce il costrutto delle **sequenze**:
+```sql
+create sequence Prenotazione_id_seq;
+
+create table Prenotazione (
+	id integer default nextval('Prenotazione_id_seq') not null
+	istante timestamp not null,
+	primary key (id)
+);
+```
+
+Alternativamente, esiste una scorciatoia:
+
+```sql
+```
 ## modifica e cancellazione di tabelle/schemi/database
 **modifica**:
 - `alter table`
