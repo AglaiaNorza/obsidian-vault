@@ -1,6 +1,6 @@
 ---
 created: 2025-05-14T10:21
-updated: 2025-06-01T17:07
+updated: 2025-06-01T17:26
 ---
 # DBMS
 **chiave** ⟶ non esistono due ennuple della stessa tabella che coincidono sul valore di 1+ attributi
@@ -222,6 +222,7 @@ create table Prenotazione (
 
 # query
 
+## select
 ### select
 Istruzione di interrogazione: `select` ⟶ restituisce il risultato in forma di **tabella**
 
@@ -278,4 +279,40 @@ from Persona
 where eta > 40
 ```
 
+## condizioni
 ### condizione like
+`like` si usa per caratterizzare le stringhe
+
+```sql
+select campo
+from tabella 
+where campo like stringa
+```
+
+- `'%'` indica qualsiasi stringa
+- `'_'` indica qualsiasi carattere
+
+> [!example] esempio
+> 
+> - persone che hanno un cognome che inizia con 'R'
+> 
+> ```sql
+> select *
+> from Persona
+> where cognome like 'R%'
+> ```
+
+### is null e is not null
+- si usano per selezionare valori null o non null
+
+```sql
+select * 
+from Persona 
+where eta > 40 or eta is null
+```
+
+```sql
+select * 
+from Persona 
+where eta is not null
+```
