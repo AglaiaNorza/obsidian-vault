@@ -1,6 +1,6 @@
 ---
 created: 2025-05-14T10:21
-updated: 2025-06-01T15:58
+updated: 2025-06-01T17:07
 ---
 # DBMS
 **chiave** ⟶ non esistono due ennuple della stessa tabella che coincidono sul valore di 1+ attributi
@@ -220,4 +220,62 @@ create table Prenotazione (
 - `drop schema`
 - `drop database`
 
+# query
 
+### select
+Istruzione di interrogazione: `select` ⟶ restituisce il risultato in forma di **tabella**
+
+```sql
+select tabella.attributo1, 
+		...
+		tabella.attributoN
+from tabella
+where condizine
+```
+
+
+> [!example] esempio
+> 
+> $$
+> \pi_{\text{indirizzo}}(\sigma_{\text{nome='FixIt'}}(\text{Officina}))
+> $$
+> 
+> ```sql
+> select Officina.indirizzo
+> from Officina
+> where Officina.nome = 'FixIt'
+> ```
+
+- se non c'è ambiguità nel nome di un attributo, si può indicare senza nome della tabella
+
+>[!example] stesso esempio
+> ```sql
+> select indirizzo
+> from Officina
+> where nome = 'FixIt'
+> ```
+
+- se non c'è una condizione (ovvero `where true`), `where` si può escludere
+### select distinct
+`select distinct` rimuove i duplicati dalla tabella di ritorno
+
+```sql
+select distinct cognome, nome
+from Persona
+where eta > 40
+```
+
+- se ci sono omonimi con più di 40 anni, restituisce il loro nome e cognome una volta sola
+
+### select *
+`select *` restituisce tutti i dati delle ennuple selezionate
+
+![[selectstar.png|center|400]]
+
+```sql
+select *
+from Persona
+where eta > 40
+```
+
+### condizione like
