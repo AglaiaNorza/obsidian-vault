@@ -1,6 +1,6 @@
 ---
 created: 2025-05-14T10:21
-updated: 2025-06-02T15:01
+updated: 2025-06-02T15:42
 ---
 # DBMS
 **chiave** ⟶ non esistono due ennuple della stessa tabella che coincidono sul valore di 1+ attributi
@@ -368,4 +368,56 @@ select *
 from Officina
 where ...
 order by clausola1 asc|desc, ..., clausolaN asc|desc
+```
+
+## funzioni aggregate nella target list
+
+Le funzioni aggregate calcolano un singolo valore a partire da tutte le ennuple (il risultato è quindi una tabella con una sola ennupla)
+### count
+(conta)
+
+- numero di riparazioni del veicolo
+```sql
+select count(*)
+from Riparazione
+where veicolo = 'HK 243 BW'
+```
+
+- numero di officine distinte che hanno riparato il veicolo
+
+```sql
+select count(distinct officine)
+from Riparazione
+where veicolo = 'HK 243 BW'
+```
+
+Quindi
+- `count(*)` ⟶ numero di ennuple
+- `count(attributo)` ⟶ numero di valori non `NULL` per l'attributo con duplicati
+- `count(distinct attributo)` ⟶ numero di valori non `NULL` e distinti per l'attributo
+
+### funzioni matematiche
+- `sum(attributo)` (anche su tempo)
+- `avg(attributo)` (anche su tempo)
+- `min(attributo)` (su domini ordinati)
+- `max(attributo)` (su domini ordinati)
+
+>[!tip] i valori `NULL` sono ignorati
+
+### group by
+Le funzioni aggregate possono essere applicate a partizioni delle tuple.
+
+- nomi delle persone con figli e stipendio >= 45 con i nomi dei figli
+```sql
+select g.id as gid, g.nome as genitore, f.nome as figlio
+from Persona g, GenFiglio gf, Persona f
+where g.id = gf.gen and gf.figlio = f.id and g.stipendio >= 45
+```
+
+- nomi delle persone con figli e stipendio >= 45 con il numero di figli
+
+```
+select g.id as gid, g.nome as genitore, count(f.nome) as nFigli
+from Persona g, GenFiglio gf, Persona f
+where g.id = 
 ```
