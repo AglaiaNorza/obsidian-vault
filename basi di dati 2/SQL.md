@@ -1,6 +1,6 @@
 ---
 created: 2025-05-14T10:21
-updated: 2025-06-01T17:26
+updated: 2025-06-02T12:07
 ---
 # DBMS
 **chiave** ⟶ non esistono due ennuple della stessa tabella che coincidono sul valore di 1+ attributi
@@ -316,3 +316,5 @@ select *
 from Persona 
 where eta is not null
 ```
+
+## più tabelle
