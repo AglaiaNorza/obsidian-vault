@@ -1,6 +1,6 @@
 ---
 created: 2025-05-14T10:21
-updated: 2025-06-02T12:27
+updated: 2025-06-02T14:25
 ---
 # DBMS
 **chiave** ⟶ non esistono due ennuple della stessa tabella che coincidono sul valore di 1+ attributi
@@ -318,4 +318,15 @@ where eta is not null
 ```
 
 ## più tabelle
-Per fare un join tra più tabelle
+Per fare un join tra più tabelle:
+
+![[joinsql.png|center|400]]
+
+
+```sql
+select Officina.indirizzo
+from Officina, riparazione
+where Officina.nome = Riparazione.officina
+and Riparazione.veicolo = 'HK 243 BW'
+```
+
