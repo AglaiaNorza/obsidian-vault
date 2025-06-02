@@ -1,6 +1,6 @@
 ---
 created: 2025-05-14T10:21
-updated: 2025-06-02T15:42
+updated: 2025-06-02T16:09
 ---
 # DBMS
 **chiave** ⟶ non esistono due ennuple della stessa tabella che coincidono sul valore di 1+ attributi
@@ -416,8 +416,31 @@ where g.id = gf.gen and gf.figlio = f.id and g.stipendio >= 45
 
 - nomi delle persone con figli e stipendio >= 45 con il numero di figli
 
-```
+```sql
 select g.id as gid, g.nome as genitore, count(f.nome) as nFigli
 from Persona g, GenFiglio gf, Persona f
-where g.id = 
+where g.id = gf.gen and gf.figlio = f.id and g.stipendio >= 45
+group by g.id, g.nome
 ```
+
+- mette nello stesso gruppo le ennuple che hanno lo stesso `g.id` e `g.nome`
+- conta quante righe (quanti figli) ci sono in quel gruppo
+
+- gli attributi nella target list devono comparire nella clausola `group by`
+
+![[groupby.png|center|450]]
+
+#### having
+La condizione `having` esprime una condizione sui gruppi (e può contenere funzioni aggregate)
+- si omettono le ennuple dei gruppi che non soddisfano la condizione `having`
+- ! non si possono usare gli alias nella condizione having
+
+restituire i nomi delle persone con stipendio >= 45 e almeno 2 figli insieme al numero di figli:
+```sql
+select g.id as gid, g.nome as genitore, count(f.nome) as nFigli
+from Persona g, GenFiglio gf, Persona f
+where g.id = gf.gen and gf.figlio = f.id and g.stipendio >= 45
+group by g.id, g.nome
+having count(f.nome) >= 2
+```
+
