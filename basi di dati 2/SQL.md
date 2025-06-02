@@ -1,6 +1,6 @@
 ---
 created: 2025-05-14T10:21
-updated: 2025-06-02T14:25
+updated: 2025-06-02T15:01
 ---
 # DBMS
 **chiave** ⟶ non esistono due ennuple della stessa tabella che coincidono sul valore di 1+ attributi
@@ -330,3 +330,42 @@ where Officina.nome = Riparazione.officina
 and Riparazione.veicolo = 'HK 243 BW'
 ```
 
+### alias di tabelle
+Si possono anche usare alias per i nomi delle tabelle (o per gli attributi)
+
+```sql
+select o.indirizzo
+from Officina as o, Riparazione as r
+where o.nome = r.officina
+	and r.veicolo = 'HK 243 BW'
+```
+
+oppure:
+
+```sql
+select o.indirizzo
+from Officina o, Riparazione r
+where o.nome = r.officina
+	and r.veicolo = 'HK 243 BW'
+```
+
+### occorrenze multiple di una tabella
+esempio: veicoli che sono stati riparati in almeno due officine
+
+```sql
+select distinct r1.veicolo as targa
+from Riparazione as r1, Riparazione as r2
+where r1.veicolo = r2.veicolo
+	and r1.officina <> r2.officina
+```
+
+## ordine
+### order by
+Il risultato di un'interrogazione SQL può essere ordinato
+
+```sql
+select * 
+from Officina
+where ...
+order by clausola1 asc|desc, ..., clausolaN asc|desc
+```
