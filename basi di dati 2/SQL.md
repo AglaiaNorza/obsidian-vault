@@ -1,6 +1,6 @@
 ---
 created: 2025-05-14T10:21
-updated: 2025-06-04T11:49
+updated: 2025-06-04T13:08
 ---
 # DBMS
 **chiave** ⟶ non esistono due ennuple della stessa tabella che coincidono sul valore di 1+ attributi
@@ -141,7 +141,7 @@ create domain nome_dominio as tipo_base
 Un **dominio enumerativo** definisce un insieme finito, piccolo e stabile di valori, ognuno identificato da un'etichetta.
 
 ```sql
-create type nome_dominnio as 
+create type nome_dominio as 
 	enum ("valore 1", ..., "valore N")
 ```
 
