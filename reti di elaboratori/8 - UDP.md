@@ -1,6 +1,6 @@
 ---
 created: 2025-04-07T11:35
-updated: 2025-04-07T12:15
+updated: 2025-06-14T15:02
 ---
 >[!info] overview
 >- è un protocollo **senza connessione**: non è richiesto alcun setup fra processi client e server
@@ -28,7 +28,7 @@ UDP è un servizio **connectionless**: non c’è coordinazione tra livello di t
 >
 >- UDP è un protocollo molto semplice (infatti le FSM hanno un solo stato)
 
->[!tip] DNS usa UDP
+>[!tip]- DNS usa UDP
 >Quando effettua query, DNS utilizza UDP.
 >- sceglie UDP invece di TCP perché deve effettuare query molto semplici e molto brevi, e UDP risulta più veloce
 ## datagrammi UDP
