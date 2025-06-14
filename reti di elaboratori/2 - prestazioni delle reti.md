@@ -1,6 +1,6 @@
 ---
 created: 2025-03-26T18:31
-updated: 2025-04-24T21:06
+updated: 2025-06-14T12:04
 ---
 Internet è una rete di reti, composta da reti di accesso e dal backbone internet.
 ## rete di accesso
@@ -167,7 +167,7 @@ L’output del comando è composto da 6 colonne:
 >![[traceroute.png|center|400]]
 
 ### prodotto rate * ritardo
-Il prodotto $\text{rate} \cdot\text{ritardo}$ rappresenta il **massimo numero di bit che possono riempire un collegamento**.
+Il prodotto $\text{rate} \cdot\text{ritardo}$ (ritardo di propagazione) rappresenta il **massimo numero di bit che possono riempire un collegamento**.
 
 >[!example] esempio
 >Supponiamo di avere un link con un rate di $1\text{bps}$ e un ritardo di $5\text{sec}$.
