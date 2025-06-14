@@ -1,6 +1,6 @@
 ---
 created: 2025-03-26T18:31
-updated: 2025-06-14T12:04
+updated: 2025-06-14T13:13
 ---
 Internet è una rete di reti, composta da reti di accesso e dal backbone internet.
 ## rete di accesso
@@ -180,4 +180,7 @@ Possiamo pensare al link tra due punti come a un tubo. La sezione trasversale de
 
 ![[tubo.png|center|350]]
 
-
+### Round Trip Time
+>[!info] Round Trip Time
+>Il *Round Trip Time* è il tempo impiegato da un piccolo pacchetto per andare dal client al server e ritornare al client. 
+>- include ritardi di propagazione, di accodamento e di elaborazione

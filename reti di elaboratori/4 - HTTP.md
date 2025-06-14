@@ -1,6 +1,6 @@
 ---
 created: 2025-03-26T18:31
-updated: 2025-04-24T21:06
+updated: 2025-06-14T13:15
 ---
 ## World Wide Web
 Il World Wide Web (WWW) è un'applicazione internet nata dalla necessità di scambio e condivisione di ingormazioni tra ricercatori universitari di varie nazioni.
@@ -92,7 +92,7 @@ Esistono due tipi di connessioni HTTP:
 >- hanno un overhead per il sistema operativo per ogni connessione TCP
 >- i browser aprono spesso connessioni TCP parallele per caricare gli oggetti
 >
->Le connessioni persistenti invece richiedono un solo RTT di connessione per tutti gli oggetti (+ un RTT per ogni oggetto ricevuto dal server)
+>Le connessioni persistenti invece richiedono un solo RTT di connessione che vale per tutti gli oggetti (+ un RTT per ogni oggetto ricevuto dal server)
 
 > [!example] esempio: connessioni non persistenti
 > Supponiamo che l’utente immette l’URL `www.someSchool.edu/someDepartment/home.index`, che contiene testo e riferimenti a 10 immagini jpeg
