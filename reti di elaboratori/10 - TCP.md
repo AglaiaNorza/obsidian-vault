@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-04-24T21:06
+updated: 2025-06-14T16:01
 ---
 # introduzione
 >[!info] overview
@@ -195,7 +195,7 @@ Se il segmento non viene riscontrato, può accadere che:
 - **timeout basato su RTT** ⟶ c'è un unico timer di ritrasmissione, associato al più vecchio segmento non riscontrato
 	- quando arriva una notifica intermedia, si riavvia il timer sul più vecchio segmeno non riscontrato
 - **ritrasmissione**:
-	- **singla** ⟶ solo il segmento non riscontrato
+	- **singola** ⟶ solo il segmento non riscontrato
 	- **rapida** ⟶ al terzo ACK duplicato prima del timeout si ritrasmette
 
 ## controllo del flusso
