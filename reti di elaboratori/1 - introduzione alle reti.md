@@ -1,6 +1,6 @@
 ---
 created: 2025-03-03T13:49
-updated: 2025-05-01T11:36
+updated: 2025-06-14T11:25
 ---
 Una **rete** è composta da dispositivi, chiamati **nodi** (collegati tra di loro da **link**), in grado di scambiarsi informazioni. I nodi possono essere sistemi terminali (end system), che utilizzano la rete per eseguire applicazioni e comunicare tra loro, oppure dispositivi di interconnessione, che si occupano di instradare e gestire il traffico dati all'interno della rete.
 
@@ -22,12 +22,12 @@ I dati viaggiano da un sistema terminale ad un altro passando per una serie di c
 
 Alcuni esempi sono il cavo coassiale o, più interessante, la fibra ottica, che non subisce interferenze.
 #### mezzi trasmissivi wireless
-Il segnale si propaga nell’*atmosfera* e nello spazio eterno.
+Se i mezzi trasmissivi sono wireless, significa che il segnale si propaga nell’*atmosfera* e nello spazio esterno.
 - non richiedono l'installazione di cavi
 - si possono usare ovunque
 - ma: possono subire molte più interferenze (es. riflessione, ostruzione)
 
-L'esempio più noto è quello della LAN.
+L'esempio più noto è quello della LAN wireless.
 ## classificazione delle reti
 Le reti si possono classificare in base al loro range:
 
