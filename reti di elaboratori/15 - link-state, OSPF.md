@@ -1,6 +1,6 @@
 ---
 created: 2025-05-05T20:03
-updated: 2025-05-31T22:15
+updated: 2025-06-14T19:23
 ---
 ## link state
 Lo stato di un link indica il **costo** associato al link. 
@@ -84,14 +84,6 @@ ciclo (while $N'\neq N$):
 > | $z$          | $(u,y)$      |
 > 
 
-## confronto tra link state e distance vector
-
-
-|                              | **link state**                                                                                                                                                                                                                     | **distance vector**                                                                                                                                                                                                         |
-| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **complessità dei messaggi** | con $n$ nodi, $E$ collegamenti, implica l’invio di $O(nE)$ messaggi (ogni nodo deve conoscere il costo degli $E$ link)                                                                                                             | richiede scambi tra nodi adiacenti (il tempo di convergenza può variare)                                                                                                                                                    |
-| **velocità di convergenza**  | l’algoritmo ha complessità $O(n^2)$ <small>(prima $n$ nodi, poi $n-1$, poi $n-2$... (gauss))</small>                                                                                                                               | può convergere lentamente; può presentare cicli di instradamento e il problema del conteggio infinito                                                                                                                       |
-| **robustezza**               | OSPF è *più robusto* di RIP:<br>se un router funziona male, può comunicare via broadcast un costo sbagliato per uno dei suoi collegamenti connessi (ma non per altri); i nodi si occupano di calcolare soltanto le proprie tabelle | RIP è *meno robusto* di OSPF:<br>un nodo può comunicare cammini a costo minimo errati a tutte le destinazioni; la tabella di ciascun nodo può essere usata da altri (un calcolo errato si può diffondere per l’intera rete) |
 ## protocollo OSPF
  **Open Shortest Path First** è un protocollo di routing basato sull'algoritmo link state.
  - è *open* perché le specifiche del protocollo sono pubblicamente disponibili
@@ -107,3 +99,12 @@ ciclo (while $N'\neq N$):
 - `link-state request`: usato per richiedere specifiche informazioni su un collegamento
 - `link-state update`: messsaggio principale, usato da OSPF per la costruzione del LSDB
 - `link-state ack`: riscontro ai link-state update (per fornire affidabilità)
+
+
+## confronto tra link state e distance vector
+
+|                              | **link state**                                                                                                                                                                                                                     | **distance vector**                                                                                                                                                                                                         |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **complessità dei messaggi** | con $n$ nodi, $E$ collegamenti, implica l’invio di $O(nE)$ messaggi (ogni nodo deve conoscere il costo degli $E$ link)                                                                                                             | richiede scambi tra nodi adiacenti (il tempo di convergenza può variare)                                                                                                                                                    |
+| **velocità di convergenza**  | l’algoritmo ha complessità $O(n^2)$ <small>(prima $n$ nodi, poi $n-1$, poi $n-2$... (gauss))</small>                                                                                                                               | può convergere lentamente; può presentare cicli di instradamento e il problema del conteggio infinito                                                                                                                       |
+| **robustezza**               | OSPF è *più robusto* di RIP:<br>se un router funziona male, può comunicare via broadcast un costo sbagliato per uno dei suoi collegamenti connessi (ma non per altri); i nodi si occupano di calcolare soltanto le proprie tabelle | RIP è *meno robusto* di OSPF:<br>un nodo può comunicare cammini a costo minimo errati a tutte le destinazioni; la tabella di ciascun nodo può essere usata da altri (un calcolo errato si può diffondere per l’intera rete) |

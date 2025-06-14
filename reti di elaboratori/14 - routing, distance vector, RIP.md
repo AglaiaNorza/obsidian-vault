@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-06-14T19:19
+updated: 2025-06-14T19:20
 ---
 >[!info] routing
 >Il **routing** si occupa di trovare il **miglior percorso** per un pacchetto e di inserirlo nella tabella di routing (o tabella di forwarding).
@@ -177,7 +177,7 @@ Il protocollo RIP utilizza 3 timer:
 	- quando le informazioni non sono più valide, il router continua ad annunciare il percorso con costo pari a 16 e, allo scadere del timer, rimuove il percorso
 
 ### guasto su collegamento e recupero
-(Come visto sopra) se un router non riceve notizie da un suo vicino per 180 secondi, il nodo o il collegamento vengono considerati spenti o guasti . Se accade:
+(Come visto sopra) se un router non riceve notizie da un suo vicino per 180 secondi, il nodo o il collegamento vengono considerati spenti o guasti. Se accade:
 - RIP modifica la tabella di instradamento locale
 - propaga l'informazione mandando annunci ai router vicini
 - se la loro tabella di instradamento è cambiata, i vicini inviano nuovi messaggi

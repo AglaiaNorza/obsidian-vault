@@ -1,6 +1,6 @@
 ---
 created: 2025-04-28T17:11
-updated: 2025-05-31T22:15
+updated: 2025-06-14T19:21
 ---
 >[!info] indice
 >- [[1 - introduzione alle reti]]
@@ -22,8 +22,8 @@ updated: 2025-05-31T22:15
 >livello rete:
 >- [[12 - introduzione al livello rete]]
 >- [[13 - IP, IPv4, DHCP, NAT, forwarding, ICMP]]
->- [[14 - routing, RIP]]
->- [[15 - OSPF]]
+>- [[14 - routing, distance vector, RIP]]
+>- [[15 - link-state, OSPF]]
 >- [[16 - BGP]]
 >- [[18 - IPv6]]
 >
