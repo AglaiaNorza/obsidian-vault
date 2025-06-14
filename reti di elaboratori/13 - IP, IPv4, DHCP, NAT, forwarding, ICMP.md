@@ -1,6 +1,6 @@
 ---
 created: 2025-04-30T17:16
-updated: 2025-05-31T22:15
+updated: 2025-06-14T16:31
 ---
 Il protocollo IP (Internet Protocol) è responsabile della **suddivisione in pacchetti**, del **forwarding** e della **consegna** dei datagrammi a livello rete (host to host).
 - è un protocollo *inaffidabile* e *connectionless*
@@ -63,7 +63,7 @@ Un indirizzo IP è formato da 32 bit (4 byte) in notazione decimale puntata.
 
 >[!info] interfaccia
 >l'**interfaccia** è il confine tra host e collegamento fisico
->- ogni interfaccia di host e router internet ha un indirizzo IP *globalmente univoco*
+>- ogni interfaccia di host e router internet ha un indirizzo IP *globalmente univoco* (circa, in realtà se si usano NAT o indirizzi privati non è così)
 >- i router devono necessariamente essere connessi ad almeno due collegamenti
 >- un host, in genere, ha una sola interfaccia
 
