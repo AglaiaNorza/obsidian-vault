@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-31T22:15
+updated: 2025-06-14T19:19
 ---
 >[!info] routing
 >Il **routing** si occupa di trovare il **miglior percorso** per un pacchetto e di inserirlo nella tabella di routing (o tabella di forwarding).
@@ -130,7 +130,7 @@ Il **Routing Information Protocol** (RIP) è un protocollo a vettore distanza, <
 >![[RIP-es.png|center|450]]
 
 Nel protocollo RIP, ogni router manda **periodicamente** la sua routing table agli altri router. Ogni router dello stesso network potrà quindi aggiornare le sue tabelle in base alle informazioni ricevute. 
-- ogni router che riceve un messaggio da un altro router (nello stesso network) che dice di poter raggiungere il network $X$ a costo $N$ sa che potrà a sua volta raggiungerlo a costo $X+1$ (attraverso il router da cui ha ricevuto il messaggio)
+- ogni router che riceve un messaggio da un altro router (nello stesso network) che dice di poter raggiungere il network $X$ a costo $N$ sa che potrà a sua volta raggiungerlo a costo $N+1$ (attraverso il router da cui ha ricevuto il messaggio)
 
 >[!tip] invece di inviare solo i vettori di distanza, i router inviano l'intero contenuto della tabella di routing
 
