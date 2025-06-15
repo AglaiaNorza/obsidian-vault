@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-06-14T16:01
+updated: 2025-06-15T10:45
 ---
 # introduzione
 >[!info] overview
@@ -249,7 +249,7 @@ La congestione avviene se il **carico** della rete è superiore alla sua **capac
 - lunghi ritardi
 
 >[!question] controllo del flusso vs controllo della congestione
->Con il controllo del flusso, la dimensione della finestra di invio è controllata dal destinatario tramite il valore `rwnd` (contenuto in ogni segmento trasmesso nella direzione opposta). In questo modo, la finestra del ricevnte non viene mai sovraccariccata.
+>Con il controllo del flusso, la dimensione della finestra di invio è controllata dal destinatario tramite il valore `rwnd` (contenuto in ogni segmento trasmesso nella direzione opposta). In questo modo, la finestra del ricevente non viene mai sovraccariccata.
 >
 >Ma i buffer intermedi (nei router) possono comunque congestionarsi: un router riceve infatti dati da più mittenti. Quindi, nonostante non ci sia congestione agli estremi, non vuol dire che non ce ne sia nei nodi intermedi.
 
@@ -303,7 +303,7 @@ Nello **slow start** (incremento esponenziale), la variablile `cwnd` è iniziali
 
 #### congestion avoidance
 Al termine di slow start, inizia **congestion avoidance**:
-- l'incremento di `cwnd` è *lineare* ($+1$ ogni volta che viene riscontrata l'intera finestra di segmenti)
+- l'incremento di `cwnd` è *lineare* ($+1$ ogni volta che viene riscontrata l'*intera finestra di segmenti*)
 
 Congestion avoidance continua finché non si **rileva congestione** (ovvero finché non si va in *timeout* o si ricevono *3 ACK duplicati*).
 - se si va in timeout, $\text{ssthreshold} =\frac{\text{cwnd}}{2}$ e $\text{cwnd}=1$
