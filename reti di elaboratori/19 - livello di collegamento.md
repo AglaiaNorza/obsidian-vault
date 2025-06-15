@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-31T22:15
+updated: 2025-06-14T21:58
 ---
 La comunicazione a livello di collegamento è **hop-to-hop** o nodo-to-nodo.
 - host e router sono chiamati **nodi** o **stazioni**
@@ -101,7 +101,7 @@ I **protocolli di accesso multiplo** permettono di limitare il caos e realizzare
 
 >[!info] protocolli di accesso multiplo ideali
 >
->A livello ideale, se si ha un canale broadcast con velocità di $R$bps, si vuole che:
+>A livello ideale, se si ha un canale broadcast con velocità di $R$ bps, si vuole che:
 >- se solo un nodo deve inviare dati, esso disponga di un tasso trasmissivo pari a $R$bps
 >- se $M$ nodi devono inviare dati, il canale sia *diviso equamente* tra questi (quindi che ognuno abbia un tasso trasmissivo di $\frac{R}{M}$bps)
 >
