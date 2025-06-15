@@ -1,6 +1,6 @@
 ---
 created: 2025-04-28T17:11
-updated: 2025-06-14T19:21
+updated: 2025-06-15T15:51
 ---
 >[!info] indice
 >- [[1 - introduzione alle reti]]
@@ -32,6 +32,7 @@ updated: 2025-06-14T19:21
 >- [[20 - indirizzi MAC, ARP]]
 >- [[21 - switch, ethernet, VLAN]]
 >- [[22 - LAN wireless]]
+>- [[23 - CDMA, altre tecnologie wireless WIP]]
 
 >[!tip]- un memino gentilmente fornito da [alessio](https://alem1105.github.io/Quartz/) 
 >
