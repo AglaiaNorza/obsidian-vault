@@ -1,6 +1,6 @@
 ---
 created: 2025-06-21T10:11
-updated: 2025-06-21T19:39
+updated: 2025-06-21T20:06
 ---
 # shell
 La shell è un'interprete di comandi, ovvero un programma che esegue altri comandi.
@@ -57,9 +57,16 @@ Linux ha un solo filesystem che ha come radice `/` (root), che contiene, diretta
 
 - i nomi dei ffile e delle directory sono **case-sensitive**
 
-## path
+## directory
 Ogni file o directory è raggiungibile da `/` mediante un path assoluto.
 
 >[!tip] `~` equivale a `/home/currentuser`
 
-Per conoscere la current working directory, si usa `pwd`
+Per conoscere la **current working directory**, si usa `pwd`. Per cambiare directory, si usa `cd [path]` (`path` può essere assoluto o relativo).
+- `cd` senza path ritorna alla home
+- `..` indica la parent directory, mentre `.` la cwd
+
+Per **creare una directory**, si usa `mkdir nomedir`.
+- la flag `-p` crea anche le parent directory se non esistono (es. `mkdir dir1/dir2` crea anche `dir1` se essa non esiste)
+
+Per conoscere il **contenuto di una directory**, si usa il comando `ls [directory]`.
