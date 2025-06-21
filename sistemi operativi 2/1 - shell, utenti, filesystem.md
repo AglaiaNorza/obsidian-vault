@@ -1,6 +1,6 @@
 ---
 created: 2025-06-21T10:11
-updated: 2025-06-21T10:40
+updated: 2025-06-21T10:42
 ---
 ## shell
 La shell è un'interprete di comandi, ovvero un programma che esegue altri comandi.
@@ -29,4 +29,10 @@ Esistono anche le opzioni BSD-style, senza dash (es. `tar xfz nomefile.tgz`).
 Durante l'installazione di Linux, è necessario specificare almeno un utente (utente principale).
 - non tutti gli utenti possono fare login 
 	- `root` non può fare il login, ma un utente può acquisire i diritti di `root` attraverso `su` e `sudo`
-- ogni utente appartiene almeno ad un **gruppo** (ne viene automaticamente creato uno con lo stesso nome dell')
+- ogni utente appartiene almeno ad un **gruppo** (ne viene automaticamente creato uno con lo stesso nome dell'utente principale)
+	- per scoprire i gruppi a cui appartiene un utente, si usa `groups [nomeutente]`
+
+## sudo
+L'utente principale è un **sudoer**, ovvero appartiene al gruppo predefinito `sudo`
+-  gli utenti del gruppo `sudo` possono eseguire comandi da super utente (`root`) usando `sudo comando`
+- `sudo` è quindi un comando che prende in input un altro comando
