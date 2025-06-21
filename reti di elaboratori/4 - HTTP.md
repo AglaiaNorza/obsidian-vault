@@ -1,6 +1,6 @@
 ---
 created: 2025-03-26T18:31
-updated: 2025-06-14T13:15
+updated: 2025-06-21T10:10
 ---
 ## World Wide Web
 Il World Wide Web (WWW) è un'applicazione internet nata dalla necessità di scambio e condivisione di ingormazioni tra ricercatori universitari di varie nazioni.

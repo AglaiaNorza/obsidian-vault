@@ -1,6 +1,6 @@
 ---
 created: 2025-03-26T18:31
-updated: 2025-06-14T13:13
+updated: 2025-06-21T10:10
 ---
 Internet è una rete di reti, composta da reti di accesso e dal backbone internet.
 ## rete di accesso
