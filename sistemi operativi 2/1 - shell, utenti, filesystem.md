@@ -1,6 +1,6 @@
 ---
 created: 2025-06-21T10:11
-updated: 2025-06-21T11:36
+updated: 2025-06-21T18:10
 ---
 ## shell
 La shell è un'interprete di comandi, ovvero un programma che esegue altri comandi.
@@ -33,6 +33,8 @@ Durante l'installazione di Linux, è necessario specificare almeno un utente (ut
 	- per scoprire i gruppi a cui appartiene un utente, si usa `groups [nomeutente]`
 
 >[!summary] creazione di utenti
+>Si possono creare nuovi utenti tramite il comando `adduser nuovoutente` (di default, `nuovoutente` non apparterrà ai sudoers).
+>- per aggiungere un utente a un gruppo, si usa `adduser nuovoutente gruppo`
 
 ## sudo
 L'utente principale è un **sudoer**, ovvero appartiene al gruppo predefinito `sudo`
