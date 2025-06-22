@@ -1,6 +1,6 @@
 ---
 created: 2025-06-21T10:11
-updated: 2025-06-21T20:23
+updated: 2025-06-22T17:21
 ---
 # shell
 La shell è un'interprete di comandi, ovvero un programma che esegue altri comandi.
@@ -66,9 +66,54 @@ Per conoscere la **current working directory**, si usa `pwd`. Per cambiare direc
 - `cd` senza path ritorna alla home
 - `..` indica la parent directory, mentre `.` la cwd
 
-Per **creare una directory**, si usa `mkdir nomedir`.
+Per **creare una directory**, si usa il comando `mkdir nomedir`.
 - la flag `-p` crea anche le parent directory se non esistono (es. `mkdir dir1/dir2` crea anche `dir1` se essa non esiste)
+
+Per **creare un file**, si usa il comando `touch nomefile`.
 
 Per conoscere il **contenuto di una directory**, si usa il comando `ls [directory]`.
 - la flag `-a | --all` permette di vedere anche i file nascosti (che iniziano con `.`)
 - la flag `-R | --recursive` permette di visualizzare ricorsivamente il contenuto delle sottodirectory
+
+Per visualizzare l'**albero delle directory**, si  usa il comando `tree [-a] [-L maxdepth] [-d] [-x] [nomedir]`
+- `-d` mostra solo le directory
+- `-x` si usa per rimanere nel filesystem corrente (se incontra un mount point di un altro filesystem, non lo esplora)
+
+## mounting
+Il filesystem root `/` contiene elementi eterogenei (disco interno, filesystem su disco esterno, filesystem di rete...) grazie al meccanismo di **mounting**.
+- `mount` e `cat /etc/mtab` visualizzano i filesystem montati
+- `cat /etc/fstab` visualizza i filesystem montati al boot
+
+| directory | spiegazione                                           | montata           |
+| --------- | ----------------------------------------------------- | ----------------- |
+| `/boot`   | kernel e file di boot                                 | no                |
+| `/bin`    | binari (eseguibili) di base                           | no                |
+| `/dev`    | periferiche hardware e virtuali (devices)             | boot              |
+| `/etc`    | file di configurazione di sistema                     | no                |
+| `/proc`   | dati e statistiche di processi e parametri del kernel | boot              |
+| `/sys`    | informazioni e statistiche di device di sistema       | boot              |
+| `/media`  | mountpoint per device di I/O                          | quando necessario |
+| `/mnt`    | come `/media`                                         | quando necessario |
+| `/sbin`   | binari di sistema                                     | no                |
+| `/var`    | file variabili (log, code di stampa, mail...)         | no                |
+| `/tmp`    | file temporanei                                       | no                |
+| `/lib`    | librerie                                              | no                |
+
+Una qualsiasi directory `D` può diventare un punto di mount per un altro filesystem `F` se e solo se la directory root di `F` diventa accessibile da `D`. Se `D` è vuota, dopo il mount conterrà `F`; se non è vuota, i dati che conteneva precedentemente saranno di nuovo accessibili dopo l'unmount.
+
+>[!summary] partizioni
+>Un disco può essere diviso in 2+ partizioni (per esempio una contenente il sistema operativo e una contenente i dati dell'utente)
+
+## tipi di filesystem
+
+Esistono diversi tipi di filesystem:
+
+| Nome     | Journal | Partiz (TB) | File (TB) | Nome file (bytes) |
+| -------- | ------- | ----------- | --------- | ----------------- |
+| ext2     | No      | 32          | 2         | 255               |
+| ext3     | Si      | 32          | 2         | 255               |
+| ext4     | Si      | 1000        | 16        | 255               |
+| reiserFS | Si      | 16          | 8         | 4032              |
+
+Dal punto di vista del programmatore, il tipo di filesystem definisce la codifica dei dati, mentre dal punto di vista dell'utente, la dimensione massima di partizioni e file, la lunghezza massima dei nomi dei file e la presenza o assenza di journaling.
+
