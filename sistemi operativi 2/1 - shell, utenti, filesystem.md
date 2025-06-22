@@ -1,6 +1,6 @@
 ---
 created: 2025-06-21T10:11
-updated: 2025-06-22T19:19
+updated: 2025-06-22T19:48
 ---
 # shell
 La shell è un'interprete di comandi, ovvero un programma che esegue altri comandi.
@@ -210,3 +210,29 @@ Il proprietario di un file definisce i permessi di accesso (chi può leggere, sc
 ![[permessi-segnatura.png|center|500]]
 
 ![[permessi-file.png|center|450]]
+
+>[!summary]- più informazioni sui significati dei permessi
+>
+>![[permessi-significati.png|center|500]]
+
+### permessi speciali
+#### sticky bit (t)
+Se applicato sulle directory, corregge il comportamento di `w+x` (che permette la cancellazione di file in una directory su cui si hanno i permessi `w+x` senza avere permessi di scrittura sui file stessi) permettendo la cancellazione dei file solo **se si hanno permessi di scrittura** su di essi.
+- inutile se applicato su file
+
+>[!example] esempio
+>
+>Se un utente `U` vuole quindi cancellare un file `f` in una directory `D`:
+>- senza sticky bit, gli sarà sufficiente avere i diritti di scrittura su `D` 
+>- con lo sticky bit, gli sono necessari anche i permessi di scrittura su `f`
+
+#### setuid bit (s)
+Si usa sui file eseguibili. Quando vengono eseguiti, i privilegi con cui opera il corrispondente processo non sono quelli dell'utente che esegue il file ma quelli dell'utente **proprietario** del file.
+- per esempio, il comando `passwd` ha il `setuid` (infatti permette ad un utente di modificare la propria password)
+
+#### setgid bit (s)
+Analogo di `setuid`, ma con i gruppi (i privilegi sono quelli del gruppo che è proprietario del file eseguibile).
+- può essere applicato ad una directory, e in quel caso ogni file creato al suo interno ha il gruppo della directory anziché quello primario di chi crea i file
+
+### visualizzazione
+I permessi di accesso si visualizzano con `ls` o `stat`
