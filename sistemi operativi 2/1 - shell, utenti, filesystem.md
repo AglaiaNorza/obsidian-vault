@@ -1,6 +1,6 @@
 ---
 created: 2025-06-21T10:11
-updated: 2025-06-22T19:48
+updated: 2025-06-22T20:24
 ---
 # shell
 La shell è un'interprete di comandi, ovvero un programma che esegue altri comandi.
@@ -235,4 +235,4 @@ Analogo di `setuid`, ma con i gruppi (i privilegi sono quelli del gruppo che è 
 - può essere applicato ad una directory, e in quel caso ogni file creato al suo interno ha il gruppo della directory anziché quello primario di chi crea i file
 
 ### visualizzazione
-I permessi di accesso si visualizzano con `ls` o `stat`
+I permessi di accesso si visualizzano con `ls` o `stat`. I permessi speciali vengono visualizzati al posto del bit di esecuzione (`x`) (il setuid nella terna utente, il setgid nella terna gruppo, lo sticky nella terna altro).
