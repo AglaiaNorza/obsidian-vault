@@ -1,6 +1,6 @@
 ---
 created: 2025-06-21T10:11
-updated: 2025-06-22T17:21
+updated: 2025-06-22T17:53
 ---
 # shell
 La shell è un'interprete di comandi, ovvero un programma che esegue altri comandi.
@@ -73,7 +73,14 @@ Per **creare un file**, si usa il comando `touch nomefile`.
 
 Per conoscere il **contenuto di una directory**, si usa il comando `ls [directory]`.
 - la flag `-a | --all` permette di vedere anche i file nascosti (che iniziano con `.`)
-- la flag `-R | --recursive` permette di visualizzare ricorsivamente il contenuto delle sottodirectory
+- la flag `-A | --almost-all` mostra anche i file nascosti ma non quelli impliciti
+- `--author`, usata con `-l`, mostra l'autore di ogni file
+- `-c`, 
+	- usata con `-lt`, ordina per (e mostra) il  ctime (momento dell'ultimo cambiamento)
+	- usata con `-l`, mostra il ctime e ordina per nome
+	- altrimenti, ordina per ctime più recente per primo
+- `-d | --directory` mostra le directory e non i loro contenuti
+-  `-R | --recursive` permette di visualizzare ricorsivamente il contenuto delle sottodirectory
 
 Per visualizzare l'**albero delle directory**, si  usa il comando `tree [-a] [-L maxdepth] [-d] [-x] [nomedir]`
 - `-d` mostra solo le directory
