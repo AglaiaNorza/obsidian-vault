@@ -1,6 +1,6 @@
 ---
 created: 2025-06-21T10:11
-updated: 2025-06-21T20:06
+updated: 2025-06-21T20:23
 ---
 # shell
 La shell è un'interprete di comandi, ovvero un programma che esegue altri comandi.
@@ -70,3 +70,5 @@ Per **creare una directory**, si usa `mkdir nomedir`.
 - la flag `-p` crea anche le parent directory se non esistono (es. `mkdir dir1/dir2` crea anche `dir1` se essa non esiste)
 
 Per conoscere il **contenuto di una directory**, si usa il comando `ls [directory]`.
+- la flag `-a | --all` permette di vedere anche i file nascosti (che iniziano con `.`)
+- la flag `-R | --recursive` permette di visualizzare ricorsivamente il contenuto delle sottodirectory
