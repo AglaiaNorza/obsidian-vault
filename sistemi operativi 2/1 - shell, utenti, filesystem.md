@@ -1,6 +1,6 @@
 ---
 created: 2025-06-21T10:11
-updated: 2025-06-22T18:12
+updated: 2025-06-22T18:54
 ---
 # shell
 La shell è un'interprete di comandi, ovvero un programma che esegue altri comandi.
@@ -120,6 +120,26 @@ Il filesystem root `/` contiene elementi eterogenei (disco interno, filesystem s
 | `/tmp`    | file temporanei                                       | no                |
 | `/lib`    | librerie                                              | no                |
 
+>[!summary] esempi di opzioni di mounting comuni
+>
+> | opzione    | significato                                                            |
+> | ---------- | ---------------------------------------------------------------------- |
+> | `ro`       | read-only                                                              |
+> | `rw`       | read-write                                                             |
+> | `noexec`   | non permette l'esecuzione di file binari                               |
+> | `nosuid`   | ignora SUID e SGID                                                     |
+> | `nodev`    | non permette dispositivi a livello di file                             |
+> | `relatime` | aggiorna il tempo di accesso solo se più vecchio del tempo di modifica |
+> | `noatime`  | non aggiorna il tempo di accesso                                       |
+> | `sync`     | tutte le scritture avvengono in modalità sincrona                      |
+> | `user`     | permette agli utenti normali di montare il filesystem                  |
+> | `uid=1000` | imposta l'utente proprietario                                          |
+> 
+
+
+
+
+
 Una qualsiasi directory `D` può diventare un punto di mount per un altro filesystem `F` se e solo se la directory root di `F` diventa accessibile da `D`. Se `D` è vuota, dopo il mount conterrà `F`; se non è vuota, i dati che conteneva precedentemente saranno di nuovo accessibili dopo l'unmount.
 
 >[!summary] partizioni
@@ -137,4 +157,37 @@ Esistono diversi tipi di filesystem:
 | reiserFS | Si      | 16          | 8         | 4032              |
 
 Dal punto di vista del programmatore, il tipo di filesystem definisce la codifica dei dati, mentre dal punto di vista dell'utente, la dimensione massima di partizioni e file, la lunghezza massima dei nomi dei file e la presenza o assenza di journaling.
+
+## `passwd` e `group`
+
+I due file `/etc/passwd` e `/etc/group` sono organizzati per righe (sequenze di caratteri terminate con line feed (`0x0A`)).
+
+Il file `passwd` contiene tutti gli **utenti**, ed è strutturato in questo modo:
+- `username:password:uid:gid:gecos:homedir:shell`
+	- (al posto di `password` si trova una `x` - le password si trovano in `/etc/shadow` (vedi [[10, 11 - password, buffer overflow|password (SO1)]]))
+
+l file  contiene tutti i **gruppi**, ed è strutturato in questo modo:
+- `groupname:password:groupID:lista utenti`
+	- anche qui la password è assente
+- gli utenti della lista sono separati da `,`
+
+## inode
+(come già visto in [[6 - file system#gestione file in UNIX|file system (SO1)]]) Ogni file del filesystem è rappresentato da una struttura dati chiamata **inode**, univocamente identificata da un *inode number*.
+- la cancellazione di un inode libera l'inode number, che potrà quindi essere riutilizzato
+
+I principali attributi degli inode sono:
+- **type** ⟶ tipo di file (regular, block...)
+- **user ID** ⟶ ID del proprietario del file
+- **group ID** ⟶ ID del gruppo a cui appartiene il proprietario
+- **mode** ⟶ permessi (read, write, exec) di accesso per proprietario, gruppo e tutti gli altri
+- **size** ⟶ dimensione in byte del file
+- **timestamps**
+	- *ctime* ⟶ cambiamento di un attributo
+	- *mtime* ⟶ modifica (solo scrittura)
+	- *atime* ⟶ access time (solo lettura)
+- **link count** ⟶ numero di hard links
+- **data pointers** ⟶ puntatore alla lista dei blocchi che compongono il file (se si tratta di una directory, il contenuto su disco è costituito da due colonne: nome del file/directory e relativo inode number)
+
+
+
 
