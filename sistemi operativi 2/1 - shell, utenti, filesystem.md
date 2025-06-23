@@ -1,6 +1,6 @@
 ---
 created: 2025-06-21T10:11
-updated: 2025-06-22T20:35
+updated: 2025-06-23T12:45
 ---
 # shell
 La shell è un'interprete di comandi, ovvero un programma che esegue altri comandi.
@@ -249,10 +249,13 @@ Per settare permessi, si usa il comando `chmod mode [, mode...] filename`. Il co
 	- una o più lettere nell’insieme `{rxwXst}`
 	- una lettera nell’insieme `{ugo}`
 
-
-
-
+### cambiare il proprietario
+Per cambiare il proprietario di un file, si usa `chown [-R] proprietario {file}` <small>(è possibile specificare anche un gruppo)</small>, mentre per cambiare la proprietà di gruppo di un file, si usa `chgrp [-R] gruppo {file}`.
+- se il file è una directory, con la flag `-R` si applica il comando anche a tutte le sottodirectory
 ### visualizzazione
 I permessi di accesso si visualizzano con `ls` o `stat`. I permessi speciali vengono visualizzati al posto del bit di esecuzione (`x`) (il setuid nella terna utente, il setgid nella terna gruppo, lo sticky nella terna altro).
 
 ## altri comandi
+
+### `umask [mode]`
+Setta la maschera dei file, ovvero i diritti di accesso al file o alle directory nel momento della lro creazione, a `mode` 
