@@ -1,6 +1,6 @@
 ---
 created: 2025-06-21T10:11
-updated: 2025-06-22T20:24
+updated: 2025-06-22T20:35
 ---
 # shell
 La shell è un'interprete di comandi, ovvero un programma che esegue altri comandi.
@@ -234,5 +234,25 @@ Si usa sui file eseguibili. Quando vengono eseguiti, i privilegi con cui opera i
 Analogo di `setuid`, ma con i gruppi (i privilegi sono quelli del gruppo che è proprietario del file eseguibile).
 - può essere applicato ad una directory, e in quel caso ogni file creato al suo interno ha il gruppo della directory anziché quello primario di chi crea i file
 
+### settare permessi
+Per settare permessi, si usa il comando `chmod mode [, mode...] filename`. Il comando segue un formato ottale:
+- si usano 4 numeri tra 0 e 7, come dalle tabelle sopra
+- il primo numero indica `setuid`, `setgid` e `sticky`
+- gli altri sono per utente, gruppo e altri
+- si possono fornire solo 3 numeri se si assumono `setuid`, `setgid` e `sticky` settati a `0`
+
+![[chmod-numeri.png|center|450]]
+
+`chmod` ha anche una modalità simbolica che utilizza le lettere per settare i permessi:
+- il formato è: `[ugoa][+-=][perms...]`, dove `perms` è:
+	- `zero`
+	- una o più lettere nell’insieme `{rxwXst}`
+	- una lettera nell’insieme `{ugo}`
+
+
+
+
 ### visualizzazione
 I permessi di accesso si visualizzano con `ls` o `stat`. I permessi speciali vengono visualizzati al posto del bit di esecuzione (`x`) (il setuid nella terna utente, il setgid nella terna gruppo, lo sticky nella terna altro).
+
+## altri comandi
