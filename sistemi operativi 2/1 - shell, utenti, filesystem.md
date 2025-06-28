@@ -1,6 +1,6 @@
 ---
 created: 2025-06-21T10:11
-updated: 2025-06-23T12:45
+updated: 2025-06-23T13:39
 ---
 # shell
 La shell è un'interprete di comandi, ovvero un programma che esegue altri comandi.
@@ -258,4 +258,28 @@ I permessi di accesso si visualizzano con `ls` o `stat`. I permessi speciali ven
 ## altri comandi
 
 ### `umask [mode]`
-Setta la maschera dei file, ovvero i diritti di accesso al file o alle directory nel momento della lro creazione, a `mode` 
+Setta la maschera dei file, ovvero i diritti di accesso al file o alle directory nel momento della lro creazione, a `mode`.
+
+La maschera può essere:
+- un **numero ottale** da uno a quattro cifre (secondo la rappresentazione ottale dei permessi) che indica i permessi che si desidera **negare** (quindi, per esempio `1` negherà il permesso di esecuzione)
+	- i permessi saranno quindi dati da `0777 - umask` per i file, e `0666 - umask` per le directory
+- una **stringa** secondo la rappresentazione simbolica dei permessi che indica l'insieme dei permessi che possono essere **concessi**
+
+### `cp [-r] [-i] [-a] [-u] {filesorgenti} filedestinazione`
+Permette di copiare file.
+- `-r` ⟶ recursive (per directory)
+- `-i` ⟶ interactive: avvisa in caso di sovrascrizione
+- `-u` ⟶ la sovrascrittura avviene solo se l'mtime della sorgente è più recente di quello della destinazione
+- `-a` ⟶ archive: i file copiati mantengono i loro permessi, proprietari, timestamp e altri attributi
+- `-b` ⟶ fa un backup dei file già esistenti nella destinazione (così che non vengano sovrascritti)
+- `-l` ⟶ invece di copiare, crea hard link
+- `-s` ⟶ invece di copiare, crea symlink
+- `--preserve=ATTR_LIST` ⟶ permette di preservare gli attributi specificati
+
+### `mv [-i] [-u] [-f] {filesorgenti} filedestinazione`
+Sposta (o rinomina!) file.
+- `-i` e `-u` come in `cp`
+- `-f` (force) è di default (non chiede prima di sovrascrivere)
+
+### `rm [-f] [-i] [-r] {file}`
+Rimuove file (non )
