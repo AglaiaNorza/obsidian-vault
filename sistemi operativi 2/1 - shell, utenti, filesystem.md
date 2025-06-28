@@ -1,6 +1,6 @@
 ---
 created: 2025-06-21T10:11
-updated: 2025-06-23T13:39
+updated: 2025-06-28T20:51
 ---
 # shell
 La shell è un'interprete di comandi, ovvero un programma che esegue altri comandi.
@@ -282,4 +282,40 @@ Sposta (o rinomina!) file.
 - `-f` (force) è di default (non chiede prima di sovrascrivere)
 
 ### `rm [-f] [-i] [-r] {file}`
-Rimuove file (non )
+Rimuove file (non c'è un cestino)
+- `-f` forza la cancellazione 
+
+### `ln [-s] src [dest]`
+Crea symlink e hardlink.
+- `-s` per symlink (hardlink è il default)
+
+>[!tip] eliminare la sorgente
+>se il file sorgente viene rimosso, un symlink smette di funzionare, mentre un hardlink continua a funzionare (poiché è un riferimento diretto al contenuto del file e non al suo nome)
+
+### `touch [-a] [-m] [-t timestamp] {file}`
+Serve per creare file o modificare il loro timestamp.
+- funziona anche con directory
+- `-t` setta il timestamp desiderato
+
+### `du [-c] [-s] [-a] [-h] [--exclude=PATTERN] [files...]`
+Calcola la dimensione dei file e/o directories dati in input.
+- `-c` (o `--total`) ⟶ restituisce la somma totale delle dimensioni
+- `-s` (`--summarize`) ⟶ (invece di mostrare la dimensione di ogni file in una directory fornita) mostra solo la dimensione totale per ogni argomento
+- `-a` (`-all`) ⟶ mostra anche le sottodirectory (mostra tutti i file)
+- `-h` (`--human-readable`) ⟶ mostra le dimensioni in formati leggibili (e.g. M, G)
+
+### `df [-h] [-l] [-i] [file]`
+Mostra la dimensione e l'attuale uso dei filesystem.
+- `-h` (`--human-readable`) ⟶ mostra le dimensioni in formati leggibili (e.g. M, G)
+- `-l` (`--local`) ⟶ mostra solo i filesystem locali
+- `-i` (`--inodes`) ⟶ mostra le informazioni sugli inode invece che sui blocchi
+- `file` ⟶ mostra le informazioni relative al filesystem che contiene il file fornito in input
+
+## `dd [opzioni]`
+Serve per creare file in modo elaborato. `[opzioni]` è una sequenza `variabile=valore`.
+- `bs=BYTES` ⟶ legge e scrive fino a `BYTES` byte alla volta (il default è 512)
+- `count=N` ⟶ copia solo `N` blocchi dell'input
+- `conv=CONVS` ⟶ converte i file secondo la lista di simboli `CONS` fornita in input (con separatore `,`)
+- `if=FILE` ⟶ file di input (se non dato, legge da tastiera)
+- `of` ⟶ file di output (se non dato, scrive a schermo)
+- `skip=N`, `seek=N` sa
