@@ -1,6 +1,6 @@
 ---
 created: 2025-06-21T10:11
-updated: 2025-06-28T20:51
+updated: 2025-06-28T20:57
 ---
 # shell
 La shell è un'interprete di comandi, ovvero un programma che esegue altri comandi.
@@ -135,7 +135,6 @@ Esistono diversi tipi di filesystem:
 | reiserFS | Si      | 16          | 8         | 4032              |
 
 Dal punto di vista del programmatore, il tipo di filesystem definisce la codifica dei dati, mentre dal punto di vista dell'utente, la dimensione massima di partizioni e file, la lunghezza massima dei nomi dei file e la presenza o assenza di journaling.
-
 ## `passwd` e `group`
 
 I due file `/etc/passwd` e `/etc/group` sono organizzati per righe (sequenze di caratteri terminate con line feed (`0x0A`)).
@@ -148,7 +147,6 @@ l file  contiene tutti i **gruppi**, ed è strutturato in questo modo:
 - `groupname:password:groupID:lista utenti`
 	- anche qui la password è assente
 - gli utenti della lista sono separati da `,`
-
 ## inode
 (come già visto in [[6 - file system#gestione file in UNIX|file system (SO1)]]) Ogni file del filesystem è rappresentato da una struttura dati chiamata **inode**, univocamente identificata da un *inode number*.
 - la cancellazione di un inode libera l'inode number, che potrà quindi essere riutilizzato
@@ -165,7 +163,6 @@ I principali attributi degli inode sono:
 	- *atime* ⟶ access time (solo lettura)
 - **link count** ⟶ numero di hard links
 - **data pointers** ⟶ puntatore alla lista dei blocchi che compongono il file (se si tratta di una directory, il contenuto su disco è costituito da due colonne: nome del file/directory e relativo inode number)
-
 ### `ls`
 Per visualizzare le informazioni contenute nell'inode di un file, si usa il comando `ls`.
 
@@ -312,10 +309,16 @@ Mostra la dimensione e l'attuale uso dei filesystem.
 - `file` ⟶ mostra le informazioni relative al filesystem che contiene il file fornito in input
 
 ## `dd [opzioni]`
-Serve per creare file in modo elaborato. `[opzioni]` è una sequenza `variabile=valore`.
+Serve per creare file in modo elaborato, (es. copiare file che non possono essere copiati con `cp`, preparare un file ad essere formattato, copiare parte di un file). `[opzioni]` è una sequenza `variabile=valore`.
 - `bs=BYTES` ⟶ legge e scrive fino a `BYTES` byte alla volta (il default è 512)
 - `count=N` ⟶ copia solo `N` blocchi dell'input
 - `conv=CONVS` ⟶ converte i file secondo la lista di simboli `CONS` fornita in input (con separatore `,`)
 - `if=FILE` ⟶ file di input (se non dato, legge da tastiera)
 - `of` ⟶ file di output (se non dato, scrive a schermo)
-- `skip=N`, `seek=N` sa
+- `skip=N`, `seek=N` ⟶ saltano i primi `N` blocchi (rispettivamente di input e output)
+
+### `mkfs [-t type fsoptions] device`
+Crea un filesystem su un device (è un front-end per i vari builder di filesystem usati da Linux).
+- `-t type` ⟶ specifica il tipo di filesystem da creare (tra [[1 - shell, utenti, filesystem#tipi di filesystem|questi]])
+- `fsoptions` ⟶ `ro` (read-only) oppure `rw` (read-write)
+- `device` ⟶ nome del dispositivo (in `/dev`) o anche file regolare
