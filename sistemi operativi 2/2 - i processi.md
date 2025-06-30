@@ -1,6 +1,6 @@
 ---
 created: 2025-06-30T19:01
-updated: 2025-06-30T21:27
+updated: 2025-06-30T21:43
 ---
 In linux, le due entità fondamentali sono i file (che rappresentano le risorse) e i processi (che permettono di elaborare dati e usare le risorse).
 - un file eseguibile in esecuzione è un processo
@@ -96,8 +96,27 @@ Un processo può essere eseguito in:
 > - `%+` oppure `%%` ⟶ l'ultimo job eseguito
 > - `%-` ⟶ il penultimo job eseguito
 
+## pipelining dei comandi
+Per eseguire un job composto da più comandi, si usa:
+```
+comando 1 | comando 2 | ... comando n
+```
+- lo standard output di un comando `i` diventa l'input del comando `i+1`
+- se si usa `|&`, invece, sarà lo *standard error* ad essere ridirezionato sullo standard input del comando successivo
 
+## altri comandi
+### `ps [opzioni] [pid...]`
+Mostra le informazioni dei processi in esecuzione.
+- per ogni processo, mostra `PID`, `TTY` (terminale), `TIME` (tempo totale di esecuzione), `CMD` (comando)
+- legge le informazioni dai file virtuali in `/proc`
+- senza argomenti, mostra i processi dell'utente attuale lanciati dalla shell corrente
 
+Opzioni:
+- `-e` ⟶ mostra tutti i processi di tutti gli utenti lanciati da tutte e shell o al boot (figli del processo `0`)
+- `-u {utente, }` ⟶ tutti i processi degli utenti nella lista
+- `-p {pid, }` ⟶ tutti i processi con PID nella lista
+- `-o {field, }` ⟶ permette di scegliere i campi da visualizzare
+- `-f` ⟶ restituisce colonne aggiuntive: `UID`, `PPID`, `C` (fattore di utilizzo della CPU), `STIME` (tempo di avvio)
+- `-l` ⟶ altre colonne addizionali: `F` (flag), `PRI` (priorità (maggiore la priorità, minore il numero)), `NI` (nice value, influenza la priorità), `ADDR` (indirizzo di memoria del processo), `SZ` (dimensione dell'immagine del processo in pagine), `WCHAN` (waiting channel, indirizzo della funzione )
+- `-c {cmds}` ⟶ solo i processi il cui nome eseguibile è in `{cmds}`
 
-
->
