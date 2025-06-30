@@ -1,6 +1,6 @@
 ---
 created: 2025-06-30T19:01
-updated: 2025-06-30T19:20
+updated: 2025-06-30T19:42
 ---
 In linux, le due entità fondamentali sono i file (che rappresentano le risorse) e i processi (che permettono di elaborare dati e usare le risorse).
 - un file eseguibile in esecuzione è un processo
@@ -18,4 +18,10 @@ I simboli `>` e `<` possono essere usati per redirigere l'output di un comando s
 >- `ls > dirlist` ⟶ l'output di `ls` viene ridirezionato in `dirlist`
 >- `2>&1 ls > dirlist` ⟶ l'output di stderr (`2`) viene ridirezionato dove sta andando (`&`) lo stdout (`1`), e lo stdout viene ridirezionato in `dirlist` (`ls > dirlist`) - MA ! bash elabora il comando da sinistra a destra: quando `2>&1` viene elaborato, lo `stdout` non era ancora stato ridirezionato, quindi lo `stderr` andrà sul terminale, e l'output di `ls` in `dirlist`.
 >- `ls > dirlist 2>&1` ⟶ sia lo `stderr` che lo `stdout` vengono ridirezionati in `dirlist`
->- 
+>- `2>/dev/null` ⟶ nasconde gli errori generati da un comando
+
+## rappresentazione dei processi
+[ già trattata [[2 - processi (e thread)|qui (sistemi operativi 1)]]]
+
+
+
