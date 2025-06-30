@@ -1,6 +1,6 @@
 ---
 created: 2025-06-30T19:01
-updated: 2025-06-30T19:42
+updated: 2025-06-30T21:27
 ---
 In linux, le due entità fondamentali sono i file (che rappresentano le risorse) e i processi (che permettono di elaborare dati e usare le risorse).
 - un file eseguibile in esecuzione è un processo
@@ -23,5 +23,81 @@ I simboli `>` e `<` possono essere usati per redirigere l'output di un comando s
 ## rappresentazione dei processi
 [ già trattata [[2 - processi (e thread)|qui (sistemi operativi 1)]]]
 
+I processi sono identificati da **Process Identifier** (PID) e **Process Control block** (PCB), e sei aree di memoria.
+
+Il **PID** è univoco, e in ogni istante non ci possono essere due processi con lo stesso PID. Il PID di un processo terminato si può riutilizzare.
+
+Il **PCB** è unico per processo e contiene:
+- PID: Process Identifier
+- PPID: Parent Process Identifier
+- real UID: Real User Identifier
+- real GID: Real Group ID
+- effective UID: Effective User Identifier (UID assunto dal processo in esecuzione)
+- effective GID: Effective Group ID (come sopra per GID)
+- saved UID: Saved User Identifier (UID avuto prima dell’esecuzione del SetUID)
+- saved GID: Saved Group Identifier (come sopra per GID)
+- current Working Directory: directory di lavoro corrente
+- umask: file mode creation mask
+- nice: priorità statica del processo
+
+>[!question] RUID vs EUID
+>Quando si setta il `SetUID` di un file eseguibile:
+>- il `RUID` è l'id di chi lo esegue
+>- l'`EUID` è l'id del proprietario del file
+
+Le **aree di memoria** sono:
+- **text segment** ⟶ istruzioni da eseguire (in linguaggio macchina)
+- **data segment** ⟶ dati statici inizializzati (variabili globali e locali static) e alcune costanti di ambiente
+- **BSS** ⟶ (Block Started from Symbol) contiene dati statici non inizializzati; la distinzione dal data segment si fa per motivi di realizzazione hardware
+- **heap** ⟶ dati dinamici
+- **stack** ⟶ chiamate a funzioni con corrispondenti dati dinamici
+- **memory mapping segment** ⟶ tutto ciò che riguarda librerie esterne dinamiche usate dal processo, nonché estensione dello heap in alcuni casi
+
+>[!summary] aree di memoria
+>
+>![[memoria-processi.png|center|500]]
+
+>[!tip] aree condivise
+>Alcune aree di memoria però potrebbero essere condivise:
+>- il text segment tra più istanze dello stesso processo
+>- due processi potrebbero avere lo stesso BSS o Data segment o MMS
+>- lo stack non è mai condiviso
+### stato di un processo
+Un processo si può trovare in uno di questi stati:
+- **running (R)** ⟶ in esecuzione su un processore
+- **runnable (R)** ⟶ pronto per essere eseguito; aspetta lo scheduler
+- **(interruptible) sleep (S)** ⟶ in attesa di qualche evento; non può essere scelto dallo scheduler
+- **zombie (Z)** ⟶ terminato, il suo PCB viene ancora mantenuto dal kernel perchè il processo padre non ha ancora richiesto il suo “exit status”
+- **stopped (T)** ⟶ caso particolare di sleeping: ha ricevuto un segnale `STOP` ed è in attesa di un segnale `CONT`
+- **traced (t)** ⟶ in esecuzione di debug, oppure in generale in attesa di un segnale
+- **uninterruptible sleep (D)** ⟶ come sleep, ma tipicamente sta facendo operazioni di I/O su dischi lenti e non può essere interrotto né ucciso
+
+### modalità di esecuzione di un processo
+Un processo può essere eseguito in:
+- **foreground**:
+	- il comando può legger l'input da tastiera e scrivere a schermo
+	- finché non termina, il prompt non viene restituito e non si possono sottomettere altri comandi alla shell
+- **background**:
+	- il comando non può leggere l'input da tastiera, ma può scrivere a schermo
+	- il prompt viene immediatamente restituito
+	- mentre il job viene eseguito in background, si possono dare altri comandi alla shell
+	- per eseguire un programma in background, si usa `&`
+
+>[!question] lista di job
+>per vedere la lista di job in esecuzione, si usa il comando `jobs [-l] [-p]`
+
+>[!summary] `bg` e `fg`
+> - il comando `bg` permette di portare un processo in background
+> - `fg%n` porta in foreground il processo `%n`
+> - `bg%n` porta in background il processo `%n`
+> 
+> si possono identificare job anche con:
+> - `%prefix` dove `prefix` è la parte iniziale del comando del job desiderato
+> - `%+` oppure `%%` ⟶ l'ultimo job eseguito
+> - `%-` ⟶ il penultimo job eseguito
 
 
+
+
+
+>
