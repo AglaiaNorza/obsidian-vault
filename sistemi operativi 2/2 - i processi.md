@@ -1,6 +1,6 @@
 ---
 created: 2025-06-30T19:01
-updated: 2025-07-01T11:18
+updated: 2025-07-01T11:50
 ---
 In linux, le due entità fondamentali sono i file (che rappresentano le risorse) e i processi (che permettono di elaborare dati e usare le risorse).
 - un file eseguibile in esecuzione è un processo
@@ -149,9 +149,32 @@ Un `ps` interattivo. Una volta aperto, basta premere `?` per avere la lista dei 
 
 
 ### `kill [-l [signal]] [-signal] [pid...]`
-Permette di inviare segnali ad un processo (non solo la terminazione!).
+Permette di inviare segnali ad un processo (non solo la terminazione!). Si può usare la notazione con `%` <small>(usata da `bg` e `fg`) per indicare i job destinatari del messaggio </small>
 - `-l` mostra la lista dei segnali (un segnale è identificato dal numero o dal nome (con o senza `SIG`))
 
 (es. `kill -9 pid` o `kill -s SIGKILL pid` o `kill -s KILL pid`)
 
-I segnali verranno presi in considerazione solo se il *real user* del processo è lo stesso che invia il segnale, o se lo invia un superuser.
+I segnali verranno presi in considerazione solo se il *real user* del processo è lo stesso che invia il segnale, o se lo invia un superuser. Un processo che riceve un segnale fa un'azione predefinita o un'azione personalizzata.
+
+>[!example] esempio di segnali
+>- `SIGSTOP`, `SIGSTP` ⟶ sospensione (si può inviare anche con `CTRL+Z`
+>- `SIGCONT` ⟶ continuazione di processi sospesi (è il segnale inviato da `bg`)
+>- `SIGKILL`, `SIGINT` ⟶ terminazione (si può inviare anche con `CTRL+C`)
+>- i segnali `SIGUSR1` e `SIGUSR2` sono impostati dall'utente per le proprie necessità, e consentono una semplice forma di comunicazione tra processi
+
+
+### `nice [-n num] [comando]`
+`nice` senza opzioni mostra quanto sia la "niceness" di partenza. La "niceness" può essere pensata come un'addizione sulla priorità: se è positiva, ne aumenta il valore (e la priorità decresce), altrimenti ne diminuisce il valore (e la priorità cresce).
+- va da `-19` a `+20`, con default a `0`
+
+`nice [-n num] comando` lancia `comando` con niceness `num`.
+
+### `renice prioritu {pid, }`
+Interviene su processi già in esecuzione e permette di modificare la loro "niceness" (quindi la loro priorità).
+
+
+
+
+
+
+

@@ -1,6 +1,6 @@
 ---
 created: 2025-05-18T11:51
-updated: 2025-05-18T16:53
+updated: 2025-07-01T11:33
 ---
 ## raffinamento dei requisiti
 1) Utenti
@@ -19,7 +19,7 @@ updated: 2025-05-18T16:53
 	10) commenti [v.7]
 	11) Video Censurato (nessuna NUOVA interazione)
 		1) motivo
-		2) istante censura
+		- `-p {pid, }` ⟶ tutti i processi con PID nella lista2) istante censura
 3) Categoria
 	1) nome
 4) Tag
