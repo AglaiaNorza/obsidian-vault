@@ -1,6 +1,6 @@
 ---
 created: 2025-06-30T19:01
-updated: 2025-07-01T11:50
+updated: 2025-07-01T11:56
 ---
 In linux, le due entità fondamentali sono i file (che rappresentano le risorse) e i processi (che permettono di elaborare dati e usare le risorse).
 - un file eseguibile in esecuzione è un processo
@@ -169,12 +169,9 @@ I segnali verranno presi in considerazione solo se il *real user* del processo �
 
 `nice [-n num] comando` lancia `comando` con niceness `num`.
 
-### `renice prioritu {pid, }`
+### `renice priority {pid, }`
 Interviene su processi già in esecuzione e permette di modificare la loro "niceness" (quindi la loro priorità).
 
-
-
-
-
-
-
+### `strace [-p pid] [comando]`
+Lancia `comando` mostrando tutte le sue syscall, oppure visualizza le syscall del processo `pid`.
+- `-o filename` ridireziona l'output su un file
