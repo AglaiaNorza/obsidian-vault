@@ -1,6 +1,6 @@
 ---
 created: 2025-06-30T19:01
-updated: 2025-06-30T21:43
+updated: 2025-07-01T10:38
 ---
 In linux, le due entità fondamentali sono i file (che rappresentano le risorse) e i processi (che permettono di elaborare dati e usare le risorse).
 - un file eseguibile in esecuzione è un processo
@@ -117,6 +117,28 @@ Opzioni:
 - `-p {pid, }` ⟶ tutti i processi con PID nella lista
 - `-o {field, }` ⟶ permette di scegliere i campi da visualizzare
 - `-f` ⟶ restituisce colonne aggiuntive: `UID`, `PPID`, `C` (fattore di utilizzo della CPU), `STIME` (tempo di avvio)
-- `-l` ⟶ altre colonne addizionali: `F` (flag), `PRI` (priorità (maggiore la priorità, minore il numero)), `NI` (nice value, influenza la priorità), `ADDR` (indirizzo di memoria del processo), `SZ` (dimensione dell'immagine del processo in pagine), `WCHAN` (waiting channel, indirizzo della funzione )
+- `-l` ⟶ altre colonne addizionali: `F` (flag), `PRI` (priorità (maggiore la priorità, minore il numero)), `NI` (nice value, influenza la priorità), `ADDR` (indirizzo di memoria del processo), `SZ` (dimensione dell'immagine del processo in pagine), `WCHAN` (waiting channel, indirizzo della funzione del kernel all'interno del quale, se è in sleep, si è fermato)
 - `-c {cmds}` ⟶ solo i processi il cui nome eseguibile è in `{cmds}`
 
+#### campi mostrati da `ps`
+- `PPID` ⟶ parent pid
+- `C` ⟶ parte intera della percentuale di uso della CPU
+- `STIME` (o `START`) ⟶ ora (o data) in cui è stato fatto partire il comando
+- `TIME` ⟶ tempo di CPU usato fino ad ora
+- `CMD` ⟶ comando (con argomenti)
+- `F` ⟶ flag associate al processo:
+	- `1`: processo "forkato" ma ancora non eseguito
+	- `4`: ha usato privilegi da superutente
+	- `5`: entrambi i precedenti
+	- `0` nessuno dei precedenti
+	- `-y -l` elimina questo campo 
+- `S` ⟶ stato del processo in una sola lettera
+- `UID` ⟶ utente che ha lanciato il processo
+- `PRI` ⟶ attuale priorità del processo (priorità alta = numero basso)
+- `NI` ⟶ valore di nice da aggiungere alla priorità
+- `ADDR` ⟶ indirizzo in memoria del processo (utile solo per backwards compatibility)
+	- `-y -l` elimina questo campo e lo sostituisce con `RSS` (resident set size, dimensione del processo in memoria principale)
+- `SZ` ⟶ dimensione totale attuale del processo in numero di pagine (sia in memoria che su disco)
+- `WCHAN` ⟶ se il processo è in sleep, in `WCHAN` c'è la funzione del kernel all'interno della quale si è fermato
+
+### `top [-b] [-n num] [-p {pid, }]`
