@@ -1,6 +1,6 @@
 ---
 created: 2025-06-30T19:01
-updated: 2025-07-01T10:38
+updated: 2025-07-01T11:18
 ---
 In linux, le due entità fondamentali sono i file (che rappresentano le risorse) e i processi (che permettono di elaborare dati e usare le risorse).
 - un file eseguibile in esecuzione è un processo
@@ -142,3 +142,16 @@ Opzioni:
 - `WCHAN` ⟶ se il processo è in sleep, in `WCHAN` c'è la funzione del kernel all'interno della quale si è fermato
 
 ### `top [-b] [-n num] [-p {pid, }]`
+Un `ps` interattivo. Una volta aperto, basta premere `?` per avere la lista dei comandi accettati.
+- `-b` ⟶ non accetta più comandi interattivi, ma continua a fare refresh ogni pochi secondi
+- `-n num` ⟶ fa solo `num` refresh
+- `-p {pid, }` ⟶ tutti i processi con PID nella lista
+
+
+### `kill [-l [signal]] [-signal] [pid...]`
+Permette di inviare segnali ad un processo (non solo la terminazione!).
+- `-l` mostra la lista dei segnali (un segnale è identificato dal numero o dal nome (con o senza `SIG`))
+
+(es. `kill -9 pid` o `kill -s SIGKILL pid` o `kill -s KILL pid`)
+
+I segnali verranno presi in considerazione solo se il *real user* del processo è lo stesso che invia il segnale, o se lo invia un superuser.
