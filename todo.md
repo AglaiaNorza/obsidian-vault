@@ -1,6 +1,6 @@
 ---
 created: 2025-06-23T13:29
-updated: 2025-07-02T14:49
+updated: 2025-07-02T15:05
 ---
 - [x] governo
 - [ ] trasparenza
@@ -22,9 +22,8 @@ Nello specifico, abbiamo finito di tradurre il sito, ma abbiamo trovato dei prob
 [ documento ]
 (essenzialmente va cambiata la prima frase e vanno messe le informazioni su Viale Regina Elena prima di quelle su Via Salaria)
 
-
-
-
+Grazie mille in anticipo
+Aglaia
 
 
 
