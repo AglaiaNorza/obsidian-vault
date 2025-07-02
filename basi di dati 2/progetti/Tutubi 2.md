@@ -1,6 +1,6 @@
 ---
 created: 2025-05-18T11:51
-updated: 2025-07-01T11:33
+updated: 2025-07-02T11:27
 ---
 ## raffinamento dei requisiti
 1) Utenti
