@@ -1,6 +1,6 @@
 ---
 created: 2025-04-07T11:35
-updated: 2025-07-02T18:51
+updated: 2025-07-04T12:22
 ---
 >[!info] overview
 >- è un protocollo **senza connessione**: non è richiesto alcun setup fra processi client e server

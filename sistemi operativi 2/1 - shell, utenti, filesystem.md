@@ -1,6 +1,6 @@
 ---
 created: 2025-06-21T10:11
-updated: 2025-07-02T18:51
+updated: 2025-07-04T12:22
 ---
 # shell
 La shell è un'interprete di comandi, ovvero un programma che esegue altri comandi.
