@@ -1,6 +1,6 @@
 ---
 created: 2025-06-21T10:11
-updated: 2025-07-04T12:22
+updated: 2025-07-06T10:37
 ---
 # shell
 La shell è un'interprete di comandi, ovvero un programma che esegue altri comandi.
@@ -105,7 +105,7 @@ Il filesystem root `/` contiene elementi eterogenei (disco interno, filesystem s
 > | `ro`       | read-only                                                              |
 > | `rw`       | read-write                                                             |
 > | `noexec`   | non permette l'esecuzione di file binari                               |
-> | `nosuid`   | ignora SUID e SGID                                                     |
+> | `nosuid`   | disabilita i bit SUID e SGID                                                     |
 > | `nodev`    | non permette dispositivi a livello di file                             |
 > | `relatime` | aggiorna il tempo di accesso solo se più vecchio del tempo di modifica |
 > | `noatime`  | non aggiorna il tempo di accesso                                       |
