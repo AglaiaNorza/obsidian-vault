@@ -1,6 +1,6 @@
 ---
 created: 2025-06-21T10:11
-updated: 2025-07-06T10:37
+updated: 2025-07-06T10:49
 ---
 # shell
 La shell è un'interprete di comandi, ovvero un programma che esegue altri comandi.
@@ -105,7 +105,7 @@ Il filesystem root `/` contiene elementi eterogenei (disco interno, filesystem s
 > | `ro`       | read-only                                                              |
 > | `rw`       | read-write                                                             |
 > | `noexec`   | non permette l'esecuzione di file binari                               |
-> | `nosuid`   | disabilita i bit SUID e SGID                                                     |
+> | `nosuid`   | disabilita i bit SUID e SGID (vedi [[1 - shell, utenti, filesystem#permessi di accesso\|sotto]])                               |
 > | `nodev`    | non permette dispositivi a livello di file                             |
 > | `relatime` | aggiorna il tempo di accesso solo se più vecchio del tempo di modifica |
 > | `noatime`  | non aggiorna il tempo di accesso                                       |
@@ -142,6 +142,7 @@ I due file `/etc/passwd` e `/etc/group` sono organizzati per righe (sequenze di 
 Il file `passwd` contiene tutti gli **utenti**, ed è strutturato in questo modo:
 - `username:password:uid:gid:gecos:homedir:shell`
 	- (al posto di `password` si trova una `x` - le password si trovano in `/etc/shadow` (vedi [[10, 11 - password, buffer overflow|password (SO1)]]))
+	- `gecos` contiene informazioni sull'utente
 
 l file  contiene tutti i **gruppi**, ed è strutturato in questo modo:
 - `groupname:password:groupID:lista utenti`

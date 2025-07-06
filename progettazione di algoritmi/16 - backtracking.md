@@ -1,6 +1,6 @@
 ---
 created: 2025-04-01
-updated: 2025-05-15T21:49
+updated: 2025-07-06T10:59
 ---
 >[!info] backtracking
 >Il **backtracking** è una tecnica algoritmica utilizzata tipicamente per risolvere problemi in cui devono essere soddisfatti dei vincoli. Costruisce progressivamente una soluzione, scartando i percorsi che violano i vincoli e tornando indietro quando una scelta porta a un vicolo cieco o quando una soluzione parziale è stata completata.
@@ -24,9 +24,11 @@ def strbin(n, sol = []):
 	if len(sol) == n:
 		print(''.join(sol))
 		return
+		
 	sol.append('0')
 	strbin(n, sol)
 	sol.pop()
+	
 	sol.append('1')
 	strbin(n, sol)
 	sol.pop()
@@ -76,6 +78,7 @@ def strbink(n, k, tot1 = 0, sol = []):
 	sol.append('0')
 	strbink(n, k, tot1, sol)
 	sol.pop()
+	 
 	if tot1<k:
 		sol.append('1')
 		bk2(n, k, tot1+1, sol)
