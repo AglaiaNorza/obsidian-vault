@@ -1,6 +1,6 @@
 ---
 created: 2025-06-21T10:11
-updated: 2025-07-06T16:26
+updated: 2025-07-06T17:34
 ---
 # shell
 La shell è un'interprete di comandi, ovvero un programma che esegue altri comandi.
@@ -293,6 +293,8 @@ Crea symlink e hardlink.
 ### `touch [-a] [-m] [-t timestamp] {file}`
 Serve per creare file o modificare il loro timestamp.
 - funziona anche con directory
+- `-a` cambia solo l'access time
+- `-m` cambia solo il modified time
 - `-t` setta il timestamp desiderato
 
 ### `du [-c] [-s] [-a] [-h] [--exclude=PATTERN] [files...]`
