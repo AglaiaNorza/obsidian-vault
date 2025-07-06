@@ -1,6 +1,6 @@
 ---
 created: 2025-06-21T10:11
-updated: 2025-07-06T10:49
+updated: 2025-07-06T16:26
 ---
 # shell
 La shell è un'interprete di comandi, ovvero un programma che esegue altri comandi.
@@ -209,9 +209,9 @@ Il proprietario di un file definisce i permessi di accesso (chi può leggere, sc
 
 ![[permessi-file.png|center|450]]
 
->[!summary]- più informazioni sui significati dei permessi
+>[!summary] più informazioni sui significati dei permessi
 >
->![[permessi-significati.png|center|500]]
+>![[permessi-significati.png|center|550]]
 
 ### permessi speciali
 #### sticky bit (t)
