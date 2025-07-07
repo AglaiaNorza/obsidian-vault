@@ -1,6 +1,6 @@
 ---
 created: 2025-06-30T19:01
-updated: 2025-07-01T11:56
+updated: 2025-07-07T13:28
 ---
 In linux, le due entità fondamentali sono i file (che rappresentano le risorse) e i processi (che permettono di elaborare dati e usare le risorse).
 - un file eseguibile in esecuzione è un processo
@@ -30,11 +30,11 @@ Il **PID** è univoco, e in ogni istante non ci possono essere due processi con 
 Il **PCB** è unico per processo e contiene:
 - PID: Process Identifier
 - PPID: Parent Process Identifier
-- real UID: Real User Identifier
-- real GID: Real Group ID
+- real UID: Real User Identifier (UID di chi ha lanciato il processo)
+- real GID: Real Group ID (GID di chi ha lanciato il processo)
 - effective UID: Effective User Identifier (UID assunto dal processo in esecuzione)
 - effective GID: Effective Group ID (come sopra per GID)
-- saved UID: Saved User Identifier (UID avuto prima dell’esecuzione del SetUID)
+- saved UID: Saved User Identifier (UID avuto prima dell’esecuzione del SetUID, a cui ritornare)
 - saved GID: Saved Group Identifier (come sopra per GID)
 - current Working Directory: directory di lavoro corrente
 - umask: file mode creation mask
