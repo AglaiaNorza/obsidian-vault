@@ -1,6 +1,6 @@
 ---
 created: 2025-06-30T19:01
-updated: 2025-07-07T13:28
+updated: 2025-07-07T13:38
 ---
 In linux, le due entità fondamentali sono i file (che rappresentano le risorse) e i processi (che permettono di elaborare dati e usare le risorse).
 - un file eseguibile in esecuzione è un processo
@@ -78,10 +78,10 @@ Un processo può essere eseguito in:
 	- il comando può legger l'input da tastiera e scrivere a schermo
 	- finché non termina, il prompt non viene restituito e non si possono sottomettere altri comandi alla shell
 - **background**:
+	- per eseguire un programma in background, si usa `&`
 	- il comando non può leggere l'input da tastiera, ma può scrivere a schermo
 	- il prompt viene immediatamente restituito
 	- mentre il job viene eseguito in background, si possono dare altri comandi alla shell
-	- per eseguire un programma in background, si usa `&`
 
 >[!question] lista di job
 >per vedere la lista di job in esecuzione, si usa il comando `jobs [-l] [-p]`
