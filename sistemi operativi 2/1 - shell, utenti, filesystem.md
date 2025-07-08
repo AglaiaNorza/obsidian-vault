@@ -1,6 +1,6 @@
 ---
 created: 2025-06-21T10:11
-updated: 2025-07-08T11:26
+updated: 2025-07-08T13:26
 ---
 # shell
 La shell è un'interprete di comandi, ovvero un programma che esegue altri comandi.
@@ -210,9 +210,28 @@ Il proprietario di un file definisce i permessi di accesso (chi può leggere, sc
 >![[permessi-significati.png|center|550]]
 
 ### permessi speciali
+I permessi speciali sono specificati:
 
+Nella notazione ottale, i permessi speciali sono specificati nel primo numero, in questo modo:
+- `4` = setuid
+- `2` = setgid
+- `1` = sticky bit
 
+(il bit assumerà come valore la somma tra i permessi speciali attivi).
 
+>[!example] esempio
+> ```
+> 6760/rws rwS ---
+> ```
+> - setuid e setgid sono attivi 
+> - il primo numero è `6` (= `4` + `2`)
+> - l'utente non ha il permesso di esecuzione, quindi la `s` è minuscola
+> - il gruppo ha permesso di esecuzone, quindi la `S` è maiuscola
+
+Nella notazione a stringa, invece, il carattere che indica il permesso speciale assume la posizione del permesso di esecuzione. Se il file ha anche il permesso di esecuzione, la lettera che rappresenta il permesso speciale sarà maiuscola (altrimenti, sarà minuscola).
+- `s` nella prima terna di permessi ⟶ setuid
+- `s` nella seconda terna di permessi ⟶ setgid
+- `t` (nell'ultima terna di permessi) ⟶ sticky bit
 #### sticky bit (t)
 Se applicato sulle directory, corregge il comportamento di `w+x` (che permette la cancellazione di file in una directory su cui si hanno i permessi `w+x` senza avere permessi di scrittura sui file stessi) permettendo la cancellazione dei file solo **se si hanno permessi di scrittura** su di essi.
 - inutile se applicato su file
