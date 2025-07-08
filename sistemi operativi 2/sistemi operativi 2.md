@@ -1,6 +1,6 @@
 ---
 created: 2025-04-06T11:47
-updated: 2025-07-07T13:07
+updated: 2025-07-08T09:48
 ---
 >[!info] index
 >- [[1 - shell, utenti, filesystem]]
