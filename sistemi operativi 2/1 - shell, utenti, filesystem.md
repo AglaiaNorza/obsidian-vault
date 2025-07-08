@@ -1,6 +1,6 @@
 ---
 created: 2025-06-21T10:11
-updated: 2025-07-08T11:15
+updated: 2025-07-08T11:26
 ---
 # shell
 La shell è un'interprete di comandi, ovvero un programma che esegue altri comandi.
@@ -114,10 +114,6 @@ Il filesystem root `/` contiene elementi eterogenei (disco interno, filesystem s
 > | `uid=1000` | imposta l'utente proprietario                                          |
 > 
 
-
-
-
-
 Una qualsiasi directory `D` può diventare un punto di mount per un altro filesystem `F` se e solo se la directory root di `F` diventa accessibile da `D`. Se `D` è vuota, dopo il mount conterrà `F`; se non è vuota, i dati che conteneva precedentemente saranno di nuovo accessibili dopo l'unmount.
 
 >[!summary] partizioni
@@ -214,6 +210,9 @@ Il proprietario di un file definisce i permessi di accesso (chi può leggere, sc
 >![[permessi-significati.png|center|550]]
 
 ### permessi speciali
+
+
+
 #### sticky bit (t)
 Se applicato sulle directory, corregge il comportamento di `w+x` (che permette la cancellazione di file in una directory su cui si hanno i permessi `w+x` senza avere permessi di scrittura sui file stessi) permettendo la cancellazione dei file solo **se si hanno permessi di scrittura** su di essi.
 - inutile se applicato su file
