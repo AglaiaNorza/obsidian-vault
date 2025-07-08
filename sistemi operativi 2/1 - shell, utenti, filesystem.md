@@ -1,6 +1,6 @@
 ---
 created: 2025-06-21T10:11
-updated: 2025-07-07T11:25
+updated: 2025-07-08T11:15
 ---
 # shell
 La shell è un'interprete di comandi, ovvero un programma che esegue altri comandi.
@@ -256,7 +256,7 @@ I permessi di accesso si visualizzano con `ls` o `stat`. I permessi speciali ven
 ## altri comandi
 
 ### `umask [mode]`
-Setta la maschera dei file, ovvero i diritti di accesso al file o alle directory nel momento della lro creazione, a `mode`.
+Setta la maschera dei file, ovvero i diritti di accesso al file o alle directory nel momento della loro creazione, a `mode`.
 
 La maschera può essere:
 - un **numero ottale** da uno a quattro cifre (secondo la rappresentazione ottale dei permessi) che indica i permessi che si desidera **negare** (quindi, per esempio `1` negherà il permesso di esecuzione)
