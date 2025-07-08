@@ -1,6 +1,6 @@
 ---
 created: 2025-05-13T21:40
-updated: 2025-05-31T22:15
+updated: 2025-07-08T16:24
 ---
 L'algebra relazionale è un *linguaggio formale* che ci permette di interrogare una base di dati relazionale. Consiste di:
 - un insieme di **operatori** che possono essere applicati a una (unari) o due (binari) istanze di relazione, e forniscono come risultato:

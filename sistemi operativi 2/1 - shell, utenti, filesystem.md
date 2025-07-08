@@ -1,6 +1,6 @@
 ---
 created: 2025-06-21T10:11
-updated: 2025-07-07T11:25
+updated: 2025-07-08T16:24
 ---
 # shell
 La shell è un'interprete di comandi, ovvero un programma che esegue altri comandi.
@@ -114,10 +114,6 @@ Il filesystem root `/` contiene elementi eterogenei (disco interno, filesystem s
 > | `uid=1000` | imposta l'utente proprietario                                          |
 > 
 
-
-
-
-
 Una qualsiasi directory `D` può diventare un punto di mount per un altro filesystem `F` se e solo se la directory root di `F` diventa accessibile da `D`. Se `D` è vuota, dopo il mount conterrà `F`; se non è vuota, i dati che conteneva precedentemente saranno di nuovo accessibili dopo l'unmount.
 
 >[!summary] partizioni
@@ -214,6 +210,28 @@ Il proprietario di un file definisce i permessi di accesso (chi può leggere, sc
 >![[permessi-significati.png|center|550]]
 
 ### permessi speciali
+I permessi speciali sono `setuid`, `setgid` e `sticky bit`.
+
+Nella notazione ottale, sono specificati nel primo numero, in questo modo:
+- `4` = setuid
+- `2` = setgid
+- `1` = sticky bit
+
+(il bit assumerà come valore la somma tra i permessi speciali attivi).
+
+Nella notazione a stringa, invece, il carattere che indica il permesso speciale assume la posizione del permesso di esecuzione. Se il file ha anche il permesso di esecuzione, la lettera che rappresenta il permesso speciale sarà maiuscola (altrimenti, sarà minuscola).
+- `s` nella prima terna di permessi ⟶ setuid
+- `s` nella seconda terna di permessi ⟶ setgid
+- `t` (nell'ultima terna di permessi) ⟶ sticky bit
+
+>[!example] esempio
+> ```
+> 6760/rws rwS ---
+> ```
+> - setuid e setgid sono attivi 
+> - il primo numero è `6` (= `4` + `2`)
+> - l'utente non ha il permesso di esecuzione, quindi la `s` è minuscola
+> - il gruppo ha permesso di esecuzone, quindi la `S` è maiuscola
 #### sticky bit (t)
 Se applicato sulle directory, corregge il comportamento di `w+x` (che permette la cancellazione di file in una directory su cui si hanno i permessi `w+x` senza avere permessi di scrittura sui file stessi) permettendo la cancellazione dei file solo **se si hanno permessi di scrittura** su di essi.
 - inutile se applicato su file
@@ -256,7 +274,7 @@ I permessi di accesso si visualizzano con `ls` o `stat`. I permessi speciali ven
 ## altri comandi
 
 ### `umask [mode]`
-Setta la maschera dei file, ovvero i diritti di accesso al file o alle directory nel momento della lro creazione, a `mode`.
+Setta la maschera dei file, ovvero i diritti di accesso al file o alle directory nel momento della loro creazione, a `mode`.
 
 La maschera può essere:
 - un **numero ottale** da uno a quattro cifre (secondo la rappresentazione ottale dei permessi) che indica i permessi che si desidera **negare** (quindi, per esempio `1` negherà il permesso di esecuzione)
