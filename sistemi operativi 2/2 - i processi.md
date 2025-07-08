@@ -1,6 +1,6 @@
 ---
 created: 2025-06-30T19:01
-updated: 2025-07-08T10:30
+updated: 2025-07-08T16:24
 ---
 In linux, le due entità fondamentali sono i file (che rappresentano le risorse) e i processi (che permettono di elaborare dati e usare le risorse).
 - un file eseguibile in esecuzione è un processo
@@ -175,3 +175,5 @@ Interviene su processi già in esecuzione e permette di modificare la loro "nice
 ### `strace [-p pid] [comando]`
 Lancia `comando` mostrando tutte le sue syscall, oppure visualizza le syscall del processo `pid`.
 - `-o filename` ridireziona l'output su un file
+
+
