@@ -1,6 +1,6 @@
 ---
 created: 2025-06-21T10:11
-updated: 2025-07-09T15:48
+updated: 2025-07-09T15:54
 ---
 # shell
 La shell è un'interprete di comandi, ovvero un programma che esegue altri comandi.
@@ -278,8 +278,7 @@ Setta la maschera dei file, ovvero i diritti di accesso al file o alle directory
 
 La maschera può essere:
 - un **numero ottale** da uno a quattro cifre (secondo la rappresentazione ottale dei permessi) che indica i permessi che si desidera **negare** (quindi, per esempio `1` negherà il permesso di esecuzione)
-	- i permessi saranno quindi dati da `0777 - umask` per i file, e `0666 - umask` per le directory
-	- ma non è una vera sottrazione aritmetica (in realtà sarebbe un `& !(umask)`) - quindi, se si vuoele
+	- i permessi saranno quindi dati da `0777 - umask` per i file, e `0666 - umask` per le directory (in realtà sarebbe un `& !(umask)`) 
 - una **stringa** secondo la rappresentazione simbolica dei permessi che indica l'insieme dei permessi che possono essere **concessi**
 
 ### `cp [-r] [-i] [-a] [-u] {filesorgenti} filedestinazione`
