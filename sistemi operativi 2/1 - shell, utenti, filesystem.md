@@ -1,6 +1,6 @@
 ---
 created: 2025-06-21T10:11
-updated: 2025-07-09T15:15
+updated: 2025-07-09T15:45
 ---
 # shell
 La shell è un'interprete di comandi, ovvero un programma che esegue altri comandi.
@@ -199,7 +199,7 @@ Il comando `stat filename` restituisce varie informazioni su un file.
 - `stat -c %B filename` restituisce la dimensione dei blocco su disco su cui si trova il file (non la dimensione del file stesso)
 
 ## permessi di accesso
-Il proprietario di un file definisce i permessi di accesso (chi può leggere, scrivere, eseguire un file).
+Il proprietario di un file definisce i permessi di accesso (chi può leggere, scrivere, eseguire un file). Sono visualizzabili con `ls` o `stat`.
 
 ![[permessi-segnatura.png|center|500]]
 
@@ -260,17 +260,17 @@ Per settare permessi, si usa il comando `chmod mode [, mode...] filename`. Il co
 ![[chmod-numeri.png|center|450]]
 
 `chmod` ha anche una modalità simbolica che utilizza le lettere per settare i permessi:
-- il formato è: `[ugoa][+-=][perms...]`, dove `perms` è:
+- il formato è: `[ugoa][+-=][perms...]`, dove:
+- `u` = user, `g` = group, `o` = other, `a` = all
+- `perms` è:
 	- `zero`
 	- una o più lettere nell’insieme `{rxwXst}`
-	- una lettera nell’insieme `{ugo}`
+		- `X` = permesso di esecuzione condizionato (si aggiunge `x` solo se l'elemento è una directory, o almeno uno degli altri utenti (u/g/o) ha già il permesso di esecuzione)
+	- una lettera nell’insieme `{ugo}` ⟶ aggiunge i permessi dell'insieme corrispondente (dell'utente/del gruppo/di others)
 
 ### cambiare il proprietario
 Per cambiare il proprietario di un file, si usa `chown [-R] proprietario {file}` <small>(è possibile specificare anche un gruppo)</small>, mentre per cambiare la proprietà di gruppo di un file, si usa `chgrp [-R] gruppo {file}`.
 - se il file è una directory, con la flag `-R` si applica il comando anche a tutte le sottodirectory
-### visualizzazione
-I permessi di accesso si visualizzano con `ls` o `stat`. I permessi speciali vengono visualizzati al posto del bit di esecuzione (`x`) (il setuid nella terna utente, il setgid nella terna gruppo, lo sticky nella terna altro).
-
 ## altri comandi
 
 ### `umask [mode]`
