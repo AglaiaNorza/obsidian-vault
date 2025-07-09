@@ -1,6 +1,6 @@
 ---
 created: 2025-06-21T10:11
-updated: 2025-07-08T16:24
+updated: 2025-07-09T15:15
 ---
 # shell
 La shell è un'interprete di comandi, ovvero un programma che esegue altri comandi.
@@ -219,7 +219,7 @@ Nella notazione ottale, sono specificati nel primo numero, in questo modo:
 
 (il bit assumerà come valore la somma tra i permessi speciali attivi).
 
-Nella notazione a stringa, invece, il carattere che indica il permesso speciale assume la posizione del permesso di esecuzione. Se il file ha anche il permesso di esecuzione, la lettera che rappresenta il permesso speciale sarà maiuscola (altrimenti, sarà minuscola).
+Nella notazione a stringa, invece, il carattere che indica il permesso speciale assume la posizione del permesso di esecuzione. Se il file ha anche il permesso di esecuzione, la lettera che rappresenta il permesso speciale sarà minuscola (altrimenti, sarà maiuscola).
 - `s` nella prima terna di permessi ⟶ setuid
 - `s` nella seconda terna di permessi ⟶ setgid
 - `t` (nell'ultima terna di permessi) ⟶ sticky bit
