@@ -1,3 +1,6 @@
+---
+{}
+---
 ## mutua esclusione: soluzioni software
 Proviamo ora a gestire la mutua esclusione senza aiuto dal parte dell’hardware o dal Sistema Operativo. Tenteremo quindi di gestire tutto nel codice (senza la sicurezza di avere operazioni atomiche).
 

@@ -1,3 +1,6 @@
+---
+{}
+---
 cosa succede se la CU genera segnali errati?
 dobbiamo individuare:
 - quale combinazione di segnali venga generate

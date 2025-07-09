@@ -1,3 +1,6 @@
+---
+{}
+---
 ## concetti base di concorrenza
 Per i Sistemi Operativi moderni, è essenziale supportare più processi in esecuzione attraverso:
 - multiprogrammazione

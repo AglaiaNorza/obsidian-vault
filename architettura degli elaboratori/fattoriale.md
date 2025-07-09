@@ -1,3 +1,6 @@
+---
+{}
+---
 
 > [!note]- fattoriale iterativo
 > ```

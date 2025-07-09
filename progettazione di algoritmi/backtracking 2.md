@@ -1,6 +1,5 @@
 ---
-created: 2025-05-15T16:13
-updated: 2025-05-15T16:56
+{}
 ---
 
 > [!example] matrici binarie

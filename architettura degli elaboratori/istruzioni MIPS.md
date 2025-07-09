@@ -1,3 +1,6 @@
+---
+{}
+---
 ### aritmetiche
 ![[arithmetic ops.png]]
 ### logiche

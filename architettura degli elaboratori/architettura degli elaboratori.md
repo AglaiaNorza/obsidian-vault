@@ -1,3 +1,6 @@
+---
+{}
+---
 > [!info] index
 > - [[architetture CISC e RISC]]
 > - [[Control Unit malfunzionante]]

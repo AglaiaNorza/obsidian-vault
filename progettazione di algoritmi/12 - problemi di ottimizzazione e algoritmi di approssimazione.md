@@ -1,6 +1,5 @@
 ---
-created: 2025-03-31T14:43
-updated: 2025-04-18T17:28
+{}
 ---
 Un problema di ottimizzazione è un tipo di problema in cui l'obiettivo è trovare la **migliore soluzione possibile** tra un insieme di soluzioni ammissibili.
 - ogni soluzione ammissibile (ovvero che soddisfa tutte le condizioni imposte dal problema) ha un valore associato chiamato *costo* o *beneficio*.

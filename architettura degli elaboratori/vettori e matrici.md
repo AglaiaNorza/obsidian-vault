@@ -1,3 +1,6 @@
+---
+{}
+---
 in assembly non esistono i tipi.
 
 ### vettori

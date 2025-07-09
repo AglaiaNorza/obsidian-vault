@@ -1,6 +1,5 @@
 ---
-created: 2025-04-10T14:17
-updated: 2025-07-09T14:17
+{}
 ---
 Come visto nell'[[3 - stack protocollare|introduzione allo stack protocollare]], il livello di rete si occupa dell'instradamento dei segmenti dall'origine alla destinazione.
 Nello specifico, svolge due compiti:

@@ -1,6 +1,5 @@
 ---
-created: 2025-02-27T16:34
-updated: 2025-04-01T18:03
+{}
 ---
 Un algoritmo si dice **efficiente** se la sua complessità è di ordine *polinomiale* nella dimensione $n$ dell’output, ovvero se è di complessità $O(n^c)$ per una qualche costante $c$.
 

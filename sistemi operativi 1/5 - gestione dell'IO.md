@@ -1,3 +1,6 @@
+---
+{}
+---
 > [!info]- index
 > - [[#dispositivi di I/O|dispositivi di I/O]]
 > - [[#organizzazione della funzione di I/O|organizzazione della funzione di I/O]]

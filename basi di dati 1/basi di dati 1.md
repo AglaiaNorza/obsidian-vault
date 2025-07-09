@@ -1,7 +1,3 @@
----
-created: 2025-04-26T23:09
-updated: 2025-07-09T14:17
----
 > [!info] index
 >  - [[1 - intro]]
 > - [[2 - algebra relazionale]]

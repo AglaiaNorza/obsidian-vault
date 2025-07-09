@@ -1,6 +1,5 @@
 ---
-created: 2025-04-01
-updated: 2025-07-07T11:25
+{}
 ---
 >[!info] backtracking
 >Il **backtracking** è una tecnica algoritmica utilizzata tipicamente per risolvere problemi in cui devono essere soddisfatti dei vincoli. Costruisce progressivamente una soluzione, scartando i percorsi che violano i vincoli e tornando indietro quando una scelta porta a un vicolo cieco o quando una soluzione parziale è stata completata.

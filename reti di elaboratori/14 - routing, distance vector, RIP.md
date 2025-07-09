@@ -1,6 +1,5 @@
 ---
-created: 2025-04-01
-updated: 2025-06-14T19:20
+{}
 ---
 >[!info] routing
 >Il **routing** si occupa di trovare il **miglior percorso** per un pacchetto e di inserirlo nella tabella di routing (o tabella di forwarding).

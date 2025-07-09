@@ -1,7 +1,3 @@
----
-created: 2025-05-14T10:21
-updated: 2025-06-28T20:25
----
 # DBMS
 **chiave** ⟶ non esistono due ennuple della stessa tabella che coincidono sul valore di 1+ attributi
 - ogni tabella ha una **chiave primaria** - non può essere NULL

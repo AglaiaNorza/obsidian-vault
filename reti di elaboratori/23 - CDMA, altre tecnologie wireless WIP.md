@@ -1,6 +1,5 @@
 ---
-created: 2025-06-15T15:30
-updated: 2025-06-15T15:51
+{}
 ---
 ## CDMA
 Nel protocollo CDMA, un solo canale occupa l'intera ampiezza di banda, e tutte le stazioni possono inviare contemporaneamente - la "suddivisione" della banda avviene via **codici**.

@@ -1,6 +1,5 @@
 ---
-created: 2025-04-30T17:16
-updated: 2025-05-05T19:22
+{}
 ---
 > [!info] greedy
 > Un algoritmo si dice **greedy** se, ad ogni passaggio, opta per la *soluzione ottimale a livello locale*.

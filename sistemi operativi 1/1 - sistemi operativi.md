@@ -1,5 +1,5 @@
 ---
-sticker: lucide//git-compare
+{}
 ---
 ### sistema operativo (e i suoi componenti)
 gestisce le risorse hardware di un sistema computerizzato (processori, RAM, i/o) e fornisce un insieme di servizi agli utenti. 

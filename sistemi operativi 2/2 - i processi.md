@@ -1,7 +1,3 @@
----
-created: 2025-07-08T16:24
-updated: 2025-07-09T14:17
----
 In linux, le due entità fondamentali sono i file (che rappresentano le risorse) e i processi (che permettono di elaborare dati e usare le risorse).
 - un file eseguibile in esecuzione è un processo
 

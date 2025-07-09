@@ -1,7 +1,3 @@
----
-created: 2025-05-13T21:40
-updated: 2025-07-09T14:17
----
 Supponiamo di voler creare una base di dati contenente i seguenti dati di studenti universitari:
 - dati anagrafico-identificativi (nome, cognome, data, comune, provincia, matricola, CF)
 - dati curricolari (per ogni esame: voto, data, codice, titolo e docente)

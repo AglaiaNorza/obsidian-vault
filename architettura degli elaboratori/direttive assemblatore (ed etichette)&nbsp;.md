@@ -1,3 +1,6 @@
+---
+{}
+---
 #### direttive
 Le direttive non corrispondono in modo diretto ad una particolare istruzione in linguaggio macchina, bensì vengono inter0pretate esclusivamente dall’assemblatore, il quale si occuperà poi di tradurre il tutto in istruzioni più complesse.
 

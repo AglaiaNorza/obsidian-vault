@@ -1,3 +1,6 @@
+---
+{}
+---
 > [!info]- index
 > - [[#CPU senza pipeline|CPU senza pipeline]]
 > 			- [[#fasi di esecuzione di un'istruzione|fasi di esecuzione di un'istruzione]]

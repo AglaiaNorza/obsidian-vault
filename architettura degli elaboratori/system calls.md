@@ -1,3 +1,6 @@
+---
+{}
+---
 ![[system calls.png | 350]]
 Set di servizi messi a disposizione dal Kernel del Sistema Operativo.
 Ogni sistema operativo gestisce le syscalls in maniera diversa, ma in generale si tende a seguire questa struttura:

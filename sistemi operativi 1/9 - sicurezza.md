@@ -1,3 +1,6 @@
+---
+{}
+---
 > Secondo il NIST (National Institute of Standards and Technology), la definizione di "sicurezza informatica" è "la protezione offerta da un sistema informativo automatico al fine di conservare integrità, disponibilità e confidenzialità delle risorse del sistema stesso"
 
 ## obiettivi

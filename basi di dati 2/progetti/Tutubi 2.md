@@ -1,7 +1,3 @@
----
-created: 2025-05-18T11:51
-updated: 2025-07-07T11:25
----
 ## raffinamento dei requisiti
 1) Utenti
 	1) nome

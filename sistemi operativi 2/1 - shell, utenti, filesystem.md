@@ -1,7 +1,3 @@
----
-created: 2025-06-21T10:11
-updated: 2025-07-09T15:54
----
 # shell
 La shell è un'interprete di comandi, ovvero un programma che esegue altri comandi.
 - la shell scrive un prompt e attende che l'utente scriva un comando

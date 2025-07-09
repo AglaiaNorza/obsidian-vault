@@ -1,6 +1,5 @@
 ---
-created: 2025-04-01
-updated: 2025-05-31T22:15
+{}
 ---
 Le reti wireless si dividono in:
 - LAN wireless, disponibili in campus, uffici, bar, aree pubbliche

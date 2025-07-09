@@ -1,3 +1,6 @@
+---
+{}
+---
 > [!info]- index
 > - [[#fetch e aggiornamento PC|fetch e aggiornamento PC]]
 > - [[#operazioni ALU e accesso memoria|operazioni ALU e accesso memoria]]

@@ -1,6 +1,5 @@
 ---
-created: 2025-03-29T16:36
-updated: 2025-04-01T18:04
+{}
 ---
 Una **componente connessa** (o semplicemente "componente") di un grafo <u>indiretto</u> è un sottografo composto da un *insieme massimale di nodi connessi da cammini*.
 

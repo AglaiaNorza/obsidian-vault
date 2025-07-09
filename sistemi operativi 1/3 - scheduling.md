@@ -1,3 +1,6 @@
+---
+{}
+---
 Un sistema operativo deve allocare risorse tra diversi processi che ne fanno richiesta contemporaneamente: tra le risorse, c'è il processore (e quindi il tempo di esecuzione). Questa risorsa viene allocata tramite lo **scheduling**.
 
 >[!question] qual è lo scopo dello scheduling?

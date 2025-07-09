@@ -1,6 +1,5 @@
 ---
-created: 2025-04-19T15:53
-updated: 2025-04-19T16:50
+{}
 ---
 
 > [!info] paradigma client-server

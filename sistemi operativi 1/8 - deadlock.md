@@ -1,3 +1,6 @@
+---
+{}
+---
 Il deadlock è un *blocco permanente* di un insieme di processi, che competono per le risorse o comunicano tra loro.
 - il motivo di base è la **richiesta contemporanea delle stesse risorse** da parte di due o più processi.
 

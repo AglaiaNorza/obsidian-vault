@@ -1,3 +1,6 @@
+---
+{}
+---
 Una funzione è un frammento di codice che *riceve degli argomenti* e *calcola un risultato*.
 - ha un indirizzo di partenza
 - riceve uno o più argomenti(mettiamo dei valori nei registri)

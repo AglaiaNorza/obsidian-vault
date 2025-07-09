@@ -1,3 +1,6 @@
+---
+{}
+---
 [fonti varie ma molto appunti exyss]
 - La memoria può contenere sia istruzioni che dati.
 - La memoria delle architetture MIPS è **indicizzata al byte** (ogni indice punta a un byte).

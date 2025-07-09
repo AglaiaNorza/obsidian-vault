@@ -1,3 +1,6 @@
+---
+{}
+---
  in C, il massimo di un vettore si trova così:
  
 ```C
