@@ -263,7 +263,6 @@ Per settare permessi, si usa il comando `chmod mode [, mode...] filename`. Il co
 	- una o più lettere nell’insieme `{rxwXst}`
 		- `X` = permesso di esecuzione condizionato (si aggiunge `x` solo se l'elemento è una directory, o almeno uno degli altri utenti (u/g/o) ha già il permesso di esecuzione)
 	- una lettera nell’insieme `{ugo}` ⟶ aggiunge i permessi dell'insieme corrispondente (dell'utente/del gruppo/di others)
-
 ### cambiare il proprietario
 Per cambiare il proprietario di un file, si usa `chown [-R] proprietario {file}` <small>(è possibile specificare anche un gruppo)</small>, mentre per cambiare la proprietà di gruppo di un file, si usa `chgrp [-R] gruppo {file}`.
 - se il file è una directory, con la flag `-R` si applica il comando anche a tutte le sottodirectory
