@@ -215,7 +215,7 @@ Nella notazione ottale, sono specificati nel primo numero, in questo modo:
 
 (il bit assumerà come valore la somma tra i permessi speciali attivi).
 
-Nella notazione a stringa, invece, il carattere che indica il permesso speciale assume la posizione del permesso di esecuzione. Se il file ha anche il permesso di esecuzione, la lettera che rappresenta il permesso speciale sarà minuscola (altrimenti, sarà maiuscola).
+Nella notazione a stringa, invece, il carattere che indica il permesso speciale assume la posizione del permesso di esecuzione. Se il file ha anche il permesso di esecuzione, la lettera che rappresenta il permesso speciale sarà minuscola altrimenti, sarà maiuscola).
 - `s` nella prima terna di permessi ⟶ setuid
 - `s` nella seconda terna di permessi ⟶ setgid
 - `t` (nell'ultima terna di permessi) ⟶ sticky bit
@@ -226,8 +226,8 @@ Nella notazione a stringa, invece, il carattere che indica il permesso speciale 
 > ```
 > - setuid e setgid sono attivi 
 > - il primo numero è `6` (= `4` + `2`)
-> - l'utente non ha il permesso di esecuzione, quindi la `s` è minuscola
-> - il gruppo ha permesso di esecuzone, quindi la `S` è maiuscola
+> - l'utente ha il permesso di esecuzione, quindi la `s` è minuscola
+> - il gruppo non ha il permesso di esecuzone, quindi la `S` è maiuscola
 #### sticky bit (t)
 Se applicato sulle directory, corregge il comportamento di `w+x` (che permette la cancellazione di file in una directory su cui si hanno i permessi `w+x` senza avere permessi di scrittura sui file stessi) permettendo la cancellazione dei file solo **se si hanno permessi di scrittura** su di essi.
 - inutile se applicato su file
