@@ -1,5 +1,6 @@
 ---
-{}
+created: 2025-07-12T12:03
+updated: 2025-07-12T12:03
 ---
 cosa succede se la CU genera segnali errati?
 dobbiamo individuare:
