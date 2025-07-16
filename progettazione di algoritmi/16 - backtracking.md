@@ -5,8 +5,19 @@
 >Il **backtracking** è una tecnica algoritmica utilizzata tipicamente per risolvere problemi in cui devono essere soddisfatti dei vincoli. Costruisce progressivamente una soluzione, scartando i percorsi che violano i vincoli e tornando indietro quando una scelta porta a un vicolo cieco o quando una soluzione parziale è stata completata.
 >- il backtracking ha una complessità esponenziale, quindi è poco efficiente nell'affrontare problemi che non siano NP-completi [[15 - programmazione dinamica#problema dei file su disco|(problemi NP-completi)]]
 
-## esercizi
+Un algoritmo di backtracking userà quindi una *funzione di taglio* (che verifica una certa condizione prima di effetuare alcune scelte) per evitare le chiamate ricorsive non necessarie, "potando" quindi l'albero di ricorsione.
+## calcolare la complessità
+Si consideri un algoritmo di enumerazione basato sul backtracking dove l'albero di ricorsione ha **altezza** $h$, il **costo di una foglia** è $g(n)$ e il **costo di un nodo interno** è $O(f(n))$.
 
+Sappiamo, per come funziona il backtracking, che *un nodo viene generato solo se ha la possibilità di portare ad una foglia da stampare*.
+
+Quindi:
+- si generano solo le foglie che vanno stampate, quindi il costo totale dei **nodi foglia** è $O(S(n) \cdot g(n))$ 
+- i **nodi interni** che verranno generati saranno $O(S(n) \cdot h)$, in quanto ogni nodo interno generato apparterrà ad un cammino che parte dalla radice ed arriva ad una delle $S(n)$ foglie da enumerare (non si generano nodi che portano a "vicoli ciechi")
+
+La complessità totale sarà quindi:
+$$O(S(n)\cdot h \cdot f(n) + S(n) \cdot g(n))$$
+## esercizi
 ### stringhe binarie
 
 > [!example] stringhe binarie (senza vincoli)
@@ -33,8 +44,6 @@ def strbin(n, sol = []):
 	sol.pop()
 ```
 
-La tecnica del backtracking si vede nell'uso del `pop()` - infatti, prima si aggiunge `0` alla soluzione parziale e si esplorano tutte le stringhe che iniziano con quel prefisso, e poi si *rimuove* l'ultima scelta (dello `0`) con un `pop()` e si esplorano tutte le stringhe con un `1`. Anche dopo questa chiamata si esegue un altro `pop()` per ripristinare lo stato iniziale della lista prima di tornare ancora indietro.
-
 - questo algoritmo genera un albero di chiamate ricorsive alto $n$
 - l'albero ha quindi $\sum_{i=o}^h 2^i=2^{h+1}-1$ nodi, che $\in \Theta(2^n)$
 - ogni nodo esegue solo operazioni in $\Theta(1)$, tranne per il `print()`, che costa $\Theta(n)$ e viene eseguito solo dalle foglie 
@@ -46,7 +55,7 @@ $$
 $$
 
 > [!example] vincolo sugli zeri
-> Si vogliono stampare solo le stringhe che contengono massimo $k$ zeri, con $k\leq n$.
+> Si vogliono stampare solo le stringhe che contengono massimo $k$ uni, con $k\leq n$.
 
 >[!error] soluzione ottimizzabile
 >Una soluzione in $\Theta(2^n \cdot n)$ è quella per cui si creano tutte le stringhe, ma si stampano solo quelle ammissibili:
@@ -64,9 +73,9 @@ $$
 > 	bk2(n, k, tot1+1, sol)
 > 	sol.pop()
 > ```
-> - questo algoritmo non è però ottimale: infatti, genera
+> - questo algoritmo non è però ottimale: infatti, è inutile generare nell'albero di ricorsione nodi che non possono portare a soluzioni (foglie) da stampare.
 
-$\sum_{i=0}^k \binom{n}{i} \approx n^{k+1}$
+Con la tecnica del backtracking, si può risolvere questo problema: si implementa un **controllo** sul numero di uni presenti nella stringa composta fino a quel momento, e si verifica se se ne possano aggiungere altri.
 
 ```python
 def strbink(n, k, tot1 = 0, sol = []):
@@ -78,10 +87,14 @@ def strbink(n, k, tot1 = 0, sol = []):
 	strbink(n, k, tot1, sol)
 	sol.pop()
 	 
-	if tot1<k:
+	if tot1 < k:
 		sol.append('1')
 		bk2(n, k, tot1+1, sol)
 		sol.pop()
 ```
 
-es. esame sett. 2020
+- uno `0` si può sempre aggiungere (non ci sono vincoli sugli zeri)
+- un  `1` si può aggiungere solo se non si è ancora raggiunto il numero massimo (`k`)
+
+Grazie a questa **funzione di taglio**, le chiamate ricorsive sono ridotte e l'algoritmo risulta molto più efficiente.
+
