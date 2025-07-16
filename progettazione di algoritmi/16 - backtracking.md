@@ -98,3 +98,68 @@ def strbink(n, k, tot1 = 0, sol = []):
 
 Grazie a questa **funzione di taglio**, le chiamate ricorsive sono ridotte e l'algoritmo risulta molto più efficiente.
 
+### matrici binarie
+
+> [!example] matrici binarie
+> Progettare un algoritmo che prende come parametro un intero $n$ e stampa tutte le matrici binarie $n \times n$.
+
+- le matrici binarie lunghe $n$ sono $2^{n^2}$
+
+Invece di gestire la matrice con `append()` e `pop()` come faremmo con una stringa, conviene crearla e gestirla andando avanti e indietro con gli indici.
+
+```python
+def printmatr(n, sol, i=0, j=0):
+	if i == n: # saremmo ad una riga n+1 che non esiste
+		for row in sol:
+			print(row)
+		print()
+		return
+		
+	i1, j1 = i, j+1
+	
+	if j1 == n: # prossima riga
+		i1, j1 = i+1, 0
+		
+	sol[i][j] = 0
+	es1(n, sol, i1, j1)
+	
+	sol[i][j] = 1
+	es1(n, sol, i1, j)
+
+def matrbin():
+	sol = [[0]*n for _ in range(n)]
+	printmatr(n, sol)
+```
+
+- l'albero di ricorsione generato da questo algoritmo è binario di altezza $n^2$, e ha quindi $2^{n^2}-1$  nodi interni e $2^{n^2}$ foglie.
+- ciascun nodo interno richiede $O(1)$ e ciascuna foglia $O(n^2)$
+
+L'algoritmo ha quindi complessità $O(2^{n^2}n^2)$.
+- poiché le matrici da stampare sono $2^{n^2}$ e la stampa di una matrice richiede $\Theta(n^2)$, l'algoritmo è ottimo.
+
+### partizioni (senza ordine)
+
+> [!example] partizioni
+> Dato un numero intero positivo $n$, definiamo come partizioni di tutte le sequenze di elementi inferiori o uguali ad $n$ la cui somma è esattamente $n$. Vogliamo stampare solo quelle senza ordine (ovvero, se per esempio $n=4$, se stampiamo $2,\,1,\,1$, non dobbiamo stampare anche $1,\,2,\,1$).
+
+```python
+def partizioni(n, l, s=0):
+    if s == n:
+        print(l)
+        return
+
+    # ordine decrescente
+    # se la lista è vuota, scelgo n come primo elemento
+    last = l[-1] if l else n 
+    
+    for i in range(last, 0, -1):
+        if s + i <= n: # se si può aggiungere
+            l.append(i)
+            partizioni(n,l,s+i)
+            l.pop()
+
+l = []
+partizioni(n, l)
+```
+
+- con `for i in range(last, 0, -1)` faccio sì che ogni numero che viene aggiunto sia minore o uguale al precedente, così da forzare un ordine decrescente (eliminando i duplicati con la stessa somma ma diverso ordine)
