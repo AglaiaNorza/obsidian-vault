@@ -312,9 +312,9 @@ Serve per creare file o modificare il loro timestamp.
 
 ### `du [-c] [-s] [-a] [-h] [--exclude=PATTERN] [files...]`
 Calcola la dimensione dei file e/o directories dati in input.
-- `-c` (o `--total`) ⟶ restituisce la somma totale delle dimensioni
+- `-c` (o `--total`) ⟶ mostra anche la somma totale delle dimensioni
 - `-s` (`--summarize`) ⟶ (invece di mostrare la dimensione di ogni file in una directory fornita) mostra solo la dimensione totale per ogni argomento
-- `-a` (`-all`) ⟶ mostra anche le sottodirectory (mostra tutti i file)
+- `-a` (`-all`) ⟶ mostra tutti i file (normalmente mostra solo il peso di tutte le directory)
 - `-h` (`--human-readable`) ⟶ mostra le dimensioni in formati leggibili (e.g. M, G)
 
 ### `df [-h] [-l] [-i] [file]`
