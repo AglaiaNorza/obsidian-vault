@@ -182,3 +182,4 @@ Lancia `comando` mostrando tutte le sue syscall, oppure visualizza le syscall de
 - `-o filename` ridireziona l'output su un file
 
 
+$\frac{40}{}$
