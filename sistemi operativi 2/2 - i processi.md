@@ -180,6 +180,3 @@ Interviene su processi già in esecuzione e permette di modificare la loro "nice
 ### `strace [-p pid] [comando]`
 Lancia `comando` mostrando tutte le sue syscall, oppure visualizza le syscall del processo `pid`.
 - `-o filename` ridireziona l'output su un file
-
-
-$\frac{40}{}$
