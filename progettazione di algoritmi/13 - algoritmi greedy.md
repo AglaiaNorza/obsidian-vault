@@ -10,7 +10,7 @@ Abbiamo una lista di $n$ attività da eseguire:
 - ciascuna attività è caratterizzata da una coppia $(\text{tempo di inizio, tempo di fine})$
 - due attività sono *compatibili* se non si sovrappongono
 
-Si vuole trovare un sottoinsieme massimale di attività compatibili.
+Si vuole trovare un sottoinsieme massimale di attività compatibili. 
 
 >[!example] esempio 
 >

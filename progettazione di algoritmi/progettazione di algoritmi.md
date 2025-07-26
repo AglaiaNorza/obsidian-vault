@@ -18,5 +18,6 @@
 >- [[13 - algoritmi greedy]]
 >- [[14 - divide et impera]]
 >- [[15 - programmazione dinamica]]
+>- [[16 - backtracking]]
 
 [playlist](https://open.spotify.com/playlist/52f65aksG2pZCE5IRqrkLr?si=9b217e1fd5e344f4)
