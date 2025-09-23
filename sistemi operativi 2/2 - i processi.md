@@ -158,6 +158,15 @@ I segnali verranno presi in considerazione solo se il *real user* del processo �
 >- `SIGKILL`, `SIGINT` ⟶ terminazione (si può inviare anche con `CTRL+C`)
 >- i segnali `SIGUSR1` e `SIGUSR2` sono impostati dall'utente per le proprie necessità, e consentono una semplice forma di comunicazione tra processi
 
+>[!summary] segnali più importanti
+>
+>
+
+
+| segnale            | effetto                                                                          |
+| ------------------ | ------------------------------------------------------------------------------- |
+| `SIGSTOP`/`SIGSTP` manda il processo in stato stopped (T) - non riprenderà se non riceve `SIGCONT` o  |
+
 
 ### `nice [-n num] [comando]`
 `nice` senza opzioni mostra quanto sia la "niceness" di partenza. La "niceness" può essere pensata come un'addizione sulla priorità: se è positiva, ne aumenta il valore (e la priorità decresce), altrimenti ne diminuisce il valore (e la priorità cresce).
@@ -171,5 +180,3 @@ Interviene su processi già in esecuzione e permette di modificare la loro "nice
 ### `strace [-p pid] [comando]`
 Lancia `comando` mostrando tutte le sue syscall, oppure visualizza le syscall del processo `pid`.
 - `-o filename` ridireziona l'output su un file
-
-

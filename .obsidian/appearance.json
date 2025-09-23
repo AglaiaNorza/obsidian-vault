@@ -1,7 +1,3 @@
 {
-  "cssTheme": "Material Gruvbox",
-  "theme": "obsidian",
-  "enabledCssSnippets": [
-    "images_center"
-  ]
+  "cssTheme": "Material Gruvbox"
 }
