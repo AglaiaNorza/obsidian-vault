@@ -1,3 +1,6 @@
 {
-  "cssTheme": "Tokyo Night"
+  "cssTheme": "Tokyo Night",
+  "enabledCssSnippets": [
+    "images_center"
+  ]
 }
