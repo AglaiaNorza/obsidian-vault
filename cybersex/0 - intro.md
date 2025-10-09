@@ -66,7 +66,8 @@ Primary tool: **digital signatures** ⟶ cryptographic computations that allow s
 Tools:
 - **aggregation** ⟶ the combining of data from many individuals so that disclosed sums or averages canno be tied to a specific individual
 - **mixing** ⟶ the intertwining of transactions, information, or communications in a way that cannot be traced to any individual
-- **proxies** ⟶ trusted agents that are willing to eng
+- **proxies** ⟶ trusted agents that are willing to engage in actions for an individual in a way that cannot be traced back to that person
+- **pseudonyms** ⟶ fictional identities that can fill in for real identities in communications and transactions, but are otherwise known only to a trusted entity
 
 ## security and attacks
 
@@ -99,4 +100,14 @@ Tools:
 > 
 > **threat agents** ⟶ those who have the intent to conduct detrimental activities
 > 
+
+## threat consequences
+- **unauthorised disclosure** is a threat to *confidentiality*
+	- an entity gains access to data for which it's not authorised 
+- **deception** is a threat to *system and/or data integrity*
+	- an authorised entity receives false data and believes it to be true
+- **disruption** is a threat to *availability or system integrity*
+	- the correct operation of system services and functions is interrupted or prevented
+- **usurpation** is a threat to *system integrity*
+	- an unauthorised entity takes control of system services or functions
 
