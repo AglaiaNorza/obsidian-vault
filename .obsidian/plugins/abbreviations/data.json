@@ -3,23 +3,28 @@
     "SO": {
       "value": "Sistema Operativo",
       "isEnabled": true,
-      "position": 3,
+      "position": 4,
       "isCaseSensitive": true
     },
     "ESEMPIO": {
       "value": ">[!example] esempio",
       "isEnabled": true,
-      "position": 2,
+      "position": 3,
       "isCaseSensitive": true
     },
     "ORALE": {
       "value": ">[!question] possibili domande orale",
       "isEnabled": true,
-      "position": 1,
+      "position": 2,
       "isCaseSensitive": true
     },
     "-->": {
       "value": "⟶",
+      "isEnabled": true,
+      "position": 1
+    },
+    "INFO": {
+      "value": ">[!info]",
       "isEnabled": true,
       "position": 0
     }

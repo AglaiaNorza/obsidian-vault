@@ -1,3 +1,6 @@
 {
-  "cssTheme": "Material Gruvbox"
+  "cssTheme": "Material Gruvbox",
+  "enabledCssSnippets": [
+    "images_center"
+  ]
 }
