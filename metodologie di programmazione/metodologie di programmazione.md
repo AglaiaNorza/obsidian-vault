@@ -1,5 +1,5 @@
 > [!info] index
->  - [[0 - intro]]
+>  - [[metodologie di programmazione/0 - intro]]
 > - [[1 - hello, world!]]
 > - [[array]]
 > - [[campi statici]]
