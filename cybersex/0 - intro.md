@@ -111,3 +111,7 @@ Tools:
 - **usurpation** is a threat to *system integrity*
 	- an unauthorised entity takes control of system services or functions
 
+## threats and attacks
+- **interception** ⟶ eavesdropping of information intended for someone else during its transmission over a communication channel
+- **inference** (/correlation/traceback) ⟶ integration of multiple data sources and information flows to determine the source of a particular data stream or piece of information
+- **masquerade** ⟶ an unauthorised entity gains access
