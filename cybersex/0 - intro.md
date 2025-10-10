@@ -114,4 +114,11 @@ Tools:
 ## threats and attacks
 - **interception** ⟶ eavesdropping of information intended for someone else during its transmission over a communication channel
 - **inference** (/correlation/traceback) ⟶ integration of multiple data sources and information flows to determine the source of a particular data stream or piece of information
-- **masquerade** ⟶ an unauthorised entity gains access
+- **masquerading** ⟶ fabrication of information appearing to be from someone who is not actually the author
+- **falsification** ⟶ unauthorised modification of information
+- **repudiation** ⟶ denial of a commitment or data receipt (attempt to back out of a contract or protocol that requires the different parties to provide receipts acknowledging that the data has been received)
+- **incapacitation** ⟶ prevents or interrupts system operation by disabling a system component
+- **corruption** ⟶ undesirably alters system operation by adversely modifying system functions or data
+- **obstruction** ⟶ interrupts delivery of system services by hindering system operation
+- **denial-of-service** (DOS) ⟶ obstruction or degradation of a data service or information access
+- **misappropriation** ⟶ an entity assumes unauthorised
