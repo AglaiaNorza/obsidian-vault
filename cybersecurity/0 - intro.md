@@ -3,7 +3,6 @@
 
 >[!info] computer security
 >Computer security is made up of the measures and controls that ensure **confidentiality**, **integrity** and **availability** of information system assets, including hardware, software, firmware and information that is being processed, stored and communicated.
-
 ## C.I.A.
 The key concepts of security are united under the C.I.A. acronym, and they are:
 ### confidentiality
