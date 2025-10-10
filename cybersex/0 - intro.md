@@ -121,4 +121,25 @@ Tools:
 - **corruption** ⟶ undesirably alters system operation by adversely modifying system functions or data
 - **obstruction** ⟶ interrupts delivery of system services by hindering system operation
 - **denial-of-service** (DOS) ⟶ obstruction or degradation of a data service or information access
-- **misappropriation** ⟶ an entity assumes unauthorised
+- **misappropriation** ⟶ an entity assumes unauthorised logical or physical control of a system resource
+- **misuse** ⟶ causes a system component to perform a function or service that is detrimental to system security
+
+## attack surfaces
+>[!info] attack surfaces
+> Reachable and exploitable vulnerabilities in a system.
+
+Divided into three categories:
+- **network attack surface** ⟶ vulnerabilities over an enterprise netwoek, wide-area network or the Internet 
+	- includes network protocol vulnerabilities (eg those used for a DOS attack), disruption of communication links and intruder attacks
+- **software attack surface** ⟶ vulnerabilities in application, utility or operating system code 
+- **human attack surface** ⟶ vulnerabilities created by personnel or outsiders (social engineering, human error)
+
+## computer security strategy
+- **security policy** ⟶ formal statement of rules and practices that specify or regulate how a system or organization provides security services to protect sensitive and critical system resources
+- **security implementation** ⟶ made up of
+	- prevention
+	- detection
+	- response
+	- recovery
+- **assurance** ⟶ attribute of an information system that provides grounds for having confidence that the system's security policy is enforced
+- **evaluation** ⟶ examining a computer product with respect to certain criteria
