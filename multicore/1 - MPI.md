@@ -33,7 +33,36 @@ MPI's functionalities are included in the C `mpi.h` header file, which needs to 
 ## communicators
 As previously mentioned, MPI processes communicate via messages. 
 Communicators are collections of processes that can send messages to each other.
-- `MPI_Init` defines a communicator made up of all the 
+- `MPI_Init()` defines a communicator (called `MPI_COMM_WORLD`) made up of all the processes created when the program is started
+- after the MPI calls, before exiting, `MPI_Finalize()` must be called
+
+There are two functions needed to operate with communicators:
+
+```C
+int MPI_Comm_size(
+	MPI_Comm comm /* in */
+	int* comm_sz_p /* out */
+)
+```
+
+- given a communicator `comm`, it writes the number of processes it contains (cardinality) in `comm_sz_p`, given in input
+	- it writes in the pointer given in input instead of returning because the return value is used for the operation's state - whether it was successful, or it returned an error (and which error)
+
+```C
+int MPI_Comm_rank(
+	MPI_Comm comm /* in */
+	int* my_rank_p /* out */
+)
+```
+
+- writes the rank, relative to `comm`, of the process making the call in `my_rank_p`
+
+## message sending
+
+>[!warning] nonovertaking messages
+> MPI requires that messages be **nonovertaking**: if process `q` sends 
+
+
 
 A message is successfully received if:
 - `recv_type` = `send_type`
