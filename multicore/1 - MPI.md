@@ -1,4 +1,39 @@
-### communicators
+MPI is a library used by [[multicore/0 - intro#types of parallel systems|distributed memory]] systems.
+It follows the Single-Program Multiple-Data (SPMD) model, so a the same program is executed by multiple processes, that communicate through message passing.
+
+MPI's functionalities are included in the C `mpi.h` header file, which needs to be included by any program that uses MPI. Identifiers defined by MPI start with `MPI_`, and the first letter following the underscore is uppercase.
+
+>[!summary] compiling and execution
+>
+> To compile, run:
+>```C
+> mpicc -g -Wall -o mpi_hello mpi_hello.c
+>```
+>
+>- `-g` produces debugging information
+>- `-Wall` turns on all warnings
+>
+>To execute, run:
+>```C
+> mpiexec -n <number of processes> <executable>
+>```
+>
+>- `n` processes will execute the program
+>
+> Parallel debugging is trickier than debugging serial programs - it can be useful to use MPI with `ddd` (or `gdb`) on one specific process:
+>```
+> mpiexec -n 4 ./test : -n 1 ddd ./test : -n 1 ./test
+>```
+>
+>- the 5th process is launched under `ddd` 
+
+>[!info] identifying MPI processes
+>Every MPI process is defined by a unique nonnegative **rank** (`0` to `p-1`, with `p` = # of processes) 
+
+## communicators
+As previously mentioned, MPI processes communicate via messages. 
+Communicators are collections of processes that can send messages to each other.
+- `MPI_Init` defines a communicator made up of all the 
 
 A message is successfully received if:
 - `recv_type` = `send_type`
