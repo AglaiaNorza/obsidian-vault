@@ -1,2 +1,2 @@
 >[!info]  index
-> - [[intro]]
+> - [[cybersecurity/0 - intro]]
