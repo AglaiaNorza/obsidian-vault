@@ -31,4 +31,31 @@ There are different types of parallel systems
 - **distributed memory** ⟶ each core has its own private memory; cores must communicate explicitly by sending *messages* across a network
 
 ### instruction-wise
-- **multiple-instruction multiple-data** (MIMD)
+- **multiple-instruction multiple-data** (MIMD) ⟶ each core has its own control units and can work independently
+- **single-instruction multiple-data** (SIMD) ⟶ cores share the control units (they all have to execute the same instruction)
+
+|          | **shared memory**      | **distributed memory** |
+| -------- | ---------------------- | ---------------------- |
+| **SIMD** | CUDA                   |                        |
+| **MIMD** | pthreads, openMD, CUDA | MPI                    |
+
+### task-wise
+<small>There isn't a complete agreement on the definition, but</small>
+- **concurrent** task parallelism ⟶ multipple tasks can be in progress at any time
+	- concurrent programs can be serial
+- **parallel** ⟶ multiple tasks *cooperate closely* to solve a problem (tightly coupled - cores share memory or are connected via a fast network)
+- **distributed** ⟶ a program *might need to cooperate* with others to solve a problem (more loosely coupled - eg services connected through the internet)
+
+(parallel and distributed are both subsets of concurrent)
+
+## hardware
+We need to know which hardware we're working with, in order to optimise for it specifically.
+
+>[!info] von neumann architecture
+>
+>![[von-neumann.png|center|500]]
+>
+>- **main memory** ⟶ collection of locations; each location has an address used to access its content (data/instruction) 
+>- **CPU** ⟶ comprised of the many units, like the Control Unit, the registers (which store the state of the executing program) e.g. the Program Counter, and the datapath (which executes the instructions)
+>-  **interconnect** ⟶ used to transfer data between the CPU and the memory. its traditionally a **bus**, but it can be much more complex
+>	- tranferring data from memory to the registers is a bottleneck, known as **von neumann bottleneck**
