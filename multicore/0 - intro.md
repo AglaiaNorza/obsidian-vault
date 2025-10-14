@@ -57,5 +57,9 @@ We need to know which hardware we're working with, in order to optimise for it s
 >
 >- **main memory** ⟶ collection of locations; each location has an address used to access its content (data/instruction) 
 >- **CPU** ⟶ comprised of the many units, like the Control Unit, the registers (which store the state of the executing program) e.g. the Program Counter, and the datapath (which executes the instructions)
->-  **interconnect** ⟶ used to transfer data between the CPU and the memory. its traditionally a **bus**, but it can be much more complex
->	- tranferring data from memory to the registers is a bottleneck, known as **von neumann bottleneck**
+>-  **interconnect** ⟶ used to transfer data between the CPU and the memory; traditionally a **bus**, but it can be much more complex
+>	- the bottleneck caused by the transfer of data from memory to the registers is known as *von neumann bottleneck*
+
+>[!question]- "how much does that cost?"
+>
+>![[how-much.png|center]]
