@@ -60,7 +60,50 @@ int MPI_Comm_rank(
 ## message sending
 
 >[!warning] nonovertaking messages
-> MPI requires that messages be **nonovertaking**: if process `q` sends 
+> MPI requires that messages be **nonovertaking**: if process `q` sends two messages to process `r`, the first message sent by `q` must be available to `r` before the second message.
+> - there is no restriction on the arrival of messages sent by different processes
+
+### functions
+
+**sending a message**:
+```C
+int MPI_Send(
+	void*          msg_buf_p, // in
+	int            msg_size,  // in
+	MPI_Datatype   msg_type,  // in
+	int            dest,      // in
+	int            tag,       // in
+	MPI_Comm       comm       // in
+);
+```
+
+where:
+- `msg_buf_p` ⟶ start address of the memory block that needs to be sent
+	- `void*` - any kind of data can be sent
+- `msg_size` ⟶ number of elements in the message ($\neq$ number of bytes, the size is deduced from `msg_type`)
+- `msg_type` ⟶ type of data that is being sent (types defined by `MPI_Datatype`; new types can be created if needed)
+- `dest` ⟶ rank of the receiver
+- `tag` ⟶ used to identify messages (optional) - needs to match with the receiver's in its `MPI_Receive`
+- `comm` ⟶ communicator to be used
+
+**receiving a message**:
+```C
+int MPI_Recv(
+	void*          msg_buf_p, // in
+	int            buf_size,  // in
+	MPI_Datatype   buf_type,  // in
+	int            source,    // in
+	int            tag,       // in
+	MPI_Comm       comm,      // in
+	MPI_Status*    status_p   // in
+);
+```
+
+where:
+- `msg_buf_p` ⟶ pointer to the address starting from which the data will be written
+- `source` ⟶ rank of the sender (can be a special value like `MPI_ANY_SOURCE`)
+- `tag` ⟶ has to match the sender's `MPI_Send` `tag`
+- `status_p` ⟶ more information about the receive (eg rank of the sender if `MPI_ANY_SOURCE` is used)
 
 
 
