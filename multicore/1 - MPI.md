@@ -105,9 +105,38 @@ where:
 - `tag` ⟶ has to match the sender's `MPI_Send` `tag`
 - `status_p` ⟶ more information about the receive (eg rank of the sender if `MPI_ANY_SOURCE` is used)
 
+**knowing how much data is being received**:
+```C
+int MPI_Get_count(
+	MPI_Status*  status_p, // in
+	MPI_Datatype type,     // in
+	int*         count_p   // out
+);
+```
+- `status_p` ⟶ status of the receive (identifies the communication)
+- `type` ⟶ type of data being received
+- `count_p` ⟶ "return" value: how many `type`s have been received
 
+> [!summary] data types
+> 
+> | MPI datatype         | C datatype             |
+> | -------------------- | ---------------------- |
+> | `MPI_CHAR`           | `signed char`          |
+> | `MPI_SHORT`          | `signed short int`     |
+> | `MPI_LONG`           | `signed long int`      |
+> | `MPI_LONG_LONG`      | `signed long long int` |
+> | `MPI_UNSIGNED_CHAR`  | `unsigned char`        |
+> | `MPI_UNSIGNED_SHORT` | `unsigned short int`   |
+> | `MPI_UNSIGNED`       | `unsigned int`         |
+> | `MPI_UNSIGNED_LONG`  | `unsigned long int`    |
+> | `MPI_FLOAT`          | `float`                |
+> | `MPI_DOUBLE`         | `double`               |
+> | `MPI_LONG_DOUBLE`    | `long double`          |
+> | `MPI_BYTE`           |                        |
+> | `MPI_PACKED`         |                        |
+> 
 
-A message is successfully received if:
+A message is **successfully received** if:
 - `recv_type` = `send_type`
 - `recv_buf_sz` >= `send_buf_sz` (i can send less bytes than i can receive)
 
@@ -116,22 +145,23 @@ A receiver can get a message without knowing:
 - the sender (wildcard `MPI_ANY_SOURCE`)
 - the tag of the message (wildcard `MPI_ANY_TAG`)
 
-To find out, you can operate on `&status`, an `MPI_Status`-type argument (the last argument of an `MPI_Recv`)
+To find out, you can operate on `&status`, an `MPI_Status`-type argument (the last argument of an `MPI_Recv`):
 - `status.MPI_SOURCE` to find the source
 - `status.MPI_TAG` to find the tag
-- it also offers `status.MPI_ERROR` (to find the error ?)
+- `status.MPI_ERROR` to find the error code
 
 ### issues with send and receive
 Some things are well-defined (tags, id), but others have been left up to the implementation:
+- `MPI_Send` may behave differently with regard to buffer size, cutoffs and blocking
+	- with an `MPI_Send`, there is no way of knowing if the message has been sent and whether it has arrived, so the next instruction could be executed with the message still inside the process; the only guarantee is that, when the next instruction is executed, if the buffer (with the message) is modified, the correct data will be sent anyway (even if the message hadn't left yet) (MPI might make a copy of it, or something similar) 
+		- different implementations handle this differently
 
-- MPI_Send - non so se il messaggio sia partito o arrivato - passo all'istruzione successiva, e il messaggio potrebbe essere ancora all'interno del processo - l'unica garanzia che ho è che, quando eseguo l'istruzione successiva, se modifico il buffer da inviare/inviato, i dati inviati saranno comunque corretti, anche se il messaggio non dovesse essere partito (forse MPI fa una copia, o per altri motivi)
-	- different implementations handle this differently
+MPI has a buffer for sent messages that haven't been received; if the message is too big, instead of using the buffer, the sender will check if the receiver is ready (*rendezvous*).
 
-MPI ha un buffer per i messaggi inviati ma non ricevuti da nessuno (nessuno ha chiamato la funzione con i parametri giusti) - ma, se il buffer è troppo grande, chi invia controlla se il ricevente è pronto a ricevere (rendezvous).
-
-La receive si blocca fino a quando il messaggio non viene ricevuto (quindi, quando termina, ho la garanzia che il buffer sia stato ricevuto).
+`MPI_Receive` blocks the process until the message is received (so, when it ends, there's a guarantee that the buffer has been received).
 - if a process tries to receive a message and there's no matching send, the process will hang
 - if a call to `MPI_Send` blocks and there's no matching receive, the sending process can hang
+- if a call to `MPI_`
 
 >[!question] what happens when you do a send?
 > ![[send-request.png|center|500]]
