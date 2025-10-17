@@ -161,9 +161,20 @@ MPI has a buffer for sent messages that haven't been received; if the message is
 `MPI_Receive` blocks the process until the message is received (so, when it ends, there's a guarantee that the buffer has been received).
 - if a process tries to receive a message and there's no matching send, the process will hang
 - if a call to `MPI_Send` blocks and there's no matching receive, the sending process can hang
-- if a call to `MPI_`
+- if a call to `MPI_Send` is buffered and there's no matching receive, the message will be lost
+- if the rank of the destination process is the same as the source process, the process will hang (or worse, the receive may match another send)
 
 >[!question] what happens when you do a send?
 > ![[send-request.png|center|500]]
 
+## point-to-point communication models
+As explained above, `MPI_Send` uses the so-called **standard communication mode**: based on the size of the message, it decides whether to block the call until the destination process collects it or (if the message is small enough) to return before a matching receive is issued (**locally blocking**).
 
+There are three more communication models:
+- **buffered** ⟶ the sending operation is always locally blocking (it will return as soon as the message is copied to a buffer), and the buffer is *user-provided*
+- **synchronous** ⟶ the sending operation will return only after the destination process has initiated and started the retrieval of the message (**globally blocking** - the sender can be sure of the point the receiver is at without any further explicit communication)
+- **ready** ⟶ the send operation will only succeed if a matching receive operation has already been initialised (otherwise, it returns an error code); used to reduce the overhead of handshaking operation
+
+the different modes are implemented with `MPI_Bsend()`, `MPI_Ssend()` and `MPI_Rsend()`, that share the same arguments `(void *buf, int count, MPI_Datatype datatype, int dest, int tag, MPI_Comm comm)`
+
+## non-blocking communication
