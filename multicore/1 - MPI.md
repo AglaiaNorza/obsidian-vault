@@ -178,3 +178,4 @@ There are three more communication models:
 the different modes are implemented with `MPI_Bsend()`, `MPI_Ssend()` and `MPI_Rsend()`, that share the same arguments `(void *buf, int count, MPI_Datatype datatype, int dest, int tag, MPI_Comm comm)`
 
 ## non-blocking communication
+Buffered sends are considered bad for performance (the caller has to wait for the copying to take place)
