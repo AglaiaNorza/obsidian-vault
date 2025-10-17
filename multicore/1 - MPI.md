@@ -178,4 +178,69 @@ There are three more communication models:
 the different modes are implemented with `MPI_Bsend()`, `MPI_Ssend()` and `MPI_Rsend()`, that share the same arguments `(void *buf, int count, MPI_Datatype datatype, int dest, int tag, MPI_Comm comm)`
 
 ## non-blocking communication
-Buffered sends are considered bad for performance (the caller has to wait for the copying to take place)
+Buffered sends are considered bad for performance (the caller has to wait for the copying to take place). Non-blocking or immediate functions allow communication and computation to overlap by returning immediately upon initiating a transfer.
+
+The downside is that the completion of the operations (for both end-points) has to be queried explicitly for both senders (so that they can re-use or modify the message buffer) and receivers (so that they can extract the content of the messages).
+
+>[!tip] communication modes
+> Non-blocking communication can be coupled with any communication mode (`MPI_Isend`, `MPI_Ibsend`, `MPI_Issend` etc)
+
+### functions
+
+**send**:
+```C
+int MPI_Isend(
+	void *buf, // address of data buffer (IN)
+	int count, // number of data items (IN)
+	MPI_Datatype datatype, // type of buffer elements (IN)
+	int dest, // rank of destination process
+	int tag, // label to identify the message (IN)
+	MPI_Comm comm, // identifies the communicator (IN)
+	MPI_Request *req // used to return a handle for checking status (OUT)
+)
+```
+
+**receive**:
+```C
+int MPI_Isend(
+	void *buf, // addfess of data buffer (IN)
+	int count, // number of data items (IN)
+	MPI_Datatype datatype, // type of buffer elements (IN)
+	int source, // rank of destination process
+	int tag, // label to identify the message (IN)
+	MPI_Comm comm, // identifies the communicator
+	MPI_Request *req // used to return a handle for checking status (OUT)
+)
+```
+
+#### check for completion
+The non-blocking functions are associated with a wait command that can be blocking or non-blocking.
+
+**blocking** (destroys handle)
+```C
+int MPI_Wait(
+	MPI_Request *req, // address of the handle identifying the
+					  // operation queried (IN/OUT)
+	                  // the call invalidates *req by 
+	                  // setting it to MPI_REQUEST_NULL
+	MPI_Status *st // addess of the structure that will hold the 
+				   // comm. information (OUT)
+)
+```
+
+**non-blocking** (destroys handle if operation was successful (i.e. `*flag=1`))
+```C
+int MPI_Test(
+	MPI_Request *req, // address of the handle identifying the
+					  // operation queried (IN)
+	int *flag, // set to true is operation is complete (OUT)
+	MPI_Status *st // addess of the structure that will hold the 
+				   // comm. information (OUT)
+)
+```
+
+There are several variants available, like:
+- `Waitall`
+- `Testall`
+- `Waitany`
+- `Testany`
