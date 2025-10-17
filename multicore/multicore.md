@@ -1,2 +1,4 @@
- >[!info] example
+ >[!info] index
+ >- [[multicore/0 - intro|0 - intro]]
+ >- [[1 - MPI]]
  
