@@ -16,6 +16,10 @@ The application logic is stored in a single program.
 >- **running the program** - execution path changes based on ID
 >- **shutting-down the program** (clean-up, saving results)
 
+### Multiple Program Multiple Data
+
 >[!warning] potential issues with SPMD
->SPMD 
+>SPMD fails when:
+>- memory requirements are too high for all nodes
+>- it has to deal with heterogenous platforms
 
