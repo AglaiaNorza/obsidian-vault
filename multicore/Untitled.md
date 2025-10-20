@@ -26,4 +26,9 @@ For SPMD, the execution steps are identical to SPMD, but deployment involves dif
 - both SPMD and MPMD are supported by MPI
 
 ### Master-Worker
-The Master-Worker
+The Master-Worker model is made up of two kinds of components: Masters and Workers.
+
+The **Master** (1+) is responsible for:
+- handing out pieces of work to workers
+- collecting the result of the computation from the workers
+- 
