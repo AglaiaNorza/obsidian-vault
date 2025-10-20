@@ -25,3 +25,5 @@ For SPMD, the execution steps are identical to SPMD, but deployment involves dif
 
 - both SPMD and MPMD are supported by MPI
 
+### Master-Worker
+The Master-Worker
