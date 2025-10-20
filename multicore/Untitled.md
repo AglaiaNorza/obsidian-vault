@@ -7,7 +7,7 @@ There are two main categories of parallel program structure patterns:
 
 ## Globally Parallel, Locally Sequential (GLPS)
 
-### Single Program Multiple Data
+### SPMD, MPMD
 The application logic is stored in a single program.
 
 >[!summary] typical program structure
@@ -16,10 +16,12 @@ The application logic is stored in a single program.
 >- **running the program** - execution path changes based on ID
 >- **shutting-down the program** (clean-up, saving results)
 
-### Multiple Program Multiple Data
-
 >[!warning] potential issues with SPMD
 >SPMD fails when:
 >- memory requirements are too high for all nodes
 >- it has to deal with heterogenous platforms
+
+For SPMD, the execution steps are identical to SPMD, but deployment involves different programs.
+
+- both SPMD and MPMD are supported by MPI
 
