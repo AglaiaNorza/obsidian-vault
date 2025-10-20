@@ -31,4 +31,5 @@ The Master-Worker model is made up of two kinds of components: Masters and Worke
 The **Master** (1+) is responsible for:
 - handing out pieces of work to workers
 - collecting the result of the computation from the workers
-- 
+
+
