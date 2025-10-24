@@ -17,3 +17,15 @@ There are two kinds of attacks used on symmetric encryption:
 - **brute-force attacks** ⟶ all possible keys are tried until an intelligible translation into plaintext is obtained (on average, half of all possible keys must be tried)
 
 ### most known symmetric encryption algorithms
+- **AES** (Advanced Encryption Standard / **Rijndael**)
+	- 128-bit block cypher + 128 / 192 / 256-bit secret keys
+	- most popular and widely used
+- **DES** (Data Encryption Standard) (or *DEA*, Data Encryption Algorithm)
+	- 64 plaintext block + 56 bit key = 64 bit cypher block
+	- now considered insecure due to the shortness of the key
+	- **3DES** ⟶ repeats DES threee times using either two or three unique keys
+		- (168-bit key
+- **RC4** (ARC4)
+	- stream cipher with 40-2048-bit secret keys
+	- considered insecure
+
