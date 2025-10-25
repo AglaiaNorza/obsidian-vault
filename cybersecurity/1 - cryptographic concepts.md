@@ -40,4 +40,5 @@ There are two kinds of attacks used on symmetric encryption:
 	- considered insecure
 
 ### message  authentication
-Message authentication is used for protection against active attacks. Received messages are verified to be authentic: contents have not been altered, 
+Message authentication is used for protection against active attacks. Received messages are verified to be authentic: contents have not been altered, the source is authentic, and they arrived timely and in correct sequence.
+Message authentication can use conventional encryption 
