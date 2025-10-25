@@ -68,6 +68,17 @@ A **Message Authentication Code** is used to verify the integrity and authentici
 >- the result of applying a hash function is called *hash value* or *cheksum* or *message digest*
 
 >[!summary] properties for a hash function aimed at authentication
+>- can be applied to a block of data of **any size**
+>- produces a **fixed-length output**
+>- $H(x)$ is relatively **easy to compute** $\forall x$
+>- **one-way** or pre-image **resistant** - computationally infeasible given $h$, to find $x$ s.t. $H(x)=h$
+>- computationally infeasible to find $y\neq x$ s.t. $H(y)=H(x)$
+>- **collision-resistant** - computationally infeasible to find $(x,y)$ s.t. $H(x)=H(y)$
+
+There are two approaches to attacking a secure hash function:
+- exploiting *logical weaknesses* in the algorithm
+- 
+
 
 
 ### MAC with one-way hash functions
