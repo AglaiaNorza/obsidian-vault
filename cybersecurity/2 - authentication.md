@@ -21,10 +21,22 @@ There are three aspects that need to be managed:
 	- verify the identity of the individual/group/... receiving the authenticator as part of the initial authenticator distribution
 	- establish initial authenticator content
 	- establish and implement administrative procedures for initial authenticator distribution; for lost, compromised, or damaged authenticators; and for revoking authenticators
-	- change default authenticators at first use
-	- ch
+	- change default authenticators at first use, and change them frequently or when relevant events occur
+	- protect authenticator content from unauthorized disclosure and modification
+-  **feedback** of authentication information must be **obscured** during the authentication process
 
+>[!info] digital identity guidelines architecture model
+>
+>![[NIST-digital-id.png|center|600]]
+## means of authentication
+The four means of authentication are based on
+- something you know (e.g. password)
+- something you possess ⟶ token (e.g. smart card)
+- something you are ⟶ biometrics (e.g. fingerprint)
+- something you do ⟶ dynamic biometrics (e.g. voice pattern)
 
+## assurance levels for user authentication
+An organisation can choose from a range of authentication technologies, based on the degree of confidence in identity proofing and authentication processes.
 
--  feedback of authentication information must be obscured during the authentication process
-
+There are three levels of Identity Assurance Levels (IAL):
+- **IAL 1** ⟶ no need to link the applicant to a specific 
