@@ -39,4 +39,5 @@ The four means of authentication are based on
 An organisation can choose from a range of authentication technologies, based on the degree of confidence in identity proofing and authentication processes.
 
 There are three levels of Identity Assurance Levels (IAL):
-- **IAL 1** ⟶ no need to link the applicant to a specific 
+- **IAL 1** ⟶ no need to link the applicant to a specific real-life identity
+- **IAL 2** ⟶ provides evidence for
