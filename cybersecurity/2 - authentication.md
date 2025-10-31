@@ -40,4 +40,7 @@ An organisation can choose from a range of authentication technologies, based on
 
 There are three levels of Identity Assurance Levels (IAL):
 - **IAL 1** ⟶ no need to link the applicant to a specific real-life identity
-- **IAL 2** ⟶ provides evidence for
+- **IAL 2** ⟶ provides evidence for the claimed identity using remote or physically-present identity proofing
+- **IAL 3** ⟶ requires physical presence for identity proofing
+
+ 
