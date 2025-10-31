@@ -1,11 +1,9 @@
-
-
-### Elapsed parallel time
+## Elapsed parallel time
 ```C
 double MPI_Wtime(void);
 ```
 
-rturns the # of seconds that have elapsed since ?? in the past
+returns the time in seconds since an arbitrary time in the past
 
 >[!question] measuring
 > What time do we consider when we have to calculate how much time a program takes? Each rank might finish at different times.
