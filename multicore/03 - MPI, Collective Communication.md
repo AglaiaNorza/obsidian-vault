@@ -89,4 +89,60 @@ Collective communication involves a group of processes within a specified commun
 > - the `local_sum` is then reduced to the root process using `MPI_SUM`
 > - the global average is then `global_sum / (world_size * num_elements_per_proc)`
 
-## `M`
+## `MPI_Bcast`
+
+`MPI_Bcast` sends data belonging to a single process to all of the processes in the communicator
+>[!summary] syntax
+>```c
+>int MPI_Bcast(
+>	void* data_p,          // in/out
+>	int count,             // int
+>	MPI_Datatype datatype, // in	
+>	int root,              // in
+>	MPI_Comm comm,         // int
+>);
+>```
+
+- although the root process and receiver processes do different jobs, they all call the same `MPI_Bcast` function. 
+- when the root process calls `MPI_Bcast`, the `data_p` variable will be sent to all other processes
+- when all of the receiver processes call `MPI_Bcast`, the `data_p` variable will be filled in with the data from the root process.
+
+>[!example]- example
+>
+>```c
+>void Get_input(
+>			   int my_rank, // in
+>			   int comm_sz, // in
+>			   double* a_p, // out
+>			   double* b_p, // out
+>			   int*    n_p, // out
+>			   ) {
+>	if (my_rank == 0) {
+>		printf("Enter a, b, and n\n");
+>		scanf("%lf %lf %d", a_p, b_p, n_p);
+>	}
+>	MPI_Bcast(a_p, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+>	MPI_Bcast(b_p, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+>	MPI_Bcast(b_p, 1, MPI_INT, 0, MPI_COMM_WORLD);
+>}
+>```
+> - the process with rank `0` sends the values to the other processes, which will find the values in the *same variables used for sending*
+
+## `MPI_Allreduce`
+An `MPI_Allreduce` is conceptually an `MPI_Reduce` followed by an `MPI_Bcast` - the data is processed and the result is distributed to all the processes.
+
+>[!example] example
+>![[MPI-Allreduce.png|center|500]]
+
+```C
+int MPI_Allreduce(
+	void*        input_data_p,  // in
+	void*        output_data_p, // out
+	int          count,         // in
+	MPI_Datatype datatype,      // in
+	MPI_Op       operator,      // in
+	MPI_Comm     comm           // in
+);
+```
+
+- the argument list is identical to that of `MPI_Reduce`, but there is no `dest_process` since all the processes will get the results

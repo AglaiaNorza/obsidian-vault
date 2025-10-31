@@ -1,5 +1,5 @@
  >[!info] index
- >- [[multicore/0 - intro|0 - intro]]
- >- [[1 - MPI]]
- >- [[2 - parallel design patterns]]
+ >- [[00 - intro|00 - intro]]
+ >- [[01 - MPI]]
+ >- [[02 - parallel design patterns]]
  

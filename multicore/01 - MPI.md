@@ -1,4 +1,4 @@
-MPI is a library used by [[multicore/0 - intro#types of parallel systems|distributed memory]] systems.
+MPI is a library used by [[00 - intro#types of parallel systems|distributed memory]] systems.
 It follows the Single-Program Multiple-Data (SPMD) model, so a the same program is executed by multiple processes, that communicate through message passing.
 
 MPI's functionalities are included in the C `mpi.h` header file, which needs to be included by any program that uses MPI. Identifiers defined by MPI start with `MPI_`, and the first letter following the underscore is uppercase.
