@@ -26,4 +26,30 @@ There are different ways of storing passwords:
 ### unix-style, legacy
 -  up to **8 printable characters**-long
 - **12-bit salt** used to modif DES encryption into a one-way hash function
+- `password + salt` is encrypted 25 times, and the output is translated to a 11 character sequence
+
+This approach is now considered inadequate, though it is often required for compatibility reasons.
+
+### unix-style, today
+UNIX:
+- 1000 iterations of MD5 crypt routine with a salt of up to 48 bits
+- no limitations on password length
+- produces a 128-bit hash value
+
+OpenBSD:
+- uses Bcrypt (hash function based on the Blowfish symmetric block cypher), which allows passwords of up to 55 characters
+- requires a 128-bit salt
+- produces a 192-bit hash value
+- includes a configurable cost variable to increase time required to perform a hash
+
+## password strength and cracking
+>[!question] what makes a password strong?
+> - using both upper and lower case characters, special characters, numbers
+> - unpredictability
+> - length
+
+The main vulnerability passwords have is that they have to be stored in human memory (so they are far from random).
+
+Password cracking attacks include:
+- **dictionary attacks** - attackers develop a large dictionary of possible passwords and try each one against the password file (each password has to be hashedd using each salt value)
 - 
