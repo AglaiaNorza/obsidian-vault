@@ -52,4 +52,16 @@ The main vulnerability passwords have is that they have to be stored in human me
 
 Password cracking attacks include:
 - **dictionary attacks** - attackers develop a large dictionary of possible passwords and try each one against the password file (each password has to be hashedd using each salt value)
-- 
+- **rainbow table attacks** - hash values are pre-compiled for all salts
+
+### password selection strategies
+- *user education* - users can be taught the importance of using hard to guess passwords, and can be provided with guidelines for selecting strong passwords
+- *computer generated passwords* (users have trouble remembering them)
+- *reactive password checking* - system periodicaly runs its own password cracker to find guessable passwords
+- *complex password policy* - system checks to see if the password selected by the user is allowable, and if not, rejects it. 
+	- the goal is to eliminate guessable passwords while allowing the user to select a password that is memorable
+	- hard to understand the balance, + it requires space and time to check the passwords
+
+>[!tip] periodically changing password
+>Requiring users to change passwors periodically, while intuitive, is not a good practice, as it incentivizes weaker passwords that are easier for people to set and remember 
+
