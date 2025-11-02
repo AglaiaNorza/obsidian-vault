@@ -12,5 +12,18 @@ The user's ID determines their privileges, and whether they're authorised to acc
 >- *quid pro quo* - offering a service and expecting something in return
 
 ## storing passwords
+Passwords are stored through **cryptographic hash functions**, which output a checksum on messages of any length.
+- the output is of a constant, **fixed size** (independently from the input length)
 
+A cryptographic hash function has to:
+- be impossible to invert
+- be very efficient to compute
+- make it very hard to find two input values with the same output
 
+(also talked about [[1 - cryptographic concepts#hash functions|here]])
+
+There are different ways of storing passwords:
+### unix-style, legacy
+-  up to **8 printable characters**-long
+- **12-bit salt** used to modif DES encryption into a one-way hash function
+- 
