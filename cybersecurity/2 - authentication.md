@@ -215,4 +215,43 @@ There are three steps in the operation of a biometric authentication system:
 
 ![[identification.png|center|500]]
 
-## remote user authentication
+## Remote user authentication
+Authentication over a network, the internet or a communications link is more complex - there are additional security threats, such as eavesdropping, password capturing, replaying an authentication sequence that has been observed.
+
+Remote authentication generally relies on some form of a **challenge-response** protocol to counter threats.
+
+>[!summary] basic challenge-response protocol for remote user auth
+>
+>password and token
+>
+>![[challenge-response.png|center|600]]
+>
+>static and dynamic biometric
+>
+> ![[challenge-response1.png|center|600]]
+
+## Authentication security issues
+There are a lot of different attacks that can be attempted:
+- **client attacks** ⟶ adversary attempts to achieve user authentication *without access to the remote host* or the intervening communications path
+- **host attacks** ⟶ directed at the *user file* at the host where passwords, token passcodes, or biometric templates are stored
+- **eavesdropping** ⟶ adversary *attempts to learn the password* by some sort of attack that involves physical proximity 
+- **replay** ⟶ adversary *repeats a previously captured user response*
+- **trojan horse** ⟶ an application or physical device *masquerades as an authentic application* or device for the purpose of capturing a user password, passcode, or biometric
+- **denial-of-service** ⟶ attempts to disable a user authentication service by *flooding the service* with numerous authentication attempts
+
+| Attacks                           | Authenticators             | Examples                                       | Typical defenses                                                                                                           |
+| --------------------------------- | -------------------------- | ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| **client attack**                 | password                   | guessing, exhaustive search                    | large entropy; limited attempts                                                                                            |
+|                                   | token                      | exhaustive search                              | large entropy; limited attempts; theft of object requires presence                                                         |
+|                                   | biometric                  | false match                                    | large entropy; limited attempts                                                                                            |
+| **host attacks**                  | password                   | plaintext theft, dictionary/exhaustive search  | same as password; 1-time passcode                                                                                          |
+|                                   | token                      | passcode theft                                 | capture device authentication; challenge response                                                                          |
+|                                   | biometric                  | template theft                                 | capture device authentication; challenge response                                                                          |
+| **eavesdropping, theft, copying** | password                   | “shoulder surfing”                             | user diligence to keep secret; administrator diligence to quickly revoke compromised passwords; multifactor authentication |
+|                                   | token                      | theft, counterfeiting hardware                 | multifactor authentication; tamper resistant/evident token                                                                 |
+|                                   | biometric                  | copying (spoofing) biometric                   | copy detection at capture device and capture device authentication                                                         |
+| **replay**                        | password                   | replay stolen password response                | challenge-response protocol                                                                                                |
+|                                   | token                      | replay stolen passcode response                | challenge-response protocol; 1-time passcode                                                                               |
+|                                   | biometric                  | replay stolen biometric template response      | copy detection at capture device and capture device authentication via challenge-response protocol                         |
+| **trojan horse**                  | password, token, biometric | installation of rogue client or capture device | authentication of client or capture device within  trusted security perimeter                                              |
+| **denial of service**             | password, token, biometric | lockout by multiple failed authentication      | multifactor with token                                                                                                     |
