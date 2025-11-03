@@ -73,4 +73,71 @@ ideally, $S(n,p) = p$ (**linear speedup**)
 >
 >![[speedup-exp.png|center|550]]
 >
->In general
+>In general, we expect the **speedup to get better** when **increasing the problem size** $n$.
+>
+>>[!example]- speedups of parallel matrix-vector multiplication
+>>
+>>![[matrix-mul-speedup.png|center|500]]
+
+>[!tip] note !
+> Note that:
+> $$T_{serial}(n) \neq T_{parallel}(n, 1)$$
+> 
+> - the parallel and sequential implementations might be different, and in general, $T_{parallel}(n, 1) \geq T_{serial}(n)$
+
+We define **scalability** this way: 
+
+$$S(n,p) = \frac{T_{parallel(n,1)}}{T_{parallel(n,p)}} $$
+- (measure of how well a program's performance increases as more cores are added)
+
+and (parallel) **efficiency** this way:
+$$E(n,p) = \frac{S(n,p)}{p} = \frac{T_{serial}(n)}{p\times T_{parallel}(n,p)}$$
+- (measure of how effectively the processing resources are being used)
+
+Ideally, we would like to have $E(n,p)= 1$. In practice, it is $\leq 1$, and it gets worse with smaller problems.
+
+>[!example]- efficiency of parallel matrix-vector multiplication
+>
+>![[matrix-mul-efficiency.png|center|500]]
+
+## strong vs weak scaling
+Strong and weak scaling are two methods used to evaluate the scalability of a parallel program. They differ on whether the total problem size is kept fixed or scaled along with the processes.
+
+- **strong scaling** ⟶ the problem size is *fixed*, the number of processes is increased
+	- (if the efficiency stays high, the program is strong-scalable)
+- **weak scaling** ⟶ the problem size is *increased* at the same rate as the number of processes
+	- (if the efficiency stays high, the program is weak-scalable)
+
+>[!example] examples
+>
+>The matrix-vector multiplication program is weak-scalable but not strong-scalable.
+>![[weakly-scalable.png|center|450]]
+>
+>![[not-strongly-scalable.png|center|450]]
+
+## Amdahl's law (strong scaling)
+>[!info] Idea
+>Every program has some part that cannot be parallelized (like reading/writing a file from disk, sending/receiving data over the network etc): **serial fraction**, $1-\alpha$
+
+Amdahl's law says that **the speedup is limited by the serial fraction**:
+$$
+T_{\text{parallel}}(p)=(1-\alpha)T_{\text{serial}}+\alpha \ \frac{ T_{\text{serial}}}{p}
+$$
+
+The upper asymptotic limit of the speedup to which we can aim is
+$$
+\lim_{ p \to \infty } S(p)=\frac{1}{1-\alpha}
+$$
+
+## Gustafson’s law (weak scaling)
+If we consider weak scaling, the **parallel fraction increases with the problem size** (i.e., the serial time remains constant, but the parallel time increases).
+
+This is also known as **scaled speedup**.
+$$
+S(n,p)=(1-\alpha)+\alpha p
+$$
+
+
+>[!tip] Amdahl's law vs Gustafson's law
+>
+>![[amdahl-gustafson.png|center|550]]
