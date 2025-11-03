@@ -156,9 +156,63 @@ OTP (One-Time Password) devices are **hardware authentication tokens**. They hav
 They use a block cipher/hash function to combine secret key and time or nonce value (arbitrary number that can only be used once in a cryptographic communication) to create the OTP.
 They have a tamper-resistant module for secure storage of the secret key.
 
+>[!bug] The main disadvantage to hardware authentication tokens is that any other person can see the code (which is why they are used in multifactor authentication)
 #### Time-based one-time password (TOTP)
 Time-based OTPs (TOTPs), are used in many hardware tokens and by many mobile authenticator apps.
-The client and the server both share a secret key and a time step (in seconds). both the client and the server calculate a `T` value (`current_unix_time/time_step`).
-`T` is then used in the HMAC ([[1 - cryptographic concepts#MAC with one-way hash functions|hash-based MAc]]) as the message, and the secret key is used as, well, the secret key, to get an authentication tag (that, as we know, ensures authenticity)
-- TOTPs are safe to replay attacks ! as the code changes every 30 seconds
-an open standard for secure authentication is *FIDO2*
+The client and the server pre-establish the unix time from which to start counting time steps, and the length of a one-time duration. Both the client and the server calculate a `C_t` value (`current_unix_time/time_step`).
+`C_t` and the secret key (which client and server share) are then used in the HMAC ([[1 - cryptographic concepts#MAC with one-way hash functions|hash-based MAc]]) to get an authentication tag 
+- TOTPs aren't vulnerable to replay attacks, as the code changes every 30 seconds
+- systems using time based OTP need to allow for clock drift between token and verifying system
+
+#### Authentication using a mobile phone
+Authentication can also be done on a mobile phone, in two main ways:
+- via **SMS**
+	- one of the simplest approaches
+	- requires mobile coverage to receive the sms
+	- if the mobile is lost or stolen, the user will lose access and somene else might gain it
+	- an attacker might also intercept messages using either a fake mobile tower, or by attacking SS7 signaling protocol
+- via **mobile authenticator apps**:
+	- they implement a one-time password generator with the TOTP algorithm
+	- they don't require an internet connection, and can be used with multiple accounts
+	- the phone might still be lost or stolen
+	- an attacker might compromise them by installing malware
+
+## Biometrics
+Biometrics are measures used to **uniquely identify** a person, based on **biological or physiological traits**.
+
+Biometric systems incorporate scanners or sensors to read in information, which is then compared to stored templates of accepted users.
+- based on pattern recognition
+
+Biometric systems are technically complex and expensive when compared to passwords and tokens.
+
+>[!summary] representation
+>
+>![[biometric-id.png|center|550]]
+
+>[!info] biometric accuracy dilemma
+>Determining how close a presented feature has to be to a reference feature isn't easy.
+>
+>![[bio-acc.png|center|500]]
+>
+>In this depiction, the comparison between the presented feature and a reference feature is reduced to a single numeric value, which, to be accepted as a match, has to be greater than a preassigned threshold.
+
+>[!tip]- security vs convenience
+>
+>![[biom-op-curves.png|center|500]]
+
+There are three steps in the operation of a biometric authentication system:
+- **enrollment**
+
+![[enrollment.png|center|500]]
+
+
+- **verification**
+
+![[verification.png|center|500]]
+
+- **identification**
+
+
+![[identification.png|center|500]]
+
+## remote user authentication
