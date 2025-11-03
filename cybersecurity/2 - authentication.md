@@ -139,6 +139,26 @@ They typically include three types of memory:
 - **Electrically erasable programmable ROM** (EEPROM) ⟶ holds application data and programs
 - **Random access** (RAM) ⟶ holds temporary data generated when applications are executed
 
+>[!info] eIDs
+> National electronic identity cards are examples of smart cards. In addition to other national ID cards, they provide:
+> - ePass - a digital representation of the cardholder's identity
+> - eID - an identity record that an authorised service can access with the cardholder's permission
+> - eSign - private key and certificate verifying the key; generates a digital signature
+> 
+> To ensure that the contactless RF chip in the eID card cannot be read without explicit access control, the **Password Authenticated Connection Establishment** (PACE) protocol is used:
+> - for online applications, access is established by the user via six-digit PIN
+> - for offline application, either the MRZ printed on the back of the card or the six-digit card access number (CAN) printed on the front is used
+> 
+> ![[eID-auth.png|center|500]]
+### OTPs
+OTP (One-Time Password) devices are **hardware authentication tokens**. They have a secret key to generate an OTP, which is entered by the user and validated by the system.
 
+They use a block cipher/hash function to combine secret key and time or nonce value (arbitrary number that can only be used once in a cryptographic communication) to create the OTP.
+They have a tamper-resistant module for secure storage of the secret key.
 
-
+#### Time-based one-time password (TOTP)
+Time-based OTPs (TOTPs), are used in many hardware tokens and by many mobile authenticator apps.
+The client and the server both share a secret key and a time step (in seconds). both the client and the server calculate a `T` value (`current_unix_time/time_step`).
+`T` is then used in the HMAC ([[1 - cryptographic concepts#MAC with one-way hash functions|hash-based MAc]]) as the message, and the secret key is used as, well, the secret key, to get an authentication tag (that, as we know, ensures authenticity)
+- TOTPs are safe to replay attacks ! as the code changes every 30 seconds
+an open standard for secure authentication is *FIDO2*
