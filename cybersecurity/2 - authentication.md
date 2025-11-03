@@ -36,11 +36,13 @@ The four means of authentication are based on
 - something you do ⟶ dynamic biometrics (e.g. voice pattern)
 
 ## assurance levels for user authentication
+### IAL
 An organisation can choose from a range of authentication technologies, based on the degree of confidence in identity proofing and authentication processes.
 
-There are three levels of Identity Assurance Levels (IAL):
+There are three levels of **Identity Assurance Levels** (IAL):
 - **IAL 1** ⟶ no need to link the applicant to a specific real-life identity
 - **IAL 2** ⟶ provides evidence for the claimed identity using remote or physically-present identity proofing
 - **IAL 3** ⟶ requires physical presence for identity proofing
 
- 
+### AAL
+AALs define options an organisation can select
