@@ -69,7 +69,7 @@ A cryptographic hash function has to:
 - be very efficient to compute
 - make it very hard to find two input values with the same output
 
-(also talked about [[1 - cryptographic concepts#hash functions|here]])
+(also talked about [[01 - cryptographic concepts#hash functions|here]])
 
 There are different ways of storing passwords:
 ### unix-style, legacy
@@ -160,7 +160,7 @@ They have a tamper-resistant module for secure storage of the secret key.
 #### Time-based one-time password (TOTP)
 Time-based OTPs (TOTPs), are used in many hardware tokens and by many mobile authenticator apps.
 The client and the server pre-establish the unix time from which to start counting time steps, and the length of a one-time duration. Both the client and the server calculate a `C_t` value (`current_unix_time/time_step`).
-`C_t` and the secret key (which client and server share) are then used in the HMAC ([[1 - cryptographic concepts#MAC with one-way hash functions|hash-based MAc]]) to get an authentication tag 
+`C_t` and the secret key (which client and server share) are then used in the HMAC ([[01 - cryptographic concepts#MAC with one-way hash functions|hash-based MAc]]) to get an authentication tag 
 - TOTPs aren't vulnerable to replay attacks, as the code changes every 30 seconds
 - systems using time based OTP need to allow for clock drift between token and verifying system
 
