@@ -1,4 +1,4 @@
 >[!info]  index
-> - [[cybersecurity/00 - intro]]
-> - [[01 - cryptographic concepts]]
-> - [[02 - authentication]]
+> - [[01 - intro]]
+> - [[02 - cryptographic concepts]]
+> - [[03 - authentication]]
