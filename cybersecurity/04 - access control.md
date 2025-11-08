@@ -89,11 +89,53 @@ Role-Based Access Control is based on the definition of **roles** and the specif
 
 ![[RBAC-families.png|center|400]]
 
-#### RBAC1: Role Hierarchy
-The roles have a hierarchal structure - many operations are common to a large number of roles, so some roles subsume others, and there is **inheritance** among roles.
+RBAC0 is the "base model", and each model implements new "features".
 
-The hierarchy is based on a **partial order** (like $\leq$, so a relation that is reflective, transitive and antisymmetric)
-- inheritance of a permission goes from a *generalised role* (top) to a *specialized role* (bottom)
+- **RBAC1** ⟶ **hierarchy** 
+	- roles have a hierarchal structure - many operations are common to a large number of roles, so some roles subsume others, and there is **inheritance** among roles.
+	- the hierarchy is based on a **partial order** (like $\leq$, so a relation that is reflective, transitive and antisymmetric) that goes from top to bottom
+- **RBAC2** ⟶ **constraints**
+	- constraints relating to the roles are added
+	- some types include:
+		- *mutually exclusive roles* 
+		- *cardinality* (maximum number of roles that can be given to a user)
+		- *prerequisite roles* (a user can only be assigned a role if it is already assigned to another specified role)
+- **RBAC3** ⟶ **hierarchy + constraints**
+
+### Attribute-Based Access Control (ABAC)
+Authorizations can express conditions on properties of **both the resource and the subject**.
+- very flexible
+	- systems are capable of enforcing DAC, RBAC and MAC concepts
+	- an unlimited number of attributes can be combined to satisfy any rule
+- the main obstacle is it could be demanding (performance-wise) to evaluate predicates on both resources and users for each access
+
+ABAC relies on **policies** (sets of rules and relations that govern allowable behaviour within an organisation, based on the privilege of subjects and how resources or objects are to be protected under which environment conditions) and **privileges** (authorised behaviours of a subject, defined by an authority and embodied in a policy).
+
+The ABAC attributes can be divided into:
+- **subject attributes** ⟶ define the identity and characteristics of a subject (active entity that can change the system state)
+- **object attributes** ⟶ can be used to make access control decisions (objects are passive entities containing or receiving information)
+- **environmnet attributes** ⟶ describe the operational/technical/situational environment or context in which the information access occurs
+
+>[!example] ABAC policy model
+
+#### ABA policies model
+- $S$, $O$ and $E$  ⟶  subjects, objects and environments
+- $SA_{k}(1\dots k\dots Kthe pre-defined attributes for subjects (they contain information about the subject)
+- $OA_{m}(1\dots m\dots M)$ are the pre-defined attributes for objects (they contain information about the object)
+- $EA_{n}(1\dots n\dots N)$ are the pre-defined attributes for environments (they contain information about the context under which the access attempt is made)
+- the *access rule* states the decision of whether a subject $\text{can\_access}$ an object in a given environment. it is determined by a function $f$ that evaluates the collection of attributes for subject, object and environment
+	- e.g.: a subject with `role` = `admin` can access a `filesecuritylevel`= `confidential` *only if* `currenttime`is in between `9am` and `5pm`
+	- this is more flexible than RBAC, as it can incorporate many dynamic factors (e.g. time, location, or resource data) into access decision
+$$
+\text{can\_access(s,o,e)$\leftarrow$f(ATTR(s),ATTR(o), ATTR(e))}
+$$
+
+
+
+>[!bug] ABAC vs RBAC
+>- In RBAC, as the number of attributes grows, the number of roles and permissions grows exponentially
+>- ABAC deals with additional attributes more efficiently
+
 
 
 
