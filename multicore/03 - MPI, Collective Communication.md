@@ -92,7 +92,7 @@ Collective communication involves a group of processes within a specified commun
 ## `MPI_Bcast`
 
 `MPI_Bcast` sends data belonging to a single process to all of the processes in the communicator
->[!summary] syntax
+>[!summary] header
 >```c
 >int MPI_Bcast(
 >	void* data_p,          // in/out
@@ -134,15 +134,37 @@ An `MPI_Allreduce` is conceptually an `MPI_Reduce` followed by an `MPI_Bcast` - 
 >[!example] example
 >![[MPI-Allreduce.png|center|500]]
 
-```C
-int MPI_Allreduce(
-	void*        input_data_p,  // in
-	void*        output_data_p, // out
-	int          count,         // in
-	MPI_Datatype datatype,      // in
-	MPI_Op       operator,      // in
-	MPI_Comm     comm           // in
-);
-```
+> [!summary] header
+> ```C
+> int MPI_Allreduce(
+> 	void*        input_data_p,  // in
+> 	void*        output_data_p, // out
+> 	int          count,         // in
+> 	MPI_Datatype datatype,      // in
+> 	MPI_Op       operator,      // in
+> 	MPI_Comm     comm           // in
+> );
+> ```
+> 
 
 - the argument list is identical to that of `MPI_Reduce`, but there is no `dest_process` since all the processes will get the results
+
+## `MPI_Scatter`
+`MPI_Scatter` involves a designated root process sending data to all processes in a communicator - but, instead of sending the same piece of data to all processes (like `MPI_Bcast`), it sends **different chunks to different processes**.
+
+![[MPI-scatter.png|center|400]]
+- it reads in an entire vector on process `0` and only sends the needed components to each of the other proccesses
+
+> [!summary] header
+> ```C
+> MPI_Reduce(
+>    void*        input_data_p,  // in
+>    void*        output_data_p, // out
+>    int          count,         // in
+>    MPI_Datatype datatype,      // in
+>    MPI_Op       operator,      // in
+>    int          dest_process,  // in
+>    MPI_Comm     comm           // in
+> );
+> ```
+> 
