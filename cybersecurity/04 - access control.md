@@ -59,10 +59,47 @@ When a process requests access to a file system object, the appropriate ACL is s
 Each subject and each object are assigned a **security class** (which often form a hierarchy and are called "security levels"). 
 - a subject is said to have a **security clearance** of a given level
 - an object is said to have a **security classification** of a given level
-
+- unlike with DAC, users cannot share or change the access permissions of data they own (access is enforced by the system)
 #### Multilevel Security (MLS)
 The MLS model defined four **access modes**:
-- **read** (only read)
-- **append** (only write)
+- **read** (read-only)
+- **append** (write-only)
 - **write** (both read and write)
-- **execute** ()
+- **execute** (neither read nor write, but execute-only)
+
+Confidentiality is achieved if a subject at a high level cannot convey information to a subject at a lower level, unless it is thanks to an **authorised declassification**. (It is achieved through:)
+- **no read up**: a subject can only read objects of $\leq$ security level
+	- called the *simple security property* ('ss-property')
+- **no write down**: a subject can only write into an object of $\geq$ security level
+	- called the *star property* ('\*-property)
+
+Models like this (i.e.*Bell-LaPadula* model) are limited because they cannot manage the "downgrade" of objects (they have a very rigid structure).
+
+### Role-Based Access Control (RBAC)
+Role-Based Access Control is based on the definition of **roles** and the specification of access rights for those roles, rather than for subjects directly.
+
+>[!summary] goals
+>- describing organizational access control policies
+>- roles are based on job function 
+>- flexibility and scalability are increased
+
+![[RBAC-matrix.png|center|550]]
+
+### Families of RBAC Models
+
+![[RBAC-families.png|center|400]]
+
+#### RBAC1: Role Hierarchy
+The roles have a hierarchal structure - many operations are common to a large number of roles, so some roles subsume others, and there is **inheritance** among roles.
+
+The hierarchy is based on a **partial order** (like $\leq$, so a relation that is reflective, transitive and antisymmetric)
+- inheritance of a permission goes from a *generalised role* (top) to a *specialized role* (bottom)
+
+
+
+
+
+
+
+
+
