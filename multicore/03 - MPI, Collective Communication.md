@@ -188,7 +188,7 @@ An `MPI_Allreduce` is conceptually an `MPI_Reduce` followed by an `MPI_Bcast` - 
 > [!summary] header
 > ```C
 > int MPI_Gather (
-> 	void*        send_buf_p, // in
+> 	void*        send_data_p, // in
 > 	int          send_count, // in
 > 	MPI_Datatype send_type,  // in
 > 	void*        recv_buf_p, // out
@@ -198,3 +198,5 @@ An `MPI_Allreduce` is conceptually an `MPI_Reduce` followed by an `MPI_Bcast` - 
 > 	MPI_Comm     comm        // in
 > );
 > ```
+> - only the root process needs to have a valid receive buffer (all the other processes can pass `NULL` for `recv_data_p`)
+> - `recv_count` is the count of **elements that each process sends**
