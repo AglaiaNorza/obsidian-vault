@@ -39,5 +39,5 @@ The rules are often provided via **access matrix**, **access control list** (ACL
 >[!info] extended access control matrix
 > 
 > ![[extended-access-matrix.png|center|550]]
-> 
-> 
+
+
