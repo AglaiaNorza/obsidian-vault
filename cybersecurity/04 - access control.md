@@ -35,9 +35,34 @@ The rules are often provided via **access matrix**, **access control list** (ACL
 > 
 > ![[ACL-subject.png|center|450]]
 
-
 >[!info] extended access control matrix
 > 
 > ![[extended-access-matrix.png|center|550]]
+> 
+> ![[extended-matrix-rule.png|center|500]]
+> 
+> - the extended control marix considers the ability of one subject to transfer rights, create another subject and have 'owner' access rights to it
+> - it can also define a hierarchy of subjects
+> - certain subjects have the authority to make specific changes to the access matrix
+> 
+> Access by a subject to an object is mediated by the **controller** for that object. The controller's decisions are based on the contents of the matrix. 
 
+>[!summary]- traditional UNIX file access control
+>
+> ![[1 - shell, utenti, filesystem#permessi di accesso]]
 
+Many modern UNIX systems support access control lists (Linux, FreeBSD, OpenBSD...).
+
+When a process requests access to a file system object, the appropriate ACL is selected, and the matching entry is checked for the correct permissions.
+
+### Mandatory Access Control (MAC)
+Each subject and each object are assigned a **security class** (which often form a hierarchy and are called "security levels"). 
+- a subject is said to have a **security clearance** of a given level
+- an object is said to have a **security classification** of a given level
+
+#### Multilevel Security (MLS)
+The MLS model defined four **access modes**:
+- **read** (only read)
+- **append** (only write)
+- **write** (both read and write)
+- **execute** ()
