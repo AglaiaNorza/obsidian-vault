@@ -116,21 +116,15 @@ The ABAC attributes can be divided into:
 - **object attributes** ⟶ can be used to make access control decisions (objects are passive entities containing or receiving information)
 - **environmnet attributes** ⟶ describe the operational/technical/situational environment or context in which the information access occurs
 
->[!example] ABAC policy model
-
-#### ABA policies model
-- $S$, $O$ and $E$  ⟶  subjects, objects and environments
-- $SA_{k}(1\dots k\dots Kthe pre-defined attributes for subjects (they contain information about the subject)
-- $OA_{m}(1\dots m\dots M)$ are the pre-defined attributes for objects (they contain information about the object)
-- $EA_{n}(1\dots n\dots N)$ are the pre-defined attributes for environments (they contain information about the context under which the access attempt is made)
-- the *access rule* states the decision of whether a subject $\text{can\_access}$ an object in a given environment. it is determined by a function $f$ that evaluates the collection of attributes for subject, object and environment
-	- e.g.: a subject with `role` = `admin` can access a `filesecuritylevel`= `confidential` *only if* `currenttime`is in between `9am` and `5pm`
-	- this is more flexible than RBAC, as it can incorporate many dynamic factors (e.g. time, location, or resource data) into access decision
-$$
-\text{can\_access(s,o,e)$\leftarrow$f(ATTR(s),ATTR(o), ATTR(e))}
-$$
-
-
+>[!example]- ABAC policy model
+> - $S$, $O$ and $E$  ⟶  subjects, objects and environments
+> - $SA_{k}(1\dots k\dots K)$, $OA_{m}(1\dots m\dots M)$, $EA_{n}(1\dots n\dots N)$ ⟶ pre-defined attributes for subjects, objects and environments
+> - $ATTR(s)$, $ATTR(o)$ ⟶ examples of attribute assignment relations
+> - the access rule states  whether a subject $\text{can\_access}$ an object in a given environment. it is determined by a function $f$ that evaluates the collection of attributes for subject, object and environment
+> $$
+> \text{can\_access(s,o,e)$\leftarrow$f(ATTR(s),ATTR(o), ATTR(e))}
+> $$
+> 
 
 >[!bug] ABAC vs RBAC
 >- In RBAC, as the number of attributes grows, the number of roles and permissions grows exponentially
