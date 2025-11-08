@@ -155,16 +155,22 @@ An `MPI_Allreduce` is conceptually an `MPI_Reduce` followed by an `MPI_Bcast` - 
 ![[MPI-scatter.png|center|400]]
 - it reads in an entire vector on process `0` and only sends the needed components to each of the other proccesses
 
-> [!summary] header
+> [!summary] header 
 > ```C
-> MPI_Reduce(
->    void*        input_data_p,  // in
->    void*        output_data_p, // out
->    int          count,         // in
->    MPI_Datatype datatype,      // in
->    MPI_Op       operator,      // in
->    int          dest_process,  // in
->    MPI_Comm     comm           // in
+> int MPI_Scatter(
+> 	void*        send_data_p, // in
+> 	int          send_count, // in
+> 	MPI_Datatype send_type,  // in
+> 	void*        recv_buf_p, // out
+> 	int          recv_count, // in
+> 	MPI_Datatype recv_type,  // in
+> 	int          src_proc,   // in
+> 	MPI_Comm     comm        // in
 > );
 > ```
 > 
+> - `send_data_p` ⟶ array of data that resides on the root process
+> - `send_count` ⟶ how many elements of `send_type` will be sent to each process
+
+### `MPI_Scatterv`
+extra capabilities in `MPI_Scatte`
