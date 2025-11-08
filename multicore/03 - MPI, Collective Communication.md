@@ -172,5 +172,29 @@ An `MPI_Allreduce` is conceptually an `MPI_Reduce` followed by an `MPI_Bcast` - 
 > - `send_data_p` ⟶ array of data that resides on the root process
 > - `send_count` ⟶ how many elements of `send_type` will be sent to each process
 
-### `MPI_Scatterv`
-extra capabilities in `MPI_Scatte`
+> [!tip] `MPI_Scatterv`
+>  `MPI_Scatterv` can be used if extra capabilities are needed:
+> - gaps are allowed between messages in source data (but the individual message must be contiguous)
+> - irregular message sizes are allowed
+> - data can be distributed to processes in any order
+> 
+
+## `MPI_Gather`
+(the inverse of `MPI_Scatter`)
+`MPI_Gather` takes elements from many processes and gathers them to one single process.
+
+![[MPI-gather.png|center|450]]
+
+> [!summary] header
+> ```C
+> int MPI_Gather (
+> 	void*        send_buf_p, // in
+> 	int          send_count, // in
+> 	MPI_Datatype send_type,  // in
+> 	void*        recv_buf_p, // out
+> 	int          recv_count, // in
+> 	MPI_Datatype recv_type,  // in
+> 	int          dest_proc,  // in
+> 	MPI_Comm     comm        // in
+> );
+> ```
