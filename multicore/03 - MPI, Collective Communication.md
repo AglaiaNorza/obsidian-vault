@@ -200,3 +200,9 @@ An `MPI_Allreduce` is conceptually an `MPI_Reduce` followed by an `MPI_Bcast` - 
 > ```
 > - only the root process needs to have a valid receive buffer (all the other processes can pass `NULL` for `recv_data_p`)
 > - `recv_count` is the count of **elements that each process sends**
+
+## `MPI_Allgather`
+conceptually, a gather + broadcast.
+(many-to-many communication pattern)
+
+Given a set of elements distributed across all processes, `MPI_Allgather` will gather all of the elements 
