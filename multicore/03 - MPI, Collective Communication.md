@@ -226,7 +226,7 @@ Given a set of elements distributed across all processes, `MPI_Allgather` will g
 > - `send_count` = number of elements sent by each process
 > - `recv_count` = number of elements to receive from each process (not the total number of elements to receive from all processes altogether)
 
-## `MPI_Reduce_Scatter`
+## `MPI_Reduce_scatter`
 Reduces data from all processes and then **scatters portions of the reduced result** back to the processes.
 
 > [!summary] header
@@ -242,12 +242,11 @@ Reduces data from all processes and then **scatters portions of the reduced resu
 > ```
 > - `sendbuf` ⟶ input data for each process
 > - `recvbuf` ⟶ buffer to store each process's portion of the reduced data
-> - `recvcounts` ⟶ int array specifying how many 
-> - each process provides `sum(recvcounts)` input items and receives `recvcounts[rank]` reduced results
-> - 
+> - `recvcounts` ⟶ int array specifying how many elements each process receives from the reduced result
+> - (each process provides `sum(recvcounts)` input items and receives `recvcounts[rank]` reduced results)
 
 >[!example]- example
-> 4 processes hold arrays of 4 numbers:
+> 4 processes hold arrays of 4 integers:
 > ```
 > P0 = [1, 2, 3, 4]
 > P1 = [5, 6, 7, 8]
@@ -255,7 +254,7 @@ Reduces data from all processes and then **scatters portions of the reduced resu
 > P3 = [13, 14, 15, 16]
 > ```
 > 
-> if we perform a `MPI_Reduce_Scatter` with `op = MPI_SUM` and `recv_counts = [1, 1, 1, 1]` (each process gets 1 element), we have:
+> if we perform a `MPI_Reduce_scatter` with `op = MPI_SUM` and `recv_counts = [1, 1, 1, 1]` (each process gets 1 element), we have:
 > 
 > 1) reduce:
 > 
@@ -267,3 +266,41 @@ Reduces data from all processes and then **scatters portions of the reduced resu
 > ```
 > P0 gets 28,  P1 gets 32,  P2 gets 36,  P3 gets 40
 > ```
+
+## `MPI_Alltoall`
+Performs a **complete data exchange** among all processes in a communicator - every process sends a *distinct chunk of data* to *every other process*, and receives a distinct chunk *from every other process*.
+
+> [!summary] header
+> ```C
+> int MPI_Alltoall(
+>     const void* sendbuf,   // in
+>     int         sendcount, // in
+>     MPI_Datatype sendtype, // in
+>     void*       recvbuf,   // out
+>     int         recvcount, // in
+>     MPI_Datatype recvtype, // in
+>     MPI_Comm    comm       // in
+> );
+> ```
+> - `sendcount` ⟶ number of elements sent to each process
+> - `recvcount` ⟶ number of elements received from each process
+> - (all processes must send and receive **the same amount of data**)
+
+>[!example]- example
+> 4 processes hold arrays of 4 integers:
+> ```
+> P0 = [1, 2, 3, 4]
+> P1 = [5, 6, 7, 8]
+> P2 = [9, 10, 11, 12]
+> P3 = [13, 14, 15, 16]
+> ```
+> if we do a `MPI_Alltoall` with `sendcount = recvcount = 1`, each process sends 1 integer to each other process. 
+> The result is:
+> 
+> ```
+> P0 = [1, 5, 9, 13]
+> P1 = [2, 6, 10, 14]
+> P2 = [3, 7, 11, 15]
+> P3 = [4, 8, 12, 16]
+> ```
+> 

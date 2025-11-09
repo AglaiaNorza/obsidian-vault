@@ -3,5 +3,5 @@
  >- [[01 - MPI]]
  >- [[02 - parallel design patterns]]
  >- [[03 - MPI, Collective Communication]]
- >- [[04 - Performance evaluation]]
+ >- [[06 - Performance evaluation]]
  
