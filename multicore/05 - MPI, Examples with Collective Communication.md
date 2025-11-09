@@ -126,11 +126,11 @@ $$
 > ```
 
 How do we parallelize this?
-- **broadcast** the vector `x` from rank `0` to all other processes
-- **scatter** the rows of the matrix from rank `0` to the other processes
-- each process computes a subset of the elements of the resulting vector `y`
-- **gather** the final vector `y` to rank `0`
-- **broadcast** `y` from rank `0` to all other processes
+1) **broadcast** the vector `x` from rank `0` to all other processes
+2) **scatter** the rows of the matrix from rank `0` to the other processes
+3) each process computes a subset of the elements of the resulting vector `y`
+4) **gather** the final vector `y` to rank `0`
+5) **broadcast** `y` from rank `0` to all other processes
 
 >[!example] reading a matrix from stdin and scattering it
 > ```C
@@ -170,3 +170,40 @@ How do we parallelize this?
 > 	}
 > }
 > ```
+
+We can use [[03 - MPI, Collective Communication#`MPI_Allgather`|MPI_Allgather]] to perform steps 4&5 at once.
+
+```C
+void Mat_vect_mult(
+	double   local_A[], // in
+	double   local_x[], // in
+	double   local_y[], // out
+	int      local_m,   // in
+	int      n,         // in
+	int      local_n,   // in
+	MPI_Comm comm,      // in
+) {
+	double* x;
+	int local_i, j;
+	x = malloc(n*sizeof(double));
+	
+	// gather x from the different processes
+	// (all the processes will call Mat_vect_mult)
+	MPI_Allgather(local_x, local_n, MPI_DOUBLE, x, local_n, MPI_DOUBLE, comm);
+	
+	for (local_i=0; local_i<local_m; local_i++) {
+		local_y[local_i] = 0.0;
+		for (j=0; j<n; j++)
+			// only local_m rows are used
+			local_y[local_i] += local_A[local_i*n+j]*x[j];
+	}
+		
+		// allgather to y (steps 4&5)
+	    MPI_Allgather(local_y, local_m, MPI_DOUBLE, y, local_m, MPI_DOUBLE, comm);
+	
+	free(x);
+	free(y);
+}
+```
+
+(so, in the `main` function, one would call `Read_matrix` first and then `Mat_vect_mult`)

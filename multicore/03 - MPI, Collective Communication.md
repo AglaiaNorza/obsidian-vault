@@ -182,6 +182,7 @@ An `MPI_Allreduce` is conceptually an `MPI_Reduce` followed by an `MPI_Bcast` - 
 ## `MPI_Gather`
 (the inverse of `MPI_Scatter`)
 `MPI_Gather` takes elements from many processes and gathers them to one single process.
+- elements are gathered in order of the processes' rank
 
 ![[MPI-gather.png|center|450]]
 
@@ -205,4 +206,64 @@ An `MPI_Allreduce` is conceptually an `MPI_Reduce` followed by an `MPI_Bcast` - 
 conceptually, a gather + broadcast.
 (many-to-many communication pattern)
 
-Given a set of elements distributed across all processes, `MPI_Allgather` will gather all of the elements 
+Given a set of elements distributed across all processes, `MPI_Allgather` will gather all of the elements to all the processes.
+
+![[MPI_Allgather.png|center|400]]
+
+> [!header]
+> 
+> ```C
+> MPI_Allgather(
+> 	void*         send_data_p, // in
+> 	int           send_count, // in
+> 	MPI_Datatype  send_type,  // in
+> 	void*         recv_data_p, // out
+> 	int           recv_count, // in
+> 	MPI_Datatype  recv_type,  // in
+> 	MPI_Comm      comm        // in
+> );
+> ```
+> - `send_count` = number of elements sent by each process
+> - `recv_count` = number of elements to receive from each process (not the total number of elements to receive from all processes altogether)
+
+## `MPI_Reduce_Scatter`
+Reduces data from all processes and then **scatters portions of the reduced result** back to the processes.
+
+> [!summary] header
+> ```C
+> int MPI_Reduce_scatter(
+>     const void* sendbuf,   // in
+>     void*       recvbuf,   // out
+>     const int*  recvcounts,// in
+>     MPI_Datatype datatype, // in
+>     MPI_Op      op,        // in
+>     MPI_Comm    comm       // in
+> );
+> ```
+> - `sendbuf` ⟶ input data for each process
+> - `recvbuf` ⟶ buffer to store each process's portion of the reduced data
+> - `recvcounts` ⟶ int array specifying how many 
+> - each process provides `sum(recvcounts)` input items and receives `recvcounts[rank]` reduced results
+> - 
+
+>[!example]- example
+> 4 processes hold arrays of 4 numbers:
+> ```
+> P0 = [1, 2, 3, 4]
+> P1 = [5, 6, 7, 8]
+> P2 = [9, 10, 11, 12]
+> P3 = [13, 14, 15, 16]
+> ```
+> 
+> if we perform a `MPI_Reduce_Scatter` with `op = MPI_SUM` and `recv_counts = [1, 1, 1, 1]` (each process gets 1 element), we have:
+> 
+> 1) reduce:
+> 
+> ```
+> [1+5+9+13, 2+6+10+14, 3+7+11+15, 4+8+12+16] = [28, 32, 36, 40] 
+> ```
+> 
+> 2) scatter
+> ```
+> P0 gets 28,  P1 gets 32,  P2 gets 36,  P3 gets 40
+> ```
