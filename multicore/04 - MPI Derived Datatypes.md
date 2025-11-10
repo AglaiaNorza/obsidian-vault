@@ -21,7 +21,7 @@
 > ![[struct-in-memory.png|center|400]]
 
 ## implementation
-Formally, derived data types are implemented with a **sequence of basic MPI data types** together with a **displacement** for each of the data types.
+Formally, derived data types are implemented with a **sequence of basic MPI data types** together with a **displacement** for each of the datatypes.
 
 ### `MPI_Type_create_struct`
 Builds a derived datatype that consists of *individual elements with different basic types*.
@@ -84,4 +84,36 @@ We can't be sure of the size of the displacements (because of the implementation
 > > Referencing may not have a unique definition on machines with a segmented address space. The use of `MPI_Get_address` guarantees portability.
 
 ## `MPI_Type_commit`
+Allows the MPI implementation to optimize its internal representation of the datatype for use in communication functions (it **finalizes** a user-defined datatype before it can be used in any communication operations)
+- it **must** be called before using the type in an operation !!
 
+>[!summary] header
+>```C
+> int MPI_Type_commit(MPI_Datatype* new_mpi_t_p); //in&out
+>```
+
+## `MPI_Type_free`
+Frees any additional storage used for the new data type, after one is done using it.
+
+> [!summary] syntax
+> 
+> ```C
+> int MPI_Type_free(MPI_Datatype* old_mpi_t_p); //in&out
+> ```
+
+## other functions for new datatypes
+MPI defines ~400 functions, 40 of which are used to manage datatypes.
+Some other examples are:
+
+![[MPI-more-data.png|center|450]]
+
+- `MPI_Type_contiguous`:
+    - Creates a new datatype for a single, contiguous block of elements.
+- `MPI_Type_vector`:
+    - Creates a datatype for data elements of the same datatype that are regularly spaced (strided) in memory.
+    - This is defined by a `Count` (number of blocks), a `Block Length` (elements per block), and a `Stride` (distance between the start of consecutive blocks).
+- `MPI_Type_create_subarray`:
+    - Creates a datatype that describes a multidimensional subarray within a larger array.
+    - Requires specifying the full array size (`arraysizes`), the desired subarray size (`subsizes`), and the starting coordinates (`startsizes`).
+- `MPI_Pack` / `MPI_Unpack`:
+    - Used to manually pack (serialize) non-contiguous or heterogeneous data into a contiguous buffer before a send, and then unpack it on the receiving side.
