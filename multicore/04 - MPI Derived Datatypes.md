@@ -41,5 +41,47 @@ Builds a derived datatype that consists of *individual elements with different b
 ### `MPI_Get_address`
 We can't be sure of the size of the displacements (because of the implementation) - we can use `MPI_Get_address` to get the **address of the memory location**.
 
->[!summary] 
+>[!summary] header
+> 
+> ```C
+> int MPI_Get_address(
+> 	void*     location_p, // in
+> 	MPI_Aint* address_p   // out
+> );
+> ```
+
+> [!example]- example
+> 
+> ```C
+> struct t {
+> 	double a;
+> 	double b;
+> 	int n;
+> };
+> ```
+> 
+> ```C
+> MPI_Aint a_addr, b_addr, n_addr;
+> 
+> MPI_Get_address(&a, &a_addr);
+> array_of_displacements[0] = 0; // start
+> MPI_Get_address(&b, &b_addr);
+> array_of_displacements[1] = b_addr-a_addr; //first displacement
+> MPI_Get_address(&c, &c_addr);
+> array_of_displacements[2] = c_addr-a_addr; // second displacement (from a, not from b !!)
+> ```
+> 
+> 
+> > [!warning] warning !
+> > This approach would be wrong:
+> > ```C
+> > array_of_displacements[0] = 0;
+> > array_of_displacements[1] = &b - &a;
+> > array_of_displacements[2] = &n - &a;
+> > ```
+> > because `&` cast-expressions return a pointer, not an address. 
+> > ISO C does not require that the value of a pointer (or the pointer cast to int) be the absolute address of the object pointed at (though this is commonly the case).
+> > Referencing may not have a unique definition on machines with a segmented address space. The use of `MPI_Get_address` guarantees portability.
+
+## `MPI_Type_commit`
 
