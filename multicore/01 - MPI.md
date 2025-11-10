@@ -246,7 +246,25 @@ There are several variants available, like:
 - `Testany`
 
 #### `MPI_Sendrecv`
-Carries out a **blocking send** and a **receive** in a single call.
-- source and destination can be the same or different
+Carries out a **blocking send** and a **receive** in a single, atomic call.
 - an alternative to scheduling the communications
+- it won't deadlock if two processes simultaneously try to exchange data
+- the send and receive operations can target different processes and use different message tags and datatypes (flexible)
 
+> [!summary] header
+> ```C
+> int MPI_Sendrecv(
+> 	void* send_buf_p,            // in
+> 	int send_buf_size,           // in
+> 	MPI_Datatype send_buf_type,  // in
+> 	int dest,                    // in
+> 	int send_tag,                // in
+> 	void* recv_buf_p,            // out
+> 	int recv_buf_size,           // in
+> 	MPI_Datatype recv_buf_type,  // in
+> 	int source,                  // in
+> 	int recv_tag,                // in
+> 	MPI_Comm communicator,       // in
+> 	MPI_Status* status_p         // in
+> )
+> ```
