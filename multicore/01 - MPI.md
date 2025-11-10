@@ -244,3 +244,9 @@ There are several variants available, like:
 - `Testall`
 - `Waitany`
 - `Testany`
+
+#### `MPI_Sendrecv`
+Carries out a **blocking send** and a **receive** in a single call.
+- source and destination can be the same or different
+- an alternative to scheduling the communications
+
