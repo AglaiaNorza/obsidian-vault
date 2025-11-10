@@ -59,19 +59,25 @@ To use MPI in a thread-safe manner, MPI should be initialised with an `MPI_Init_
 >![[MPI-multiple.png|center|500]]
 >
 
-### thread-safety
+### thread-safety, re-entrant functions
 A block of code is **thread-safe** if it can be simultaneously executed by multiple threads without causing problems.
 
->[!example] example
+- it is not uncommon for C libraries to not be thread-safe (ex: `strtok`, `random`, `localtime`...)
+
+>[!example]- example, `strtok`
 >Suppose we want to use multiple threads to “tokenize” a file that consists of ordinary text. The tokens are just contiguous sequences of characters separated from the rest of the text by white-space.
 >
 >We could divide the input file into lines of text and assign the lines to the threads in a round-robin fashion:
 >- the first line goes to thread 0, second goes to thread 1 etc, and we can serialize access to the lines of input using semaphores
 >- after a thread has read a single line of input, it can tokenize the line using the `strtok` function
 >- the idea is that, in the first call, `strtok` caches a pointer to string, and for subsequent calls it returns successive tokens taken from the cached pointer.
->
->il problema di questa funzione è che mantiene uno stato interno
->>[!bug] Issues with `strtok`
->>`strtok` caches the pointer to the input line by declaring a variable to have static storage class and this causes the value stored in this variable to persist from one call to the next.
->>
->>Unfortunately for us, this cashed string is shared, not private. So the `strtok` function is not thread-safe. If multiple threads call it simultaneously, the output may not be correct
+>  
+>>[!bug] thread-safety
+>>However, `strtok` caches the pointer to the input line by declaring a variable to have static storage class, which causes the value stored in this variable to persist from one call to the next.
+>>Unfortunately, the cached string is shared, not private. 
+>>So the `strtok` function is *not thread-safe*. If multiple threads call it simultaneously, the output may not be correct.
+
+In some cases, the C standard specifies **alternate versions** of its functions, called "re-entrant functions", which can be interrupted (typically during thread context-switching), and re-entered by another thread without any ill-effect.
+- for example, `strtok_r` is the re-entrant version of `strtok`
+
+In principle, re-entrant $\neq$ thread-safe, but, in practice, **re-entrant functions are often thread-safe**.
