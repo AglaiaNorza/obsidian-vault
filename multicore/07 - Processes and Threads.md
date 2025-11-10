@@ -41,4 +41,37 @@ To use MPI in a thread-safe manner, MPI should be initialised with an `MPI_Init_
 - `MPI_THREAD_SERIALIZED` ⟶ rank can be multi-threaded but **only one thread at a time** may call MPI functions; the rank must ensure that MPI is used in a thread-safe way. one approach is to ensure that MPI usage is mutally excluded by all the threads
 - `MPI_THREAD_MULTIPLE` ⟶ rank can be multi-threaded and any thread may call MPI functions. *the MPI library ensures that this access is safe across threads*. note that this makes all MPI operations less efficient, even if only one thread makes MPI calls, so should be used only when necessary
 
+>[!summary]- visual representations
+>
+>single:
+>![[MPI-single-thread.png|center|500]]
+>
+>funneled:
+>
+>![[MPI-funneled.png|center|500]]
+>
+>serialized:
+>
+>![[MPI-serialized.png|center|500]]
+>
+>multiple:
+>
+>![[MPI-multiple.png|center|500]]
+>
 
+### thread-safety
+A block of code is **thread-safe** if it can be simultaneously executed by multiple threads without causing problems.
+
+>[!example] example
+>Suppose we want to use multiple threads to “tokenize” a file that consists of ordinary text. The tokens are just contiguous sequences of characters separated from the rest of the text by white-space.
+>
+>We could divide the input file into lines of text and assign the lines to the threads in a round-robin fashion:
+>- the first line goes to thread 0, second goes to thread 1 etc, and we can serialize access to the lines of input using semaphores
+>- after a thread has read a single line of input, it can tokenize the line using the `strtok` function
+>- the idea is that, in the first call, `strtok` caches a pointer to string, and for subsequent calls it returns successive tokens taken from the cached pointer.
+>
+>il problema di questa funzione è che mantiene uno stato interno
+>>[!bug] Issues with `strtok`
+>>`strtok` caches the pointer to the input line by declaring a variable to have static storage class and this causes the value stored in this variable to persist from one call to the next.
+>>
+>>Unfortunately for us, this cashed string is shared, not private. So the `strtok` function is not thread-safe. If multiple threads call it simultaneously, the output may not be correct
