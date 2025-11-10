@@ -1,6 +1,6 @@
  >[!info] index
  >- [[multicore/00 - intro|00 - intro]]
- >- [[01 - MPI]]
+ >- [[01 - MPI, Intro and Message Sending]]
  >- [[02 - Parallel design patterns]]
  >- [[03 - MPI, Collective Communication]]
  >- [[04 - MPI, Derived Datatypes]]

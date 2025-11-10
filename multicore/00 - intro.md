@@ -25,10 +25,13 @@ To write parallel programs, we'll use four different extensions of the C APIs:
 
 ## types of parallel systems 
 There are different types of parallel systems
-
 ### memory-wise
 - **shared memory** ⟶ the cores can share access to the computer's memory; they are coordinated by having them examine and update shared memory locations
 - **distributed memory** ⟶ each core has its own private memory; cores must communicate explicitly by sending *messages* across a network
+
+> [!example] distributed memory systems
+>  
+> ![[distributed-memory-systems.png|center|450]]
 
 ### instruction-wise
 - **multiple-instruction multiple-data** (MIMD) ⟶ each core has its own control units and can work independently
