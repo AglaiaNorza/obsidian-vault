@@ -33,23 +33,39 @@ They are added to a system to **allow behaviors that aren't part of the basic C 
 >in which `clause` can be:
 >- `if(exp)` ⟶ executes in parallel only if `exp` evaluates to a nonzero value at runtime (only one `if` clause can be specified !)
 >- `private` / `shared`⟶ seen [[here]]
->- `num_threads(int_exp)` ⟶ **number of threads** to use for the parallel region; if dynamic adjustment of the number of threads is also enabled, then `int_exp` specifies the maximum number of threads to be used
+>- `num_threads(thread_count)` ⟶ **number of threads** to use for the parallel region; if dynamic adjustment of the number of threads is also enabled, then `thread_count` specifies the maximum number of threads to be used
+> 	>[!warning] The OpenMP standard **doesn't guarantee** that this will actually start `thread_count` threads.
+> 	> There might be system-defined limitations on the number of threads that a program can start.
+>
 
+> [!example]- example
+> 
+> ```C
+> #include <stdio.h>
+> #include <stdlib.h>
+> #include <omp.h>
+> 
+> void Hello(void);
+> 
+> int main(int argc, char* argv[]) {
+> 	/* get # of threads from CLI */
+> 	int thread_count = strtol(argv[1], NULL, 10);
+> 	
+> 	# pragma omp parallel num_threads(thread_count)
+> 	Hello();
+> 	
+> 	return 0;
+> }
+> 
+> void Hello(void){
+> 	int my_rank = omp_get_thread_num();
+> 	int thread_count = omp_get_num_threads();
+> 	
+> 	printf("Hello from thread %d of %d\n", my_rank, thread_count);
+> }
+> ```
 
-
+To compile a program that uses OpenMP, the `-fopenmp` **flag** is necessary.
 ```C
-#include <stdio.h>
-#include <stdlib.h>
-#include <omp.h>
-
-void Hello(void);
-
-int main(int argc, char* argv[]) {
-	/* get # of threads from CLI */
-	int thread_count = strtol(argv[1], NULL, 10);
-	
-	# pragma omp parallel num_threads(thread_count)
-
-
-}
+gcc -g -Wall -fopenmp -o omp_hello omp_hello.c
 ```
