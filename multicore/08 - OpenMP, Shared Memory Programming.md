@@ -15,3 +15,39 @@ OpenMP's aim is to **decompose a sequential program** into components that can b
 ## pragmas
 OpenMP uses special preprocessor instructions called **pragmas**. 
 They are added to a system to **allow behaviors that aren't part of the basic C specification**.
+
+>[!bug] compilers that don't support pragmas ignore them
+
+### `# pragma omp parallel`
+
+`# pragma omp parallel` is the most basic parallel directive
+- included in the `omp.h` library
+- the **number of threads** that run the following block of code is **determined by the run-time system**
+
+>[!summary] syntax
+>
+>```
+>  # pragma omp parallel clause
+>```
+>
+>in which `clause` can be:
+>- `if(exp)` ⟶ executes in parallel only if `exp` evaluates to a nonzero value at runtime (only one `if` clause can be specified !)
+>- ``
+
+
+```C
+#include <stdio.h>
+#include <stdlib.h>
+#include <omp.h>
+
+void Hello(void);
+
+int main(int argc, char* argv[]) {
+	/* get # of threads from CLI */
+	int thread_count = strtol(argv[1], NULL, 10);
+	
+	# pragma omp parallel num_threads(thread_count)
+
+
+}
+```
