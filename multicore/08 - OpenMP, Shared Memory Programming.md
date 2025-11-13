@@ -32,7 +32,9 @@ They are added to a system to **allow behaviors that aren't part of the basic C 
 >
 >in which `clause` can be:
 >- `if(exp)` ⟶ executes in parallel only if `exp` evaluates to a nonzero value at runtime (only one `if` clause can be specified !)
->- ``
+>- `private` / `shared`⟶ seen [[here]]
+>- `num_threads(int_exp)` ⟶ **number of threads** to use for the parallel region; if dynamic adjustment of the number of threads is also enabled, then `int_exp` specifies the maximum number of threads to be used
+
 
 
 ```C
