@@ -12,6 +12,12 @@ OpenMP's aim is to **decompose a sequential program** into components that can b
 > 
 > ![[OPENMP-GSLP.png|center|500]]
 
+
+>[!summary] terminology
+> - **Team** ⟶ collection of threads executing the parallel block
+> - **Master** ⟶ original thread of execution
+> - **Parent** ⟶ thread that encountered a parallel directive and started a team of threads (often the master)
+> - **Children** ⟶ threads started by the parent
 ## pragmas
 OpenMP uses special preprocessor instructions called **pragmas**. 
 They are added to a system to **allow behaviors that aren't part of the basic C specification**.
@@ -85,4 +91,61 @@ Two very useful functions are:
 - `omp_get_num_threads` ⟶ returns the *active threads* in a parallel region (if called in a sequential part, `1`)
 - `omp_get_thread_num` ⟶ returns the id of the calling thread
 
-## Terminology
+### Compiler support
+If the compiler doesn't support OpenMP, the `#ifdef` construct can be used:
+```C
+#ifdef _OPENMP
+#include <omp.h>
+#endif
+```
+- this way, the header only gets included if it's actually supported
+
+The same `#ifdef` has to be used before the OpenMP functions are called, though, since they can't be executed without the library.
+
+```C
+#ifdef _OPENMP
+	int my_rank = omp_get_thread_num ( );
+	int thread_count = omp_get_num_threads ( );
+#else
+	int my_rank = 0;
+	int thread_count = 1;
+#endif
+```
+
+## Mutual Exclusion
+When parallelising with OpenMP, one has to be careful: in cases in which **shared variables** are involved, **results are unpredictable** when 2+ threads attempt to simultaneously execute (because the variable copies stored in the registers are not guaranteed to be consistent - changes could be lost/overwritten).
+
+The solution to that is **mutual exclusion** (critical sections).
+- only one thread at a time can execute a critical section
+
+```C
+# pragma omp critical
+	global_result += my_result;
+```
+- (the compiler likely replaces it with pthread lock and unlocks)
+
+## Variable scope
+In OpenMP, the scope of a variable refers to the **set of threads that can access the variable** in a parallel block.
+
+A variable that can be accessed by all the threads in the team has a **shared scope**; a variable that can only be accessed by a single thread has a **private scope**.
+- The default scope for variables declared *before a parallel block* is **shared**.
+
+- probabilmente fa una riduzione ad albero
+- meglio mettere una riduzione che una sezione critica (alla peggio mette lui una sezione critica, ma probabilmente sarà più efficiente)
+
+
+- ognuno fa una copia della variabile accumulatore, inizializzata al valore identita' dell'op specificata
+
+```C
+int acc = 6;
+#pragma omp parallel num_threads(5) reduction(* : acc)
+{
+acc += omp_get_thread_num();
+printf("thread %d: private acc is
+%d\n",omp_get_thread_num(),acc);
+}
+printf("after: acc is %d\n",acc)
+```
+(non andrebbe usata un'operazione diversa da quella specificata) 
+
+
