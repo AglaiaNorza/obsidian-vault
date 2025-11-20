@@ -69,3 +69,20 @@ To compile a program that uses OpenMP, the `-fopenmp` **flag** is necessary.
 ```C
 gcc -g -Wall -fopenmp -o omp_hello omp_hello.c
 ```
+
+### Thread Team Size Control
+There are three levels at which the number of threads can be specified:
+1) **Universally** - via the `OMP_NUM_THREADS` *environment variable*
+	- sets the default number of threads for **all OpenMP programs** executed in the **current shell section**
+	- `export OMP_NUM_THREADS=x` to set it, `echo ${OMP_NUM_THREADS}` to query it
+2) **Program level** - via the `omp_set_num_threads` *function* (called outside an OpenMP construct)
+3) **Pragma level** - via the `num_threads` *clause* <small>(seen above)</small>
+	- sets the number of threads for a single specific parallel construct
+
+The *most specific setting* "overwrites" the others (so, a pragma level specification will "win" over a universal one).
+
+Two very useful functions are:
+- `omp_get_num_threads` ⟶ returns the *active threads* in a parallel region (if called in a sequential part, `1`)
+- `omp_get_thread_num` ⟶ returns the id of the calling thread
+
+## Terminology
