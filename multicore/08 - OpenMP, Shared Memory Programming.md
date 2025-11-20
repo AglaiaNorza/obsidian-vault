@@ -128,24 +128,75 @@ The solution to that is **mutual exclusion** (critical sections).
 In OpenMP, the scope of a variable refers to the **set of threads that can access the variable** in a parallel block.
 
 A variable that can be accessed by all the threads in the team has a **shared scope**; a variable that can only be accessed by a single thread has a **private scope**.
-- The default scope for variables declared *before a parallel block* is **shared**.
-
-- probabilmente fa una riduzione ad albero
-- meglio mettere una riduzione che una sezione critica (alla peggio mette lui una sezione critica, ma probabilmente sarà più efficiente)
-
-
-- ognuno fa una copia della variabile accumulatore, inizializzata al valore identita' dell'op specificata
+- The default scope for variables declared *before a parallel block* is **shared** (inside a parallel block, it's obviously private)
 
 ```C
-int acc = 6;
-#pragma omp parallel num_threads(5) reduction(* : acc)
+int x; // shared
+#pragma omp parallel
 {
-acc += omp_get_thread_num();
-printf("thread %d: private acc is
-%d\n",omp_get_thread_num(),acc);
+	int y // private
 }
-printf("after: acc is %d\n",acc)
 ```
-(non andrebbe usata un'operazione diversa da quella specificata) 
 
+## Reduction clause
+Say that we want to have an output parameter `global_result`, where each thread accumulates the result of a function.
 
+We could make the function return the computed area and use a critical section like this:
+```C
+#pragma omp parallel num_threads(thread_count)
+{
+	#pragma omp critical
+	global_result += Local_function(...);
+}
+```
+
+but we would be *forcing the threads to execute sequentially* !
+
+We can avoid this problem by declaring a *private variable* inside the parallel block and *moving the critical section* after the function call.
+```C
+#pragma omp parallel num_threads(thread_count)
+{
+	double my_result = 0.0 // private
+	my_result += Local_function(...);
+	#pragma omp critical
+	global_result += my_result;
+}
+```
+
+This is a *reduction* ! And OpenMP provides a native way of doing it.
+
+>[!info] Reduction operators
+>- A **reduction operator** is a binary operation (e.g. addition/multiplication)
+>- A **reduction** is a computation that repeatedly applies the same reduction operator to a sequence of operands to get a single result
+>- All of the intermediate results are stored in the same variable: the **reduction variable**
+
+A **reduction clause** can be added to a parallel directive:
+```C
+reduction(<operator>: <variable list>)
+```
+
+Like so:
+```C
+#pragma omp parallel num_threads(thread_count) reduction(+: global_result)
+	global_result += Local_function(...)
+```
+- it's likely that OpenMP will implement a tree reduction
+- it's always better to use a reduction clause rather than a critical section (worst case scenario, OpenMP will use a critical section itself, but in most cases it will use a faster implementation)
+
+The **private variables** created for a reduction clause are **initialised to the identity value** for the operator.
+The reduction at the end of the parallel section accumulates the outside value and the private values computed inside the parallel region.
+
+> [!warning] (wrong) example
+> 
+> ```C
+> int acc = 6;
+> #pragma omp parallel num_threads(5) reduction(* : acc) // * operation
+> {
+> 	acc += omp_get_thread_num(); // uses + instead of *
+> 	printf("thread %d: private acc is
+> 	%d\n",omp_get_thread_num(),acc);
+> }
+> printf("after: acc is %d\n",acc)
+> ```
+> 
+> This example doesn't work: you should never use an operation that is different from the one specified in the reduction clause (since the private variables will be initialised to its identity value, using a different operation will not hold the same result)
