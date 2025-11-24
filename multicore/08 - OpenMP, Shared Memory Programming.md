@@ -124,6 +124,8 @@ The solution to that is **mutual exclusion** (critical sections).
 ```
 - (the compiler likely replaces it with pthread lock and unlocks)
 
+If supported by the CPU, the `atomic` clause ensured that a specific memory operation is performed as an indivisible action at the hardware level 
+
 ## Variable scope
 In OpenMP, the scope of a variable refers to the **set of threads that can access the variable** in a parallel block.
 
@@ -138,7 +140,33 @@ int x; // shared
 }
 ```
 
-## Reduction clause
+### `default` clause
+The `default` clause lets the programmer specify the scope of each variable in a block.
+- `none` ⟶ no policy will be applied by default; the programmer is required to *explicitly declare the data-sharing policy* of every variable
+- `shared` ⟶ variables not explicitly assigned a policy will be considered as having been passed implicitly to a `shared` clause
+- `reduction` ⟶ as seen [[08 - OpenMP, Shared Memory Programming#Reduction clause|below]]
+- `private` ⟶ creates a *separate copy* of a variable for each thread in the team.
+	- private variables are not initialised !!\
+- `firstprivate` ⟶ behaves like the `private` clause, but the private variable copies are *initialised to the value of the "outside" object*
+- `lastprivate` ⟶ behaves like the `private` clause, but the thread finishing the *last iteration of the sequential block* copies the value of its object to the "outside" object
+- `threadprivate` ⟶ creates a thread-specific persistent storage for global data; 
+	- `copyin` is used in conjunction with the `threadprivate` clause to initialise the threadprivate copies of a team of threads from the master thread's variables
+
+> [!example] example
+> ```C
+> int total = 0; // shared variable 
+> int N = 1000; // shared variable 
+> // Using default(none) forces the programmer to explicitly state 
+> // the scope of 'total', 'N', and 'i'. 
+> #pragma omp parallel for default(none) private(i) shared(total, N)
+> 	reduction(+:total) 
+> for (i = 0; i < N; i++){ 
+> 	total += i; // Error-free because 'total' is in reduction, 'i' and 'N' are handled }
+> }
+> ```
+
+
+### `reduction` clause
 Say that we want to have an output parameter `global_result`, where each thread accumulates the result of a function.
 
 We could make the function return the computed area and use a critical section like this:
@@ -200,3 +228,4 @@ The reduction at the end of the parallel section accumulates the outside value a
 > ```
 > 
 > This example doesn't work: you should never use an operation that is different from the one specified in the reduction clause (since the private variables will be initialised to its identity value, using a different operation will not hold the same result)
+
