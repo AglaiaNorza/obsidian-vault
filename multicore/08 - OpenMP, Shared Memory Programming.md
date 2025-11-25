@@ -151,6 +151,7 @@ The `default` clause lets the programmer specify the scope of each variable in a
 - `lastprivate` ⟶ behaves like the `private` clause, but the thread finishing the *last iteration of the sequential block* copies the value of its object to the "outside" object
 - `threadprivate` ⟶ creates a thread-specific persistent storage for global data; 
 	- `copyin` is used in conjunction with the `threadprivate` clause to initialise the threadprivate copies of a team of threads from the master thread's variables
+	- `copyprivate` could also be used - in that case, the value of a private variable is changed by a thread entering the parallel region, and, at the end of the section, is broadcasted to the other threads' private copies of the variable (see example)
 
 > [!example] example
 > ```C
@@ -165,6 +166,56 @@ The `default` clause lets the programmer specify the scope of each variable in a
 > }
 > ```
 
+>[!example]- `threadprivate` examples and explanation
+>- with `copyin`
+> ```C
+> private_data = 999; // set the master thread's initial value
+> // use copyin to initialize all private copies
+> #pragma omp parallel copyin(private_data) num_threads(2)
+> {
+>     // all threads print the value copied from the master (999)
+>     printf("Thread %d (Start): %d\n", omp_get_thread_num(), private_data);
+> 
+>     // each thread modifies its OWN private copy
+>     private_data += omp_get_thread_num(); 
+> 
+>     // all threads print their modified private value
+>     printf("Thread %d (End): %d\n", omp_get_thread_num(), private_data);
+>     } 
+>     
+>     // check the master thread's final value (modified by the master thread)
+> 	printf("Master Thread (After Parallel): %d\n", private_data);
+> }
+> ```
+> 
+> - with `copyprivate`
+> 
+> ```C
+> // private_var is a private variable
+> int private_var;
+> #pragma omp threadprivate(private_var)
+> // initially, the value in each thread's private_var is uninitialized
+> 
+> int main() {
+>     #pragma omp parallel num_threads(4) 
+>     {
+>         // this whole block is executed by ONLY ONE thread (the "single" thread).
+>         #pragma omp single copyprivate(private_var)
+>         {
+>             // the chosen thread sets its own private copy.
+>             private_var = 4;
+>             
+>             // the implicit barrier at the end of this 'single' region will perform the broadcast.
+>             // copyprivate(private_var) copies the value (4) to all other threads' private_var copies.
+>             
+>         } // implicit barrier + copyprivate occurs here
+> 
+>         // now, the threads now have the value 4, regardless of their initial value.
+>         printf("Thread %d (After Single): private_var = %d\n", omp_get_thread_num(), private_var);
+>         
+>     } 
+> }
+> ```
 
 ### `reduction` clause
 Say that we want to have an output parameter `global_result`, where each thread accumulates the result of a function.
@@ -229,3 +280,129 @@ The reduction at the end of the parallel section accumulates the outside value a
 > 
 > This example doesn't work: you should never use an operation that is different from the one specified in the reduction clause (since the private variables will be initialised to its identity value, using a different operation will not hold the same result)
 
+### parallel `for` clause
+A parallel `for` forks a team of threads to execute the following structured block.
+
+>[!bug] The structured block following the parallel `for` directive **must be** a `for` loop
+
+The system parallelizes the `for` loop by **dividing the iterations** of the loop among threads.
+
+>[!example] example
+> ```C
+> h = (b - a)/n;
+> approx = (f(a) + f(b)) / 2.0;
+> # pragma omp parallel for num_threads(thread_count) reduction(+: approx)
+> for (i = 1; i <= n - 1; i++)
+> 	approx += f(a + i*h);
+> approx = h*approx;
+> ```
+
+>[!info] legal forms for parallelizable `for` statements
+>
+>![[parallel-for-rules.png|center|500]]
+>
+>plus:
+>- the variable `index` must have an integer or pointer type
+>- the expressions `start`, `end` and `incr` must have a compatible (with `index`) type
+>- the expressions `start`, `end` and `incr` *must not change* during the execution of the loop
+>- during the execution of the loop, the `index` variable *can only be modified by the "increment expression"* in the `for` statement
+
+
+> [!example]- non-parallelizable `for` loops
+> 
+> ```C
+> for (i = 0; i < n; i++){
+> 	if(...) break; //cannot be parallelized
+> }
+> 
+> for (i = 0; i < n; i++){
+> 	if(...) return 1; //cannot be parallelized
+> }
+> 
+> for (i = 0; i < n; i++){
+> 	if(...) exit(); //can be parallelized but shouldn't
+> }
+> 
+> for (i = 0; i < n; i++){
+> 	if(...) i++; //cannot be parallelized
+> }
+> ```
+
+>[!example]+ example: odd-even sort
+> the code might fork/join new threads every time the `parallel for` is called (depending on the implementation)
+>- if it does so, we would have some overhead 
+>```c
+>
+>for (phase = 0; phase < n; phase++){
+>	if(phase  % 2 == 0){
+>		# pragma omp parallel for num_threads(thread_count) default(none) shared(a, n) private(i, tmp)
+>		for(i = 1; i < n; i += 2){
+>			if(a[i-1] > a[i]){
+>				tmp = a[i-1];
+>				a[i-1] = a[i];
+>				a[i] = tmp;
+>			}
+>		}
+>	}else{
+>		# pragma omp parallel for num_threads(thread_count) default(none) shared(a, n) private(i, tmp)
+>		for(i = 1; i < n; i += 2){
+>			if(a[i-1] > a[i]){
+>				tmp = a[i+1];
+>				a[i+1] = a[i];
+>		￼￼example: 		a[i] = tmp;
+>			}
+>		}
+>	}
+>}
+>```
+>
+>- in cases like this, we can create the threads at the beginning
+>```c
+># pragma omp parallel num_threads(thread_count) default(none) shared(a, n) private(i, tmp, phase)
+>
+>for (phase = 0; phase < n; phase++){
+>	if(phase  % 2 == 0){
+>		# pragma omp for
+>		for(i = 1; i < n; i += 2){
+>			if(a[i-1] > a[i]){
+>				tmp = a[i-1];
+>				a[i-1] = a[i];
+>				a[i] = tmp;
+>			}
+>		}
+>	}else{
+>		# pragma omp for
+>		for(i = 1; i < n; i += 2){
+>			if(a[i-1] > a[i]){
+>				tmp = a[i+1];
+>				a[i+1] = a[i];
+>				a[i] = tmp;
+>			}
+>		}
+>	}
+>}
+>```
+
+#### nested `for` loops
+
+
+if we have nested for loops, it is often enough to simply *parallelize the outermost loop*
+
+![[nested-for.png|center|500]]
+
+but sometimes, the outermost loop is too short, and not all threads are utilized: we could try to parallelize the inner loop, but there is no guarantee that the thread utilization will be better
+
+![[nested-for1.png|center|500]]
+
+>[!tip]  The correct solution is to **collapse it into one single loop** that does all of the iterations.
+
+We can do so manually:
+
+![[nested-for12.png|center|500]]
+
+or ask OpenMP to do it for us:
+
+![[nested-for123.png|center|500]]
+
+>[!warning] nested parallelism
+> Nested parallelism is disabled in OpenMP by default, so nested `for`
