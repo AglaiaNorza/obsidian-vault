@@ -126,6 +126,42 @@ The solution to that is **mutual exclusion** (critical sections).
 
 If supported by the CPU, the `atomic` clause ensured that a specific memory operation is performed as an indivisible action at the hardware level 
 
+### named critical sections
+OpenMP provides the option of adding a **name** to a critical directive:
+```
+# pragma omp critical(name)
+```
+
+this way, two blocks protected with critical directives with different names can be *executed simultaneously*.
+
+Since these names are set at compile time, what can we do if we want to have multiple critical sections but we don't yet know how many at compile time? We can use locks:
+
+### locks
+
+> [!example] lock example
+> ```C
+> omp_lock_t writelock;
+> omp_init_lock(&writelock);
+> 
+> #pragma omp parallel for
+> for(i = 0; i < x; i++){
+> 	// some stuff
+> 	omp_set_lock(&writelock);
+> 	// one thread at a time stuff
+> 	omp_unset_lock(&writelock);
+> 	// some other stuff
+> }
+> omp_destroy_lock(&writelock);
+> ```
+> 
+
+### critical vs atomic vs locks
+>[!info] keep in mind
+>- the `atomic` directive has the potential to be the fastest method of obtaining mutual exclusion, but some `atomic` clause implementations might enforce mutual exclusion across *all `atomic` directives in the program* (even between ones who do not share the same critical section)
+>- the use of locks should be probablly reserved for situations in which *mutual exclusion is needed for a data structure* rather than a block of code
+>- you *shouldn’t mix* the different types of mutual exclusions for a single critical section
+>- there is *no guarantee of fairness* in mutual exclusion constructs (the waiting queue is unordered)
+>- it can be *dangerous to nest* mutual exclusion constructs
 ## Variable scope
 In OpenMP, the scope of a variable refers to the **set of threads that can access the variable** in a parallel block.
 
@@ -398,11 +434,11 @@ but sometimes, the outermost loop is too short, and not all threads are utilized
 
 We can do so manually:
 
-![[nested-for12.png|center|500]]
+![[nested-for2.png|center|500]]
 
 or ask OpenMP to do it for us:
 
-![[nested-for123.png|center|500]]
+![[nested-for3.png|center|500]]
 
 >[!warning] nested parallelism
-> Nested parallelism is disabled in OpenMP by default, so nested `for`
+> Nested parallelism is disabled in OpenMP by default, so nested `for` pragmas will be ignored (and enabling it is not recommended).
