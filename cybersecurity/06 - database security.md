@@ -21,9 +21,12 @@ SQL injection attacks represent one of the most prevalent network-based security
 > SQLi attacks typically work by **prematurely terminating** a text string and **appending a new command**.
 > - since the inserted command may have additional strings appended to it before its execution, attackers terminate the injected string with a comment mark `--`, so the subsequent text is ignored at execution time
 
-
 ### SQL attack avenues
 The main avenues for SQL attacks are:
 - **user input**
 - **server variables** ⟶ attackers can forge HTTP and network header values, placing data directly into them
-- **second-order injection** ⟶ a malicious user could rely on data already present in the system to trigger
+- **second-order injection** ⟶ a malicious user could rely on data already present in the system to trigger an SQL injection attack (the input that modifies the query to cause an attack doesn't come from the user but from within the system itself)
+- **cookies** ⟶ an attacker could alter cookies so that when the application server builds an SQL query based on their content, its structure and function are modified
+- **physical user input** ⟶ for example through I/O mechanisms (USB sticks etc)
+
+### inband attacks
