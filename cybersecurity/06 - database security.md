@@ -22,4 +22,8 @@ SQL injection attacks represent one of the most prevalent network-based security
 > - since the inserted command may have additional strings appended to it before its execution, attackers terminate the injected string with a comment mark `--`, so the subsequent text is ignored at execution time
 
 
-
+### SQL attack avenues
+The main avenues for SQL attacks are:
+- **user input**
+- **server variables** ⟶ attackers can forge HTTP and network header values, placing data directly into them
+- **second-order injection** ⟶ a malicious user could rely on data already present in the system to trigger
