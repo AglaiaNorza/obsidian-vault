@@ -1,7 +1,4 @@
 ## CPUs vs GPUs
-
-
-
 **CPU**s are **latency-oriented** (latency = time taken to complete a single task). 
 They aim for high clock frequency, and feature:
 - large caches, to convert long latency memory to short latency cache accesses
@@ -55,25 +52,19 @@ There are many ways to link GPUs to CPUs
 
 ## GPU software development platforms
 the main GPU software delopment platforms are:
-- **CUDA**: provides 2 sets of APIs (high-level and low-level). **only for NVIDIA hardware** (however there are tools to run CUDA code on AMD GPUs)
-- **HIP**: AMD’s equivalend of CUDA. most calls are the same, with only the first 4 characters changing (CUDA-command ⟶ HIP-command)
+- **CUDA** ⟶ provides 2 sets of APIs (high-level and low-level). **only for NVIDIA hardware** (however there are tools to run CUDA code on AMD GPUs)
+- **HIP** ⟶ AMD’s equivalend of CUDA. most calls are the same, with only the first 4 characters changing (CUDA-command ⟶ HIP-command)
 	- there are tools to convert CUDA code to HIP
-- *OpenCL*  (*open computing language*): open standard for writing programs that can execute across a variety of heterogeneous platforms that include GPUs, CPUs, DSPs or other processors. its supported by both NVIDIA and AMD, and is the primary development platform of the latter
-- *OpenACC*: open standard for an API that allows the use of compiler directives (like openMP !) to automatically map computations to GPUs or multicore chips, according to the programmer
-there are many more …
----
-Il problema di CUDA e' che funziona solo su GPU nvidia (anche se ormai esistono tool per compilare per GPU AMD)
+- **OpenCL** (open computing language) ⟶ open standard for writing programs that can execute across a variety of heterogeneous platforms that include GPUs, CPUs, DSPs or other processors.
+	- supported by both NVIDIA and AMD (primary development platform for AMD GPUs)
+- **OpenACC** ⟶ open standard for an API that allows the use of compiler directives to automatically map computations to GPUs or multicore chips
 
-- **HIP** is AMD's equivalent of CUDA 
--
+and more
 
-other options are OPENCL and OPENACC (portable both to GPs and CPU/GPUs)
-
----
-CUDA enables a general-purpose programming model on NVIDIA GPUs
-- initially created for 3d graphics, then adapted to the general public
-
-It enables explicit GPU memory management.
+# CUDA: Compute Unified Device Architecture
+CUDA enables a **general-purpose programming model** on NVIDIA GPUs
+- it was initially created for 3d graphics, then adapted to the general public
+- It enables explicit **GPU memory management**
 
 The GPU is viewed as a **compute device** that:
 - is a *co-processor* to the CPU
@@ -86,4 +77,25 @@ The GPU is viewed as a **compute device** that:
 > 3) Run CUDA **kernel** (functions executed on the GPU)
 > 4) (when the kernel is done) **Copy results** from GPU memory to host memory
 
+## Execution model
 
+![[CUDA-execution.png|center|600]]
+
+>In the vast majority of scenarios, the host is responsible for I/O operations, passing the input and subsequently collecting the output data from the memory space of the GPU
+
+
+>[!info] thread organisation
+>![[CUDA-exec-model.png|center|500]]
+>CUDA organizes the threads in a 6-D structure (maximum - lower dimentions are also possible)
+>- threads can be organized in 1D, 2D or 3D **blocks** 
+>- blocks are organized in 1D, 2D or 3D **grids**
+>
+>Each thread is aware of its position in the structure via a set of **intrinsic variables** (with which it can map its position to the subset of data that it is assigned to).
+
+## Compute capabilities
+Sizes of blocks and grids are determined by the **capability** (what each generation of GPUs is capable of). 
+- the **compute capability** of a device is represented by a *version number* ("SM version"), which identifies the features supported and is used by applications at runtime to determine *which hardware features/instructions are available*
+
+>[!example] CUDA compute capabilities
+>
+>![[CUDA-capabilities.png|center|550]]
