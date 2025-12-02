@@ -77,6 +77,7 @@ The GPU is viewed as a **compute device** that:
 > 3) Run CUDA **kernel** (functions executed on the GPU)
 > 4) (when the kernel is done) **Copy results** from GPU memory to host memory
 
+
 ## Execution model
 
 ![[CUDA-execution.png|center|600]]
@@ -90,12 +91,47 @@ The GPU is viewed as a **compute device** that:
 >- threads can be organized in 1D, 2D or 3D **blocks** 
 >- blocks are organized in 1D, 2D or 3D **grids**
 >
->Each thread is aware of its position in the structure via a set of **intrinsic variables** (with which it can map its position to the subset of data that it is assigned to).
 
-## Compute capabilities
+### Compute capabilities
 Sizes of blocks and grids are determined by the **capability** (what each generation of GPUs is capable of). 
 - the **compute capability** of a device is represented by a *version number* ("SM version"), which identifies the features supported and is used by applications at runtime to determine *which hardware features/instructions are available*
 
 >[!example] CUDA compute capabilities
 >
 >![[CUDA-capabilities.png|center|550]]
+
+### Thread position
+(possible oral exam question !)
+
+Each thread is aware of its position in the structure via a set of **intrinsic variables** (with which it can map its position to the subset of data that it is assigned to):
+
+- `blockDim` ⟶ contains the size of each block $(B_{x}, B_{y}, B_{z})$
+- `gridDim` ⟶ contains the size of the grid, in blocks $(G_{x}, G_{y}, G_{z})$
+- `threadIdx` ⟶ contains the $(x,y,z)$ position of the thread within a block, with:
+	- $x \in [0,B_{x}-1]$
+	- $y \in [0, B_{y}-1]$
+	- $z \in [0, B_{z}-1]$
+- `blockIdx` ⟶ contains the $(b_{x}, b_{y}, b_{z})$ position of a thread’s block within the grid, with:
+	- $b_{x} \in [0,G_{x}-1]$
+	- $b_{y} \in [0, G_{y}-1]$
+	- $b_{z} \in [0, B_{z}-1]$
+
+>[!example] getting thread position in the grid/block
+>
+>![[thread-position.png|center|550]]
+>
+>(linear view:
+>
+> ![[thread-position-linear.png|center|550]])
+
+>[!summary] unique thread identifier
+>- different threads might have the same `threadIdx` but be on different blocks, so i need to combine `threadIdx` and `blockIdx` to get a unique identifier
+>```c
+>int myID = ( blockIdx.z * gridDim.x * gridDim.y +
+>            blockIdx.y * gridDim.x +
+>            blockIdx.x ) * blockDim.x * blockDim.y * blockDim.z +
+>            threadIdx.z * blockDim.x * blockDim.y +
+>            threadIdx.y * blockDim.x +
+>            threadIdx.x;
+>```
+
