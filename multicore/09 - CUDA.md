@@ -77,7 +77,6 @@ The GPU is viewed as a **compute device** that:
 > 3) Run CUDA **kernel** (functions executed on the GPU)
 > 4) (when the kernel is done) **Copy results** from GPU memory to host memory
 
-
 ## Execution model
 
 ![[CUDA-execution.png|center|600]]
@@ -91,14 +90,6 @@ The GPU is viewed as a **compute device** that:
 >- threads can be organized in 1D, 2D or 3D **blocks** 
 >- blocks are organized in 1D, 2D or 3D **grids**
 >
-
-### Compute capabilities
-Sizes of blocks and grids are determined by the **capability** (what each generation of GPUs is capable of). 
-- the **compute capability** of a device is represented by a *version number* ("SM version"), which identifies the features supported and is used by applications at runtime to determine *which hardware features/instructions are available*
-
->[!example] CUDA compute capabilities
->
->![[CUDA-capabilities.png|center|550]]
 
 ### Thread position
 (possible oral exam question !)
@@ -135,3 +126,66 @@ Each thread is aware of its position in the structure via a set of **intrinsic v
 >            threadIdx.x;
 >```
 
+### Compute capabilities
+Sizes of blocks and grids are determined by the **capability** (what each generation of GPUs is capable of). 
+- the **compute capability** of a device is represented by a *version number* ("SM version"), which identifies the features supported and is used by applications at runtime to determine *which hardware features/instructions are available*
+
+>[!example] CUDA compute capabilities
+>
+>![[CUDA-capabilities.png|center|550]]
+
+## Programs in CUDA
+CUDA is usually [[02 - Parallel design patterns#SPMD, MPMD|SPMD]] (or SIMT, *Single Instruction, Multiple Threads*). 
+
+To use parallel computing with CUDA, one must specify:
+- a function (called **kernel**) that is going to be executed by all the threads
+	- all kernels have a `void` return type ⟶ to get a result, we have to move the data from the GPU to the CPU
+	- kernel calls are asynchronous: they give the control back to the host (so `cudaDevicesSynchronize();` is necessary to ensure synchronization)
+- how threads are arranged in the blocks and how the blocks are arranged in the grid
+
+>[!example] hello world in cuda
+> ```C
+> // hello.cu
+> #include <stdio.h>
+> #include <cuda.h>
+> 
+> //kernel
+> __global__ void hello() {
+> 	// printf is supported by CC 2.0 
+> 	printf("Hello world!\n");
+> }
+> 
+> int main() {
+> 	hello<<<1,10>>>();
+> 	// blocks until the CUDA kernel terminates (barrier)
+> 	cudaDeviceSyncronize();
+> 	return 1;
+> }
+> ```
+> 
+> >[!summary] compiling + running
+> >```bash
+> > nvcc --arch=sm_20 hello.cu -o hello
+> > ./hello //execute
+> >```
+
+>[!tip] extension
+>CUDA files use the `.cu` extension. It's the same as `.c`, but it serves as a convention as `.cu` files are expected to be run on GPUs.
+
+### Function decorators
+- `__global__` ⟶  (kernel definition) a function that can be called by host or GPU, but will be executed on the GPU 
+	- the compiler generates assembly code for the GPU instead of for the CPU, as they have different instruction sets, and a different compiler (`nvcc`))
+- `__device__` ⟶ a function that runs on the GPU and can be only called from within a kernel (i.e. from the GPU)
+- `__host__` ⟶ a function that can only run on the host.
+	- typically omitted, unless in combination with `__device__` to indicate that the function can run on both the host and the device. (such a scenario implies the generation of two compiled codes for the function !)
+
+### Thread scheduling
+Each thread runs on a CUDA core. Sets of cores on the *same SM* share the same Control Unit, so they must *synchronously execute the same instruction*.
+- different sets of SMs can run different kernels
+
+Each block runs on a single SM (i.e. i can’t have a block spanning over multiple SMs, but i can have more blocks running on the same SM)
+- *not all the threads in a block run concurrently*.
+
+Once a block is fully executed, the SM will run the next one.
+
+## Warps
