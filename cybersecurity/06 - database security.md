@@ -130,7 +130,33 @@ To perform a second order inject attack, a user with a malicious name is registe
 > ```
 
 ### piggy-backing
+
+> [!example] example
+> ```SQL
+> -- query
+> $q = "SELECT id FROM users WHERE user='"user."' AND pass='"
+> 
+> -- injected parameters
+> $user = "'; DROP TABLE users --"
+> 
+> -- query executed
+> $q = "SELECT id FROM users WHERE user=''; DROP TABLE users --' AND pass=''"
+> ```
+> - both queries are executed
+
+## information schema
+Informations schema are metadata about the objects within a database. They can be used to gather data about any tables from the available databases.
+
+`INFORMATION_SCHEMA.TABLES` is a view that provides information:
+- `TABLE_SCHEMA` ⟶ DB to which the table belongs
+- `TABLE_NAME` ⟶ name of the table
+- `TABLE_ROWS` ⟶ number of rows in the table
+
+`INFORMATION_SCHEMA.COLUMNS`:
+- `TABLE_NAME` ⟶ name of the table containing the column
+
 ```SQL
--- query
-$q = "SELECT id FROM users WHERE user='"user."' AND pass='"
+INFORMATION_SCHEMA.
+- TABLE_SCHEMA 
+
 ```
