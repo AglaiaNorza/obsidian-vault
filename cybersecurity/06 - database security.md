@@ -147,16 +147,37 @@ To perform a second order inject attack, a user with a malicious name is registe
 ## information schema
 Informations schema are metadata about the objects within a database. They can be used to gather data about any tables from the available databases.
 
-`INFORMATION_SCHEMA.TABLES` is a view that provides information:
+`INFORMATION_SCHEMA.TABLES` is a view that provides information about the tables that exist within the database:
 - `TABLE_SCHEMA` ⟶ DB to which the table belongs
 - `TABLE_NAME` ⟶ name of the table
 - `TABLE_ROWS` ⟶ number of rows in the table
 
-`INFORMATION_SCHEMA.COLUMNS`:
+`INFORMATION_SCHEMA.COLUMNS` is a view that provides information about the columns that exist within the database:
 - `TABLE_NAME` ⟶ name of the table containing the column
+- `COLUMN_NAME` ⟶ name of the column
+- `COLUMN_TYPE` ⟶ data type of the column
 
-```SQL
-INFORMATION_SCHEMA.
-- TABLE_SCHEMA 
+>[!example] example
+> ```SQL
+> -- vulnerable query
+> $q = "SELECT username FROM users WHERE user id=$id";
+> 
+> -- step 1: get the table's name
+> $id = "- 1 UNION SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema != 'mysql' AND table_schema != 'information_schema' -- ";
+> 
+> -- step 2: get the name of the columns inside the tables
+> $id = "-1 UNION SELECT column_name FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = 'users' LIMIT 0,1 --";
+> 
+> -- using '-1' as the ID makes the query result for the original query to be empty, forcing the db to rely on the results of the UNION SELECT
+> ```
 
-```
+## blind sqli
+Third, most common category of SQLi (the other two are error-based SQi and Union-Based SQLi): the attacker **cannot directly see the output** of the database query on the web page.
+
+there are two types of blind SQLi:
+- **boolean-based**
+- **time-based**: used when there are no visible differences in the page content or status to indicate a `TRUE` or `FALSE` result. 
+	- the attacker uses *conditional time-daly* functions (`IF` clauses + `SLEEP`) and measures the response time to determine the outcome of the query. 
+	- this way, the attacker slowly extracts data one character at a time 
+
+## SQL file operations
