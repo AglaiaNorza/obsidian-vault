@@ -107,7 +107,7 @@ Happen when the target buffer is on the stack.
 ## shellcode
 Shellcode is code supplied by the attacker (often saved in the buffer they want to overflow). Traditionally, it transfers control to a shell.
 
-Shell code can also be machine code (specific to the processor and OS) - to create this type of shell code, good assembly skills are needed. More recently, a number of sites and tools have been developed to autoate the process.
+Shell code is often machine code (specific to the processor and OS) - to create this type of shell code, good assembly skills are needed. More recently, a number of sites and tools have been developed to autoate the process.
 
  it must be:
  - *self-contained*: it cannot rely on external shared libraries or system files.
@@ -140,7 +140,61 @@ the shellcode executes the `/bin/sh` shell
 >execve(sh, args, NULL);
 >}
 >```
->
->this code is then translated into *PIC* assembly code.
->- in particular, it uses the syscall `execve`
->the hexidecimal values for the compiled machine code is the *shellcode*, which is fed as an input
+
+## buffer overflow defenses
+There are two types of defenses: compile-time and run-time.
+
+### compile-time defenses
+--- 
+**Using a modern high-level language**, which is not vulnerable to buffer overflow attacks.
+- the compiler enforces range checks and permissible operations on variables
+
+The main disadvantages are:
+- additional code must be executed at runtime to impose checks - flexibility and safety come at a cost (resource use)
+- since the language is very high level, access to some instructions/hardware resources is lost (so writing programs that need them is not recommended)
+
+---
+**Safe coding techniques**.
+
+Programmers need to inspect the code and rewrite any unsafe coding (caused for example by the prioritisation of efficiency over type safety of languages like C).
+
+---
+**Language extensions/safe libraries**.
+
+Handling dynamically-allocated memory is very complicated because information about it is not available at compile time:  there are libraries that can help with solving this problem (like C's `libsafe`).
+
+---
+**Stack protection**.
+
+The programmer can add function entry and exit codes to *check stack for signs of corruption*. 
+
+For example, a *canary* can be used:
+- small, unique secret values placed on the stack to detect if overflow has occurred; the canary is placed immediately before the crucial control data, and, before returning control, the function checks the canary. if its value has been altered, the stack has been corrupted and the program is aborted.
+
+Another option is using *Stackshield and Return Address Defender* (RAD), a compiler extension that stores a backup copy of the return address in a safe memory region (the program checks its return copy against the stored one).
+
+---
+
+### run-time defenses
+
+----
+**Executable address space protection**.
+
+Hardware + software defense that splits memory in sections that are *either writeable or executable*, but not both.
+- trying to execute code in a non-executable area (like the stack for example) causes a segfault which halts the attack
+
+This method doesn't support executable stack code.
+
+--- 
+**Address space randomization**
+
+This solution randomly manipulates the location of key data structures (stack, heap, global data), heap buffers and standard lib functions. This prevents the attacker from reliably guessing the target address in which to place the shellcode.
+
+---
+**Guard pages**
+
+Guards can be placed between critical sections of memory - these are flagged as illegal addresses, and any attempt to access them aborts processes.
+
+---
+
+## buffer overflow variants
