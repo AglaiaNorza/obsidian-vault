@@ -189,3 +189,41 @@ Each block runs on a single SM (i.e. i can’t have a block spanning over multip
 Once a block is fully executed, the SM will run the next one.
 
 ## Warps
+Threads are executed in groups called **warps** (currently made of 32 threads - `warpSize` variable).
+- threads in a block are split into warps according to their *intra-block ID* (eg. the first 32, then the next 32 etc)
+- all threads in a warp are executed according to the SIMD model (one single instruction for all threads in the warp) - so, all the threads in a warp will always have the *same execution timing*
+- several warp schedulers can be present on any Streaming Multiprocessor
+
+### Warp divergence
+Since all threads in a warp are executed according to the SIMD model, at any instant in time, for all the threads in the warp, one istruction is fetched and executed.
+If a *conditional operation* leads the threads to different paths, all the divergent paths are **evaluated sequentially** until the paths mege again.
+- threads that do not follow the path currently being executed are stalled
+
+>[!example] divergence
+>
+>![[warp-divergence-ex.png]]
+
+### Context switching
+Usually, a SM has more resident blocks/warps than it is able to currently run. To be able to execute all of them, each SM can **switch** seamlessly between them.
+- each thread has its own **on-chip private execution context**, so context-switching comes almost for free
+
+When an instruction that a warp needs to execute has to wait for the result of a previously initiated long-latency operation, the warp is not selected for execution ⟶ instead, another resident warp that isn't waiting gets selected. This mechanism is called "*latency tolerance*" or "latency hiding".
+- given a sufficient number of warps, the hardware will likely find one to execute at any point in time 
+
+>[!tip] This ability to *tolerate long-latency operations* is the main reason GPUs don't dedicate nearly as much chip area to cache memories and branch prediction mechanisms as CPUs
+
+>[!error] Instead of context switching, the biggest cost in GPU parallel computing is *data transfer* (GPU/CPU)
+
+>[!example] Block size esample 1
+> Suppose a CUDA device allows up to 8 blocks and 1024 threads per SM, and 512 threads per block.
+should we use `8x8`, `16x16`, or `32x32` blocks ?
+>- `8x8` blocks ⟶ 64 threads per block would make it necessary to have 16 blocks to fill a SM. However, we can have at most 8 blocks per SM, ending up with 512 threads per SM. The resources wouldn't be fully utilized. 
+>- `16x16` blocks ⟶ 256 threads per block would make it necessary to have 4 blocks to fill a SM. That would allow us to have 1024 threads for each SM (so, many opportunity for latency hiding)
+>- `32x32` blocks ⟶ we would have 1024 threads per block, which is higher than the 512 threads per block we can have
+
+>[!example] Block size example 2 (3)
+> Suppose our structure is a grid of `4x5x3` blocks, each made of 100 threads, and that the GPU has 16SMs.
+> 
+> -  to distribute `4x5x3=60` blocks over 16SMs, we can use round robin ⟶ that way,  12SMs would receive 4 blocks, and 6SMs would receive 3 blocks.
+> 	- this is an inefficient solution, as while the first 12 SMs will be processing the last block, the other 6 will be idle
+> - 
