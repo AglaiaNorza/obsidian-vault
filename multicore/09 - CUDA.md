@@ -325,6 +325,8 @@ Data allocated on host memory is **not visible from the GPU** and viceversa. It 
 > 
 
 ### example: vector addition
+(got it from diego 4 now thx diego need 2 come back to this TODO)
+
 >[!example] vector addition
 >![[vector-addition-cuda-1.png|center|400]]
 >
@@ -366,4 +368,78 @@ Data allocated on host memory is **not visible from the GPU** and viceversa. It 
 >```
 >
 >![[vector-addition-cuda-1.png|center|400]]
+
+>[!tip] error cheching (good practice)
+> we should check the `cudaError_t` return variable to handle any errors
+>```c
+>int deviceCount = 0;
+>cudaGetDeviceCount(&deviceCount);
+>
+>if(deviceCount == 0)
+>    printf("No CUDA compatible GPU exists.\n");
+>else
+>{
+>    cudaDeviceProp pr;
+>    for(int i=0; i<deviceCount; i++)
+>    {
+>        cudaGetDeviceProperties(&pr, i);
+>        printf("Dev #%i is %s\n", i, pr.name);
+>    }
+>}
+>int deviceCount = 0;
+>
+>cudaGetDeviceCount(&deviceCount);
+>```
+
+### memory types
+Memory is divided into **on-chip** and **off-chip**.
+
+![[memory-types.png|center|500]]
+
+> [!info] Memory Types
+> - **registers** ⟶ hold local variables, are *unique to each SP*.
+> - **shared memory** ⟶ fast on-chip memory that holds *frequenty used data*. 
+> 	- can also be used to *exchange* data between SPs of the same SM
+> - **L1/L2 cache** ⟶  (act as seen in the comparch course) transparent to the programmer
+> - **global memory** ⟶ main part of the *off-chip* memory. 
+> 	- high capacity but relatively slow, it is the *only part accessible* through CUDA functions
+> - **texture and surface memory** ⟶ content managed by special hardware that permits fast implementation of some filtering/interpolation operator
+> - **constant memory** ⟶ part of the memory that can only store *constants*. 
+> 	- it is cached, allows for *broadcasting of a single value to all threads in a warp*
+
+CUDA variables scopes and lifetime:
+
+| variable declaration                    | memory   | scope  | lifetime    |
+| --------------------------------------- | -------- | ------ | ----------- |
+| automatic variables other than arrays   | register | thread | kernel      |
+| automatic array variables               | global   | thread | kernel      |
+| `__device__ __shared__ int SharedVar;`  | shared   | block  | kernel      |
+| `__device__ int GlobalVar;`             | global   | grid   | application |
+| `__device__ __constant__ int ConstVar;` | constant | grid   | application |
+### registers
+Registers are used to store **variables local to a thread**
+- Registers on a core are **split among the resident threads** 
+- compute capability determines the maximum number of registers that can be used per thread. 
+	- if this number is exceeded, local variables are allocated in the global off-chip memory (slow)
+	- spilled variables could also be cached in the L1 on-chip cache
+	- the *compiler* will decide which variables will be allocated in the registers and which will spill over to global memory
+
+
+>[!info]  maximum registers and occupancy
+> nvidia defines as **occupancy** the ratio of resident warps over the maximum possible resident warps:
+>$$\text{occupancy} = \frac{\text{resident\_warps}}{\text{maximum\_warps}}$$
+>>[!example] example
+>> Assume that the target GPU has $32.000$ registers per SM, and can have up to $1.536$ resident threads per SM
+>>- a kernel uses 48 registers
+>>- a block is 256 threads
+>>	- each block requires $256 \cdot48=12.288$ registers
+>>- thus, each SM could have 2 resident blocks (as $12.288\cdot 2< 32.000 < 12.288\cdot 3$), and $512$ resident threads
+>>- 512 is much below the maximum limit of the $1.536$ threads - this undermines the possiblity to hide latency
+> 
+> an *occupancy close to 1* is desirable, as the closer it is the higher the opportunities to swap between threads and hide latencies
+>- the occupancy of a given kernel can be analyzed through a profiler
+>
+>To increase occupancy, we can:
+>- *reduce the number of registers* required by the kernel
+>- *use a GPU with higher registers per thread* limit
 
