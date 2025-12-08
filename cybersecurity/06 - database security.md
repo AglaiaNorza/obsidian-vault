@@ -198,6 +198,64 @@ If the attacker achieves remote command execution, they could read/write files.
 >```
 
 ## SQL countermeasures
-There are three types  of countermeasures against SQL injections. 
+There are three types  of countermeasures against SQL injections:
+- parameterized query insertion
+- manual defensive coding practices
+- SQL DOM
 
-### 
+### parameterized query insertion
+parameterized queries are essential for defense against SQLis, as they address the fundamental flaw of SQLis: the *ambiguity between code and data*
+ 
+ They work by forcing the application to send the *SQL command structure* to the database *separately* from any user-supplied data:
+```SQL
+$q = "SELECT * FROM users WHERE user_id = ? and password = ?";
+```
+the application then sends the user’s input variables to those placeholders, and the db *treats the input strictly as data*, regardless of what it contains:
+```SQL
+-- if the input is "' OR 1=1 --", the db sees it as a single, long string literal
+$q = "SELECT * FROM users WHERE user_id = '' OR 1-=1 -- ' AND password='user-password' ";
+```
+
+
+### manual defensive coding practices
+supplementary to parameterized queries or used in scenarios where the parameterization is impossible, they include:
+- *escaping user input*: the code manually iterates through the user input and prepends a `\` to any special characters(like `'` or `"`)
+- *type enforcement*: ensuring that if the code expects a number, any non-numeric characters are immediately rejected or cast to an integer, which strips injection payloads
+- *whitelisting*: only allowing input that matches a strict set of approved characters or values
+- *principle of least principle*: acts on the configuration of a DB to limit the impact of a successful SQLi attack (the application’s db should only have *the minimum privileges necessary for its operation*)
+
+### SQL DOM
+SQL DOM (*Data-Oriented Modeling*) is a more formal approach to preventing SQL. 
+
+It enforces a fundamental rule: *query structure must be defined separately from query data*.  This design pattern is typically implemented as a framework.
+
+Instead of letting developers build queries using string concatenation, the language environment requires the use of *constructor methods* to build the query piece by piece.
+- this approach makes it virtually impossible for developers to accidentally create an unsafe sink
+
+## DB access control
+Database access control determines:
+- which *portions* of the DB a user has access to
+- what *access rights* the user has to those portions
+
+There are a range of administrative policies supported by DB access control:
+- **centralized administration** ⟶ a small number of privileged users may grant/revoke access rights
+- **ownership-based administration** ⟶ the creator of a table may grant/revoke access rights to the table
+- **decentralized administration** ⟶ the owner of a table may grank/revoke permissions to other users, allowing them to grant/reoke access rights to the table
+	- in this case, *cascading authorization* happens: if access rights cascade through a number of users, the revocation of privileges also cascades: when user A revokes an access right, any cascaded access right is also revoked (unless that access right would exist even if the original grant from A had never occurred)
+
+There are two commands for managing access rights:
+- `GRANT` ⟶ used to grant one or more access rights, or can be used to assign a role to a user
+	- `GRANT {privileges | role} ON {table} TO {user | role | PUBLIC} [IDENTIFIED BY {password} WITH {GRANT OPTION}`
+- `REVOKE` ⟶ revokes access rights
+	- `REVOKE {privileges | role} ON {table} FROM {user | role | PUBLIC}`
+
+(typical access rights are `SELECT`, `INSERT`, `UPDATE`, `DELETE`)
+
+## inference
+In database security, **inference** refers to the process of performing *authorised queries* to deduce *unauthorised information*.
+
+Inference can be **detected**:
+- during *database design* by altering the database structure to prevent inference (often results in unnecessarily stricter access control)
+- at *query time* (if an inference channel is detected, the query is denied or altered)
+
+Some inference detection algorigh
