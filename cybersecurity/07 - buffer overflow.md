@@ -198,3 +198,45 @@ Guards can be placed between critical sections of memory - these are flagged as 
 ---
 
 ## buffer overflow variants
+
+### Replacement Stack Frame
+* Attack: Overwrites the buffer and the saved frame pointer address on the stack.
+    * The saved frame pointer is changed to refer to a dummy stack frame.
+    * When the function returns, control is transferred to the replacement dummy frame.
+    * This ultimately directs execution to the shellcode in the overwritten buffer.
+* Off-by-one attacks: A specific coding error that allows an attacker to copy one more byte than the buffer size.
+* Defenses:
+    * Stack protection mechanisms (e.g., canaries) to detect modifications to the stack frame or return address before function exit.
+    * Use non-executable stacks (e.g., DEP/NX bit).
+    * Randomization of the stack memory and system libraries (ASLR).
+### Return to System Call (Return-to-libc)
+
+* Attack: Stack overflow that replaces the return address with the address of a standard library function (like `system()`).
+    * This is a response to non-executable stack defenses.
+    * The attacker constructs suitable parameters for the library function on the stack, placed above the overwritten return address.
+    * When the function returns, the library function executes with the attacker-supplied parameters.
+    * It may require knowing the exact buffer address.
+    * Can chain multiple library calls for complex payloads.
+* Defenses: (Same as Variant 1, as they target the stack)
+    * Stack protection (canaries).
+    * Non-executable stacks.
+    * Randomization of stack and system libraries (ASLR).
+###  Heap Overflow
+
+* Attack: Targets a buffer located in the heap memory region, typically used for dynamic data structures (like linked lists).
+* Exploitation: Unlike a stack overflow, there is no return address on the heap for easy control transfer.
+    * Exploitation often involves overwriting or manipulating function pointers stored on the heap.
+    * Alternatively, it can exploit management data structures the heap uses to track allocations.
+* Defenses:
+    * Making the heap region non-executable.
+    * Randomizing the allocation of memory on the heap.
+### Global Data Overflow
+
+* Attack: Targets a buffer located in the global data region (or BSS).
+    * This buffer may be located adjacent to function pointers or adjacent process management tables.
+    * The primary goal is to overwrite a function pointer that will be called later in the program's execution flow.
+* Defenses:
+    * Making the global data region non-executable or randomized.
+    * Moving function pointers to a safe, protected memory location.
+    * Using guard pages (unmapped pages) between critical data structures to detect overflows immediately
+
