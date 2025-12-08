@@ -258,4 +258,25 @@ Inference can be **detected**:
 - during *database design* by altering the database structure to prevent inference (often results in unnecessarily stricter access control)
 - at *query time* (if an inference channel is detected, the query is denied or altered)
 
-Some inference detection algorigh
+Some inference detection algorithm is needed for both options.
+
+## database encryption
+While it is protected by multiple layers of security (firewalls, authentication, various access control systems), it is possible to **encrypt the database** as a last line of defense. 
+
+Encryption can be applied to the entire database, at the record level, the attribute level, or the level of the individual field.
+
+Encryption causes two main disadvantages: 
+ - *key management*: authorized users must have access to the decryption key for the data to which they have access
+ - *inflexibility*: it is more difficult to perform record searching
+
+To provide more flexibility, it must be possible to work with the database in its encrypted form
+
+### encryption and indexing
+- each record (row) of the db is encrypted as a block (the db cannot search or index individual attributes, as only random-looking ciphertext is available)
+	- for each row of the original db, there is an encrypted row
+- for any attribute, the range of attribute values is divided into a set of *non-overlapping partitions* that encompass all possible values, and an index value is assigned to each partition
+
+when a user asks to search for a range, the system translates that range into the corresponding index values and the db executes a simple, fast query on the unencrypted index column.
+
+>[!example] example
+> ![[db-encryption.png|center|400]]
