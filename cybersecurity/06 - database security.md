@@ -181,3 +181,23 @@ there are two types of blind SQLi:
 	- this way, the attacker slowly extracts data one character at a time 
 
 ## SQL file operations
+If the attacker achieves remote command execution, they could read/write files.
+
+>[!example] example
+>```SQL
+>-- vulnerable query
+>$q = "SELECT username FROM users WHERE user id = $id";
+>
+>-- LOAD_FILE() returns NULL upon failure
+>-- read file
+>$id = " -1' UNION SELECT LOAD_FILE('/etc/passwd')";
+>
+>-- INTO OUTFILE can trigger a MySQL error
+>-- write file
+>$id = "-1 UNION SELECT 'hi' INTO OUTFILE  '/tmp/hi'";
+>```
+
+## SQL countermeasures
+There are three types  of countermeasures against SQL injections. 
+
+### 
