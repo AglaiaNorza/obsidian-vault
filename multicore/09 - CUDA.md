@@ -226,4 +226,144 @@ should we use `8x8`, `16x16`, or `32x32` blocks ?
 > 
 > -  to distribute `4x5x3=60` blocks over 16SMs, we can use round robin ⟶ that way,  12SMs would receive 4 blocks, and 6SMs would receive 3 blocks.
 > 	- this is an inefficient solution, as while the first 12 SMs will be processing the last block, the other 6 will be idle
-> - 
+> - A block contains `100` threads, which are divided into 3 full warps (`3 x 32 = 96` threads) and a final "partial" warp of 4 threads.
+>     - Assuming 32 CUDA cores per SM, when the 4-thread partial warp is executed, only 4 of the 32 cores are active.
+>     - This leaves 28 cores idle for the duration of that warp's execution (87.5% of the cores are unused), resulting in poor hardware utilization.
+> 
+> Conclusion: Block size (100 threads) is not a multiple of the warp size (32), which leads to significant thread/core underutilization.
+
+## Device properties
+
+>[!summary] device properties struct 
+>```c
+>struct cudaDeviceProp {
+>    char name[256];             // A string identifying the device
+>    int major;                  // Compute capability major number
+>    int minor;                  // Compute capability minor number
+>    int maxGridSize [3];
+>    int maxThreadsDim [3];
+>    int maxThreadsPerBlock;
+>    int maxThreadsPerMultiProcessor;
+>    int multiProcessorCount;
+>    int regsPerBlock;           // Number of registers per block
+>    size_t sharedMemPerBlock;
+>    size_t totalGlobalMem;
+>    int warpSize;
+>    // . . . and more
+>};
+>```
+
+>[!example] listing all the GPUs in a system
+>```c
+>int deviceCount = 0;
+>cudaGetDeviceCount(&deviceCount);
+>
+>if(deviceCount == 0)
+>    printf("No CUDA compatible GPU exists.\n");
+>else
+>{
+>    cudaDeviceProp pr;
+>    for(int i = 0; i < deviceCount; i++)
+>    {
+>        cudaGetDeviceProperties(&pr, i);
+>        printf("Dev #%i is %s\n", i, pr.name);
+>    }
+>}
+>```
+
+## Memory access
+Data allocated on host memory is **not visible from the GPU** and viceversa. It must be explicitly copied from host to GPU (and viceversa).
+
+>[!summary] memory operations
+> the following calls are made from the host
+> 
+> ----
+> **memory allocation**:
+>```c
+>// allocate memory on the device
+>cudaError_t cudaMalloc ( 
+>    void** devPtr,          
+>    size_t size
+>);
+>```
+>- `devPtr` ⟶ pointer address for the hosts’s memory, where the address of the **allocated device memory** will be stored
+>- `size` ⟶ size in bytes of the requested memory block
+>---
+>**freeing memory**: 
+>
+>```c
+>// frees memory on the device
+>cudaError_t cudaFree ( 
+>    void* devPtr
+>);
+>```
+>- `devPtr` ⟶ host pointer address modified by `cudaMalloc()`
+>---
+> **copying data**:
+>
+>```c
+>// copies data between host and device
+>cudaError_t cudaMemcpy ( 
+>    void* dst,
+>    const void* src,
+>    size_t count,
+>    cudaMemcpyKind kind
+>);
+>```
+>- `dst` ⟶ destination block address
+>- `src` ⟶ source block address
+>- `count` ⟶ size in bytes
+> - `kind` ⟶ direction of the copy - `cudaMemcpy` is an enumerated type which can take one of the following values:
+> 	- `cudaMemcpyHostToHost`(`0`): Host to Host
+> 	- `cudaMemcpyHostToDevice`(`1`): Host to Device
+> 	- `cudaMemcpyDeviceToHost`(`2`): Device to Host
+> 	- `cudaMemcpyDeviceToDevice`(`3`): Device to Device, used in multi-GPU configurations (only works if the two devices are on the same server system)
+> 	- `cudaMemcpyDefault` (`4`): used when Unified Virtual Address space is available
+> ---
+> **errors**:
+> - `cudaError_t` is an enumerated type; if a CUDA function returns anything other than `cudaSuccess` (`0`), an error has occurred
+> 
+
+### example: vector addition
+>[!example] vector addition
+>![[vector-addition-cuda-1.png|center|400]]
+>
+>```c
+>//h_ specifies it is memory on the host 
+>void vecAdd(float* h_A, float* h_B, float* h_C, int n)
+>{
+>    int size = n * sizeof(float);
+>	// d_ specifies it is memory on the device
+>    float *d_A, *d_B, *d_C;
+>
+>    cudaMalloc((void**) &d_A, size);
+>    cudaMemcpy(d_A, h_A, size, cudaMemcpyHostToDevice);
+>
+>    cudaMalloc((void**) &d_B, size);
+>    cudaMemcpy(d_B, h_B, size, cudaMemcpyHostToDevice);
+>
+>    cudaMalloc((void**) &d_C, size);
+>	
+>	vecAddKernel<<ceil(n/256.0), 256>>(d_A, d_B, d_C, n);
+>
+>    cudaMemcpy(h_C, d_C, size, cudaMemcpyDeviceToHost); 
+>
+>    cudaFree(d_A);
+>    cudaFree(d_B);
+>    cudaFree(d_C);
+>}
+>```
+>- in this case, we might be running ceil(n/256) blocks. if n is not a multiple of 256, could run more threads than number of elements in the vector.
+>	- each thread must then check if it needs to process some element or not
+>
+>```c
+>__global__
+>void vecAddKernel(float* A, float* B, float* C, int n){
+>	int i = blockDim.x * blockIdx.x + threadIdx.x;
+>	// check if thread is supposed to do something
+>	if (i < n) C[i] = A[i] + B[i];
+>}
+>```
+>
+>![[vector-addition-cuda-1.png|center|400]]
+
