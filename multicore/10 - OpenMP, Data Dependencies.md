@@ -157,6 +157,38 @@ There are 3 data dependencies:
 >```
 
 ### Loop skewing
+Loop skewing involves the **rearrangement of the loop body statements**.
+
+>[!example] example
+> 
+>```c
+>for(int i = 1; i < N; i++){
+>	y[i] = f(x[i-1]);       //S1
+>	x[i] = f(x[i] + c[i]);  //S2
+>}
+>```
+>
+> - `RAW(S2->S1)` on `x`  - iteration $i+1$ reads `x[i]`, which is written in iteration $i$
+
+>[!tip] fix
+> we can make sure that the statements that consume the calculated values that cause the dependence *use values generated during the same iteration*
+> 
+> ```C
+> y[1] = f(x[0]);
+> for(int i = 1; i < N; i++){
+> 	x[i] = x[i] + c[i];
+> 	y[i+1] = f(x[i]);
+> }
+> x[N-1] = x[N-1] + c[N-1];
+> ```
+
+To perform loop unskewing, we **unroll the loop** and see the repetition pattern:
+
+![[loop-skewing.png|center|500]]
+
+### Partial parallelization
+Partial parallelization can be achieved through analyzing the **Iteration Space Dependency Graph**. Its nodes represent a single execution of the loop body, and its edges represent dependencies.
+
 
 
 ### Fissioning
