@@ -243,4 +243,3 @@ Individual work items are contained in blocks decorated by `section` derivatives
 >     }
 > }
 > ```
-

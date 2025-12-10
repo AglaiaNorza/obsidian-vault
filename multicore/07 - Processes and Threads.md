@@ -59,6 +59,11 @@ To use MPI in a thread-safe manner, MPI should be initialised with an `MPI_Init_
 >![[MPI-multiple.png|center|500]]
 >
 
+#### using openMP with MPI
+The safest threading level for using openMP with MPI is `MPI_THREAD_FUNNELED`, as it fits nicely with most OpenMP models.
+
+- MPI maps each process on a core - all the threads created by that process will run on the same core. to inhibit this functionality, the `--bin-to-none` clause is necessary
+
 ### thread-safety, re-entrant functions
 A block of code is **thread-safe** if it can be simultaneously executed by multiple threads without causing problems.
 
