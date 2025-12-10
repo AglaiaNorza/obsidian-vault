@@ -189,13 +189,69 @@ To perform loop unskewing, we **unroll the loop** and see the repetition pattern
 ### Partial parallelization
 Partial parallelization can be achieved through analyzing the **Iteration Space Dependency Graph**. Its nodes represent a single execution of the loop body, and its edges represent dependencies.
 
+> [!example] example
+> 
+> ```C
+> for (int i = 1; i < N; i++){
+> 	for(int j = 1; j < M; j++){
+> 		data[i][j] = data[i-1][j] + data[i-1][j-1]; //S1
+> 	}
+> }
+> ```
+> - `RAW(S1)` dependence
 
+>[!tip] fix
+> 
+> ![[partial-parall.png|center|450]]
+> 
+> the graph shows that there are no dependencies between nodes on the same row - that means we can parallelise the `j`-loop
+> 
+> ```C
+> for (int i = 1; i < N; i++){
+> #pragma omp parallel for
+> 	for(int j = 1; j < M; j++){
+> 		data[i][j] = data[i-1][j] + data[i-1][j-1];
+> 	}
+> }
+> ```
+> 
+
+### Refactoring
+Refactoring consists in **rewriting loops** so that parallelism can be exposed.
+
+>[!example] example
+>```c
+>for (int i = 1; i < N; i++){
+>	for(int j = 1; j < M; j++){
+>		data[i][j] = data[i-1][j] + data[i-1][j-1]; //S1
+>	}
+>}
+>```
+> - `RAW(S1)` dependence
+
+>[!tip] fix
+>
+>![[refactoring-loops.png|center|450]]
+>
+>the ISDG shows that there are no dependencies in diagonals from the right to the left
+>
+>the intuition is:
+>
+> ```C
+> for (wave = 0. wave < num_waves; wave++){
+> 	diag = F(wave);
+> 	for (k = 0; k < diag; k++){
+> 		int i = get_i(diag, k);
+> 		int j = get_j(diag, k);
+> 		data[i][j] = data[i-1][j] + data[i][j-1] + data[i-1][j-1];
+> 	}
+> }
+> ```
 
 ### Fissioning
 Fissioning means breaking the loop apart into **a sequential and a parallelizable part**.
 
 > [!example] example
-> For example, 
 > ```C
 > s = b [ 0 ];
 > for (int i = 1; i < N; i++)
@@ -204,9 +260,11 @@ Fissioning means breaking the loop apart into **a sequential and a parallelizabl
 >   s = s + b [ i ];
 > }
 > ```
-> 
-> becomes
-> 
+> - `RAW(S1)` dependence
+
+
+>[!tip] fix
+> the first part is executed sequentially, eliminating dependencies
 > ```C
 > // sequential part
 > for (int i = 1; i < N; i++)
@@ -235,3 +293,4 @@ Fissioning means breaking the loop apart into **a sequential and a parallelizabl
 > ```
 > 
 > can be parallelised via Binet's formula $\frac{\phi^n-(1-\phi)^n}{\sqrt{ 5 }}$
+
