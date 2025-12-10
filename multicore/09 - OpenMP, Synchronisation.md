@@ -128,4 +128,119 @@ The system uses the `OMP_SCHEDULE` environment variable to determine how to sche
 >- `static` ⟶ if iterations are *homogeneous* (in execution time)
 >- `dynamic/guided` ⟶ if execution cost varies (ex due to input data, conditional logic or cache effects)
 >
-> the best practice is to use performance tools to measure the runtime for different schedule options *on your target hardware*
+> If in doubt, `# pragma omp parallel for schedule(runtime)` is often a good choice, as it allows the programmer to set the schedule type after compilation via env var (not hardcoding it), making it more flexible (and good for experimenting and choosing the correct schedule).
+>
+> (the best practice is to use performance tools to measure the runtime for different schedule options on your target hardware)
+
+## Synchronization constructs
+### `master`, `single`
+
+`master` and `single` both force the execution of the following block by a **single thread**.
+- `single` implies a **barrier** on exit from the block
+- `master` guarantees that the block is executed by the **master thread**
+
+> [!example]- `master` example
+> 
+> ```C
+> int examined = 0;
+> int prevReported = 0;
+> #pragma omp for shared( examined, prevReported )
+> for( int i = 0; i < N; i++ )
+> {
+>     // some processing
+> 
+>     // update the counter
+>     #pragma omp atomic
+>     examined++;
+> 
+>     // use the master to output an update every 1000 newly
+>     // finished iterations
+>     #pragma omp omp master
+>     {
+>         int temp = examined;
+>         if( temp - prevReported >= 1000)
+>         {
+>             prevReported = temp;
+>             printf("Examined %.2f%%\n", temp * 1.0 / N );
+>         }
+>     }
+> }
+> ```
+
+### `barrier`
+
+`barrier` blocks threads until all team threads reach that point.
+
+> [!example]- example
+> ```C
+> int main ( )
+> {
+>     int a[5], i;
+>     #pragma omp parallel
+>     {
+>         // Perform some computation.
+>         #pragma omp omp for
+>         for (i = 0; i < 5; i++)
+>             a[i] = i*i;
+> 
+>         // Print intermediate results.
+>         #pragma omp omp master
+>         for (i = 0; i < 5; i++)
+>             printf("a[%d] = %d\n", i, a[i]);
+> 
+>         // Wait.
+>         #pragma omp omp barrier
+> 
+>         // Continue with the computation.
+>         #pragma omp omp for
+>         for (i = 0; i < 5; i++)
+>             a[i] += i;
+>     }
+> }
+> ```
+> 
+
+### `section` & `sections`
+
+The `sections` construct is a non-iterative worksharing construct that contains a set of structured blocks that are to be *distributed among and executed by the threads* in a team. 
+- (combines the `parallel` and `sections` directives)
+
+Individual work items are contained in blocks decorated by `section` derivatives:
+
+```C
+# pragma omp parallel sections
+{
+# pragma omp section
+	{
+		// concurent block 0
+	}
+	...
+# pragma omp section
+	{
+		// concurent block M-1
+	}
+}
+```
+
+- there is an implicit barrier at the end of a `sections` construct, unless a `nowait` clause is specified
+
+### `ordered`
+`ordered` is used inside a parallel for to ensure that a block (the iterations) will be executed in **sequential order**.
+
+> [!example] example
+> ``` C
+> double data [ N ];
+> #pragma omp parallel shared( data, N )
+> {
+>     #pragma omp for ordered schedule( static , 1 )
+>     for(int i = 0; i < N; i++)
+>     {
+>         // process the data
+> 
+>         // print the results in order
+>         #pragma omp ordered
+>         cout << data[i];
+>     }
+> }
+> ```
+
