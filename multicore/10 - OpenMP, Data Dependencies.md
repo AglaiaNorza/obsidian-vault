@@ -17,71 +17,142 @@ we have to be careful when parallelising a loop - since both instructions operat
 
 ## Dependence types
 
-> [!info] dependence types
-> 
-> ##### Flow dependence: `RAW` (Read After Write)
-> 
-> **True Dependency**. It occurs when `S1` writes a value to memory location $x$, and `S2` subsequently reads that value. The execution order `S1` , `S2` **must** be preserved.
-> 
-> >[!summary] Rule
-> >The read operation (`S2`) must wait for the write operation (`S1`) to complete.
-> >
-> > `S1`: Write $x \longrightarrow$ `S2`: Read $x$
-> 
-> >[!example] RAW Example
-> >```
-> >x = 10;          // S1: Write to x
-> >y = 2 * x + 5;   // S2: Read from x (needs the new value 10)
-> >```
-> 
+### Flow dependence: `RAW` (Read After Write)
+
+This is a **True Dependency**. It occurs when `S1` writes a value to memory location $x$, and `S2` subsequently reads that value. The execution order `S1` , `S2` **must** be preserved.
+
+>[!summary] Rule
+>The read operation (`S2`) must wait for the write operation (`S1`) to complete.
+>
+> `S1`: Write $x \longrightarrow$ `S2`: Read $x$
+
+>[!example] RAW Example
+>```C
+>x = 10;          // S1: Write to x
+>y = 2 * x + 5;   // S2: Read from x (needs the new value 10)
+>```
+
+>[!example] loop-carried RAW example
+>```c
+>double v = start;
+>double sum = 0;
+>for(i = 0; i < N; i++){
+>	A[i] = B[i] + 1;
+>	B[i+1] = A[i];
+>}
+>```
+> the write is in iteration $i$, and the read is in iteration $i+1$
+
+---
+### Anti-flow dependence: `WAR` (Write After Read)
+
+Occurs when `S1` reads a value from $x$, and `S2` subsequently writes a new value to the same location $x$. If the order were to be reversed, `S1` would read the wrong (new) value.
+
+>[!summary] Rule
+>The read operation (`S1`) must complete before the write operation (`S2`) begins, to ensure `S1` reads the old value.
+>
+> `S1`: Read $x \longrightarrow$ `S2`: Write $x$
+
+>[!example] WAR Example
+>```C
+>y = x + 3;       // S1: Read from x (needs the old value)
+>x ++;            // S2: Write to x (overwrites the old value)
+>```
+
+---
+
+### Output dependence: `WAW` (Write After Write)
+
+Occurs when both `S1` and `S2` write to the same memory location $x$. The execution order `S1` then `S2` **must** be preserved to ensure the final value of $x$ is the one written by `S2`.
+
+>[!summary] Rule
+>The final value of $x$ must be the one produced by the last write (`S2`).
+>
+> `S1`: Write $x \longrightarrow$ `S2`: Write $x$
+
+>[!example] WAW Example
+>```C
+>x = 10;          // S1: Write to x (sets it to 10)
+>x = x + c;       // S2: Write to x (this new value must persist)
+>```
+
+---
+
+### Input dependence: `RAR` (Read After Read)
+
+This is **NOT an actual dependence** that constrains execution order. Since both statements only read from the memory location $x$, their order does not affect the program's result.
+
+>[!summary] Rule
+>The order of two read operations does not matter for correctness.
+>
+> `S1`: Read $x \longleftrightarrow$ `S2`: Read $x$
+
+>[!example] RAR Example
+>```C
+>y = x + c;       // S1: Read from x
+>z = 2 * x + 1;   // S2: Read from x
+>```
+
+## Data dependency resolution
+There are 6 techniques used to solve Data Dependency:
+1) reduction/induction variable fix
+2) loop skewing
+3) partial parallelization
+4) refactoring
+5) fissioning
+6) algorithm change
+
+### Reduction/Induction Variables
+- **reduction variable** ⟶ used to *accumulate a value* across all iterations, using an associative operation
+- **induction variable** ⟶ its value gets *increased/decreased by a constant amount each iteration*
+
+> [!example] example
+> ```C
+> double v = start;
+> double sum = 0;
+> for(i = 0; i < N; i++){
+> 	sum = sum + f(v); // S1 
+> 	v = v + step; // S2 
+> }
+> ```
+
+There are 3 data dependencies:
+- `RAW(S1)` ⟶ *loop-carried dependence* - caused by the reduction variable `sum` (iteration $i+1$ reads the value written in iteration $i$)
+- `RAW(S2)` ⟶ *loop-carried dependence* - caused by the induction variable `v` (iteration $i+1$ reads the value written in iteration $i$)
+	- `v` is an induction variable because `v = v + step` == `v = start + i*step`
+- `RAW(S2 -> S1)` ⟶ *loop-carried dependence* - caused by the induction variable `v` (iteration $i+1$ reads in `S1` (`f(v)`) the value written by `S2` (`v = v + step` in iteration $i$) 
+
+>[!tip] fix
+>- first, we can remove `RAW(S2)` 
+>
+>we do so by calculating `v` "by hand" every time
+>
+>- we can also remove `RAW(S2->S1)` 
+>
+>we do so by switching the order of the instructions 
+>```c
+>double v;
+>double sum = 0;
+>for(int i = 0; i < N; i++){
+>	v = start + i*step;
+>	sum = sum + f(v);
+>}
+>```
+>
+>- `i = 0` ⟶ `v = start`
+>- `i = 1` ⟶ `v = start + step`
+>- ...
 > ---
+> - we now have to remove `RAW(S1)`, 
 > 
-> ##### Anti-flow dependence: `WAR` (Write After Read)
-> 
-> **False Dependency** (Name Dependence). It occurs when `S1` reads a value from $x$, and `S2` subsequently writes a new value to the same location $x$. If the order is reversed, `S1` would read the wrong (new) value.
-> 
-> >[!summary] Rule
-> >The read operation (`S1`) must complete before the write operation (`S2`) begins, to ensure `S1` reads the old value.
-> >
-> > `S1`: Read $x \longrightarrow$ `S2`: Write $x$
-> 
-> >[!example] WAR Example
-> >```
-> >y = x + 3;       // S1: Read from x (needs the old value)
-> >x ++;            // S2: Write to x (overwrites the old value)
-> >```
-> 
-> ---
-> 
-> ##### Output dependence: `WAW` (Write After Write)
-> 
-> **False Dependency** (Name Dependence). It occurs when both `S1` and `S2` write to the same memory location $x$. The execution order `S1` then `S2` **must** be preserved to ensure the final value of $x$ is the one written by `S2`.
-> 
-> >[!summary] Rule
-> >The final value of $x$ must be the one produced by the last write (`S2`).
-> >
-> > `S1`: Write $x \longrightarrow$ `S2`: Write $x$
-> 
-> >[!example] WAW Example
-> >```
-> >x = 10;          // S1: Write to x (sets it to 10)
-> >x = x + c;       // S2: Write to x (this new value must persist)
-> >```
-> 
-> ---
-> 
-> ##### Input dependence: `RAR` (Read After Read)
-> 
-> This is **NOT an actual dependence** that constrains execution order. Since both statements only read from the memory location $x$, their order does not affect the program's result.
-> 
-> >[!summary] Rule
-> >The order of two read operations does not matter for correctness.
-> >
-> > `S1`: Read $x \longleftrightarrow$ `S2`: Read $x$
-> 
-> >[!example] RAR Example
-> >```
-> >y = x + c;       // S1: Read from x
-> >z = 2 * x + 1;   // S2: Read from x
-> >```
+> we use the `reduction` directive, executing the reduction in a parallel-friendly way using an openMP construct
+>```c
+>double v;
+>double sum = 0;
+>#pragma omp parallel for reduction(+ : sum) private(v)
+>for(int i = 0; i < N; i++){
+>	v = start + i*step;
+>	sum = sum + f(v);
+>}
+>```
 
