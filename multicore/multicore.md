@@ -9,5 +9,6 @@
  >- [[07 - Processes and Threads]]
  >- [[08 - OpenMP, Shared Memory Programming]]
  >- [[09 - OpenMP, Synchronisation]]
+ >- [[10 - OpenMP, Data Dependencies]]
  >- [[11 - CUDA]]
  
