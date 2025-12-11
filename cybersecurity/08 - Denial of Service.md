@@ -37,12 +37,68 @@ That way, the server keeps the connection entry in its **half-open queue**, wait
 UDP Flood aims to **saturate** the target's network bandwidth and exhaust server resources by forcing it to **generate responses**.
 - the lack of a connection mechanism in UDP makes it simple for attackers to generate and send a **massive volume of UDP packets** quickly with minimal effort
 
-- **Incoming Processing:** The attacker sends a high volume of UDP packets, often with **spoofed source IP addresses**, directed toward a wide range of **random ports** on the target server. The attacker uses a spoofed address to hide their true location and to prevent the server's response packets from reaching them.
-    
-- **Resource Exhaustion (Responding):** For every incoming UDP packet, the target server is forced to perform a check:
-    
-    - It checks to see if any application is actively **listening** for requests at the specified destination port.
-        
-    - Since the packets are often sent to random, unused ports, the check fails.
-        
-    - The server then generates and sends an **ICMP Destination Unreachable** packet back to the sender (the spoofed source IP address) to inform it that the port is not available.
+The attacker sends a high volume of UDP packets, often with spoofed source IP addresses, directed toward a *wide range of random ports* on the target server.
+ For every incoming UDP packet, the target server is forced to **perform a check**: it checks to see if any application is actively listening for requests at the specified destination por. Since the packets are often sent to random, unused ports, the check fails. The server then generates and **sends an ICMP Destination Unreachable packet back** to the sender (the spoofed source IP address) to inform it that the port is not available. This way, the target is saturated and the system become unaccessible to legitimate users.
+
+## Distributed Denial of Service (DDoS)
+DDoS attacks use **multiple systems** to generate attacks.
+
+Typically, the attacker uses a flaw in operating systems or common applications to gain access and install a **zombie program** on the system. The attacker does this multiple times, gaining access to a large collection of systems that form a **botnet**.
+
+> In many cases, attackers can launch DDoS attacks for free using
+publicly available tools, or for a small fee by hiring a DDoS-as-a-service
+botnet such as Moobot in the dark web.
+
+>[!info] DDoS architecture
+>
+>![[DDoS.png|center|450]]
+
+## HTTP-Based attacks
+
+### HTTP flood
+Bombards web servers with HTTP requests (typical DoS attack), thanks to tools like LOIC and HOIC.
+- HTTP floods consume considerable resources
+- to make traffic look more realistic, **spidering** is often used ⟶ bots start from a given HTTP page and follow all links on the website recursively
+
+### slowloris + RUDY
+A slowloris attack attemps to monopolise server resources by sending HTTP `GET` **requests that never complete**, eventually consuming the server's connection capacity.
+
+Existing intrusion detection and prevention solutions that rely on signatures to detect attacks will generally not recognize Slowloris.
+
+R U Dead Yet? (**RUDY**) is another example of a "low and slow" attack. It uses HTTP `POST` requests - the attacker uses the `Content-Length` header in a `POST` request to declare a large request body which is then sent at a very slow rate.
+
+### reflection attacks
+A Reflection Attack involves the attacker using a **legitimate server** on the internet (the "*reflector*" or "intermediary") to launch the actual attack traffic against the target.
+
+- The attacker initiates the process by sending a small request packet to a publicly accessible server (the intermediary).  
+- Instead of using their own IP, they use the **victim's IP address as the source address**. This way the traffic is coming from the intermediary, hiding the attacker's IP.
+
+### DNS amplification attack
+The DNS Amplification attack exploits the DNS protocol's nature to **turn a small request into a massive response**, which is directed at the victim.
+
+- Attacker creates a series of DNS requests containing the spoofed source address of the target system
+
+- Thanks to the Amplification Factor, an attacker can send a tiny DNS query—for example, one that asks for all records (`ANY` query) for a large domain name. The request will be very small, but the DNS server's response containing the many resource records can be hundreds or even thousands of bytes long. This allows the attacker to multiply their traffic volume by a factor of 50x or more, making the resulting flood extremely difficult to defend against.
+
+> **Memcached** (a high-performance caching mechanism for dynamic websites made to speed up the delivery of web contents) can make this extremely more powerful -  the attacker makes a request that stores a large amount of data and then sends a spoofed request to make such data to be delivered to the victim via UDP. 
+> - memcached can bring an amplification fator of 50'000
+
+## DoS attack defenses
+DoS attacks cannot be prevented entirely, since high traffic volumes may be legitimate (eg. very popular sites).
+
+There are four lines of defense against DDoS:
+- attack **prevention** and preemption
+- attack **detection** and **filtering**
+- attack source traceback and **identification**: ISPs could be able to trace packet flow back to source (may be difficult and time consuming)
+- attack **reaction**: implementing a contingency plan (switching to alternate backup servers, commissioning new servers at a new site with new addresses)
+
+### attack prevention
+it is possible to:
+- **block spoofed source addresses** ⟶ implementing filters at the edge of the network nearest the sender (the attacker's ISP) is the most effective place to stop spoofed packets before they enter the wider Internet
+	- Filters must be applied to traffic before it leaves the ISP’s network or at the point of entry to their network. This practice is known as **Ingress Filtering**.
+- Using **Modified TCP Connection Handling Code** (SYN Cookies)
+	- primary defense against SYN Spoofing/Flood attacks
+	- Instead of allocating memory for the half-open connection immediately, the server *encodes the connection's state information* into the initial sequence number of the SYN-ACK packet it sends back to the client.
+		- a real client will then send the final ACK with this sequence number, allowing the server to decode the cookie, verify the connection legitimacy, and only then allocate resources.
+	- As a secondary mitigation, an option is to drop an entry for an incomplete connection from the TCP connections table when it overflows (less desirable)
+- 
