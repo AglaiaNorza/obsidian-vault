@@ -101,4 +101,9 @@ it is possible to:
 	- Instead of allocating memory for the half-open connection immediately, the server *encodes the connection's state information* into the initial sequence number of the SYN-ACK packet it sends back to the client.
 		- a real client will then send the final ACK with this sequence number, allowing the server to decode the cookie, verify the connection legitimacy, and only then allocate resources.
 	- As a secondary mitigation, an option is to drop an entry for an incomplete connection from the TCP connections table when it overflows (less desirable)
-- 
+- Network and Service Configuration
+	- **block IP directed broadcast** 
+	- **block suspicious services and combinations**
+- Manage application attacks with a form of graphical puzzle (captcha) to distinguish legitimate human requests
+-  Use **mirrored** and **replicated servers** (redundancy) to ensure reliability-
+- Good general system security practices
