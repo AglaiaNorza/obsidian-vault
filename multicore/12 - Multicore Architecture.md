@@ -40,4 +40,61 @@ In multicore systems, each core is in possession of a `L1` cache, while `L2` and
 
 There are two ways to keep the cache coherent:
 - **Snooping Cache Coherence** ⟶ the cores share a *bus*
-	- any signal transmitted on the bus can be "seen" by all cores 
+	- any signal transmitted on the bus can be "seen" by all cores connected to it
+	- when a core updates its copy of a variable, it broadcasts this information across the bus
+	- if another core is "snooping" on the bus, it will be notified and mark its copy as invalid
+	- con: very expensive
+- **Directory Based Cache Coherence** ⟶ uses a data structure called *directory* that stores the *status of each cache line*
+	- when a variable is updated, the directory is consulted and the cache controllers of the cores that have that variable's line cached invalidate it
+
+### False sharing
+**False sharing** is a common issue in multicore architectures. It arises when two or more threads access data that, while being different, is **on the same cache line** (causing an invalidation, even though the threads are accessing different values).
+
+The main strategies to fix this issue are:
+- **padding** ⟶ adding "empty" bytes to data so that it starts on a new cache line 
+	- the cache lines' dimension needs to be known (can be obtained in the code via `sysconf(_SC_LEVEL1_DCACHE_LINESIZE`)
+
+> [!example] padding example
+> 
+> ```C
+> double x[N];
+> #pragma omp parallel for schedule(static, 1)
+>     for( int i = 0; i < N; i++ )
+>         x[ i ] = someFunc( x [ i ] );
+> ```
+> 
+> ```C
+> double x[N][8];
+> #pragma omp parallel for schedule(static, 1)
+>     for( int i = 0; i < N; i++ )
+>         x[ i ][ 0 ] = someFunc( x [ i ][ 0 ] );
+> ```
+> 
+> - this approach modifies the data structure to physically force elements apart (instead of a 1D array, a 2D array with 8-element rows is used) (this way, two variables are exactly 64 bytes apart)
+> - this approach wastes memory, and kills cache effectiveness (goes against locality, a 64-byte line is pulled in but only 8 bytes are used)
+
+> [!example] example: spacing with `struct`s
+> 
+> ```C
+> // assuming 64-byte line
+> struct alignTo64ByteCacheLine {
+> 	int __onCacheLine1 __attribute__((aligned(64)))
+> 	int __onCacheLine2 __attribute__((aligned(64)))
+> }
+> ```
+> - the `aligned` directive tells the GCC compiler that the memory address for that variable has to be a multiple of 64 (so, for example, they will be placed at `0` and `64`)
+
+- changing the **mapping** of data to threads or cores
+
+> [!example] example
+> ```C
+> double x[N];
+> #pragma omp parallel for schedule(static, 8)
+>     for( int i = 0; i < N; i++ )
+>         x[ i ] = someFunc( x [ i ] );
+> ```
+> - threads take "chunks" of 8 iterations at a time (by giving thread 0 the indices `0–7`, thread 0 gains exclusive ownership of the entire first cache line, while thread 2 owns the second cache line)
+> - thisapproach is better than padding, as it doesn't waste memory and uses caches correc
+> 
+
+- using private/local variables
