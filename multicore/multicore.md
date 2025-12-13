@@ -5,7 +5,7 @@
  >- [[03 - MPI, Collective Communication]]
  >- [[04 - MPI, Derived Datatypes]]
  >- [[05 - MPI, Examples with Collective Communication]]
- >- [[06 - Performance evaluation]]
+ >- [[06 - MPI Performance evaluation]]
  >- [[07 - Processes and Threads]]
  >- [[08 - OpenMP, Shared Memory Programming]]
  >- [[09 - OpenMP, Synchronisation]]
