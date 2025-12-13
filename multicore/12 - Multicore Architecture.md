@@ -84,7 +84,7 @@ The main strategies to fix this issue are:
 > ```
 > - the `aligned` directive tells the GCC compiler that the memory address for that variable has to be a multiple of 64 (so, for example, they will be placed at `0` and `64`)
 
-- changing the **mapping** of data to threads or cores
+- **changing the mapping** of data to threads or cores
 
 > [!example] example
 > ```C
@@ -94,7 +94,33 @@ The main strategies to fix this issue are:
 >         x[ i ] = someFunc( x [ i ] );
 > ```
 > - threads take "chunks" of 8 iterations at a time (by giving thread 0 the indices `0–7`, thread 0 gains exclusive ownership of the entire first cache line, while thread 2 owns the second cache line)
-> - thisapproach is better than padding, as it doesn't waste memory and uses caches correc
+> - this approach is better than padding, as it doesn't waste memory and uses caches correctly
 > 
 
-- using private/local variables
+- using **private/local variables**
+	- this is a good approach, but it wouldn't work for indexes in a loop - it is more suited, for example, for when threads are "fighting" over a single shared variable (ex. a reduction to a sum)
+
+# Memory Organization
+There are two ways that memory can be organised in multicore systems:
+
+### Uniform Memory Access
+
+![[UMA.png|center|500]]
+
+In a UMA system, all of the processors have **direct access** to memory. This means that any processor can access any data in memory *at the same time* and *with the same speed*, independently from where the data is physically located.
+
+- programmers don't have to handle memory access in a complex way (since all processors "see" the same memory)
+- the single shared bus/interconnect is a chokepoint - as you add cores, they fight for bandwidth (so, this approach is not very common in systems with too many cores)
+
+(as far as caches are concerned, UMA typically uses **bus snooping**)
+
+### Non-Uniform Memory Access
+![[NUMA.png|center|500]]
+
+In NUMA systems, cores are partitioned in "**groups**", and each group has a **distinct main memory**, which is disconnected from the others. The division is transparent to the programmer (as, functionally, memory is seen as one unit).
+- the nodes are connected via a high speed interconnection, which allows the processors to access other nodes' memory
+- accessing "local" memory is cheaper (faster) than accessing a "remote" memory
+
+It is possible to specify where the data must be allocated with the `numa.h` library.
+
+(as far as caches are concerned, UMA typically uses **directory-based coherence**)

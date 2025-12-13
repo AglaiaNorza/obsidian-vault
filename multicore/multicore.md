@@ -11,4 +11,5 @@
  >- [[09 - OpenMP, Synchronisation]]
  >- [[10 - OpenMP, Data Dependencies]]
  >- [[11 - CUDA]]
+ >- [[12 - Multicore Architecture]]
  
