@@ -39,3 +39,5 @@ In multicore systems, each core is in possession of a `L1` cache, while `L2` and
 >![[multicore-cache-es.png|center|450]]
 
 There are two ways to keep the cache coherent:
+- **Snooping Cache Coherence** ⟶ the cores share a *bus*
+	- any signal transmitted on the bus can be "seen" by all cores 
