@@ -31,4 +31,26 @@ HTTP authentication is rarely used nowadays; the process is:
 2. the server replies with a status message: `401 Unauthorized`, with a specific `WWW-Authenticate` header containing information on the authentication method; the browser then prompts the user for credentials
 3. the browser gets the client’s credentials, includes them in the `Authorization` header and sends it back to the server (either base64-encoded or hashed with the username, password, (other things), and a nonce (random, one-time value))
 
-### monitoring HTTP
+### monitoring and manipulating HTTP
+HTTP payload is cleartext encapsulated in TCP packets (with default port `80`), so it's easy to monitor and manipulate
+- it can be monitored through sniffing tools (eg wireshark)
+- it can be manipulated through traditional browsers and extensions, via proxy, curl and more
+
+### HTTP sessions
+HTTP is stateless, so every request is independent from the previous ones; but dynamic web applications require the ability to maintain some kind of session
+- HTTP sessions are implemented by web application themselves, and session information is transmitted between the client and the server via:
+	- HTTP payloads `<INPUT TYPE="hidden NAME="sessionid VALUE="7456">`
+	- URLs `http://www.example/com/page.php?sessionid=7456`
+	- HTTP headers (eg cookies) 
+```http
+GET /page.php HTTP/1.1
+Host: www.example.com
+...
+Cookie: sessionid=7456
+```
+
+(for more info, see [[4 - HTTP#cookie|cookies]])
+
+#### session hijacking
+
+![[session-hijacking.png|center|450]]
