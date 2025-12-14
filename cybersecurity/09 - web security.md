@@ -62,8 +62,26 @@ Cookie: sessionid=7456
 ---
 Session cookies can be used in **Insecure Direct Object Reference**s 
 An **IDOR** occurs when a web application exposes a direct reference to an internal implementation object, such as a file, directory, or database key, and the application fails to verify that the requesting user is authorized to access that object.
-## content isolation & the same origin policy
+## content isolation & the "same origin" policy
 Most of the browser's security machanisms rely on the possibility of *isolating documents* (and execution contexts) depending on the resource's origin (generally, different websites or sources shouldn't access each other's content)
 - a malicious website cannot run scripts that access data and functionalities of other websites visited by the user (*cross-site scripting*)
 
+> This is part of the **Same Origin Policy** (SOP), an essential security concept for web browsers, designed to isolate documents from different websites.
 
+> [!summary] SOP "rules"
+> - a website cannot read or modify cookies or other DOM elements of other websites
+> - actions like "modify content of another window" should always require a security check
+> - a website can request a resource from another website, but can't process the received data
+> - actions like "follow a link" should always be allowed
+> - any 2 scripts executed in 2 given execution contexts can access their DOMs iff the *protocol*, *domain name* and *port* of their host document are the same
+> 
+> ![[SOP.png|center|500]]
+
+SOP's simplicity is also its limit:
+- we can't isolate homepages of different users hosted on the same protocol+domain+port
+- different domains cannot easily interact among each other if legitimately needed
+	- solution: `document.domain` can be used to relax the SOP by reducing domain definitions to its parent domains, matching other sibling subdomains that do the same (both scripts can set their top level domain as their domain control)
+		- issue: allows communication among other subdomains (eg. `google.com` and `mobile.google.com`)
+	- more secure solution: `postMessage()` allows scripts to send messages between windows located on completely different origins in a controlled and safe manner (allows both the sender and the receiver to agree on the communication boundaries)
+
+## client-side attacks
