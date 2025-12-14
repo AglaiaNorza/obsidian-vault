@@ -466,3 +466,4 @@ To indicate that some data must go in the shared on-chip memory rather than the 
 >[!example] example: 1d stencil
 
 
+p
