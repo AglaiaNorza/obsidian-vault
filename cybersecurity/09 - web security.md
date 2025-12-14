@@ -85,3 +85,23 @@ SOP's simplicity is also its limit:
 	- more secure solution: `postMessage()` allows scripts to send messages between windows located on completely different origins in a controlled and safe manner (allows both the sender and the receiver to agree on the communication boundaries)
 
 ## client-side attacks
+Client-side attacks **exploit the trust of the browser** (as opposite to exploiting the trust of servers). 
+
+More specifically, the trust of
+- a user towards a website (*XSS*)
+- a website towards a user (*CSRF*)
+
+Once the attacker's code runs in the victim's browser, the goals can include:
+- *stealing the cookie* associated with the vulnerable domain
+- *login form manipulations* (e.g., redirecting the user's credentials to an attacker-controlled server).
+- Execution of *additional GET/POST requests* (e.g., changing the user's password or transferring money).
+
+### Cross-Site Scripting (XSS)
+XSS targets the user's application. Its goal is *unauthorised access to information* stored on the client's browser (or other unauthorised actions).
+
+The main steps are usually:
+1.  HTML/js code is injected in a web page, exploiting a **lack of input sanitization** to make it run
+2. the client’s brower executes any code and renders any HTML present on the vulnerable page
+
+There are different *types of XSS*:
+- **reflected XSS**
