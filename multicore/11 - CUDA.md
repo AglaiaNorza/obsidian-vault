@@ -324,7 +324,7 @@ Data allocated on host memory is **not visible from the GPU** and viceversa. It 
 > - `cudaError_t` is an enumerated type; if a CUDA function returns anything other than `cudaSuccess` (`0`), an error has occurred
 > 
 
-### example: vector addition
+### Example: vector addition
 (got it from diego 4 now thx diego need 2 come back to this TODO)
 
 >[!example] vector addition
@@ -391,7 +391,7 @@ Data allocated on host memory is **not visible from the GPU** and viceversa. It 
 >cudaGetDeviceCount(&deviceCount);
 >```
 
-### memory types
+### Memory types
 Memory is divided into **on-chip** and **off-chip**.
 
 ![[memory-types.png|center|500]]
@@ -416,7 +416,7 @@ CUDA variables scopes and lifetime:
 | `__device__ __shared__ int SharedVar;`  | shared   | block  | kernel      |
 | `__device__ int GlobalVar;`             | global   | grid   | application |
 | `__device__ __constant__ int ConstVar;` | constant | grid   | application |
-### registers
+### Registers
 Registers are used to store **variables local to a thread**
 - Registers on a core are **split among the resident threads** 
 - compute capability determines the maximum number of registers that can be used per thread. 
@@ -442,4 +442,27 @@ Registers are used to store **variables local to a thread**
 >To increase occupancy, we can:
 >- *reduce the number of registers* required by the kernel
 >- *use a GPU with higher registers per thread* limit
+
+### Shared memory (on-chip)
+Shared memory is on-chip memory that is **shared among threads**.
+- (different from registers, that are private to threads)
+- it can be seen as a **user-managed L1 cache**.
+
+Shared memory can be used as:
+- a place to hold *frequently used data* that would require a global memory access
+- a way for cores on the same SM to *share data*
+
+To indicate that some data must go in the shared on-chip memory rather than the global memory, the `__shared__` specifier can be used.
+
+>[!question] shared memory vs L1 cache
+> |        | Shared Memory (Explicitly Managed)                                | L1 Cache (Automatically Managed)                       |
+> | :-------------------- | :---------------------------------------------------------------- | :----------------------------------------------------- |
+> | Location              | On-chip                                                           | On-chip                                                |
+> | Management            | Managed by the programmer (explicitly)                            | Managed automatically by hardware/OS                   |
+> | Performance Potential | Can provide better performance in some cases                      | Performance depends on automatic algorithms            |
+> | Data Guarantee        | Programmer has control/guarantee that data needed will be present | No guarantee that the needed data will be in the cache |
+> 
+
+>[!example] example: 1d stencil
+
 
