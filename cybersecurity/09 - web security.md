@@ -51,6 +51,19 @@ Cookie: sessionid=7456
 
 (for more info, see [[4 - HTTP#cookie|cookies]])
 
-#### session hijacking
-
+#### session attacks
+- **session hijacking** ⟶ the attacker "steals" the user's session ID and sends a request to the web server as if they were the user
 ![[session-hijacking.png|center|450]]
+
+- **session prediction** ⟶ early php implementations of sessions were susceptible to session prediction, as the total effective randomness was reduced from 160 bits down to only 40 or even 20 bits (1milion cookies, not that much) if the attacker could pre-compute or know certain values
+- **session fixation** ⟶ the attacker sets the victim's session ID before the victim logs in (the attacker sends a link containing the session ID to the victim)
+![[session-fixation.png|center|450]]
+
+---
+Session cookies can be used in **Insecure Direct Object Reference**s 
+An **IDOR** occurs when a web application exposes a direct reference to an internal implementation object, such as a file, directory, or database key, and the application fails to verify that the requesting user is authorized to access that object.
+## content isolation & the same origin policy
+Most of the browser's security machanisms rely on the possibility of *isolating documents* (and execution contexts) depending on the resource's origin (generally, different websites or sources shouldn't access each other's content)
+- a malicious website cannot run scripts that access data and functionalities of other websites visited by the user (*cross-site scripting*)
+
+
