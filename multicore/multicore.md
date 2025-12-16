@@ -10,6 +10,6 @@
  >- [[08 - OpenMP, Shared Memory Programming]]
  >- [[09 - OpenMP, Synchronisation]]
  >- [[10 - OpenMP, Data Dependencies]]
- >- [[11 - CUDA]]
+ >- [[11 - CUDA (wip)]]
  >- [[12 - Multicore Architecture]]
  
