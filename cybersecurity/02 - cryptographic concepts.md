@@ -168,7 +168,7 @@ In case of key compromise, a certificate may need to be revoked.
 
 ![[digital-envelope.png|center|550]]
 
-A digital envelope is a secure method for transmitting encrypted information using both symmetric and asymmetric encryption. The **data is encrypted with a symmetric key**, which is then **encrypted with the recipient's public key** using asymmetric encryption (ensuring that only the intended recipient, who holds the corresponding private key, can decrypt the symmetric key and access the original data).
+A digital envelope is a secure method for transmitting encrypted information using both symmetric and asymmetric encryption. The **data is encrypted with a symmetric key**, which is then **encrypted with the recipient's public key** using asymmetric encryption (ensuring that only the intended recipient, who holds the corresponding private key, can decrypt the symmetric key and access the original data). The envelope contains both the data and the encrypted key - the receiver uses their private key to decrypt the encrypted key, then they use that for the message.
 
 ## random numbers
 Random numbers play an essential role in cybersecurity. Their uses include the generation of:
