@@ -78,7 +78,7 @@ A cryptographic hash function has to:
 There are different ways of storing passwords:
 ### unix-style, legacy
 -  up to **8 printable characters**-long
-- **12-bit salt** used to modif DES encryption into a one-way hash function
+- **12-bit salt** used to modify DES encryption into a one-way hash function
 - `password + salt` is encrypted 25 times, and the output is translated to a 11 character sequence
 
 This approach is now considered inadequate, though it is often required for compatibility reasons.
