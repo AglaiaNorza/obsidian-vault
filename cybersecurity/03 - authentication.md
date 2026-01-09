@@ -44,7 +44,7 @@ There are three levels of **Identity Assurance Levels** (IAL):
 - **IAL 2** ⟶ provides evidence for the claimed identity using remote or physically-present identity proofing
 - **IAL 3** ⟶ requires physical presence for identity proofing
 
-### Assurance Levels for User Authentication (AAL)
+### Authentication Assurance Level 
 AALs define options an organisation can select based on their risk assessment and the potential harm caused by an attacker taking control of an authenticator and accessing their systems.
 
 - **AAL 1** ⟶ assurance of authentication via user-supplied ID and password
