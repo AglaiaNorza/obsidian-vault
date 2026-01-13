@@ -107,7 +107,7 @@ Happen when the target buffer is on the stack.
 ## shellcode
 Shellcode is code supplied by the attacker (often saved in the buffer they want to overflow). Traditionally, it transfers control to a shell.
 
-Shell code is often machine code (specific to the processor and OS) - to create this type of shell code, good assembly skills are needed. More recently, a number of sites and tools have been developed to autoate the process.
+Shell code is often machine code (specific to the processor and OS) - to create this type of shell code, good assembly skills are needed. More recently, a number of sites and tools have been developed to automate the process.
 
  it must be:
  - *self-contained*: it cannot rely on external shared libraries or system files.
