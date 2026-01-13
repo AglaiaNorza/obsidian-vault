@@ -139,11 +139,11 @@ void foo(char *s) {
 foo("stringatroppolungaperbuf");
 ```
 
-In questo esempio, stiamo inserendo troppi dati rispetto alla dimensione del buffer, ma il computer (che non sa effettivamente quando il buffer finisca), continua a sovrascrivere tutti gli indirizzi di memoria che trova fino al completamento dell'operazione.
+In questo esempio, stiamo inserendo troppi dati rispetto alla dimensione del buffer, ma il computer (che non sa effettivamente quando il buffer finisca) continua a sovrascrivere tutti gli indirizzi di memoria che trova fino al completamento dell'operazione.
 
 Quindi, dopo questa operazione, lo stack si troverebbe circa in questa situazione:
 
-![[stack-dopo.png|center|350]]
+![[stack-dopo.png|center|400]]
 
 Questo tipo di overflow porta generalmente alla terminazione di un programma per segmentation fault. Ma, se i dati inseriti nell'overflow sono preparati in modo accurato, è possibile per esempio *modificare l'indirizzo di ritorno arbitrariamente*, ed **eseguire codice arbitrario**.
 

@@ -26,17 +26,17 @@ Buffer overflow happens because when a process attempts to store data beyond the
 >```
 >(assuming that `str1` and `str2` are adjacent)
 >
->the buffers are of fixed size, and the function `gets()` reads input until it encounters a newline character or end-of-file, therefore performing no bounds checking
->- if the user provides an input string *longer than 8 bytes*, the excess data overflows `str2` and overwrites adjacent variables on the stack(e.g. `str1`, the return address of the function)
+>the buffers are of fixed size, and the function `gets()` reads input until it encounters a newline character or end-of-file, therefore performing no bound checking
+>- if the user provides an input string *longer than 8 bytes*, the excess data overflows `str2` and overwrites adjacent variables on the stack (e.g. `str1`, the return address of the function)
 >
 > execution:
 >```bash
->## ok example
+>## valid
 >$cc -g -o buffer1 buffer1.c$ ./buffer1
 >START
 >buffer1: str1(START), str2(START), valid(1)
 >
->## 14bytes-long string, it corrupts str1
+>## 14byte-string, corrupts str1
 >$ ./buffer1
 >EVILINPUTVALUE
 >buffer1: str1(TVALUE), str2(EVILINPUTVALUE), valid(0)
