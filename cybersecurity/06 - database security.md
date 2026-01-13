@@ -114,7 +114,7 @@ the `UNION` construct can be used to achieve **data extraction**:
 >- in MySQL, if the types do not match, a cast is performed automatically
 
 ### second order inject
-To perform a second order inject attack, a user with a malicious name is registered. Later on, the attacker asks to change its password, leading the DB to performing another query when retrieving the relative data.
+To perform a second order inject attack, a user with a malicious name is registered. Later on, the attacker asks to change its password, leading the DB to perform another query when retrieving the relative data.
 
 > [!example] example
 > 
