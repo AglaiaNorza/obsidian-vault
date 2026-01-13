@@ -9,6 +9,13 @@ DoS attacks typically target:
 ## flooding attacks
 Flooding attacks try to overload the network capacity on some link to a server.
 They are classified based on the network protocol used.
+
+In a basic DoS attack from a single source, the originating IP address is visible in the ICMP packets, making the attacker's location traceable. However, attackers often use **IP Spoofing**, which involves falsifying the source IP address in the outgoing packets.
+
+>[!info] spoofing
+> Source Address Spoofing is the act of **falsifying the source IP address** in a network packet.
+> - requires network engineers to specifically query flow information from their routers ⟶ because the source addresses are fake, simple logging of incoming IP addresses is insufficient for identifying the real attacker, external tools must be used
+
 ### flooding ping (ICMP flood)
 Simple attack exploiting ICMP via the `ping` command. 
 
@@ -16,11 +23,6 @@ Simple attack exploiting ICMP via the `ping` command.
 - as the volume of attack traffic increases and reaches the capacity limits of the victim's network or server, the device can no longer process all of it
 	- eventually, the network starts **discarding** packets (both the attack packets and legitimate user traffic) - thus, service is denied
 
-In a basic DoS attack from a single source, the originating IP address is visible in the ICMP packets, making the attacker's location traceable. However, attackers often use **IP Spoofing**, which involves falsifying the source IP address in the outgoing packets.
-
->[!info] spoofing
-> Source Address Spoofing is the act of **falsifying the source IP address** in a network packet.
-> - requires network engineers to specifically query flow information from their routers ⟶ because the source addresses are fake, simple logging of incoming IP addresses is insufficient for identifying the real attacker, external tools must be used
 
 ### SYN spoofing (SYN flood attack)
 SYN flood attacks exploit the **three-way handshake** used to establish a TCP connection.
