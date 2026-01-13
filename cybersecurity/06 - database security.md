@@ -240,7 +240,7 @@ Database access control determines:
 There are a range of administrative policies supported by DB access control:
 - **centralized administration** ⟶ a small number of privileged users may grant/revoke access rights
 - **ownership-based administration** ⟶ the creator of a table may grant/revoke access rights to the table
-- **decentralized administration** ⟶ the owner of a table may grank/revoke permissions to other users, allowing them to grant/reoke access rights to the table
+- **decentralized administration** ⟶ the owner of a table may grank/revoke permissions to other users, allowing them to grant/revoke access rights to the table
 	- in this case, *cascading authorization* happens: if access rights cascade through a number of users, the revocation of privileges also cascades: when user A revokes an access right, any cascaded access right is also revoked (unless that access right would exist even if the original grant from A had never occurred)
 
 There are two commands for managing access rights:
