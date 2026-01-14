@@ -119,5 +119,5 @@ There are different *types of XSS*:
 >- when the victim’s browser receives the response, it starts rendering the page. when it gets to the `<script>` tag, it executes the code immediately, sending a GET request to the attacker’s server with its cookie as a parameter
 
 
-- **stored XSS** ⟶ the injection is *stored in a page* of the web application (typically a DB) and displayed to users accessing it
+- **stored XSS** ⟶ the injection is *stored in a page* of the web application (typically a DB) - attacks users accessing it
 - **DOM-based XSS** ⟶ the injection happens in a *parameter used by a script* running within the page itself
