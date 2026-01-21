@@ -53,7 +53,7 @@ Map workers and reduce workers are separate, and they can vary in number.
 >[!question] Master-Worker vs Map-Reduce
 > With the Master-Worker pattern, the same function is applied to different data items, while, with the Map-Reduce pattern, the same function can be applied to **different parts of a single data item**
 
-## Globally Sequentia, Locally Parallel (GLPS)
+## Globally Sequential, Locally Parallel (GLPS)
 <small>the application executes as a sequential program, with individual parts of it running in parallel if requested</small>
 
 ### Fork/Join
