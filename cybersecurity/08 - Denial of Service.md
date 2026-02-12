@@ -75,8 +75,8 @@ A Reflection Attack involves the attacker using a **legitimate server** on the i
 - The attacker initiates the process by sending a small request packet to a publicly accessible server (the intermediary).  
 - Instead of using their own IP, they use the **victim's IP address as the source address**. This way the traffic is coming from the intermediary, hiding the attacker's IP.
 
-### DNS amplification attack
-The DNS Amplification attack exploits the DNS protocol's nature to **turn a small request into a massive response**, which is directed at the victim.
+#### DNS amplification attack
+The DNS Amplification attack is a version of a reflection attack that exploits the DNS protocol's nature to **turn a small request into a massive response**, which is directed at the victim.
 
 - Attacker creates a series of DNS requests containing the spoofed source address of the target system
 
