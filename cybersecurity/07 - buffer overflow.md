@@ -248,7 +248,6 @@ Guards can be placed between critical sections of memory - these are flagged as 
     * The saved frame pointer is changed to refer to a dummy stack frame.
     * When the function returns, control is transferred to the replacement dummy frame.
     * This ultimately directs execution to the shellcode in the overwritten buffer.
-* Off-by-one attacks: A specific coding error that allows an attacker to copy one more byte than the buffer size.
 * Defenses:
     * Stack protection mechanisms (e.g., canaries) to detect modifications to the stack frame or return address before function exit.
     * Use non-executable stacks (e.g., DEP/NX bit).
@@ -256,11 +255,11 @@ Guards can be placed between critical sections of memory - these are flagged as 
 ### Return to System Call (Return-to-libc)
 
 * Attack: Stack overflow that replaces the return address with the address of a standard library function (like `system()`).
-    * This is a response to non-executable stack defenses.
     * The attacker constructs suitable parameters for the library function on the stack, placed above the overwritten return address.
     * When the function returns, the library function executes with the attacker-supplied parameters.
     * It may require knowing the exact buffer address.
     * Can chain multiple library calls for complex payloads.
+    * (Response to non-executable stack defenses.)
 * Defenses: (Same as Variant 1, as they target the stack)
     * Stack protection (canaries).
     * Non-executable stacks.
@@ -275,7 +274,6 @@ Guards can be placed between critical sections of memory - these are flagged as 
     * Making the heap region non-executable.
     * Randomizing the allocation of memory on the heap.
 ### Global Data Overflow
-
 * Attack: Targets a buffer located in the global data region (or BSS).
     * This buffer may be located adjacent to function pointers or adjacent process management tables.
     * The primary goal is to overwrite a function pointer that will be called later in the program's execution flow.
@@ -284,3 +282,9 @@ Guards can be placed between critical sections of memory - these are flagged as 
     * Moving function pointers to a safe, protected memory location.
     * Using guard pages (unmapped pages) between critical data structures to detect overflows immediately
 
+| Attack Type         | Location | Key Pointer Overwritten                             |
+| ------------------- | -------- | --------------------------------------------------- |
+| **Stack Overflow**  | Stack    | Return Address (EIP/RIP) or Frame Pointer (EBP/RBP) |
+| **Return-to-libc**  | Stack    | Return Address (redirected to library functions)    |
+| **Heap Overflow**   | Heap     | Function Pointers or Heap Metadata                  |
+| **Global Overflow** | BSS/Data | Global Function Pointers                            |
