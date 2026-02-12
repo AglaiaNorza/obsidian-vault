@@ -4,7 +4,7 @@
 >
 >![[web-infrastructure.png|center|500]]
 > Standard Client-Server model. The web browser initiates a `page request`. The web server receives it and processes it via one of two paths:
-> 1. static Content (left) ⟶ the server spawns a worker to simply fetch an HTML file from storage.
+> 1. static content (left) ⟶ the server spawns a worker to simply fetch an HTML file from storage.
 > 2. dynamic content (right) ⟶ the server spawns an interpreter to execute a script. This script often queries a DB to retrieve data and generate the page content before sending the `server response` back
 
 
