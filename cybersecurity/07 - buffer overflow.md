@@ -63,9 +63,53 @@ Happen when the target buffer is on the stack.
 >[!info] stack frame
 > section of the computer's call stack that holds data for a single function call, including its arguments, local variables, and the return address to know where to resume execution after the function finishes.
 
+>[!tip] targeted pointers
+>* **Return Address: EIP (Instruction Pointer)** ⟶ the "Program Counter." It stores the memory address of the *next instruction* the CPU will execute.
+>    * if an attacker overwrites the value on the stack that is destined for EIP, they dictate the very next step the CPU takes.
+>* **Saved Frame Pointer: EBP (Base Pointer)** ⟶ anchors the current stack frame (reference point for local variables).
+>    * often overwritten just before the EIP - corrupting it can destabilize the program
+>
+
 (see also [[10, 11 - password, buffer overflow#il problema stack smashing|SO2]])
 
->[!example]- stack overflow example
+>[!example]- visual example
+>To understand this better, it can be useful to visualise the opposing directions of memory usage.
+> 1. the Stack grows down (allocates space from High Memory → Low Memory).
+> 2. Buffers write up (writes data from Low Memory → High Memory).
+>
+>When a function is called, the stack frame is pushed. The Return Address (where the CPU goes next) sits "above" the local variables in memory.
+>
+>```text
+>      High Memory (0xffffffff)
+>             ^
+>             |
+>    +-------------------------+
+>    |   Return Address (EIP)  |  <-- TARGET: Controls program flow
+>    +-------------------------+      (e.g., address of next instr.)
+>    |   Saved Frame Ptr (EBP) |
+>    +-------------------------+
+>    |                         |
+>    |      buffer[16]         |  <-- Input starts here and writes UP
+>    |                         |
+>    +-------------------------+
+>             |
+>             v
+>      Low Memory (0x00000000)
+>```
+>
+>If we feed 24 bytes of `'A'` (`0x41`) into the 16-byte buffer, the input writes past the buffer's ceiling and crushes the saved data.
+>
+>```text
+>    +-------------------------+
+>    |       0x41414141        |  <-- Return Address is now 'AAAA'
+>    +-------------------------+      (CPU will try to jump to 0x41414141)
+>    |       0x41414141        |
+>    +-------------------------+
+>    |    AAAAAAAAAAAAAAAA     |  <-- Buffer filled
+>    +-------------------------+
+>```
+
+>[!example]- code example
 > vulnerable code:
 >```c
 >void hello(char *tag)
