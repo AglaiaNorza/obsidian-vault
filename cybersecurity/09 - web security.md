@@ -107,7 +107,7 @@ There are different *types of XSS*:
 - **reflected XSS** ⟶ the injection happens in a parameter used by the page to *dynamically display information* 
 
 >[!example] example 
-> ![[reflected-XSS.png|center|600]]
+> ![[reflected-XSS.png|center|700]]
 > the vulnerability is that the website's response script that directly echoes the user’s `keyword` parameter into the HTML response, without any sanitization or encoding
 >- the attacker crafts a malicious link (to the vulnerable site) containing the XSS payload, that is designed to read the cookie and make a request to the attacker’s server. in this case, the payload is:
 >```html
@@ -120,4 +120,7 @@ There are different *types of XSS*:
 
 
 - **stored XSS** ⟶ the injection is *stored in a page* of the web application (typically a DB) - attacks users accessing it
+	- the attacker finds an input field (comment section, user profile, message forum) that saves data to a database without sanitization - unlike reflected XSS, the attacker doesn't need to trick a user into clicking a specific link, they just need the user to view the affected page
 - **DOM-based XSS** ⟶ the injection happens in a *parameter used by a script* running within the page itself
+	- ex: the server sends a perfectly safe HTML page - however, the page contains JavaScript that takes data from an unsafe "source" and passes it to a "sink" (a function that executes or renders code)
+	- the vulnerability exists entirely in the client-side code, not the server-side code
