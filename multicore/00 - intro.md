@@ -44,7 +44,7 @@ There are different types of parallel systems
 
 ### task-wise
 <small>There isn't a complete agreement on the definition, but</small>
-- **concurrent** task parallelism ⟶ multipple tasks can be in progress at any time
+- **concurrent** task parallelism ⟶ multiple tasks can be in progress at any time
 	- concurrent programs can be serial
 - **parallel** ⟶ multiple tasks *cooperate closely* to solve a problem (tightly coupled - cores share memory or are connected via a fast network)
 - **distributed** ⟶ a program *might need to cooperate* with others to solve a problem (more loosely coupled - eg services connected through the internet)
