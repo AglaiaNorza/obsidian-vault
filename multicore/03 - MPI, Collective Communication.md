@@ -54,7 +54,6 @@ Collective communication involves a group of processes within a specified commun
 >[!tip] other caveats
 >- the arguments passed by each process must be "compatible"
 >- for example, if one process passes in `0` as the dest_process and another passes in `1`, then the outcome of a call to `MPI_Reduce` is erroneous and the program is likely to hang or crash
->- despite the fact 
 
 > [!example]- example -  average
 > 
