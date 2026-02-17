@@ -81,14 +81,3 @@ Loop parallelism is employed for migration of sequential/legacy software to mult
 - the flexibility is limited, but so is the effort
 
 >[!tip] supported by OpenMP
-
-# examples
-
-## trapezoidal rule
-
->[!summary] Concept
->
->We want to approximate the integral of a function by calculating the trapezoids inside it.
-> ![[trapezoidal-rule.png|center|500]]
->
-> TODO
