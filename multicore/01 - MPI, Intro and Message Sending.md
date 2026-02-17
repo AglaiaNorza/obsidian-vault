@@ -202,7 +202,7 @@ int MPI_Isend(
 
 **receive**:
 ```C
-int MPI_Isend(
+int MPI_Irecv(
 	void *buf, // addfess of data buffer (IN)
 	int count, // number of data items (IN)
 	MPI_Datatype datatype, // type of buffer elements (IN)
