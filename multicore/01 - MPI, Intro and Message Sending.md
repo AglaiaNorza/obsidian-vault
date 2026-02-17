@@ -206,7 +206,7 @@ int MPI_Irecv(
 	void *buf, // addfess of data buffer (IN)
 	int count, // number of data items (IN)
 	MPI_Datatype datatype, // type of buffer elements (IN)
-	int source, // rank of destination process
+	int source, // rank of source process
 	int tag, // label to identify the message (IN)
 	MPI_Comm comm, // identifies the communicator
 	MPI_Request *req // used to return a handle for checking status (OUT)
