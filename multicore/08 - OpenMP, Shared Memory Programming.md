@@ -182,7 +182,7 @@ The `default` clause lets the programmer specify the scope of each variable in a
 - `shared` ⟶ variables not explicitly assigned a policy will be considered as having been passed implicitly to a `shared` clause
 - `reduction` ⟶ as seen [[08 - OpenMP, Shared Memory Programming#Reduction clause|below]]
 - `private` ⟶ creates a *separate copy* of a variable for each thread in the team.
-	- private variables are not initialised !!\
+	- private variables are not initialised !!
 - `firstprivate` ⟶ behaves like the `private` clause, but the private variable copies are *initialised to the value of the "outside" object*
 - `lastprivate` ⟶ behaves like the `private` clause, but the thread finishing the *last iteration of the sequential block* copies the value of its object to the "outside" object
 - `threadprivate` ⟶ creates a thread-specific persistent storage for global data; 
