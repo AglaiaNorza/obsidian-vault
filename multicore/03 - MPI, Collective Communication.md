@@ -146,7 +146,7 @@ An `MPI_Allreduce` is conceptually an `MPI_Reduce` followed by an `MPI_Bcast` - 
 > ```
 > 
 
-- the argument list is identical to that of `MPI_Reduce`, but there is no `dest_process` since all the processes will get the results
+- the argument list is identical to that of `MPI_Reduce`, but there is no `root` since all the processes will get the results
 
 ## `MPI_Scatter`
 `MPI_Scatter` involves a designated root process sending data to all processes in a communicator - but, instead of sending the same piece of data to all processes (like `MPI_Bcast`), it sends **different chunks to different processes**.
