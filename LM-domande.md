@@ -1,0 +1,24 @@
+- compattezza proposizionale
+- cosa vuol dire computazionalmente enumerabile
+- cosa vuol dire decidibile
+- come sono legati comp. en. e decidibile
+- "che altra classe di funzioni è rappresentabile?"
+- completezza predicativa
+- perché serve l’ipotesi che MA abbia assiomi decidibili per il primo teorema di incompletezza
+- cos’è una dimostrazione
+- Lemma di Lindenbaum 
+- Indecidibilità dei teoremi di MA
+- teorema e dimostrazioni DLO
+-  si può applicare Lindenbaum a MA?
+- Che proprietà deve avere questa teoria affinché non contraddica il primo teorema di Goedel? non deve essere una teoria formale, cioè non dev'essere decidibile
+- definizione dei simbolidi implicazione logica e deduzione
+- Teoria MA
+- teorema di Löwenheim-Skolem
+-  teorema a piacere
+
+AGGIUNTE
+- teorema di deduzione
+- definizione di teoria ω-categorica
+- in che modo il fatto di essere ω-categorica, non avere modelli finiti ed essere soddisfacibile garantisce che una teoria sia completa
+- Che differenza c'è, a livello formale, tra la rappresentabilità di una funzione (o relazione) calcolabile e il concetto di verità nel modello standard N?
+- Nel contesto del Primo Teorema di Incompletezza di Gödel, perché Gödel ha dovuto introdurre il concetto sintattico di ω-coerenza invece di fermarsi alla semplice coerenza logica?

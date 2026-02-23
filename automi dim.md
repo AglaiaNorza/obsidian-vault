@@ -50,8 +50,3 @@
 | PATH NL-completo                                       | (sappiamo PATH NL-hard perche' abbiamo visto savitch) mi segno currNode                                                                                                                                                                                                                                                                                                                                                                          |
 | THT siano t1 << t2 esiste L DTIME(t2) ma non DTIME(t1) | simulo con "timer" t1.5 passi e ritorno l'opposto - diagonalizzo per t1                                                                                                                                                                                                                                                                                                                                                                          |
 | SHT s1 e s2 O(s1)                                      | simulo in spazio limitato e in timer con max 2^O(s2(n))                                                                                                                                                                                                                                                                                                                                                                                          |
-
-
-DIMOSTRAZIONI UGUALI
-- "marco vertice che ha archi entranti da vertice già marcato" style
-	- 
