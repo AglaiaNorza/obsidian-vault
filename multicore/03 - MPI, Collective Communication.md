@@ -163,12 +163,13 @@ An `MPI_Allreduce` is conceptually an `MPI_Reduce` followed by an `MPI_Bcast` - 
 > 	void*        recv_buf_p, // out
 > 	int          recv_count, // in
 > 	MPI_Datatype recv_type,  // in
-> 	int          src_proc,   // in
+> 	int          root,   // in
 > 	MPI_Comm     comm        // in
 > );
 > ```
 > 
 > - `send_data_p` ⟶ array of data that resides on the root process
+> 	- `send_count` and `recv_count` should match *according to datatype* (as in, if it's the same datatype, they should be equal, and if the datatype is different, they should be equivalent (eg. if i send `4 ints` and receive `char`s, i will expect `16 char`s))
 > - `send_count` ⟶ how many elements of `send_type` will be sent to each process
 
 > [!tip] `MPI_Scatterv`
