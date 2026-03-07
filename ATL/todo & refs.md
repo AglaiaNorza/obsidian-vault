@@ -1,3 +1,0 @@
-- [ ] dynamic norms (LTL + nash equilibria) ⟶ https://iris.uniroma1.it/retrieve/e3835326-1911-15e8-e053-a505fe0a3de9/Perelli_Postprint_Enforcing_2019.pdf
-- [ ] dynamic norm synthesis in CTL ⟶ https://arxiv.org/abs/1604.05086
-- [ ] 
